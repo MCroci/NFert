@@ -1,0 +1,231 @@
+---
+title: "Nitrogen fertilisation of field crops"
+output: rmarkdown::html_vignette
+author: Michele Croci, Giorgio Impollonia, Stefano Amaducci
+vignette: >
+  %\VignetteIndexEntry{Nitrogen fertilisation of field crops}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To calculate the nitrogen inputs to be administered to the crop, the following relationship is applied:
+
+**Nitrogen fertilization (N)** = A - B + C + D - E - F - G
+
+-   crop requirements (**A**)
+
+-   \- contributions from soil fertility (**B**)
+
+-   \+ leaching losses (**C**)
+
+-   \+ immobilization and dispersion losses (**D**)
+
+-   \- nitrogen from residues of the previous crop (**E**)
+
+-   \- nitrogen from organic fertilizations carried out in previous years (**F**)
+
+-   \- natural contributions (**G**).
+
+```{r setup}
+library(NFert)
+```
+
+## Soil texture class
+
+```{r}
+print(NFert::soil.table)
+```
+
+## Classe tessiturale
+
+```{r}
+calc_soil_group_and_id_rag(clay = 10, sand = 40)
+```
+
+## A) Crop Requirements (kg/ha)
+
+Crop requirements take into account the crop's nitrogen needs, determined both on the basis of unit crop uptake and expected yield, as follows:
+
+**`A = unit crop uptake x expected yield`**
+
+The reference unit crop uptake values are reported in Appendix 6. For tree fruit crops, the requirement can also be estimated by calculating only the actual removal done with fruit harvesting (see Appendix 6) to which a share of nitrogen necessary to support annual growth (base quota, in kg, see Appendix 8) must be added.
+
+```{r}
+print(NFert::uptake_table)
+```
+
+```{r}
+calc_crop_N_demand(expected_yield_tons_ha = 6, crop = "Grano tenero FF (granella)")
+```
+
+## B) Nitrogen contributions from soil fertility (kg/ha)
+
+The nitrogen contributions from soil fertility consist of the nitrogen in mineral form assimilable by plants that is released following the mineralization processes of organic matter (B1) and, for herbaceous crops, also from the nitrogen immediately available at the beginning of the cycle (readily available nitrogen) (B2).
+
+• Crops with a cycle of less than one year = `B1 + B2`
+
+• Perennial crops in production = B1
+
+**B1 - Nitrogen derived from the mineralization of organic matter**. It is calculated based on the texture, the organic matter content of the soil, and the C/N ratio. The nitrogen derived from the mineralization of organic matter is available to the crop in relation to the period in which it develops, therefore in the calculation of this share it is necessary to consider the time coefficient. For perennial crops, for example grasslands, a time coefficient of 1 is considered valid; while for other crops with a cycle of less than twelve months, coefficients of less than one are used, also in relation to the thermal and rainfall regime of the crop growth period. The proposed time coefficients for the different crops are reported in Appendix 7.
+
+**B2 - Readily available nitrogen.** It is calculated based on the texture and the total nitrogen content of the soil. The nitrogen derived from soil fertility, if sown on solid ground, must be reduced to take into account that due to less aeration of the soil the mineralization processes of organic matter are slowed down. The reduction is estimated at 10 kg/ha.
+
+```{r}
+soil_fertility(soil.group = "Loamy textures",
+               Ntot = 1.2, SOM = 2, CN = 8,
+               ccp = "Autumn-winter crop <150 days",
+               )
+```
+
+## C) Leaching Losses
+
+Depending on the climatic trend and the soil characteristics, nitrogen losses due to leaching can occur, which are estimated by taking as a reference the amount of rainfall in certain periods of the year.
+
+The possible leaching losses are divided into two items:
+
+-   Ca = losses in the autumn-winter season;
+
+-   Cb = losses at the end of winter.
+
+**Ca = losses in the autumn-winter season**
+
+A first critical period occurs in the autumn-winter season when temperatures are low, there are no significant evapotranspiration flows, crops are in vegetative stasis, and it is easy to reach full soil saturation. The time interval from October 1st to January 31st is taken as a reference, and the possible nitrogen losses are estimated based on the indications reported in the following table:
+
++---------------+---------------------------------------------------------------+
+| Rainfall (mm) | Nitrogen Loss                                                 |
++===============+===============================================================+
+| \<150         | No loss of readily available nitrogen                         |
++---------------+---------------------------------------------------------------+
+| 150-250       | Progressively increasing loss of readily available nitrogen = |
+|               |                                                               |
+|               | *(Readily available N \* (y - 150) / 100)*                    |
++---------------+---------------------------------------------------------------+
+| \>250         | All readily available nitrogen is lost                        |
++---------------+---------------------------------------------------------------+
+
+Note:
+
+-   '*`y`*' in the formulas represents the rainfall in millimeters during the period from October to January.
+
+-   'Readily available N' refers to the amount of nitrogen in the soil that is readily available for plant uptake.
+
+**Cb - losses at the end of winter**
+
+At the end of winter (February), the mineralization processes of soil organic matter resume, but crop absorption is still limited. Excess water in this phase can therefore easily cause nitrogen leaching. For every 10 mm of rain, a loss of 1 kg of N per hectare is estimated. These losses begin to be counted when 250 mm is exceeded by adding the precipitation of the winter period and that of the month of February.
+
+```{r}
+leaching_loss(b1 = 31.2, winter_rain = 160, start_spring_rain = 160)
+```
+
+## D) Immobilization and Dispersion Losses
+
+The amounts of nitrogen immobilized by chemical-physical adsorption processes, biomass, volatilization, and denitrification processes are calculated as percentages of nitrogen inputs from soil fertility (B).
+
+Using the following formula that introduces the correction factors (fc) reported in Table 3:
+
+`D = B * fc_D`
+
+Where:
+
+D: Immobilization and dispersion losses (kg/ha)
+
+B: Nitrogen inputs from soil fertility (kg/ha)
+
+fc_D: Correction factor for immobilization and dispersion losses (from Table x)
+
+\
+Table x - Correction factors to be used to assess the immobilization and dispersion of nitrogen in the soil
+
+| **Oxygen Availability (\*)**  | Sandy | Loamy | Clayey |
+|-------------------------------|-------|-------|--------|
+| Impeded, scarce, or imperfect | 0.30  | 0.35  | 0.40   |
+| Moderate                      | 0.20  | 0.25  | 0.30   |
+| Good                          | 0.15  | 0.20  | 0.25   |
+
+(\*) Oxygen Availability can be inferred from cartographic and descriptive documents of soil characteristics where available or determined with a soil examination.
+
+## E) Nitrogen from residues of the previous crop
+
+This factor is obviously taken into consideration only in the case of rotated crops with a cycle of less than one year. The residues of previous crops, once buried, undergo a demolition process that leads to the release of nitrogen in a short time. However, if these materials are characterized by a high C/N ratio, the opposite effect occurs with a temporary reduction in nitrogen availability. This phenomenon is caused by microorganisms that carry out the demolition of the residues and that, to develop, use the mineral nitrogen present in the circulating solution of the soil. Therefore, the contribution of the item "nitrogen from residues" is not always positive.
+
+```{r}
+NFert::e.table
+```
+
+```{r}
+nitrogen_from_previous_crop_residues(previous_crop = "Winter cereals straw removal")
+```
+
+## F) Nitrogen from organic fertilizations carried out in previous years
+
+The nitrogen derived from the mineralization of residues of organic fertilizers that have been distributed in previous years varies depending on the quantity and type of fertilizer used and, in the case of regular distributions over time, also on the frequency (one, two, or three years). The recovery coefficient is applied to the total amount of nitrogen contained in the amending product usually applied in the case of regular contributions (Table 5) or to the quantity actually distributed in the previous year for occasional contributions (see "availability in the 2nd year" in Table 6). This N supplement becomes available over an entire year and should be appropriately reduced (see time coefficients in Appendix 7) in relation to the type of crop.
+
+This value provides an estimate of the residual fertility deriving from organic inputs made to crops in previous years and does not include the nitrogen that becomes available following any organic fertilizations made to the crop for which the nitrogen balance is being prepared.
+
+**Table 5 - Regular organic fertilizer applications: annual recovery coefficient % of the average amount of nutrients distributed**
+
+| **Organic Materials**           | **Every Year** | **Every 2 Years** | **Every 3 Years** |
+|:--------------------------------|:---------------|:------------------|:------------------|
+| Cattle slurry                   | 50             | 30                | 15                |
+| Swine manure and poultry manure | 30             | 15                | 10                |
+| Amendments                      | 20             | 10                | 5                 |
+
+**Table 6 -- Occasional soil amendment applications: mineralization coefficient %**
+
+| **Organic Materials**           | **Availability in the 2nd year** |
+|:--------------------------------|:---------------------------------|
+| Cattle slurry                   | 20                               |
+| Swine manure and poultry manure | 20                               |
+| Amendments                      | 20                               |
+
+```{r}
+organic_fertilization(source = "Cattle slurry", quantity=100, 
+                             frequency = "every year")
+```
+
+## G) Nitrogen from natural inputs
+
+This item takes into account the amount of nitrogen that reaches the soil through atmospheric precipitation and, in the case of leguminous crops, also the amount captured by nitrogen-fixing symbiotic bacteria.
+
+The extent of deposition varies depending on the location and proximity to urban and industrial centers. In lowland areas bordering densely populated areas, quantities fluctuating around 20 kg/ha per year are estimated. This is an annual availability that should be appropriately reduced in relation to the crop cycle.
+
+```{r}
+NFert::g.table
+```
+
+```{r}
+natural_contribution(location = "Plain adjacent to urbanized areas", 
+                     ccp = "Autumn-winter crop <150 days")
+```
+
+## Nitrogen balance calculation
+
+```{r}
+N_balance(
+  location = "Plain adjacent to urbanized areas",
+  expected_yield_tons_ha = 6, crop = "Grano tenero FF (granella)",
+  ccp = "Autumn-winter crop <150 days",
+  clay = 10, sand = 40,
+  Ntot = 1.2, SOM = 2, CN = 8,
+  oxygen_availability = "Normal",
+  winter_rain = 160,
+  start_spring_rain = 160,
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "every year",
+  forg_quantity = 100
+)
+```
+
+# Precision agriculture
+
+## Pre-sowing fertilization
+
+## Top-dressing fertilization
