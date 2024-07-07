@@ -1,0 +1,7 @@
+^renv$
+^renv\.lock$
+^NFert\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+^cran-comments\.md$
+^CRAN-SUBMISSION$

@@ -1,0 +1,26 @@
+Package: NFert
+Title: Nitrogen fertilization balance
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Michele", "Croci", , "michele.croci@unicatt.it", role = c("aut", "cre", "cph")),
+    person("Giorgio", "Impollonia", role = "aut"),
+    person("Manuele", "Ragazzi", role = "aut"),
+    person("Stefano", "Amaducci", role = "aut")
+  )
+Description: The R package NFert provides essential tools for calculating nitrogen fertilization balance in agriculture. It estimates crop nitrogen requirements, nitrogen supply from soil and organic sources, losses through leaching and volatilization, and natural atmospheric nitrogen contributions.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+URL: https://github.com/MCroci/NFert
+BugReports: https://github.com/MCroci/NFert/issues
