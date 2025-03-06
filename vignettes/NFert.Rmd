@@ -1,0 +1,231 @@
+---
+title: "Nitrogen Balance"
+author: "Michele Croci, Stefano Amaducci"
+contact: "michele.croci@unicatt.it"
+institute: "Department of Sustainable Plant Productions (DI.PRO.VE.S), Catholic University of the Sacred Heart"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Nitrogen Balance Calculation}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Overview
+
+The `N_balance()` function is a comprehensive tool for calculating the
+nitrogen balance in agricultural systems. It takes into account various
+soil characteristics, crop specifications, and environmental factors to
+provide a detailed analysis of nitrogen dynamics in crop production.
+
+## Course Objectives
+
+1.  **Understanding and Applying Nitrogen Balance** in Herbaceous Crops
+2.  **Developing Skills** in Water Balance Calculation
+3.  **Introducing Precision Agriculture** Concepts and Its Impact on
+    Agricultural Practices
+
+## Soil Sampling
+
+### Sampling Period
+
+The optimal soil sampling period should consider: - Soil moisture status
+(neither too dry nor too wet) - Sufficient time after tillage and
+fertilization operations - For herbaceous crops, ideal timing is: - Days
+following harvest - At least two months after the last fertilizer
+application
+
+### Sampling Methodology
+
+To obtain a representative sample:
+
+-   Proceed in a zigzag pattern across the field
+-   Select 15-20 sampling points depending on field extension
+-   Remove the first 5 cm to eliminate surface vegetation and debris
+-   Collect samples to a depth of 30 cm (0-30 cm)
+-   Thoroughly mix the collected soil
+-   Remove stones and coarse organic matter
+
+```{r}
+library(NFert); library(raster)
+```
+
+
+## Function Parameters
+
+The function accepts the following key parameters:
+
+-   `expected_yield_tons_ha`: Expected crop yield (tons per hectare)
+-   `crop`: Name of the crop being cultivated
+-   `ccp`: Crop calendar period
+-   `sand`: Percentage of sand in the soil
+-   `clay`: Percentage of clay in the soil
+-   `Ntot`: Total nitrogen content in the soil (%)
+-   `SOM`: Soil organic matter content (%)
+-   `CN`: Carbon to nitrogen ratio of the soil
+
+### Minimum Required Physico-Chemical Analyses
+
+-   Granulometry (soil texture)
+-   Water pH
+-   Organic matter content (%)
+-   Total and active limestone
+-   Total nitrogen (g/kg)
+-   Exchangeable potassium
+-   Assimilable phosphorus
+
+## Nitrogen Fertilization Calculation
+
+The nitrogen fertilization is calculated using the following analytical
+balance:
+
+$$
+\text{Nitrogen Fertilization (N)} = A - B + C + D - E - F - G
+$$
+
+Where: - **A**: Crop Requirements - **B**: Soil Fertility
+Contributions - **C**: Leaching Losses - **D**: Immobilization and
+Dispersion Losses - **E**: Nitrogen from Previous Crop Residues - **F**:
+Nitrogen from Organic Fertilizations in Previous Years - **G**: Natural
+Contributions
+
+## Example Usage
+```{r}
+head(NFert::uptake_table, 15)
+
+```
+
+```{r}
+# Maize crop in a typical agricultural setting
+maize_nitrogen_balance <- N_balance(
+  expected_yield_tons_ha = 15, 
+  crop = "Shredded corn class 700",
+  ccp = "Spring-summer crop 100–130 days", 
+  sand = 50, 
+  clay = 35,
+  Ntot = 1.2, 
+  SOM = 1.2, 
+  CN = 9.5, 
+  oxygen_availability = "Normal",
+  winter_rain = 160, 
+  start_spring_rain = 40,
+  prev_crop = "Winter cereals straw removal", 
+  source = "Cattle slurry",
+  fertorg_frequency = "every year", 
+  location = "Plain adjacent to urbanized areas",
+  forg_quantity = 100
+)
+
+# View the nitrogen balance components
+print(maize_nitrogen_balance)
+```
+
+``` r
+```
+
+## Key Nitrogen Balance Components
+
+1.  **A**: Total crop nitrogen demand
+2.  **B**: Soil nitrogen supply
+3.  **b1**: Readily available mineral nitrogen
+4.  **b2**: Mineralizable nitrogen from soil organic matter
+5.  **C1**: Winter nitrogen leaching loss
+6.  **C2**: Spring nitrogen leaching loss
+7.  **D**: Nitrogen immobilization loss
+8.  **E**: Nitrogen from previous crop residues
+9.  **Forg**: Nitrogen from organic fertilizer
+10. **G**: Natural nitrogen contribution
+
+## Interpretation Guidelines
+
+-   Positive nitrogen balance indicates potential nitrogen surplus
+-   Negative balance suggests the need for additional fertilization
+-   Balance helps optimize fertilizer application
+-   Minimizes environmental impact
+-   Supports sustainable agricultural practices
+
+## Practical Considerations
+
+-   Adjust parameters based on local soil conditions
+-   Consider crop-specific nitrogen requirements
+-   Monitor soil health and organic matter content
+-   Use in conjunction with comprehensive soil management practices
+
+## Limitations and Recommendations
+
+-   Requires accurate input of soil and crop parameters
+-   Represents a simplified model of complex nitrogen cycles
+-   Local validation is strongly recommended
+-   Reassess soil analysis every 5 years
+
+## Natural Nitrogen Contributions
+
+Nitrogen reaches the soil through: - Atmospheric precipitation -
+Symbiotic nitrogen fixation by leguminous crops
+
+Average annual nitrogen deposition: - Near urbanized areas: 20 kg/ha -
+Isolated plains: 15 kg/ha - Hilly or mountainous areas: 10 kg/ha
+
+## References
+
+1.  Agricultural Soil Science Journals
+2.  Local Agricultural Extension Services
+3.  Soil Fertility Management Guidelines
+4.  Sustainable Agricultural Production Techniques \`\`\`
+
+I've integrated the additional details from the Italian document,
+expanding the vignette to include: 1. Course objectives 2. Detailed soil
+sampling methodology 3. Required soil analyses 4. Expanded explanation
+of nitrogen balance calculation 5. More comprehensive interpretation
+guidelines 6. Natural nitrogen contribution details
+
+```{r}
+library(raster)
+
+# Supponiamo che B04 (Red) e B08 (NIR) siano le bande corrispondenti nel tuo raster
+red_band <- s2.rast$B04  # Banda rossa
+nir_band <- s2.rast$B08  # Banda NIR
+
+# Calcola l'NDVI
+ndvi <- (nir_band - red_band) / (nir_band + red_band)
+
+# Visualizza il risultato
+plot(ndvi, main = "NDVI")
+
+```
+
+```{r fig.height=5, fig.width=7.5}
+library(raster)
+
+# Esempio di raster NDVI
+# Carica un esempio di raster NDVI (sostituisci con il tuo file raster)
+# Supponiamo che s2.rast contenga il tuo raster NDVI
+# Ad esempio: ndvi_raster <- raster::raster("path/to/ndvi_raster.tif")
+
+# Esegui la calibrazione a due punti
+n_rate_raster_2pt <- estimate_N_rate_from_calibration_curve(
+  raster = ndvi,  # Supponiamo che la banda NDVI sia s2.rast$NDVI
+  minN = 40,               # Il tasso minimo di azoto (kg/ha) per il minimo NDVI
+  maxN = 60                # Il tasso massimo di azoto (kg/ha) per il massimo NDVI
+)
+
+# Esegui la calibrazione a tre punti (fornendo anche il tasso medio)
+n_rate_raster_3pt <- estimate_N_rate_from_calibration_curve(
+  raster = ndvi,  # Supponiamo che la banda NDVI sia s2.rast$NDVI
+  minN = 40,               # Il tasso minimo di azoto (kg/ha) per il minimo NDVI
+  meanN = 50,              # Il tasso medio di azoto (kg/ha) per il valore medio di NDVI
+  maxN = 60,               # Il tasso massimo di azoto (kg/ha) per il massimo NDVI
+  calibration_type = "three-point",  # Usa la calibrazione a tre punti
+  plot = TRUE                       # Mostra il grafico della calibrazione
+)
+
+# Visualizza il risultato del raster con i tassi di applicazione di azoto
+plot(n_rate_raster_2pt, main = "Nitrogen Application Rate (Two-Point Calibration)")
+plot(n_rate_raster_3pt, main = "Nitrogen Application Rate (Three-Point Calibration)")
+
+```
+
