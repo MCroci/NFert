@@ -21,20 +21,20 @@ calc_N_immobilization_loss <- function(B = 50, oxygen_availability = "Normal", i
   ca.table <- NFert::ca.table
   cb.table <- NFert::cb.table
 
-  # Ottieni ID_Dre corrispondente all'oxygen_availability
+  # Get ID_Dre corresponding to oxygen_availability
   id_dre <- ca.table$ID_Dre[match(oxygen_availability, ca.table$availability)]
 
-  # Controlla se id_dre è valido
+  # Check if id_dre is valid
   if (is.na(id_dre)) {
-    stop("Valore non valido per oxygen_availability")
+    stop("Invalid value for oxygen_availability. Check available options in ca.table.")
   }
 
-  # Ottieni fc_D corrispondente a id_rag e id_dre
+  # Get fc_D corresponding to id_rag and id_dre
   fc_D <- cb.table$fc_D[cb.table$ID_Rag == id_rag & cb.table$ID_Dre == id_dre]
 
-  # Controlla se fc_D è valido
-  if (length(fc_D) == 0) {
-    stop("Combinazione di id_rag e oxygen_availability non valida")
+  # Check if fc_D is valid
+  if (length(fc_D) == 0 || is.na(fc_D)) {
+    stop("Invalid combination of id_rag and oxygen_availability. Check cb.table for valid combinations.")
   }
 
   return(B * fc_D)

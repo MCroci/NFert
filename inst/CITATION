@@ -1,0 +1,22 @@
+citHeader("To cite NFert in publications use:")
+
+citEntry(
+  entry = "Manual",
+  title = "NFert: Nitrogen fertilization following Emilia-Romagna Recommendation",
+  author = personList(
+    person("Michele", "Croci", role = c("aut", "cre"), 
+           email = "michele.croci@unicatt.it"),
+    person("Manuele", "Ragazzi", role = "aut"),
+    person("Giorgio", "Impollonia", role = "aut"),
+    person("Stefano", "Amaducci", role = "aut")
+  ),
+  year = 2024,
+  note = paste("R package version", packageVersion("NFert")),
+  url = "https://github.com/yourusername/NFert",
+  textVersion = paste0(
+    "Croci M, Ragazzi M, Impollonia G, Amaducci S (2024). ",
+    "NFert: Nitrogen fertilization following Emilia-Romagna Recommendation. ",
+    "R package version ", packageVersion("NFert"), ". ",
+    "https://github.com/yourusername/NFert"
+  )
+)

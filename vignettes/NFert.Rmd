@@ -1,231 +1,691 @@
 ---
-title: "Nitrogen Balance"
+title: "Nitrogen Fertilization Management with NFert: A Comprehensive Guide"
 author: "Michele Croci, Stefano Amaducci"
-contact: "michele.croci@unicatt.it"
-institute: "Department of Sustainable Plant Productions (DI.PRO.VE.S), Catholic University of the Sacred Heart"
+date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
+    toc_depth: 3
+    number_sections: true
 vignette: >
-  %\VignetteIndexEntry{Nitrogen Balance Calculation}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Nitrogen Fertilization Management with NFert}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  markdown: 
-    wrap: 72
+  %\VignetteEncoding{UTF-8}
 ---
 
-## Overview
-
-The `N_balance()` function is a comprehensive tool for calculating the
-nitrogen balance in agricultural systems. It takes into account various
-soil characteristics, crop specifications, and environmental factors to
-provide a detailed analysis of nitrogen dynamics in crop production.
-
-## Course Objectives
-
-1.  **Understanding and Applying Nitrogen Balance** in Herbaceous Crops
-2.  **Developing Skills** in Water Balance Calculation
-3.  **Introducing Precision Agriculture** Concepts and Its Impact on
-    Agricultural Practices
-
-## Soil Sampling
-
-### Sampling Period
-
-The optimal soil sampling period should consider: - Soil moisture status
-(neither too dry nor too wet) - Sufficient time after tillage and
-fertilization operations - For herbaceous crops, ideal timing is: - Days
-following harvest - At least two months after the last fertilizer
-application
-
-### Sampling Methodology
-
-To obtain a representative sample:
-
--   Proceed in a zigzag pattern across the field
--   Select 15-20 sampling points depending on field extension
--   Remove the first 5 cm to eliminate surface vegetation and debris
--   Collect samples to a depth of 30 cm (0-30 cm)
--   Thoroughly mix the collected soil
--   Remove stones and coarse organic matter
-
-```{r}
-library(NFert); library(raster)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5,
+  fig.align = "center",
+  warning = FALSE,
+  message = FALSE
+)
 ```
 
+# Introduction
 
-## Function Parameters
+The **NFert** R package provides a comprehensive toolkit for calculating nitrogen fertilization requirements in field crops following the Emilia-Romagna Regional Recommendations for integrated production. This vignette demonstrates how to use NFert for nitrogen balance calculations, soil fertility assessment, and precision agriculture applications.
 
-The function accepts the following key parameters:
+## What is Nitrogen Balance?
 
--   `expected_yield_tons_ha`: Expected crop yield (tons per hectare)
--   `crop`: Name of the crop being cultivated
--   `ccp`: Crop calendar period
--   `sand`: Percentage of sand in the soil
--   `clay`: Percentage of clay in the soil
--   `Ntot`: Total nitrogen content in the soil (%)
--   `SOM`: Soil organic matter content (%)
--   `CN`: Carbon to nitrogen ratio of the soil
+Nitrogen balance is a quantitative method that accounts for all nitrogen inputs and outputs in an agricultural system. The general equation used in NFert is:
 
-### Minimum Required Physico-Chemical Analyses
+$$\text{Nitrogen Fertilization (N)} = A - B + C1 + C2 + D - E - F_{org} - G$$
 
--   Granulometry (soil texture)
--   Water pH
--   Organic matter content (%)
--   Total and active limestone
--   Total nitrogen (g/kg)
--   Exchangeable potassium
--   Assimilable phosphorus
+Where:
 
-## Nitrogen Fertilization Calculation
+- **A**: Crop nitrogen requirements (kg/ha)
+- **B**: Soil nitrogen supply (sum of b1 and b2) (kg/ha)
+- **C1**: Nitrogen leaching loss in winter (kg/ha)
+- **C2**: Nitrogen leaching loss in spring (kg/ha)
+- **D**: Immobilization and dispersion losses (kg/ha)
+- **E**: Nitrogen from previous crop residues (kg/ha)
+- **F_{org}**: Nitrogen from organic fertilizers (kg/ha)
+- **G**: Natural nitrogen contributions (kg/ha)
 
-The nitrogen fertilization is calculated using the following analytical
-balance:
+## Package Overview
 
-$$
-\text{Nitrogen Fertilization (N)} = A - B + C + D - E - F - G
-$$
+NFert provides three main categories of functions:
 
-Where: - **A**: Crop Requirements - **B**: Soil Fertility
-Contributions - **C**: Leaching Losses - **D**: Immobilization and
-Dispersion Losses - **E**: Nitrogen from Previous Crop Residues - **F**:
-Nitrogen from Organic Fertilizations in Previous Years - **G**: Natural
-Contributions
+1. **Complete nitrogen balance calculation** - The `N_balance()` function
+2. **Individual component functions** - For specific calculations (soil fertility, leaching, etc.)
+3. **Precision agriculture functions** - For variable rate application based on NDVI
 
-## Example Usage
-```{r}
-head(NFert::uptake_table, 15)
+# Installation and Setup
 
+```{r installation}
+# If not already installed
+# install.packages("NFert")
+
+# Load the package
+library(NFert)
+
+# For precision agriculture functions, also load raster
+library(raster)
 ```
 
-```{r}
-# Maize crop in a typical agricultural setting
-maize_nitrogen_balance <- N_balance(
-  expected_yield_tons_ha = 15, 
-  crop = "Shredded corn class 700",
-  ccp = "Spring-summer crop 100–130 days", 
-  sand = 50, 
-  clay = 35,
-  Ntot = 1.2, 
-  SOM = 1.2, 
-  CN = 9.5, 
+# Getting Started: A Simple Example
+
+Let's start with a basic example calculating the nitrogen balance for a wheat crop:
+
+```{r basic-example}
+# Calculate nitrogen balance for winter wheat
+wheat_balance <- N_balance(
+  expected_yield_tons_ha = 8,
+  crop = "Grano tenero FF (granella)",
+  ccp = "Autumn-winter crop <150 days",
+  sand = 30,
+  clay = 25,
+  Ntot = 1.2,
+  SOM = 2.0,
+  CN = 9,
   oxygen_availability = "Normal",
-  winter_rain = 160, 
+  winter_rain = 160,
   start_spring_rain = 40,
-  prev_crop = "Winter cereals straw removal", 
+  prev_crop = "Winter cereals straw removal",
   source = "Cattle slurry",
-  fertorg_frequency = "every year", 
+  fertorg_frequency = "every year",
   location = "Plain adjacent to urbanized areas",
   forg_quantity = 100
 )
 
-# View the nitrogen balance components
-print(maize_nitrogen_balance)
+# Display results
+print(wheat_balance)
+
+# Calculate final nitrogen requirement
+required_N <- calculate_N_fertilization(wheat_balance)
+cat("\nRequired nitrogen fertilization:", round(required_N, 2), "kg/ha\n")
 ```
 
-``` r
-```
+# Understanding the Nitrogen Balance Components
 
-## Key Nitrogen Balance Components
+## Component 1: Crop Nitrogen Demand (A)
 
-1.  **A**: Total crop nitrogen demand
-2.  **B**: Soil nitrogen supply
-3.  **b1**: Readily available mineral nitrogen
-4.  **b2**: Mineralizable nitrogen from soil organic matter
-5.  **C1**: Winter nitrogen leaching loss
-6.  **C2**: Spring nitrogen leaching loss
-7.  **D**: Nitrogen immobilization loss
-8.  **E**: Nitrogen from previous crop residues
-9.  **Forg**: Nitrogen from organic fertilizer
-10. **G**: Natural nitrogen contribution
+The crop nitrogen demand is calculated based on expected yield and crop-specific nitrogen uptake coefficients:
 
-## Interpretation Guidelines
-
--   Positive nitrogen balance indicates potential nitrogen surplus
--   Negative balance suggests the need for additional fertilization
--   Balance helps optimize fertilizer application
--   Minimizes environmental impact
--   Supports sustainable agricultural practices
-
-## Practical Considerations
-
--   Adjust parameters based on local soil conditions
--   Consider crop-specific nitrogen requirements
--   Monitor soil health and organic matter content
--   Use in conjunction with comprehensive soil management practices
-
-## Limitations and Recommendations
-
--   Requires accurate input of soil and crop parameters
--   Represents a simplified model of complex nitrogen cycles
--   Local validation is strongly recommended
--   Reassess soil analysis every 5 years
-
-## Natural Nitrogen Contributions
-
-Nitrogen reaches the soil through: - Atmospheric precipitation -
-Symbiotic nitrogen fixation by leguminous crops
-
-Average annual nitrogen deposition: - Near urbanized areas: 20 kg/ha -
-Isolated plains: 15 kg/ha - Hilly or mountainous areas: 10 kg/ha
-
-## References
-
-1.  Agricultural Soil Science Journals
-2.  Local Agricultural Extension Services
-3.  Soil Fertility Management Guidelines
-4.  Sustainable Agricultural Production Techniques \`\`\`
-
-I've integrated the additional details from the Italian document,
-expanding the vignette to include: 1. Course objectives 2. Detailed soil
-sampling methodology 3. Required soil analyses 4. Expanded explanation
-of nitrogen balance calculation 5. More comprehensive interpretation
-guidelines 6. Natural nitrogen contribution details
-
-```{r}
-library(raster)
-
-# Supponiamo che B04 (Red) e B08 (NIR) siano le bande corrispondenti nel tuo raster
-red_band <- s2.rast$B04  # Banda rossa
-nir_band <- s2.rast$B08  # Banda NIR
-
-# Calcola l'NDVI
-ndvi <- (nir_band - red_band) / (nir_band + red_band)
-
-# Visualizza il risultato
-plot(ndvi, main = "NDVI")
-
-```
-
-```{r fig.height=5, fig.width=7.5}
-library(raster)
-
-# Esempio di raster NDVI
-# Carica un esempio di raster NDVI (sostituisci con il tuo file raster)
-# Supponiamo che s2.rast contenga il tuo raster NDVI
-# Ad esempio: ndvi_raster <- raster::raster("path/to/ndvi_raster.tif")
-
-# Esegui la calibrazione a due punti
-n_rate_raster_2pt <- estimate_N_rate_from_calibration_curve(
-  raster = ndvi,  # Supponiamo che la banda NDVI sia s2.rast$NDVI
-  minN = 40,               # Il tasso minimo di azoto (kg/ha) per il minimo NDVI
-  maxN = 60                # Il tasso massimo di azoto (kg/ha) per il massimo NDVI
+```{r crop-demand}
+# Calculate crop nitrogen demand
+crop_demand <- calc_crop_N_demand(
+  expected_yield_tons_ha = 10,
+  crop = "Grano tenero FF (granella)"
 )
 
-# Esegui la calibrazione a tre punti (fornendo anche il tasso medio)
-n_rate_raster_3pt <- estimate_N_rate_from_calibration_curve(
-  raster = ndvi,  # Supponiamo che la banda NDVI sia s2.rast$NDVI
-  minN = 40,               # Il tasso minimo di azoto (kg/ha) per il minimo NDVI
-  meanN = 50,              # Il tasso medio di azoto (kg/ha) per il valore medio di NDVI
-  maxN = 60,               # Il tasso massimo di azoto (kg/ha) per il massimo NDVI
-  calibration_type = "three-point",  # Usa la calibrazione a tre punti
-  plot = TRUE                       # Mostra il grafico della calibrazione
-)
+print(crop_demand)
 
-# Visualizza il risultato del raster con i tassi di applicazione di azoto
-plot(n_rate_raster_2pt, main = "Nitrogen Application Rate (Two-Point Calibration)")
-plot(n_rate_raster_3pt, main = "Nitrogen Application Rate (Three-Point Calibration)")
-
+# Available crops in the database
+head(NFert::uptake_table, 10)
 ```
 
+## Component 2: Soil Fertility (B = b1 + b2)
+
+Soil fertility accounts for both readily available nitrogen (b1) and mineralizable nitrogen from organic matter (b2):
+
+```{r soil-fertility}
+# Calculate soil fertility
+soil_N <- soil_fertility(
+  Ntot = 1.2,
+  SOM = 2.5,
+  soil.group = "Sandy textures",
+  CN = 9,
+  ccp = "Autumn-winter crop <150 days"
+)
+
+print(soil_N)
+cat("Total soil N supply (B):", soil_N$b1 + soil_N$b2, "kg/ha\n")
+```
+
+### Determining Soil Group
+
+First, you need to determine the soil group based on texture:
+
+```{r soil-texture}
+# Classify soil texture using simplified method
+texture_class <- tri3(clay = 20, sand = 35)
+cat("Simplified texture class:", texture_class, "\n")
+
+# Get detailed classification and soil properties
+soil_props <- calc_soil_group_and_id_rag(clay = 20, sand = 35)
+print(soil_props)
+```
+
+## Component 3: Leaching Losses (C1, C2)
+
+Leaching losses depend on rainfall and soil drainage properties:
+
+```{r leaching}
+# Calculate leaching losses
+leaching <- leaching_loss(
+  winter_rain = 180,
+  start_spring_rain = 45,
+  oxygen_availability = "Normal",
+  id_rag = 3,
+  b1 = 25
+)
+
+print(leaching)
+cat("Total leaching loss:", leaching$C1 + leaching$C2, "kg/ha\n")
+```
+
+## Component 4: Immobilization Loss (D)
+
+Immobilization occurs when soil microorganisms use nitrogen for their own growth:
+
+```{r immobilization}
+# Calculate immobilization loss
+immobilization <- calc_N_immobilization_loss(
+  B = 50,
+  oxygen_availability = "Normal",
+  id_rag = 3
+)
+
+cat("Immobilization loss (D):", immobilization, "kg/ha\n")
+```
+
+## Component 5: Previous Crop Residues (E)
+
+Nitrogen contribution from previous crop residues:
+
+```{r residues}
+# Nitrogen from previous crop
+residue_N <- nitrogen_from_previous_crop_residues(
+  previous_crop = "Winter cereals straw removal"
+)
+
+cat("Nitrogen from residues (E):", residue_N, "kg/ha\n")
+
+# Available previous crops
+head(NFert::e.table, 10)
+```
+
+## Component 6: Organic Fertilizer (Forg)
+
+Contribution from organic fertilizers:
+
+```{r organic}
+# Calculate organic fertilizer contribution
+organic_N <- organic_fertilization(
+  source = "Cattle slurry",
+  frequency = "every year",
+  quantity = 100
+)
+
+cat("Organic fertilizer N (Forg):", organic_N, "kg/ha\n")
+
+# Compare different organic sources
+sources <- c("Cattle slurry", "Composted manure", "Pig slurry")
+organic_comparison <- data.frame(
+  source = sources,
+  N_contribution = sapply(sources, function(s) {
+    organic_fertilization(source = s, frequency = "every year", quantity = 100)
+  })
+)
+print(organic_comparison)
+```
+
+## Component 7: Natural Contribution (G)
+
+Natural nitrogen inputs from atmospheric deposition:
+
+```{r natural}
+# Calculate natural nitrogen contribution
+natural_N <- natural_contribution(
+  location = "Plain adjacent to urbanized areas",
+  ccp = "Autumn-winter crop <150 days"
+)
+
+cat("Natural contribution (G):", natural_N, "kg/ha\n")
+
+# Available locations
+head(NFert::g.table, 10)
+```
+
+# Complete Workflow: Maize Production Example
+
+Let's work through a complete example for maize production:
+
+```{r maize-workflow}
+# Step 1: Define field parameters
+maize_params <- list(
+  expected_yield = 12,  # tons/ha
+  crop = "Shredded corn class 700",
+  ccp = "Spring-summer crop 100–130 days",
+  clay = 28,
+  sand = 32,
+  Ntot = 1.5,
+  SOM = 2.8,
+  CN = 10,
+  oxygen_availability = "Normal",
+  winter_rain = 165,
+  start_spring_rain = 35,
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "every year",
+  location = "Plain adjacent to urbanized areas",
+  forg_quantity = 90
+)
+
+# Step 2: Calculate complete nitrogen balance
+maize_balance <- do.call(N_balance, maize_params)
+
+# Step 3: Display detailed results
+cat("=== MAIZE NITROGEN BALANCE ===\n")
+print(maize_balance)
+
+# Step 4: Calculate final requirement
+maize_N_requirement <- calculate_N_fertilization(maize_balance)
+cat("\nFinal N requirement:", round(maize_N_requirement, 2), "kg/ha\n")
+
+# Step 5: Interpretation
+cat("\n=== INTERPRETATION ===\n")
+cat("Crop demand (A):", round(maize_balance$A, 1), "kg/ha\n")
+cat("Soil supply (B):", round(maize_balance$B, 1), "kg/ha\n")
+cat("Leaching losses (C1+C2):", round(maize_balance$C1 + maize_balance$C2, 1), "kg/ha\n")
+cat("Immobilization (D):", round(maize_balance$D, 1), "kg/ha\n")
+cat("Residue contribution (E):", round(maize_balance$E, 1), "kg/ha\n")
+cat("Organic fertilizer (Forg):", round(maize_balance$Forg, 1), "kg/ha\n")
+cat("Natural contribution (G):", round(maize_balance$G, 1), "kg/ha\n")
+```
+
+# Scenario Comparison
+
+Compare different management scenarios for the same field:
+
+```{r scenarios}
+# Base scenario parameters
+base_params <- list(
+  expected_yield_tons_ha = 10,
+  crop = "Grano tenero FF (granella)",
+  ccp = "Autumn-winter crop <150 days",
+  clay = 22,
+  sand = 30,
+  Ntot = 1.2,
+  SOM = 2.0,
+  CN = 9,
+  oxygen_availability = "Normal",
+  winter_rain = 160,
+  start_spring_rain = 40,
+  location = "Plain adjacent to urbanized areas"
+)
+
+# Scenario 1: No organic fertilization
+scenario1 <- do.call(N_balance, c(base_params, list(
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "never",
+  forg_quantity = 0
+)))
+N1 <- calculate_N_fertilization(scenario1)
+
+# Scenario 2: With organic fertilization (80 m³/ha)
+scenario2 <- do.call(N_balance, c(base_params, list(
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "every year",
+  forg_quantity = 80
+)))
+N2 <- calculate_N_fertilization(scenario2)
+
+# Scenario 3: Higher organic rate (150 m³/ha)
+scenario3 <- do.call(N_balance, c(base_params, list(
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "every year",
+  forg_quantity = 150
+)))
+N3 <- calculate_N_fertilization(scenario3)
+
+# Compare scenarios
+comparison <- data.frame(
+  Scenario = c("No organic", "80 m³/ha organic", "150 m³/ha organic"),
+  Organic_N = c(scenario1$Forg, scenario2$Forg, scenario3$Forg),
+  N_requirement = c(N1, N2, N3),
+  N_saved = c(0, N1 - N2, N1 - N3)
+)
+
+print(comparison)
+cat("\nNitrogen saved with organic fertilization:\n")
+cat("Scenario 2:", round(N1 - N2, 2), "kg/ha (", round((N1-N2)/N1*100, 1), "%)\n")
+cat("Scenario 3:", round(N1 - N3, 2), "kg/ha (", round((N1-N3)/N1*100, 1), "%)\n")
+```
+
+# Precision Agriculture: NDVI-Based Variable Rate Application
+
+NFert supports precision agriculture through NDVI-based nitrogen rate estimation. Here are two approaches:
+
+## Method 1: Calibration Curve
+
+```{r precision-ag-calibration, fig.width=10, fig.height=5}
+# Create example NDVI raster
+set.seed(42)
+ndvi_raster <- raster(nrows=20, ncols=20, xmn=0, xmx=100, ymn=0, ymx=100)
+values(ndvi_raster) <- runif(ncell(ndvi_raster), 0.35, 0.85)
+
+# Two-point calibration
+n_rate_2pt <- estimate_N_rate_from_calibration_curve(
+  raster = ndvi_raster,
+  minN = 40,  # N rate for max NDVI (healthy areas)
+  maxN = 80,  # N rate for min NDVI (areas needing more N)
+  calibration_type = "two-point",
+  plot = FALSE
+)
+
+# Three-point calibration (more accurate)
+n_rate_3pt <- estimate_N_rate_from_calibration_curve(
+  raster = ndvi_raster,
+  minN = 40,
+  meanN = 60,  # N rate for mean NDVI
+  maxN = 80,
+  calibration_type = "three-point",
+  plot = FALSE
+)
+
+# Compare results
+cat("Two-point calibration - Mean N rate:", 
+    round(cellStats(n_rate_2pt, mean), 2), "kg/ha\n")
+cat("Three-point calibration - Mean N rate:", 
+    round(cellStats(n_rate_3pt, mean), 2), "kg/ha\n")
+```
+
+## Method 2: Holland & Schepers Algorithm
+
+```{r precision-ag-holland-schepers, fig.width=10, fig.height=6}
+# Holland & Schepers method
+hs_result <- estimate_N_rate_from_holland_schepers(
+  ndvi_raster = ndvi_raster,
+  base_N_rate = 60,  # Base application rate
+  plot = FALSE
+)
+
+cat("Holland & Schepers - Mean N rate:", 
+    round(cellStats(hs_result$dose_raster, mean), 2), "kg/ha\n")
+cat("Sufficiency Index range:", 
+    round(cellStats(hs_result$sufficiency_index_raster, min), 2), "to",
+    round(cellStats(hs_result$sufficiency_index_raster, max), 2), "\n")
+
+# Export maps for farm management systems
+# writeRaster(hs_result$dose_raster, "N_application_map.tif", 
+#             format="GTiff", overwrite=TRUE)
+```
+
+# Batch Processing Multiple Fields
+
+For agricultural consultants managing multiple fields:
+
+```{r batch-processing}
+# Create field data
+fields_data <- data.frame(
+  field_id = c("Field_A", "Field_B", "Field_C"),
+  expected_yield = c(9, 11, 8),
+  crop = c("Grano tenero FF (granella)", "Shredded corn class 700", 
+           "Grano tenero FF (granella)"),
+  ccp = c("Autumn-winter crop <150 days", "Spring-summer crop 100–130 days",
+          "Autumn-winter crop <150 days"),
+  clay = c(20, 30, 18),
+  sand = c(32, 28, 35),
+  Ntot = c(1.1, 1.6, 1.0),
+  SOM = c(1.9, 3.0, 1.7),
+  CN = c(8, 11, 9),
+  winter_rain = c(150, 180, 140),
+  prev_crop = c("Winter cereals straw removal", "Winter cereals straw removal",
+                "Legumes"),
+  organic_quantity = c(0, 100, 80)
+)
+
+# Function to process one field
+process_field <- function(row) {
+  N_balance(
+    expected_yield_tons_ha = row$expected_yield,
+    crop = as.character(row$crop),
+    ccp = as.character(row$ccp),
+    clay = row$clay,
+    sand = row$sand,
+    Ntot = row$Ntot,
+    SOM = row$SOM,
+    CN = row$CN,
+    winter_rain = row$winter_rain,
+    start_spring_rain = 40,
+    prev_crop = as.character(row$prev_crop),
+    source = "Cattle slurry",
+    fertorg_frequency = ifelse(row$organic_quantity > 0, "every year", "never"),
+    forg_quantity = row$organic_quantity,
+    oxygen_availability = "Normal",
+    location = "Plain adjacent to urbanized areas"
+  )
+}
+
+# Process all fields
+field_results <- lapply(seq_len(nrow(fields_data)), function(i) {
+  process_field(fields_data[i, ])
+})
+
+# Calculate N requirements
+fields_data$N_requirement <- sapply(field_results, function(x) {
+  calculate_N_fertilization(x)
+})
+
+# Add field areas and calculate totals
+fields_data$area_ha <- c(15, 20, 12)
+fields_data$total_N_kg <- fields_data$N_requirement * fields_data$area_ha
+
+# Summary table
+summary_table <- fields_data[, c("field_id", "crop", "area_ha", 
+                                  "N_requirement", "total_N_kg")]
+names(summary_table)[4] <- "N_rate_kg_ha"
+print(summary_table)
+
+cat("\nTotal nitrogen required for all fields:", 
+    sum(summary_table$total_N_kg), "kg\n")
+```
+
+# Advanced: Sensitivity Analysis
+
+Understand how different factors affect nitrogen requirements:
+
+```{r sensitivity}
+# Base scenario
+base_scenario <- N_balance(
+  expected_yield_tons_ha = 10,
+  crop = "Grano tenero FF (granella)",
+  ccp = "Autumn-winter crop <150 days",
+  clay = 22, sand = 30,
+  Ntot = 1.2, SOM = 2.0, CN = 9,
+  winter_rain = 160, start_spring_rain = 40,
+  prev_crop = "Winter cereals straw removal",
+  source = "Cattle slurry",
+  fertorg_frequency = "every year",
+  forg_quantity = 100,
+  oxygen_availability = "Normal",
+  location = "Plain adjacent to urbanized areas"
+)
+
+base_N <- calculate_N_fertilization(base_scenario)
+
+# Sensitivity to SOM
+SOM_values <- c(1.5, 2.0, 2.5, 3.0, 3.5)
+SOM_impact <- sapply(SOM_values, function(som) {
+  sc <- N_balance(
+    expected_yield_tons_ha = 10,
+    crop = "Grano tenero FF (granella)",
+    ccp = "Autumn-winter crop <150 days",
+    clay = 22, sand = 30,
+    Ntot = 1.2, SOM = som, CN = 9,
+    winter_rain = 160, start_spring_rain = 40,
+    prev_crop = "Winter cereals straw removal",
+    source = "Cattle slurry",
+    fertorg_frequency = "every year",
+    forg_quantity = 100,
+    oxygen_availability = "Normal",
+    location = "Plain adjacent to urbanized areas"
+  )
+  calculate_N_fertilization(sc)
+})
+
+# Sensitivity to winter rainfall
+rainfall_values <- c(100, 130, 160, 190, 220)
+rainfall_impact <- sapply(rainfall_values, function(wr) {
+  sc <- N_balance(
+    expected_yield_tons_ha = 10,
+    crop = "Grano tenero FF (granella)",
+    ccp = "Autumn-winter crop <150 days",
+    clay = 22, sand = 30,
+    Ntot = 1.2, SOM = 2.0, CN = 9,
+    winter_rain = wr, start_spring_rain = 40,
+    prev_crop = "Winter cereals straw removal",
+    source = "Cattle slurry",
+    fertorg_frequency = "every year",
+    forg_quantity = 100,
+    oxygen_availability = "Normal",
+    location = "Plain adjacent to urbanized areas"
+  )
+  calculate_N_fertilization(sc)
+})
+
+# Display results
+sensitivity_results <- data.frame(
+  Parameter = c(rep("SOM (%)", length(SOM_values)),
+                rep("Winter rainfall (mm)", length(rainfall_values))),
+  Value = c(SOM_values, rainfall_values),
+  N_requirement = c(SOM_impact, rainfall_impact),
+  Change_from_base = c(SOM_impact - base_N, rainfall_impact - base_N)
+)
+
+print(sensitivity_results)
+
+cat("\nKey insights:\n")
+cat("- SOM increase from 1.5% to 3.5% changes N requirement by",
+    round(max(SOM_impact) - min(SOM_impact), 1), "kg/ha\n")
+cat("- Rainfall increase from 100mm to 220mm changes N requirement by",
+    round(max(rainfall_impact) - min(rainfall_impact), 1), "kg/ha\n")
+```
+
+# Best Practices and Tips
+
+## 1. Input Data Quality
+
+- **Soil sampling**: Sample at optimal times (autumn, 2 months after fertilization)
+- **Sample depth**: 0-30 cm is standard for nitrogen balance calculations
+- **Number of samples**: 15-20 points per field for representative results
+- **Laboratory analysis**: Use certified laboratories for accurate results
+
+## 2. Crop Selection
+
+Make sure to use the exact crop name as it appears in the database:
+
+```{r crop-selection}
+# Check available crops
+available_crops <- NFert::uptake_table$crop
+cat("Available crops (first 10):\n")
+print(head(available_crops, 10))
+```
+
+## 3. Parameter Validation
+
+The `N_balance()` function includes input validation, but you should verify:
+
+- Sand + Clay ≤ 100%
+- All percentages are between 0-100
+- Expected yield is positive
+- Crop name matches database exactly
+
+## 4. Interpreting Results
+
+- **Negative N requirement**: Soil supply exceeds crop demand - no fertilization needed
+- **Low N requirement (<50 kg/ha)**: Soil is fertile, minimal supplementation needed
+- **High N requirement (>150 kg/ha)**: Consider organic amendments or soil improvement
+
+## 5. Seasonal Adjustments
+
+- Recalculate after significant rainfall events (affects leaching)
+- Monitor soil moisture (affects mineralization rates)
+- Adjust for seasonal variations in organic matter decomposition
+
+# Troubleshooting Common Issues
+
+## Issue 1: Crop not found
+
+```{r troubleshooting-1}
+# Error: Crop not found
+# Solution: Check exact spelling and match with database
+tryCatch({
+  calc_crop_N_demand(crop = "Wheat")  # Wrong name
+}, error = function(e) {
+  cat("Error:", e$message, "\n")
+  cat("Solution: Use 'Grano tenero FF (granella)' instead\n")
+})
+```
+
+## Issue 2: Invalid soil texture
+
+```{r troubleshooting-2}
+# Error: Invalid clay and sand combination
+# Solution: Ensure clay + sand ≤ 100
+tryCatch({
+  tri3(clay = 60, sand = 50)  # Sum exceeds 100
+}, error = function(e) {
+  cat("Error:", e$message, "\n")
+  cat("Solution: Check that clay + sand ≤ 100%\n")
+})
+```
+
+## Issue 3: NA values in results
+
+```{r troubleshooting-3}
+# If you get NA values, check:
+# 1. Location name matches g.table
+# 2. CCP matches coef_time
+# 3. Previous crop matches e.table
+# 4. Oxygen availability matches ca.table
+
+# The function will warn you about NA components
+result <- N_balance(
+  expected_yield_tons_ha = 10,
+  crop = "Grano tenero FF (granella)",
+  ccp = "Autumn-winter crop <150 days",
+  sand = 30, clay = 25,
+  # ... other parameters
+)
+# Check for warnings about missing data
+```
+
+# Additional Resources
+
+## Internal Data Tables
+
+All internal datasets are documented and accessible:
+
+```{r data-tables}
+# View available datasets
+cat("Available internal datasets:\n")
+cat("- uptake_table: Crop nitrogen uptake coefficients\n")
+cat("- e.table: Previous crop residue values\n")
+cat("- f.table: Organic fertilizer factors\n")
+cat("- g.table: Natural deposition rates\n")
+cat("- soil.table: Soil classification table\n")
+cat("- tri2.table, tri3.table: Soil texture matrices\n")
+cat("- ca.table, cb.table: Leaching and immobilization factors\n")
+cat("- coefN_readily, coefN_mineralised: Soil fertility coefficients\n")
+cat("- coef_time: Time adjustment factors\n")
+
+# Access any dataset
+head(NFert::uptake_table, 5)
+```
+
+## Getting Help
+
+- **Package documentation**: `help(package = "NFert")`
+- **Function help**: `?N_balance` or `?calc_crop_N_demand`
+- **GitHub issues**: Report bugs at https://github.com/mcroci/NFert/issues
+- **Email**: Contact michele.croci@unicatt.it
+
+# References
+
+1. Emilia-Romagna Regional Guidelines for Integrated Production (DISCIPLINARI DI PRODUZIONE INTEGRATA)
+2. Soil Fertility and Fertilization Principles (Regional Agricultural Extension Services)
+3. Precision Agriculture Best Practices (International Society of Precision Agriculture)
+
+---
+
+**Note**: The calculations in NFert follow regional guidelines for Emilia-Romagna, Italy. For other regions, coefficients and parameters may need adjustment based on local conditions and regulations.

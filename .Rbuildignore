@@ -1,2 +1,10 @@
-^NFert\.Rproj$
 ^\.Rproj\.user$
+^\.Rhistory$
+^\.RData$
+^\.Ruserdata$
+^paper/.*
+^cran-comments\.md$
+^\.git$
+^\.gitignore$
+^README\.Rmd$
+^.*\.Rproj$

@@ -71,7 +71,7 @@ estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50,
 
     # SI vs NDVI relationship
     plotSample <- raster::sampleRegular(ndvi_raster, size = 5000)
-    plot(plotSample, values(sufficiency_index)[!is.na(plotSample)],
+    plot(plotSample, raster::values(sufficiency_index)[!is.na(plotSample)],
          pch = ".", col = "blue",
          xlab = "NDVI", ylab = "Sufficiency Index",
          main = "SI-NDVI Relationship")
@@ -82,7 +82,7 @@ estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50,
 
     # Spatial distribution
     raster::plot(dose_raster, main = "Spatial N Rate Distribution",
-                 col = hcl.colors(100, "YlOrBr", rev = TRUE))
+                 col = grDevices::hcl.colors(100, "YlOrBr", rev = TRUE))
   }
 
   return(list(
