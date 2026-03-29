@@ -10,14 +10,15 @@ Authors@R:
         person("Giorgio", "Impollonia", role = "aut"),
         person("Stefano", "Amaducci", role = "aut")
     )
-Description: Calculates nitrogen fertilization rates following the 
-    Emilia-Romagna Regional Recommendation for agricultural crops. The package 
-    implements a comprehensive nitrogen balance model that accounts for crop 
-    requirements, soil fertility, leaching losses, immobilization, organic 
-    fertilization, and natural nitrogen contributions. It includes functions 
-    for soil texture classification, NDVI-based nitrogen rate estimation using 
-    calibration curves and Holland & Schepers methods, and detailed nitrogen 
-    balance calculations for precision agriculture applications.
+Description: Calculates nitrogen fertilization requirements following the 
+    Disciplinari di Produzione Integrata (DPI) Emilia-Romagna – method of the 
+    balance (Allegato 2). It implements the nitrogen balance model used by 
+    FertDPI / Fert_Office and accounts for crop demand (A), soil supply (B), 
+    leaching (C1, C2), immobilization (D), previous crop residues (E), organic 
+    fertilization (F_org), and natural deposition (G). Includes soil texture 
+    classification (USDA and DPI groupings), maximum allowed doses (MAS), 
+    NDVI-based variable rate estimation (calibration and Holland & Schepers), 
+    and tools for integrated and precision nitrogen management.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

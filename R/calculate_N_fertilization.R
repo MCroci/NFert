@@ -3,8 +3,8 @@
 #' Calculates the final nitrogen fertilization requirement (N_fert) from a nitrogen balance result.
 #'
 #' @param n_balance A data frame returned by `N_balance()` containing nitrogen balance components.
-#' @param method The calculation method to use. Default is "standard" which uses the formula:
-#'   N_fert = A - B + C1 + C2 + D - E - Forg - G
+#' @param method The calculation method to use. Default is "standard" which uses the DPI formula:
+#'   N_fert = A - B + C1 + C2 + D - E - F - Forg - G
 #'
 #' @return A numeric value representing the nitrogen fertilization requirement in kg/ha.
 #'
@@ -12,9 +12,9 @@
 #' This function calculates the final nitrogen fertilization requirement based on the nitrogen
 #' balance components. If the result is negative, it returns 0 (no fertilization needed).
 #'
-#' The standard formula is:
+#' The standard (DPI) formula is:
 #' ```
-#' N_fert = A - B + C1 + C2 + D - E - Forg - G
+#' N_fert = A - B + C1 + C2 + D - E - F - Forg - G
 #' ```
 #'
 #' Where:
@@ -23,7 +23,8 @@
 #' - C1, C2: Leaching losses
 #' - D: Immobilization losses
 #' - E: Nitrogen from previous crop residues
-#' - Forg: Nitrogen from organic fertilizer
+#' - F: Nitrogen from previous years' organic fertilization (0 if not in balance)
+#' - Forg: Nitrogen from organic fertilizer (current year)
 #' - G: Natural nitrogen contribution
 #'
 #' @export
@@ -66,13 +67,14 @@ calculate_N_fertilization <- function(n_balance, method = "standard") {
     stop("n_balance data frame is empty.")
   }
   
-  # Extract values (handle first row if multiple rows exist)
+  # Extract values (handle first row if multiple rows exist). F optional (backward compatibility)
   A <- n_balance$A[1]
   B <- n_balance$B[1]
   C1 <- n_balance$C1[1]
   C2 <- n_balance$C2[1]
   D <- n_balance$D[1]
   E <- n_balance$E[1]
+  F_prev <- if ("F" %in% names(n_balance)) n_balance$F[1] else 0
   Forg <- n_balance$Forg[1]
   G <- n_balance$G[1]
   
@@ -84,6 +86,7 @@ calculate_N_fertilization <- function(n_balance, method = "standard") {
   if (is.na(C2)) { C2 <- 0; na_components <- c(na_components, "C2") }
   if (is.na(D)) { D <- 0; na_components <- c(na_components, "D") }
   if (is.na(E)) { E <- 0; na_components <- c(na_components, "E") }
+  if (is.na(F_prev)) F_prev <- 0
   if (is.na(Forg)) { Forg <- 0; na_components <- c(na_components, "Forg") }
   if (is.na(G)) { G <- 0; na_components <- c(na_components, "G") }
   
@@ -96,9 +99,9 @@ calculate_N_fertilization <- function(n_balance, method = "standard") {
     stop("Crop nitrogen demand (A) is NA. Cannot calculate fertilization requirement.")
   }
   
-  # Calculate nitrogen fertilization requirement
+  # Calculate nitrogen fertilization requirement (DPI: N = A - B + C + D - E - F - Forg - G)
   if (method == "standard") {
-    N_fert <- A - B + C1 + C2 + D - E - Forg - G
+    N_fert <- A - B + C1 + C2 + D - E - F_prev - Forg - G
   } else {
     stop("Unknown method. Use 'standard'.")
   }

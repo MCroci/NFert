@@ -46,6 +46,29 @@ Where:
 - **F_{org}**: Nitrogen from organic fertilizers (kg/ha)
 - **G**: Natural nitrogen contributions (kg/ha)
 
+## Normative framework: DPI 2025–2026 and FertDPI
+
+NFert implements the **method of the balance** (Allegato 2) of the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna, in line with the *Guida alla Fertilizzazione Minerale e Organica* (DPI 2025) and the regional tool **FertDPI / Fert_Office**. References: DPI Norme Generali (Allegato 2, 3, 4, 6, 7, 9), Reg. reg. 2/2024 and 3/2017, Direttiva Nitrati (91/676/CEE). In **Zone Vulnerabili ai Nitrati (ZVN)** the MAS (limiti di massima applicazione standard) are binding and the 170 kg N/ha/year ceiling from livestock effluents applies at farm level.
+
+**Formula N (Guida DPI 2025):**  
+N da apportare = **A** − **B** + **C** + **D** − **E** − **F** − **G**
+
+- **A** = Fabbisogni colturali (assorbimenti unitari × produzione attesa).  
+- **B** = Fertilità del suolo: **B1** (mineralizzazione S.O.: coefficiente × S.O. % × coefficiente tempo) + **B2** (azoto pronto: coefficiente × N totale ‰; solo colture con ciclo &lt; 1 anno). Per pluriennali B = B1 soltanto.  
+- **C** = Perdite per lisciviazione: **Ca** (autunno-inverno: &lt;150 mm nessuna; 150–250 mm perdita progressiva; &gt;250 mm tutto l’N pronto) + **Cb** (febbraio: 1 kg N/ha ogni 10 mm oltre 250 mm cumulati).  
+- **D** = Immobilizzazione e dispersione = B × fattore di correzione *fc* (in funzione di ossigeno e tessitura: es. buona 0,15–0,25, moderata 0,20–0,30, impedita 0,30–0,40).  
+- **E** = N da residui della precessione (tabella: cereali paglia asportata −10, interrata −30; medica +80; soia 0; leguminose da granella +40; ecc.).  
+- **F** = N da fertilizzazioni organiche anni precedenti (ammendanti 50/30/20 %; liquame bovino 30/15/10; suino/pollina 15/10/5).  
+- **G** = Apporti naturali (precipitazioni; fissazione per leguminose).
+
+NFert computes the balance and subtracts the current-year organic N (Forg) to obtain the mineral N to apply. Fractioning rules (max 100 kg/ha N per intervention for herbaceous crops, 60 kg/ha for tree crops; min 7 days between interventions) and presemina/autumn caps (e.g. max 30 kg/ha presemina, max 40 kg/ha arboree before 15 Oct) are set by DPI and must be respected in the field plan.
+
+**Soil texture (DPI groupings):** The 12 USDA texture classes are grouped into three macro-categories used for efficiency and coefficients: (1) *Tendenzialmente sabbioso* (S, SF, FS), (2) *Franco / Medio impasto* (L, F, FL, FSA, FA), (3) *Tendenzialmente argilloso* (FLA, AS, AL, A). NFert's `tri3()` and `calc_soil_group_and_id_rag()` provide texture and soil group.
+
+**Maximum allowed doses (MAS):** Each crop has a ceiling for N and P₂O₅ that must not be exceeded. Use `get_MAS(crop)` and `check_MAS(crop, N_planned)` to retrieve and check against MAS (see section below).
+
+**Organic N efficiency (DPI):** The share of organic N available to the crop in the year of application depends on fertilizer type, **distribution technique** (efficient / medium / low), and **soil texture**. Efficient = injection, fertigation, incorporation within 4 h; medium = band spreading with quick incorporation; low = surface spreading without incorporation. Ammendanti compostati use a fixed 40% efficiency. NFert's `organic_fertilization()` uses factors by source and frequency; for DPI-specific efficiency by soil and distribution, refer to the FertDPI 'Efficienza' sheet or the regional guide.
+
 ## Package Overview
 
 NFert provides three main categories of functions:
@@ -288,6 +311,34 @@ cat("Residue contribution (E):", round(maize_balance$E, 1), "kg/ha\n")
 cat("Organic fertilizer (Forg):", round(maize_balance$Forg, 1), "kg/ha\n")
 cat("Natural contribution (G):", round(maize_balance$G, 1), "kg/ha\n")
 ```
+
+# Checking against Maximum Allowed Doses (MAS)
+
+DPI (Allegato 9, Reg. reg. 2/2024) sets **maximum allowed doses (MAS)** of N per crop; in ZVN they are binding. The planned dose must not exceed MAS. Use `get_MAS(crop, edition = "2025")` for the ZVN table from the *Guida alla Fertilizzazione* 2025, or `get_MAS(crop, edition = "2026")` (default) for the FertDPI-style table. Use `check_MAS()` to verify a planned N dose.
+
+```{r mas-check}
+# List MAS for main crops (default: edition 2026)
+get_MAS()
+
+# DPI 2025 Guida (ZVN table) – different values and crops
+get_MAS(edition = "2025")
+
+# Get MAS for a specific crop
+get_MAS("Frumento tenero (granella)")
+get_MAS("Frumento tenero (granella)", edition = "2025")  # 180 kg/ha
+get_MAS("Mais da granella", edition = "2025")            # 280 kg/ha (irriguo)
+
+# Check if a planned N dose is within MAS
+check_MAS("Frumento tenero (granella)", 180)   # OK
+check_MAS("Frumento tenero (granella)", 220)   # Over MAS
+check_MAS("Mais da granella", 250)             # OK (MAS 260 or 280 depending on edition)
+
+# After calculating requirement, verify against MAS
+required_N <- calculate_N_fertilization(wheat_balance)
+check_MAS("Grano tenero FF (granella)", round(required_N, 0))
+```
+
+Soia: MAS N = 30 kg/ha (ZVN 2025); in case of failed rhizobium, up to 120 kg/ha is allowed. Reductions: −40 kg/ha after prato ≥3 years; −60 kg/ha after medicaio ≥3 years. In ZVN, respect the 170 kg N/ha/year limit from livestock effluents (farm average). All fertilizations must be recorded in field sheets within 7 days (DPI cap. 11).
 
 # Scenario Comparison
 
@@ -563,14 +614,20 @@ cat("- Rainfall increase from 100mm to 220mm changes N requirement by",
 
 # Best Practices and Tips
 
-## 1. Input Data Quality
+## 1. Respect DPI and MAS
+
+- **MAS**: Always check that the planned N (and P₂O₅ if you use mineral P) does not exceed the maximum allowed dose for the crop: `check_MAS(crop, N_planned)`.
+- **ZVN**: In Nitrate Vulnerable Zones, respect the 170 kg N/ha/year ceiling from livestock effluents (farm level).
+- **Fertilization plan**: DPI requires a written plan (scadenze: erbacee entro 28 feb, orticole entro 15 apr, arboree/sementiere entro 15 apr; versione definitiva before harvest). Register each intervention in the field sheets within 7 days.
+
+## 2. Input Data Quality
 
 - **Soil sampling**: Sample at optimal times (autumn, 2 months after fertilization)
 - **Sample depth**: 0-30 cm is standard for nitrogen balance calculations
 - **Number of samples**: 15-20 points per field for representative results
 - **Laboratory analysis**: Use certified laboratories for accurate results
 
-## 2. Crop Selection
+## 3. Crop Selection
 
 Make sure to use the exact crop name as it appears in the database:
 
@@ -581,7 +638,7 @@ cat("Available crops (first 10):\n")
 print(head(available_crops, 10))
 ```
 
-## 3. Parameter Validation
+## 4. Parameter Validation
 
 The `N_balance()` function includes input validation, but you should verify:
 
@@ -590,13 +647,13 @@ The `N_balance()` function includes input validation, but you should verify:
 - Expected yield is positive
 - Crop name matches database exactly
 
-## 4. Interpreting Results
+## 5. Interpreting Results
 
 - **Negative N requirement**: Soil supply exceeds crop demand - no fertilization needed
 - **Low N requirement (<50 kg/ha)**: Soil is fertile, minimal supplementation needed
 - **High N requirement (>150 kg/ha)**: Consider organic amendments or soil improvement
 
-## 5. Seasonal Adjustments
+## 6. Seasonal Adjustments
 
 - Recalculate after significant rainfall events (affects leaching)
 - Monitor soil moisture (affects mineralization rates)
@@ -682,9 +739,12 @@ head(NFert::uptake_table, 5)
 
 # References
 
-1. Emilia-Romagna Regional Guidelines for Integrated Production (DISCIPLINARI DI PRODUZIONE INTEGRATA)
-2. Soil Fertility and Fertilization Principles (Regional Agricultural Extension Services)
-3. Precision Agriculture Best Practices (International Society of Precision Agriculture)
+1. Disciplinari di Produzione Integrata (DPI) 2025 – Regione Emilia-Romagna, Direzione Generale Agricoltura, Caccia e Pesca. Norme Generali, Allegati 2, 3, 4, 6, 7, 9.
+2. Guida alla Fertilizzazione Minerale e Organica – N, P, K per colture erbacee e arboree. DPI 2025, Emilia-Romagna.
+3. Regolamento regionale 2/2024 – Limiti MAS (Allegato 9). Regolamento regionale 3/2017 – Utilizzazione agronomica degli effluenti e del digestato.
+4. Direttiva Nitrati 91/676/CEE – Zone Vulnerabili ai Nitrati (170 kg N/ha/anno da effluenti zootecnici; soglie minime efficienza Reg. UE 2021/2115).
+5. FertDPI / Fert_Office – strumento regionale per il piano di fertilizzazione (DPI 2026).
+6. Precision Agriculture Best Practices (International Society of Precision Agriculture).
 
 ---
 

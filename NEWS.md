@@ -4,10 +4,12 @@
 
 ### Major Features
 * Initial release of NFert package
-* Comprehensive nitrogen balance calculation following Emilia-Romagna Regional Recommendations
-* NDVI-based nitrogen rate estimation using calibration curves and Holland & Schepers methods
-* Soil texture classification functions (tri2 and tri3)
-* Component functions for all nitrogen balance calculations
+* Nitrogen balance aligned with **Disciplinari di Produzione Integrata (DPI) Emilia-Romagna 2025–2026** (Allegato 2) and *Guida alla Fertilizzazione Minerale e Organica* (N, P, K); FertDPI / Fert_Office reference
+* Comprehensive nitrogen balance calculation (crop demand, soil supply, leaching, immobilization, residues, organic, natural)
+* **Maximum allowed doses (MAS)**: `get_MAS()` and `check_MAS()` for DPI 2026 crop ceilings (N and P₂O₅)
+* Soil texture classification (USDA; DPI 3-group: sabbioso / franco / argilloso) via tri2, tri3, calc_soil_group_and_id_rag
+* NDVI-based variable rate estimation (calibration curve and Holland & Schepers)
+* Component functions for all balance terms
 
 ### New Functions
 * `N_balance()`: Main function for comprehensive nitrogen balance calculation
@@ -23,6 +25,8 @@
 * `estimate_N_rate_from_calibration_curve()`: NDVI-based rate estimation (calibration method)
 * `estimate_N_rate_from_holland_schepers()`: NDVI-based rate estimation (H&S method)
 * `calculate_N_fertilization()`: Calculate final nitrogen fertilization requirement from balance
+* `get_MAS()`: Return maximum allowed N (MAS) for a crop; optional `edition = "2025"` (ZVN table from Guida) or `"2026"` (FertDPI style)
+* `check_MAS()`: Check planned N dose against MAS (supports same `edition`)
 
 ### Improvements
 * Comprehensive input validation in `N_balance()` function

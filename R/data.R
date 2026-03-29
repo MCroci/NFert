@@ -1,16 +1,23 @@
 #' NFert Package Data
 #'
 #' Internal datasets used by the NFert package for nitrogen balance calculations
-#' following Emilia-Romagna Regional Recommendations.
+#' following the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna
+#' (Allegato 2 – metodo del bilancio) and the FertDPI / Fert_Office reference.
 #'
 #' @name NFert-data
 #' @aliases uptake_table e.table f.table g.table soil.table tri2.table tri3.table 
 #'          ca.table cb.table coefN_readily coefN_mineralised coef_time s2.rast
 #'
 #' @details
-#' These datasets are loaded automatically with the package using `LazyData: true` 
-#' in the DESCRIPTION file. They contain lookup tables and coefficients used 
-#' throughout the nitrogen balance calculations.
+#' These datasets are loaded automatically with the package using `LazyData: true`
+#' in the DESCRIPTION file. They contain lookup tables and coefficients used
+#' throughout the nitrogen balance calculations. The DPI 2025–2026 normative references
+#' are: Norme Generali (Allegati 2, 3, 4, 6, 7, 9), Guida alla Fertilizzazione,
+#' Reg. reg. 2/2024 (MAS), Reg. reg. 3/2017, Direttiva Nitrati.
+#' Soil texture is grouped in three DPI classes: (1) Tendenzialmente sabbioso
+#' (S, SF, FS), (2) Franco / Medio impasto (L, F, FL, FSA, FA), (3) Tendenzialmente
+#' argilloso (FLA, AS, AL, A). Organic N efficiency in DPI depends on distribution
+#' level (efficient / medium / low) and soil group; see vignette for tables.
 #'
 #' @section Available Datasets:
 #' \describe{

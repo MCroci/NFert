@@ -18,6 +18,8 @@
 - [x] Input validation implemented
 - [x] Error handling improved
 - [x] Paper for SoftwareX prepared
+- [x] DPI 2026 alignment: term F (previous years' organic), `organic_previous_years_N()`, optional `soil_group`/`distribution_efficiency` in `N_balance`, B1/B2 documented (see docs/DPI_Formula_Audit.md)
+- [x] English translation of Guida fertilizzazione DPI: `Guida_Fertilizzazione_DPI_English.md`
 
 ## 📋 Next Steps (In Order)
 

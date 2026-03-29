@@ -6,16 +6,23 @@
 
 ## Overview
 
-`NFert` is an R package for calculating nitrogen fertilization rates following the Emilia-Romagna Regional Recommendation for agricultural crops. The package implements a comprehensive nitrogen balance model that accounts for various factors affecting nitrogen dynamics in crop production systems.
+`NFert` is an R package for calculating nitrogen fertilization requirements in field and tree crops following the **Disciplinari di Produzione Integrata (DPI) Emilia-Romagna** (ed. 2026). It implements the **method of the balance** (Allegato 2) as in the regional guidelines and in the FertDPI / Fert_Office tool, and supports maximum allowed doses (MAS), soil texture grouping, and precision agriculture (NDVI-based variable rate).
+
+## Normative reference
+
+- **DPI Emilia-Romagna** (2025–2026) – Norme Generali; Allegato 2 (metodo del bilancio), Allegati 3, 4, 6, 7, 9; *Guida alla Fertilizzazione Minerale e Organica* (N, P, K)
+- **FertDPI / Fert_Office** – strumento regionale; NFert riproduce la logica del bilancio azotato per uso in R
+- **Reg. reg. 2/2024** – limiti MAS (Allegato 9); **Reg. reg. 3/2017** – utilizzazione agronomica degli effluenti e del digestato
+- **Direttiva Nitrati (91/676/CEE)** – in ZVN limite 170 kg N/ha/anno da effluenti zootecnici; Reg. UE 2021/2115 (soglie minime efficienza)
 
 ## Features
 
-- **Nitrogen Balance Calculation**: Comprehensive calculation considering crop requirements, soil fertility, leaching losses, and natural contributions
-- **Soil Analysis**: Functions for soil texture classification and fertility assessment
-- **NDVI-Based Rate Estimation**: Two methods for estimating nitrogen rates from NDVI data:
-  - Calibration curve method (two-point or three-point)
-  - Holland & Schepers algorithm
-- **Component Functions**: Modular functions for each component of the nitrogen balance
+- **Nitrogen balance (Allegato 2)**: N = A + C + D − B − E − F − G (crop demand, leaching, immobilization, soil supply, precession, previous organic, natural deposition)
+- **Soil analysis**: Texture classification (USDA and DPI 3-group: tendenzialmente sabbioso / franco / argilloso), fertility (b1, b2)
+- **MAS (Massimali)**: `get_MAS()` and `check_MAS()` for maximum allowed N and P₂O₅ per crop (DPI 2026)
+- **Organic fertilization**: N from organics (efficiency depends on source, frequency, and in DPI also on soil texture and distribution technique)
+- **Precision agriculture**: NDVI-based variable rate (calibration curve and Holland & Schepers)
+- **Component functions**: All balance terms available as separate functions for teaching and scripting
 
 ## Installation
 
@@ -61,24 +68,25 @@ print(maize_n_balance)
 - `calc_N_immobilization_loss()`: Estimate nitrogen immobilization
 - `organic_fertilization()`: Calculate nitrogen from organic fertilizers
 - `natural_contribution()`: Estimate natural nitrogen deposition
-- `tri2()` and `tri3()`: Soil texture classification
+- `tri2()` and `tri3()`: Soil texture classification (USDA; tri3 maps to DPI groupings)
+- `get_MAS()` and `check_MAS()`: Maximum allowed doses (MAS) per crop (DPI 2026)
+- `calculate_N_fertilization()`: Final N dose from balance result
 - `estimate_N_rate_from_calibration_curve()`: NDVI-based rate estimation (calibration method)
 - `estimate_N_rate_from_holland_schepers()`: NDVI-based rate estimation (H&S method)
 
-## Nitrogen Balance Equation
+## Nitrogen balance (DPI Allegato 2)
 
-The nitrogen fertilization is calculated using:
+N da apportare = **A** + **C** + **D** − **B** − **E** − **F** − **G**
 
-$$N_{fert} = A - B + C + D - E - F - G$$
+- **A**: Fabbisogno della coltura (resa × coefficiente asportazione)
+- **B**: Fertilità del suolo (N mineralizzabile dalla S.O. + N pronto)
+- **C**: Perdite per lisciviazione (C1 autunno-inverno, C2 fine inverno)
+- **D**: Immobilizzazione e dispersione
+- **E**: N da precessione colturale (residui, leguminose, paglie)
+- **F**: N da fertilizzazione organiche anni precedenti
+- **G**: Apporti naturali (precipitazioni)
 
-Where:
-- **A**: Crop nitrogen requirements
-- **B**: Soil nitrogen supply (b1 + b2)
-- **C**: Leaching losses (C1 + C2)
-- **D**: Immobilization and dispersion losses
-- **E**: Nitrogen from previous crop residues
-- **F**: Nitrogen from organic fertilizations
-- **G**: Natural nitrogen contributions
+NFert computes the balance and then subtracts current-year organic N (Forg) to give the mineral N to apply. In Nitrate Vulnerable Zones (ZVN), the 170 kg N/ha/year limit from livestock effluents applies at farm level.
 
 ## Documentation
 

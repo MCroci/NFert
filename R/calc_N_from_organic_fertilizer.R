@@ -1,51 +1,110 @@
 #' Nitrogen Provided by Organic Fertilization
 #'
-#' Calculates the amount of nitrogen (N) supplied to the soil through organic fertilization.
+#' Calculates the amount of nitrogen (N) supplied to the soil through organic
+#' fertilization. Optionally applies **DPI efficiency** by material type, soil
+#' texture and distribution technique (when \code{soil_group} and
+#' \code{distribution_efficiency} are given). In the balance formula the term
+#' to subtract is the **efficient N** (N utile) available to the crop in the
+#' year of application, not total N (DPI Guida / FertDPI).
 #'
 #' @param source The source of organic fertilizer (e.g., "Cattle slurry", "Composted manure").
 #' @param frequency The frequency of application (e.g., "every year", "every two years").
-#' @param quantity The amount of organic fertilizer applied per application (in m3/ha or t/ha).
-#' @param f.table A data frame containing information about nitrogen content and application factors
-#'                for different organic fertilizers and frequencies. This should have at least
-#'                three columns: `source` (character), `frequency` (character), and `value` (numeric).
-#'                The default is `NFert::f.table`.
+#' @param quantity The amount of organic fertilizer applied per application (in m³/ha or t/ha).
+#' @param soil_group Optional. Soil group from \code{calc_soil_group_and_id_rag()}
+#'   (e.g. "Sandy textures", "Franco") to use DPI efficiency by texture. If \code{NULL},
+#'   efficiency is taken from \code{f.table} (no texture/distribution).
+#' @param distribution_efficiency Optional. "efficient", "medium", or "low" (DPI: Alta/Media/Bassa).
+#'   Required if \code{soil_group} is set. Efficient = injection, fertigation, incorporation within 4 h.
+#' @param f.table A data frame with columns \code{source}, \code{frequency}, \code{value}.
+#'   Used when \code{soil_group} is \code{NULL}. Default is \code{NFert::f.table}.
 #'
-#' @return The estimated amount of nitrogen (N) in kg/ha provided by the organic fertilization.
+#' @return The estimated amount of nitrogen (N) in kg/ha available to the crop
+#'   (efficient N when \code{soil_group} and \code{distribution_efficiency} are set).
 #'
-#' @note The `f.table` should provide the relevant conversion factors (N content and application
-#'       factors) for the specified `source` and `frequency`. The default table (`NFert::f.table`)
-#'       may not be suitable for all regions or specific organic fertilizers.
+#' @references
+#' DPI Emilia-Romagna, Guida alla fertilizzazione; efficienza in funzione di
+#' tipologia di effluente, tessitura e modalità di distribuzione (Tabella 7 Norme Generali).
 #'
 #' @export
-#'
 #' @examples
 #' organic_fertilization(source = "Cattle slurry", frequency = "every year", quantity = 50)
-#'
+#' organic_fertilization("Cattle slurry", "every year", 80,
+#'   soil_group = "Sandy textures", distribution_efficiency = "efficient")
 organic_fertilization <- function(source = "Cattle slurry", frequency = "every year",
-                                                quantity = 100, f.table = NFert::f.table) {
-
-  # Input Validation
-  if (!source %in% f.table$source) {
-    stop(paste("Organic fertilizer source '", source, "' not found in the table."))
-  }
-
-  if (!frequency %in% f.table$frequency) {
-    stop(paste("Frequency '", frequency, "' not found in the table."))
-  }
+                                  quantity = 100, soil_group = NULL,
+                                  distribution_efficiency = NULL,
+                                  f.table = NFert::f.table) {
 
   if (quantity <= 0) {
     stop("Quantity of organic fertilizer must be a positive value.")
   }
 
-  # Retrieve Value and Calculate
-  factor <- f.table$value[f.table$source == source & f.table$frequency == frequency]
+  use_dpi_efficiency <- !is.null(soil_group) && !is.null(distribution_efficiency)
 
-  # Check if factor is missing (NA)
-  if (is.na(factor)) {
-    stop(paste("No factor found for source '", source, "' and frequency '", frequency, "'."))
+  if (use_dpi_efficiency) {
+    # DPI: N utile = (N tot. nel fertilizzante × quantità) × Efficienza% / 100
+    n_content <- .organic_N_content(source)
+    if (is.na(n_content$N_per_unit)) {
+      warning("Source '", source, "' not in DPI N-content table; falling back to f.table.")
+      use_dpi_efficiency <- FALSE
+    } else {
+      N_total <- n_content$N_per_unit * quantity
+      eff <- organic_N_efficiency(source, soil_group, distribution_efficiency)
+      if (is.na(eff)) {
+        warning("Efficiency not found for source/soil/distribution; falling back to f.table.")
+        use_dpi_efficiency <- FALSE
+      } else {
+        return(N_total * eff)
+      }
+    }
   }
 
-  Forg <- factor * quantity / 100
+  if (!use_dpi_efficiency) {
+    if (!source %in% f.table$source) {
+      stop("Organic fertilizer source '", source, "' not found in the table.")
+    }
+    if (!frequency %in% f.table$frequency) {
+      stop("Frequency '", frequency, "' not found in the table.")
+    }
+    factor <- f.table$value[f.table$source == source & f.table$frequency == frequency]
+    if (is.na(factor)) {
+      stop("No factor found for source '", source, "' and frequency '", frequency, "'.")
+    }
+    return(factor * quantity / 100)
+  }
+}
 
-  return(Forg)
+#' Typical N content (kg N per m³ or per t) by source – DPI/Guida
+#' @noRd
+.organic_N_content <- function(source) {
+  tab <- .organic_N_content_table()
+  source <- as.character(source)
+  i <- match(source, tab$source)
+  if (is.na(i)) {
+    # Map DPI/Italian names to table entries
+    alias <- c("Liquame bovino" = "Cattle slurry", "Liquame suino" = "Pig slurry",
+               "Ammendante compostato" = "Composted manure")
+    if (source %in% names(alias)) i <- match(alias[source], tab$source)
+  }
+  if (is.na(i)) return(list(N_per_unit = NA_real_, unit = NA_character_))
+  list(N_per_unit = tab$N_per_unit[i], unit = tab$unit[i])
+}
+
+.organic_N_content_table <- function() {
+  data.frame(
+    source = c(
+      "Liquame bovino", "Cattle slurry", "Liquame suino", "Pig slurry",
+      "Liquame avicolo", "Digestato tal quale bovini", "Digestato tal quale suini",
+      "Digestato tal quale avicoli", "Digestato frazione chiarificata",
+      "Fanghi agroalimentari", "Ammendante compostato", "Composted manure",
+      "Letame bovino", "Digestato palabile"
+    ),
+    N_per_unit = c(
+      4.5, 4.5, 3.2, 3.2, 12, 4.5, 3.2, 12, 8, 2.8, 18, 18, 5, 4
+    ),
+    unit = c(
+      "m3", "m3", "m3", "m3", "m3", "m3", "m3", "m3", "m3", "t", "t", "t", "t", "t"
+    ),
+    stringsAsFactors = FALSE
+  )
 }
