@@ -1,0 +1,13 @@
+ID_SO,group,group_it,rating,rating_it,class
+1,Sandy textures,Sabbiosi,very low,molto bassa,Scarsa
+2,Sandy textures,Sabbiosi,low,bassa,Scarsa
+3,Sandy textures,Sabbiosi,medium,media,Normale
+4,Sandy textures,Sabbiosi,high,elevata,Elevata
+5,Loamy textures,Medio impasto,very low,molto bassa,Scarsa
+6,Loamy textures,Medio impasto,low,bassa,Scarsa
+7,Loamy textures,Medio impasto,medium,media,Normale
+8,Loamy textures,Medio impasto,high,elevata,Elevata
+9,Clay textures,Argillosi e limosi,very low,molto bassa,Scarsa
+10,Clay textures,Argillosi e limosi,low,bassa,Scarsa
+11,Clay textures,Argillosi e limosi,medium,media,Normale
+12,Clay textures,Argillosi e limosi,high,elevata,Elevata

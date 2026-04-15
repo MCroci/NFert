@@ -1,0 +1,33 @@
+ID_Cic_Mo,Prog_Cic,ID_Sta,ID_Mo,modality_epoch,ID_Liv,livello,anno_raccolta,context
+1.0,1.0,1.0,3.0,Prearatura estiva o presemina su terreno nudo o stoppie,1.0,bassa,no,cereali av ERBAI
+2.0,2.0,1.0,9.0,Prearatura estiva o presemina su paglie o stocchi,2.0,media,no,cereali av ERBAI
+3.0,3.0,1.0,10.0,Prearatura estiva o presemina su terreno nudo o stoppie; In copertura in autunno,1.0,bassa,no,cereali av ERBAI
+4.0,4.0,1.0,11.0,Fine inverno primavera - copertura,2.0,media,sì,cereali av ERBAI
+5.0,5.0,1.0,12.0,Fine inverno primavera - fase di levata,3.0,alta,sì,cereali av ERBAI
+6.0,1.0,2.0,10.0,Estiva - preparazione del terreno,3.0,alta,sì,secondo raccolto
+7.0,2.0,2.0,6.0,Estiva in copertura con interramento,3.0,alta,sì,secondo raccolto
+8.0,3.0,2.0,4.0,In copertura in fertirrigazione,2.0,media,sì,secondo raccolto
+9.0,4.0,2.0,5.0,In copertura in fertirrigazione in bassa pressione,2.0,media,sì,secondo raccolto
+10.0,5.0,2.0,8.0,In copertura senza interramento,2.0,media,sì,secondo raccolto
+11.0,1.0,9.0,16.0,Preimpianto distante dalla crescita,1.0,bassa,no,frutteti
+12.0,2.0,9.0,17.0,Preimpianto vicino dalla crescita,2.0,media,sì,frutteti
+13.0,1.0,3.0,18.0,In primavera o estate su frutteto inerbito o con interramento,3.0,alta,si,frutteti
+14.0,2.0,3.0,19.0,Fine inverno su frutteto inerbito o con interramento,3.0,alta,sì,frutteti
+15.0,3.0,3.0,20.0,In primavera su frutteto lavorato senza interramento,2.0,media,sì,frutteti
+16.0,4.0,3.0,21.0,In estate autunno su frutteto lavorato senza interramento,2.0,media,sì,frutteti
+17.0,5.0,3.0,15.0,Tardo autunno (>15/10),1.0,bassa,sì,frutteti
+18.0,1.0,4.0,13.0,Ripresa vegetativa e tagli primaverili e estivi con interramento,3.0,alta,sì,pluriennali produzione
+19.0,2.0,4.0,14.0,Tagli primaverili ed estivi senza interramento; Tagli autunnali precoci con interramento,2.0,media,sì,pluriennali produzione
+20.0,3.0,4.0,15.0,Tagli autunnali senza interramento; Tardo autunno (>15/10),1.0,bassa,sì,pluriennali produzione
+21.0,1.0,5.0,1.0,Prearatura estiva o autunnale - su terreno nudo o stoppie,1.0,bassa,no,mais sorgo altre colture pe
+22.0,2.0,5.0,2.0,Prearatura estiva o autunnale - su paglie o stocchi,2.0,media,no,mais sorgo altre colture pe
+23.0,3.0,5.0,3.0,Prearatura primaverile o presemina su terreno nudo o stoppie ,3.0,alta,sì,mais sorgo altre colture pe
+24.0,4.0,5.0,4.0,In copertura con fertirrigazione,3.0,alta,sì,mais sorgo altre colture pe
+25.0,5.0,5.0,5.0,In copertura con fertirrigazione a bassa pressione,3.0,alta,si,mais sorgo altre colture pe
+26.0,6.0,5.0,6.0,In copertura con interramento,3.0,alta,sì,mais sorgo altre colture pe
+27.0,7.0,5.0,7.0,In copertura in primavera senza interramento,2.0,media,sì,mais sorgo altre colture pe
+28.0,8.0,5.0,8.0,In copertura in estate senza interramento,2.0,media,sì,mais sorgo altre colture pe
+29.0,1.0,6.0,1.0,Prearatura estiva o autunnale su terreno nudo o stoppie,1.0,bassa,no,pluriennali 1 anno
+30.0,2.0,6.0,2.0,Prearatura estiva o autunnale su paglie o stocchi; Prearatura primaverile su terreno nudo o stoppie,2.0,media,no,pluriennali 1 anno
+31.0,3.0,6.0,3.0,Prearatura primaverile su paglie o stocchi,3.0,alta,sì,pluriennali 1 anno
+32.0,4.0,6.0,13.0,"Ripresa vegetativa, tagli primaverili e estivi con interramento",3.0,alta,sì,pluriennali 1 anno

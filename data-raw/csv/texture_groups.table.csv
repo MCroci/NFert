@@ -1,0 +1,4 @@
+group,group_canonical_it,group_singular_it,ID_Rag,specific_weight,P_immobilisation_factor,soil_weight_20cm,soil_weight_30cm,soil_weight_40cm,soil_weight_50cm
+Clay textures,Argillosi e limosi,Argilloso,3,1.2,1.4,2400.0,3600.0,4800.0,6000.0
+Sandy textures,Sabbiosi,Sabbioso,1,1.4,1.2,2800.0,4200.0,5600.0,7000.0
+Loamy textures,Medio impasto,Franco,2,1.3,1.3,2600.0,3900.0,5200.0,6500.0

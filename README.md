@@ -1,12 +1,20 @@
 # NFert
 
-**Nitrogen fertilization following Emilia-Romagna Recommendation**
+**N, P and K fertilization following Emilia-Romagna DPI 2026**
 
-[![R-CMD-check](https://github.com/yourusername/NFert/workflows/R-CMD-check/badge.svg)](https://github.com/yourusername/NFert/actions)
+[![R-CMD-check](https://github.com/mcroci/NFert/workflows/R-CMD-check/badge.svg)](https://github.com/mcroci/NFert/actions)
 
 ## Overview
 
-`NFert` is an R package for calculating nitrogen fertilization requirements in field and tree crops following the **Disciplinari di Produzione Integrata (DPI) Emilia-Romagna** (ed. 2026). It implements the **method of the balance** (Allegato 2) as in the regional guidelines and in the FertDPI / Fert_Office tool, and supports maximum allowed doses (MAS), soil texture grouping, and precision agriculture (NDVI-based variable rate).
+`NFert` is an R package for calculating nitrogen, phosphorus and potassium
+fertilization requirements in field and tree crops following the
+**Disciplinari di Produzione Integrata (DPI) Emilia-Romagna** (ed. 2026). It
+implements both the **method of the balance** (Allegato 2) and the
+**Scheda a dose Standard** method, mirroring the official Fert_Office tool
+(v1.26, Febbraio 2026). It supports maximum allowed doses (MAS), soil texture
+grouping, Olsen P and exchangeable K availability, fertilization distribution
+planning (organic + mineral), end-of-cycle soil P and K estimation and
+precision agriculture (NDVI-based variable rate).
 
 ## Normative reference
 
@@ -17,12 +25,31 @@
 
 ## Features
 
-- **Nitrogen balance (Allegato 2)**: N = A + C + D − B − E − F − G (crop demand, leaching, immobilization, soil supply, precession, previous organic, natural deposition)
-- **Soil analysis**: Texture classification (USDA and DPI 3-group: tendenzialmente sabbioso / franco / argilloso), fertility (b1, b2)
-- **MAS (Massimali)**: `get_MAS()` and `check_MAS()` for maximum allowed N and P₂O₅ per crop (DPI 2026)
-- **Organic fertilization**: N from organics (efficiency depends on source, frequency, and in DPI also on soil texture and distribution technique)
-- **Precision agriculture**: NDVI-based variable rate (calibration curve and Holland & Schepers)
-- **Component functions**: All balance terms available as separate functions for teaching and scripting
+- **Nitrogen balance (Allegato 2)**: `N_balance()` with A (crop demand),
+  B1/B2 (soil fertility), C1/C2 (leaching), D (immobilization), E (previous
+  crop residues), F (previous years' organics), Forg (current year organics),
+  G (natural deposition). Supports `soil_seeding = "no-till"` (−3 kg/ha on
+  b1), `greenhouse = TRUE` (+2 on D), automatic fold of negative E into D.
+- **Phosphorus balance**: `P_balance()` with Olsen P classification
+  (`classify_P_olsen()`), Arricchimento / Mantenimento / Riduzione strategy,
+  texture-dependent weight at 30 cm and P immobilisation factor 1.6.
+- **Potassium balance**: `K_balance()` with K availability class by texture
+  (`classify_K()`), clay-driven leaching (`K_leaching_by_clay()`).
+- **Scheda a dose Standard**: `scheda_N()` and `scheda_PK()` with the DPI 2026
+  catalogue of decrements and increments and MAS cap on N.
+- **Fertilization distribution plan**: `plan_distribution()` combines organic
+  matrices (with DPI 2026 N efficiency by soil × dose × sector) and mineral
+  fertilisers (146-entry `concimi.table`), returns Eccesso/Deficit alerts and
+  ZVN 170 kg N/ha check.
+- **End-of-cycle soil dotation**: `estimate_soil_P_end_of_cycle()` and
+  `estimate_soil_K_end_of_cycle()` for next-year planning.
+- **Soil chemistry**: `classify_pH()`, `classify_carbonate_tot()`,
+  `classify_carbonate_att()`, `classify_CEC()`, `ratio_Mg_K()`,
+  `ratio_K_CEC()`, `classify_SOM()`, `max_SO_input()`.
+- **MAS (Massimali)**: `get_MAS()` and `check_MAS()` for maximum allowed N
+  per crop (DPI 2026, RR 2/2024).
+- **Precision agriculture**: NDVI-based variable rate (calibration curve and
+  Holland & Schepers).
 
 ## Installation
 

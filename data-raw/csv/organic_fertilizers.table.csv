@@ -1,0 +1,22 @@
+ID_F_org,fertilizer,fertilizer_it,sector_id,type_id,min_dm,max_dm,avg_dm,min_N,max_N,avg_N,min_P2O5,max_P2O5,avg_P2O5,min_K2O,max_K2O,avg_K2O,fully_zootec,SO_increment
+1.0,compost,compost,ind,3.0,65.0,65.0,65.0,12.0,12.0,12.0,9.0,9.0,9.0,10.0,10.0,10.0,False,1.0
+2.0,Whole digestate (biomass / cattle effluent),Digestato t.q. biomasse o con effl. bovini,dig_tq,7.0,20.0,24.0,22.0,3.0,9.0,6.0,4.0,4.0,4.0,4.0,10.0,7.0,False,0.0
+3.0,Whole digestate (mostly pig effluent),Digestato t.q. con prevalenza effl. Suini,dig_sui,7.0,20.0,24.0,22.0,3.0,9.0,6.0,4.0,4.0,4.0,4.0,10.0,7.0,False,0.0
+4.0,Whole digestate (mostly poultry effluent),Digestato t.q. con prevalenza di effl. avicoli,dig_avi,7.0,20.0,24.0,22.0,3.0,9.0,6.0,4.0,4.0,4.0,4.0,10.0,7.0,False,0.0
+5.0,Clarified digestate fraction,Digestato frazione chiarificata,dig_chi,7.0,2.0,6.0,4.0,6.0,10.0,8.0,3.0,3.0,3.0,4.0,10.0,7.0,False,0.0
+6.0,Solid digestate fraction,Digestato frazione palabile,dig_pal,2.0,30.0,40.0,35.0,2.0,8.0,5.0,5.0,5.0,5.0,4.0,10.0,7.0,False,1.0
+7.0,Humofort pellet (natural organic amendment),humofort pellet amm. Org. Nat.,com,3.0,65.0,65.0,65.0,18.0,18.0,18.0,10.0,10.0,10.0,10.0,10.0,10.0,False,1.0
+8.0,Mixed composted amendment,ammendante compostato misto,com,3.0,60.0,70.0,65.0,16.0,20.0,18.0,10.0,14.0,12.0,12.0,14.0,13.0,False,1.0
+9.0,Humoscam pellet (fermented vegetable amendment),humoscam pellet amm. Veg. Fermentato,com,3.0,65.0,65.0,65.0,20.0,20.0,20.0,30.0,30.0,30.0,16.0,16.0,16.0,False,1.0
+10.0,Cattle manure,letame bovino,bov,2.0,20.0,30.0,25.0,3.0,7.0,5.0,0.9,3.9,2.4,4.0,10.0,7.0,True,1.0
+11.0,Sheep manure,letame ovino,avi,2.0,22.0,40.0,31.0,6.0,11.0,8.5,1.6,3.0,2.3,14.0,21.6,17.8,True,1.0
+12.0,Pig manure,letame suino,sui,2.0,25.0,25.0,25.0,4.7,4.7,4.7,4.1,4.1,4.1,5.4,5.4,5.4,True,1.0
+13.0,Spent broiler litter,lettiera esausta polli da carne,avi,4.0,60.0,80.0,70.0,30.0,47.0,38.5,29.77,57.25,43.51,16.8,20.4,18.6,True,1.0
+14.0,Beef cattle slurry,liquame bovini da carne,bov,6.0,7.0,10.0,8.5,3.2,4.5,3.85,2.3,3.4,2.8499999999999996,2.9,4.7,3.8,True,0.0
+15.0,Dairy cattle slurry,liquame bovini da latte,bov,6.0,10.0,16.0,13.0,3.9,6.3,5.1,2.3,3.7,3.0,3.8,6.2,5.0,True,0.0
+16.0,Layer hen slurry,liquami ovaiole,avi,6.0,19.0,25.0,22.0,10.0,15.0,12.5,9.2,11.5,10.35,3.6,9.0,6.3,True,0.0
+17.0,Pig slurry,liquami suini,sui,6.0,1.5,6.0,3.75,1.5,5.0,3.25,1.1,4.6,2.8499999999999996,1.2,3.7,2.45,True,0.0
+18.0,Pre-dried poultry manure,pollina preessicata,avi,8.0,50.0,85.0,67.5,23.0,43.0,33.0,21.0,34.0,27.5,17.0,30.0,23.5,True,0.0
+19.0,Agri-food sludges,fanghi agroalimentari,fan,5.0,20.0,30.0,25.0,1.4,4.2,2.8,1.25,3.75,2.5,2.0,5.0,3.5,False,0.0
+20.0,Tioscam 50 (iron-sulfur amendment),tioscam 50 amm. Base ferro e zolfo,com,3.0,65.0,65.0,65.0,10.0,10.0,10.0,0.0,0.9,0.45,0.0,0.9,0.45,False,1.0
+21.0,none,z nessuno,nn,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,True,0.0

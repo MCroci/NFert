@@ -29,6 +29,8 @@ leaching_loss(
 A list containing:
 - C1: Nitrogen leaching loss in the autumn-winter season (kg/ha).
 - C2: Nitrogen leaching loss after leaving winter (kg/ha).
+- surplus_pluviometrico: Logical. TRUE when winter_rain + start_spring_rain >= 300 mm
+(DPI 2026 scheda a dose standard: attiva l'incremento "Lisciviazione x surplus pluviometrico").
 }
 \description{
 Calculates the nitrogen leaching loss from soil based on two methods:

@@ -1,0 +1,33 @@
+ID_Cic_Mo,progressive,season_id,ID_Mo,modality_epoch,ID_Liv,level,level_it,harvest_year,context,context_it
+1,1.0,1.0,3.0,Prearatura estiva o presemina su terreno nudo o stoppie,1.0,low,bassa,no,Autumn-winter cereals / forages,cereali av ERBAI
+2,2.0,1.0,9.0,Prearatura estiva o presemina su paglie o stocchi,2.0,medium,media,no,Autumn-winter cereals / forages,cereali av ERBAI
+3,3.0,1.0,10.0,Prearatura estiva o presemina su terreno nudo o stoppie; In copertura in autunno,1.0,low,bassa,no,Autumn-winter cereals / forages,cereali av ERBAI
+4,4.0,1.0,11.0,Fine inverno primavera - copertura,2.0,medium,media,sì,Autumn-winter cereals / forages,cereali av ERBAI
+5,5.0,1.0,12.0,Fine inverno primavera - fase di levata,3.0,high,alta,sì,Autumn-winter cereals / forages,cereali av ERBAI
+6,1.0,2.0,10.0,Estiva - preparazione del terreno,3.0,high,alta,sì,Second harvest,secondo raccolto
+7,2.0,2.0,6.0,Estiva in copertura con interramento,3.0,high,alta,sì,Second harvest,secondo raccolto
+8,3.0,2.0,4.0,In copertura in fertirrigazione,2.0,medium,media,sì,Second harvest,secondo raccolto
+9,4.0,2.0,5.0,In copertura in fertirrigazione in bassa pressione,2.0,medium,media,sì,Second harvest,secondo raccolto
+10,5.0,2.0,8.0,In copertura senza interramento,2.0,medium,media,sì,Second harvest,secondo raccolto
+11,1.0,9.0,16.0,Preimpianto distante dalla crescita,1.0,low,bassa,no,Orchards,frutteti
+12,2.0,9.0,17.0,Preimpianto vicino dalla crescita,2.0,medium,media,sì,Orchards,frutteti
+13,1.0,3.0,18.0,In primavera o estate su frutteto inerbito o con interramento,3.0,high,alta,si,Orchards,frutteti
+14,2.0,3.0,19.0,Fine inverno su frutteto inerbito o con interramento,3.0,high,alta,sì,Orchards,frutteti
+15,3.0,3.0,20.0,In primavera su frutteto lavorato senza interramento,2.0,medium,media,sì,Orchards,frutteti
+16,4.0,3.0,21.0,In estate autunno su frutteto lavorato senza interramento,2.0,medium,media,sì,Orchards,frutteti
+17,5.0,3.0,15.0,Tardo autunno (>15/10),1.0,low,bassa,sì,Orchards,frutteti
+18,1.0,4.0,13.0,Ripresa vegetativa e tagli primaverili e estivi con interramento,3.0,high,alta,sì,Perennial in production,pluriennali produzione
+19,2.0,4.0,14.0,Tagli primaverili ed estivi senza interramento; Tagli autunnali precoci con interramento,2.0,medium,media,sì,Perennial in production,pluriennali produzione
+20,3.0,4.0,15.0,Tagli autunnali senza interramento; Tardo autunno (>15/10),1.0,low,bassa,sì,Perennial in production,pluriennali produzione
+21,1.0,5.0,1.0,Prearatura estiva o autunnale - su terreno nudo o stoppie,1.0,low,bassa,no,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+22,2.0,5.0,2.0,Prearatura estiva o autunnale - su paglie o stocchi,2.0,medium,media,no,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+23,3.0,5.0,3.0,Prearatura primaverile o presemina su terreno nudo o stoppie ,3.0,high,alta,sì,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+24,4.0,5.0,4.0,In copertura con fertirrigazione,3.0,high,alta,sì,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+25,5.0,5.0,5.0,In copertura con fertirrigazione a bassa pressione,3.0,high,alta,si,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+26,6.0,5.0,6.0,In copertura con interramento,3.0,high,alta,sì,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+27,7.0,5.0,7.0,In copertura in primavera senza interramento,2.0,medium,media,sì,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+28,8.0,5.0,8.0,In copertura in estate senza interramento,2.0,medium,media,sì,Maize / sorghum / other primaverile-estive,mais sorgo altre colture pe
+29,1.0,6.0,1.0,Prearatura estiva o autunnale su terreno nudo o stoppie,1.0,low,bassa,no,Perennial 1st year,pluriennali 1 anno
+30,2.0,6.0,2.0,Prearatura estiva o autunnale su paglie o stocchi; Prearatura primaverile su terreno nudo o stoppie,2.0,medium,media,no,Perennial 1st year,pluriennali 1 anno
+31,3.0,6.0,3.0,Prearatura primaverile su paglie o stocchi,3.0,high,alta,sì,Perennial 1st year,pluriennali 1 anno
+32,4.0,6.0,13.0,"Ripresa vegetativa, tagli primaverili e estivi con interramento",3.0,high,alta,sì,Perennial 1st year,pluriennali 1 anno

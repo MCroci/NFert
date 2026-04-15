@@ -1,0 +1,5 @@
+ID,min,max,class,class_it
+1.0,0.0,1.0,Low,Basso
+2.0,1.0,5.0,Medium,Medio
+3.0,5.0,7.5,High,Elevato
+4.0,7.5,100.0,Very high,Molto elevato

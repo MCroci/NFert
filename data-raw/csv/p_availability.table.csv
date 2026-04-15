@@ -1,0 +1,6 @@
+ID_Gri_P,min_P_ppm,max_P_ppm,min_P2O5_ppm,max_P2O5_ppm,rating,rating_it,class
+1.0,0.0,5.0,0.0,11.45,very low,molto bassa,molto scarso
+2.0,5.0,10.0,11.45,22.9,low,bassa,scarso
+3.0,10.0,15.0,22.9,34.35,medium,media,normale
+4.0,15.0,30.0,34.35,68.7,high,elevata,normale
+5.0,30.0,999.0,68.7,2287.71,very high, molto elevata,molto alto

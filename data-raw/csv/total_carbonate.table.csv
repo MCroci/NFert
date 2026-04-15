@@ -1,0 +1,6 @@
+ID,min,max,class,class_it
+1.0,0.0,1.0,Non-calcareous,Non calcareo
+2.0,1.0,10.0,Slightly calcareous,Poco calcareo
+3.0,10.0,25.0,Moderately calcareous,Mediamente calcareo
+4.0,25.0,50.0,Calcareous,Calcareo
+5.0,50.0,100.0,Very calcareous,Molto calcareo

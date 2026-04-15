@@ -8,6 +8,8 @@ organic_fertilization(
   source = "Cattle slurry",
   frequency = "every year",
   quantity = 100,
+  soil_group = NULL,
+  distribution_efficiency = NULL,
   f.table = NFert::f.table
 )
 }
@@ -16,25 +18,36 @@ organic_fertilization(
 
 \item{frequency}{The frequency of application (e.g., "every year", "every two years").}
 
-\item{quantity}{The amount of organic fertilizer applied per application (in m3/ha or t/ha).}
+\item{quantity}{The amount of organic fertilizer applied per application (in m³/ha or t/ha).}
 
-\item{f.table}{A data frame containing information about nitrogen content and application factors
-for different organic fertilizers and frequencies. This should have at least
-three columns: \code{source} (character), \code{frequency} (character), and \code{value} (numeric).
-The default is \code{NFert::f.table}.}
+\item{soil_group}{Optional. Soil group from \code{calc_soil_group_and_id_rag()}
+(e.g. "Sandy textures", "Franco") to use DPI efficiency by texture. If \code{NULL},
+efficiency is taken from \code{f.table} (no texture/distribution).}
+
+\item{distribution_efficiency}{Optional. "efficient", "medium", or "low" (DPI: Alta/Media/Bassa).
+Required if \code{soil_group} is set. Efficient = injection, fertigation, incorporation within 4 h.}
+
+\item{f.table}{A data frame with columns \code{source}, \code{frequency}, \code{value}.
+Used when \code{soil_group} is \code{NULL}. Default is \code{NFert::f.table}.}
 }
 \value{
-The estimated amount of nitrogen (N) in kg/ha provided by the organic fertilization.
+The estimated amount of nitrogen (N) in kg/ha available to the crop
+(efficient N when \code{soil_group} and \code{distribution_efficiency} are set).
 }
 \description{
-Calculates the amount of nitrogen (N) supplied to the soil through organic fertilization.
-}
-\note{
-The \code{f.table} should provide the relevant conversion factors (N content and application
-factors) for the specified \code{source} and \code{frequency}. The default table (\code{NFert::f.table})
-may not be suitable for all regions or specific organic fertilizers.
+Calculates the amount of nitrogen (N) supplied to the soil through organic
+fertilization. Optionally applies \strong{DPI efficiency} by material type, soil
+texture and distribution technique (when \code{soil_group} and
+\code{distribution_efficiency} are given). In the balance formula the term
+to subtract is the \strong{efficient N} (N utile) available to the crop in the
+year of application, not total N (DPI Guida / FertDPI).
 }
 \examples{
 organic_fertilization(source = "Cattle slurry", frequency = "every year", quantity = 50)
-
+organic_fertilization("Cattle slurry", "every year", 80,
+  soil_group = "Sandy textures", distribution_efficiency = "efficient")
+}
+\references{
+DPI Emilia-Romagna, Guida alla fertilizzazione; efficienza in funzione di
+tipologia di effluente, tessitura e modalità di distribuzione (Tabella 7 Norme Generali).
 }

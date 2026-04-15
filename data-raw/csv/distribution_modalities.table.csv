@@ -1,0 +1,23 @@
+ID_Mo,modality_epoch,modality_epoch_it
+1.0,"Bare soil, sown the following year",Su terreno nudo  e semina nell'anno successivo
+2.0,"Straw residues, sown the following year",Su residui pagliosi e semina nell'anno successivo
+3.0,"At soil preparation, sown same year",Alla preparazione del terreno e semina nel medesimo anno
+4.0,Top-dress fertigation,In copertura con fertirrigazione
+5.0,Top-dress low-pressure fertigation,In copertura con fertirrigazione a bassa pressione
+6.0,Top-dress with incorporation,In copertura con interramento
+7.0,Top-dress spring no-incorporation,In copertura in primavera senza interramento
+8.0,Top-dress summer no-incorporation,In copertura in estate senza interramento
+9.0,"Straw residues, sown same year",Su residui pagliosi e semina nel medesimo anno 
+10.0,Pre-sowing,Presemina
+11.0,Top-dress at full tillering (late winter),In copertura nella fase di pieno accestimento (fine inverno)
+12.0,Top-dress at stem elongation,In copertura nella fase di levata
+13.0,Spring regrowth and cuts,Ripresa vegetativa e tagli primaverili
+14.0,Summer or early autumn cuts (< 15/10),Tagli estivi o autunno precoci (< 15/10)
+15.0,Late autumn (> 15/10),Tardo autunno (>15/10)
+16.0,Pre-planting far from growth,Preimpianto distante dalla crescita
+17.0,Pre-planting near growth,Preimpianto vicino alla crescita
+18.0,Spring on grassed/incorporated orchard,In primavera su frutteto inerbito o con interramento
+19.0,Summer or late winter on grassed/incorporated orchard,In estate o fine inverno su frutteto inerbito o con interramento
+20.0,"Spring on tilled orchard, no incorporation",In primavera su frutteto lavorato senza interramento
+21.0,"Summer-autumn on tilled orchard, no incorporation",In estate autunno su frutteto lavorato senza interramento
+22.0,Before or during rapid growth,Prima o durante il rapido accrescimento

@@ -1,0 +1,22 @@
+ID_Pre,previous_crop,N,legume,previous_crop_it
+1.0,Sugar beet,30.0,False,Barbabietola
+2.0,Winter cereals straw removal,-10.0,False,Cereale autunno-vern. Paglia asportata
+3.0,Winter cereals straw burial,-30.0,False,Cereale autunno-vern. Paglia interrata
+4.0,Rapeseed,20.0,False,Colza
+5.0,Sunflower,0.0,False,Girasole
+6.0,Maize stalks removed,-10.0,False,Mais stocchi asportati
+7.0,Maize stalks buried,-40.0,False,Mais stocchi interrati
+8.0,Alfalfa thinned,60.0,True,Medicaio diradato
+9.0,Alfalfa in good conditions,80.0,True,Medicaio in buone conndizioni
+10.0,Leaf vegetables,25.0,False,Orticole a foglia
+11.0,Potato,35.0,False,Patata
+12.0,Tomato and other vegetables,30.0,False,Pomodoro e altre orticole
+13.0,Short meadow or clover,30.0,True,Prato di breve durata o trifoglio
+14.0,Mixed meadow with legumes < 5%,15.0,False,Prato polifita con leguminose < 5%
+15.0,Mixed meadow with legumes > 15%,60.0,True,Prato polifita con leguminose > 15%
+16.0,Mixed meadow with legumes 5-15%,40.0,True,Prato polifita con leguminose dal 5 al 15%
+17.0,Soybean,10.0,True,Soia
+18.0,Sorghum,-40.0,False,Sorgo
+19.0,Legume green manure,50.0,True,Sovescio di leguminose
+20.0,"Grain legume (pea, bean, chickpea, etc.)",40.0,True,"Leguminosa da granella (Pisello, Fagiolo, Cece, ecc.)"
+21.0,Undefined,0.0,False,Non definita

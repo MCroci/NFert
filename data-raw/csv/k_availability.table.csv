@@ -1,0 +1,13 @@
+ID_Gri_K,group,group_it,min_K_ppm,max_K_ppm,min_K2O_ppm,max_K2O_ppm,rating,rating_it,ID_Dot_K
+1,Sandy textures,Sabbiosi,0.0,40.0,0.0,48.0,very low,molto bassa,1.0
+2,Sandy textures,Sabbiosi,40.0,80.0,48.0,96.0,low,bassa,2.0
+3,Sandy textures,Sabbiosi,80.0,120.0,96.0,144.0,medium,media,3.0
+4,Sandy textures,Sabbiosi,120.0,999.0,144.0,1198.8,high,elevata,4.0
+5,Loamy textures,Medio impasto,0.0,60.0,0.0,72.0,very low,molto bassa,1.0
+6,Loamy textures,Medio impasto,60.0,100.0,72.0,120.0,low,bassa,2.0
+7,Loamy textures,Medio impasto,100.0,150.0,120.0,180.0,medium,media,3.0
+8,Loamy textures,Medio impasto,150.0,999.0,180.0,1198.8,high,elevata,4.0
+9,Clay textures,Argillosi e limosi,0.0,80.0,0.0,96.0,very low,molto bassa,1.0
+10,Clay textures,Argillosi e limosi,80.0,120.0,96.0,144.0,low,bassa,2.0
+11,Clay textures,Argillosi e limosi,120.0,180.0,144.0,216.0,medium,media,3.0
+12,Clay textures,Argillosi e limosi,180.0,999.0,216.0,1198.8,high,elevata,4.0

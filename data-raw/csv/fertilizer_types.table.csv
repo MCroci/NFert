@@ -1,0 +1,12 @@
+ID_Tip_fer,type,type_it,consistency,function,characteristic,efficiency,notes
+1.0,none,nessuno,none,none,none,none,
+2.0,Manure and similar,Letame e assimilati,solid,amendment,slowly degradable,low,"sono assimilati: frazione palabile digestato, correttivi e altre sostanze vegetali"
+3.0,Compost,Compost,solid,amendment,slowly degradable,low,
+4.0,Spent broiler litter,Lettiera esausta polli da carne,solid,fertilizing,rapid mineralization,medium,
+5.0,Sludges,Fanghi ,solid,fertilizing,rapid mineralization,medium,è equiparato come funzione concimante agli effluenti bovini
+6.0,Slurries and solid livestock fractions,Liquami e frazioni palabili zootecniche,liquid,fertilizing,rapid mineralization,medium,
+7.0,Whole biogas digestate,Digestato_biogas tal quale,liquid,fertilizing,rapid mineralization,medium,
+8.0,Pre-dried poultry manure,Pollina preessicata,solid,fertilizing,rapid mineralization,medium-high,
+9.0,Organic,Organico,liquid/solid,fertilizing,rapid mineralization,high,
+10.0,Organo-mineral,Organo Minerale,solid,fertilizing,rapid mineralization,high,
+11.0,Mineral / synthetic fertilizer,Concime min.e/o di sintesi,liquid/solid,fertilizing,readily available,high,

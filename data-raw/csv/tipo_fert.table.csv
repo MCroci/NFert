@@ -1,0 +1,12 @@
+ID_Tip_fer,type,consistency,function,characteristic,efficiency,notes
+1.0,nessuno,nessuna,nessuna,nessuna,nessuna,
+2.0,Letame e assimilati,palabile,ammendante,a lenta degradabilità,bassa,"sono assimilati: frazione palabile digestato, correttivi e altre sostanze vegetali"
+3.0,Compost,palabile,ammendante,a lenta degradabilità,bassa,
+4.0,Lettiera esausta polli da carne,palabile,concimante,a rapida mineralizzazione,media,
+5.0,Fanghi ,palabile,concimante,a rapida mineralizzazione,media,è equiparato come funzione concimante agli effluenti bovini
+6.0,Liquami e frazioni palabili zootecniche,liquida,concimante,a rapida mineralizzazione,media,
+7.0,Digestato_biogas tal quale,liquida,concimante,a rapida mineralizzazione,media,
+8.0,Pollina preessicata,palabile,concimante,a rapida mineralizzazione,medio alta,
+9.0,Organico,liquida/palabile,concimante,a rapida mineralizzazione,alta,
+10.0,Organo Minerale,palabile,concimante,a rapida mineralizzazione,alta,
+11.0,Concime min.e/o di sintesi,liquida/palabile,concimante,pronta disponibilità,alta,

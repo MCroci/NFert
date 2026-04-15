@@ -1,5 +1,115 @@
 # NFert News
 
+## Version 0.3.0 (2026-04-15) - Full N + P + K balance and distribution plan
+
+### Major
+
+* **Phosphorus balance**: `P_balance()` implements DPI 2026 P2O5 balance
+  (Fabbisogno A, Arricchimento B1, Anticipazioni A2, Riduzione B2) with
+  Olsen-P class via `classify_P_olsen()` and soil P availability strategy
+  via `soil_P_availability()` (Arricchimento / Mantenimento / Riduzione).
+* **Potassium balance**: `K_balance()` with K2O availability by texture group
+  via `classify_K()` and `soil_K_availability()`, plus `K_leaching_by_clay()`
+  step function for clay-dependent leaching (foglio Gri_K).
+* **Unit crop demand**: `calc_crop_P_demand()` and `calc_crop_K_demand()`
+  parallel to `calc_crop_N_demand()`.
+* **Scheda PK**: `scheda_PK()` returns the DPI 2026 standard-dose P2O5 and
+  K2O values from `standard_pk_doses.table` with user-configurable
+  decrements and increments.
+* **Distribution plan**: `plan_distribution()` builds the full fertilisation
+  plan (foglio Distribuz) combining organic matrices (via `fert_org.table`
+  titres and `efficienza.table` N efficiency by soil x dose x sector) with
+  mineral fertilisers (from `concimi.table`, 146 records), with alerts for
+  Eccesso/Deficit vs the N/P/K balances and optional ZVN 170 kg N/ha check.
+* **End-of-cycle soil dotation**: `estimate_soil_P_end_of_cycle()` and
+  `estimate_soil_K_end_of_cycle()` project soil P2O5 and K2O ppm at the
+  end of the cycle, usable as input for the following year.
+
+### Bug fix — soil group naming uniformization
+
+* The DPI texture grouping was inconsistently encoded across the lookup
+  tables: `ragg_tes.table` used "Sabbioso/Franco/Argilloso" (singular),
+  `gri_k.table`, `so.table` used "Sabbiosi/Medio impasto/Argillosi e limosi"
+  (plural), and the legacy NFert 0.1.0 tables (`soil.table`, `coefN_*`)
+  used English ("Sandy textures", etc.). This caused silent NA joins in
+  `P_balance()` / `K_balance()` / `estimate_soil_*_end_of_cycle()`.
+* Added `normalise_soil_group()` and `resolve_id_rag()` helpers that accept
+  any of the three naming conventions (case-insensitive) and return the
+  canonical Italian plural form plus the universal `ID_Rag` integer key.
+* All PK functions, `plan_distribution()` and `max_SO_input()` now route
+  every soil-group string through `normalise_soil_group()` and join on
+  `ID_Rag`. The user can pass any form indifferently.
+
+### Precision agriculture integration
+
+* New `variable_rate_N()` wrapper that bridges the agronomic balance
+  (`N_balance()` + `calculate_N_fertilization()` or `scheda_N()`) with the
+  NDVI-based variable-rate estimators
+  (`estimate_N_rate_from_calibration_curve()`,
+  `estimate_N_rate_from_holland_schepers()`). Preserves the field-average
+  dose by rescaling and supports an optional MAS per-pixel cap.
+
+### New soil chemistry classifiers
+
+* `classify_pH()`, `classify_carbonate_tot()`, `classify_carbonate_att()`,
+  `classify_CEC()`, `ratio_Mg_K()`, `ratio_K_CEC()`, `classify_SOM()`,
+  `max_SO_input()`.
+
+### New datasets
+
+* `standard_pk_doses.table` (239 rows, 14 cols): base PK doses per crop by
+  soil dotation class (Molto_Bassa / Bassa / Normale / Elevata).
+* `standard_decrements.table` (239 x 21), `standard_increments.table`
+  (239 x 29), `standard_multicycle.table` (239 x 24): DPI 2026 adjustment
+  factors from foglio `Standard` (exploded into three tables for
+  readability).
+* `concimi.table`: 146 mineral / organic-mineral fertilisers with titres
+  (N, P2O5, K2O).
+
+## Version 0.2.0 (2026-04-15) - Sync with Fert_Office v1.26 (DPI 2026, Feb 2026)
+
+### Alignment with DPI Emilia-Romagna 2026
+
+* **Full re-sync of reference data** from `Fert_Office_v1._26.xlsm`
+  (Febbraio 2026, Regione Emilia-Romagna):
+  `uptake_table` (236 crops, with N + P2O5 + K2O coefficients),
+  `mas.table` (239 crops with N_standard, dose_max_N, RR 2/2024 note),
+  `e.table`, `f.table`, `g.table` (English-first with Italian alias),
+  `coef_time` (now including N/P/K allowed percentages, anticipazioni and
+  allevamento flags per phase).
+
+* **New lookup tables**: `crops.table`, `gruppo.table`, `ragg_tes.table`,
+  `so.table`, `so_max_input`, `ph.table`, `calcare_tot.table`,
+  `calcare_att.table`, `gri_p.table`, `gri_p_meta`, `gri_k.table`,
+  `tipo_fert.table`, `fert_org.table`, `efficienza.table` (220 rows),
+  `mod_distribuz.table`, `ciclo_modalita.table`, `cicli.table`,
+  `cicli_fase.table`, `cd.table`.
+
+### New functions
+
+* `scheda_N()`: DPI 2026 simplified "Scheda a dose Standard" method for N,
+  with catalogued decrement and increment factors and MAS cap.
+
+### Fixes to the N balance (DPI 2026 semantics)
+
+* `soil_fertility()` gains `soil_seeding` argument. When `"no-till"` the
+  detrazione of 3 kg/ha (foglio B, Detrazione semina su sodo) is applied to b1.
+* `calc_N_immobilization_loss()` gains `greenhouse` (adds 2 kg/ha,
+  foglio C&D cella D23) and `E_residual` (fold negative E into D as per
+  foglio C&D cella I21).
+* `leaching_loss()` now returns `surplus_pluviometrico` (logical), true when
+  pioggia 1/10 - 28/2 >= 300 mm (foglio C&D righe 34-35).
+* `N_balance()` gains `soil_seeding`, `greenhouse`, `E_to_D` parameters and
+  exposes `surplus_pluviometrico` in the output. When `E_to_D = TRUE` (default),
+  a negative precessione `E` is summed into `D` and `E` in the output is set
+  to 0, matching the exact columnar layout of the Fert_Office `Bilancio` sheet.
+
+### Documentation
+
+* `R/data.R` updated with the full list of new datasets and their role.
+* `docs/UPDATE_PLAN_Fert_Office_v1.26.md` published with detailed gap analysis
+  and roadmap for PK balance and distribution planning (phases D, E, F).
+
 ## Version 0.1.0 (2024-XX-XX) - First CRAN release
 
 ### Major Features

@@ -1,0 +1,8 @@
+ID_pH,threshold_min,range_text,class,class_it
+1.0,0.0,"< 5,4",strongly acid,fortemente acido
+2.0,5.4,"da 5,4  a 6",acid,acido
+3.0,6.0,"da 6,1  a 6,7",slightly acid,leggermente acido
+4.0,6.7,"da 6,8  a 7,3",neutral,neutro
+5.0,7.3,"da 7,4  a 8,1",slightly alkaline,leggermente alcalino
+6.0,8.1,"da 8,2  a 8,6",alkaline,alcalino
+7.0,8.61," > 8,6",strongly alkaline,fortemente alcalino

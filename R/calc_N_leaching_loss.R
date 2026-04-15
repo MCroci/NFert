@@ -22,6 +22,8 @@
 #' @return A list containing:
 #'         - C1: Nitrogen leaching loss in the autumn-winter season (kg/ha).
 #'         - C2: Nitrogen leaching loss after leaving winter (kg/ha).
+#'         - surplus_pluviometrico: Logical. TRUE when winter_rain + start_spring_rain >= 300 mm
+#'           (DPI 2026 scheda a dose standard: attiva l'incremento "Lisciviazione x surplus pluviometrico").
 #' @export
 #'
 #' @examples
@@ -62,6 +64,11 @@ leaching_loss <- function(winter_rain = 160, start_spring_rain=40, oxygen_availa
 
   C2 <- nitrogen_loss_with_winter_rain+ febraury_loss
 
-  res <- list(C1 = C1, C2 = C2 )
+  # DPI 2026 scheda standard: condizione surplus pluviometrico
+  # (pioggia 1/10 - 28/2 >= 300 mm) → attiva incremento "Lisciviazione x surplus pluviometrico".
+  # Foglio C&D, righe 34-35.
+  surplus_pluviometrico <- isTRUE((winter_rain + start_spring_rain) >= 300)
+
+  res <- list(C1 = C1, C2 = C2, surplus_pluviometrico = surplus_pluviometrico)
   return(res)
 }

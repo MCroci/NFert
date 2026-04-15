@@ -4,7 +4,13 @@
 \alias{calc_N_immobilization_loss}
 \title{Nitrogen Immobilization Loss Calculation}
 \usage{
-calc_N_immobilization_loss(B = 50, oxygen_availability = "Normal", id_rag = 1)
+calc_N_immobilization_loss(
+  B = 50,
+  oxygen_availability = "Normal",
+  id_rag = 1,
+  greenhouse = FALSE,
+  E_residual = 0
+)
 }
 \arguments{
 \item{B}{Soil fertility factor (B) representing the potential nitrogen mineralization.}
@@ -12,18 +18,32 @@ calc_N_immobilization_loss(B = 50, oxygen_availability = "Normal", id_rag = 1)
 \item{oxygen_availability}{Oxygen availability level in the soil (e.g., "Normal", "Reduced", "Poor").}
 
 \item{id_rag}{Soil drainage index (ID_Rag), ranging from 1 (well-drained) to 5 (poorly drained).}
+
+\item{greenhouse}{Logical. If \code{TRUE}, adds 2 kg/ha of nitrogen immobilization as per
+DPI 2026 foglio C&D (cella D23 "In serra = 2"). Default \code{FALSE}.}
+
+\item{E_residual}{Optional numeric. When the previous crop has negative residual N
+(e.g. maize stalks buried, sorghum) the DPI 2026 sums \code{-E} into D (see foglio C&D,
+cella I21 "E da conteggiare"). If provided and negative, \code{-E_residual} is added to D.
+Default \code{0} (no adjustment; E is handled separately in \code{calculate_N_fertilization}).}
 }
 \value{
 The estimated nitrogen immobilization loss (D) in kg/ha.
 }
 \description{
-Calculates the amount of nitrogen immobilized by soil microorganisms based on soil fertility, oxygen availability, and drainage.
+Calculates the amount of nitrogen immobilized by soil microorganisms based on soil fertility,
+oxygen availability, and drainage.
 }
 \details{
-This function uses lookup tables (\code{ca.table} and \code{cb.table}) from the \code{NFert} package to determine the immobilization correction factor (\code{fc_D}) based on soil drainage and oxygen availability. The nitrogen immobilization loss is then calculated as:
+This function uses lookup tables (\code{ca.table} and \code{cb.table}) from the \code{NFert} package
+to determine the immobilization correction factor (\code{fc_D}) based on soil drainage and oxygen
+availability. The nitrogen immobilization loss is then calculated as:
 
-D = B * fc_D
+D = B * fc_D + 2 * (greenhouse) + max(0, -E_residual)
 }
 \examples{
 calc_N_immobilization_loss(B = 50, oxygen_availability = "Normal", id_rag = 3)
+# greenhouse:
+calc_N_immobilization_loss(B = 50, oxygen_availability = "Normal",
+                           id_rag = 3, greenhouse = TRUE)
 }

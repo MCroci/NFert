@@ -1,0 +1,240 @@
+id,group_id,crop_id,phase,crop,max_theoretical_N,MAS_N,reference_yield,yield_unit,product,dry_or_irrigated,reference_yield_t_ha,dry_matter_pct,standard_yield,standard_N,max_increment,max_N_dose,note
+1.0,1.0,A2,nd,"Actinidia polpa verde frutti, legno e foglie",340.0,150.0,25.0,tq,,no,25.0,,25.0,120.0,40.0,160.0,RR n. 2/2024
+2.0,2.0,Ab2,nd,"Actinidia polpa gialla frutti, legno e foglie",340.0,150.0,25.0,tq,,no,25.0,,30.0,150.0,40.0,190.0,RR n. 2/2024
+3.0,3.0,A4,nd,"Albicocco media produzione frutti, legno e foglie",340.0,135.0,13.0,tq,,no,13.0,,13.0,75.0,50.0,125.0,RR n. 2/2024
+4.0,4.0,A5,nd,"Albicocco  alta produzione frutti, legno e foglie",340.0,135.0,13.0,tq,,no,13.0,,18.0,100.0,50.0,150.0,RR n. 2/2024
+5.0,5.0,A6,nd,"Altri fruttiferi frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,,,0.0,,
+6.0,6.0,A8,nd,"Arancio frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,30.0,120.0,50.0,170.0,RR n. 2/2024
+7.0,7.0,A10,nd,Castagno solo frutti,340.0,,,nd,nd,no,0.0,,,,0.0,,
+8.0,8.0,A12,nd,"Ciliegio frutti, legno e foglie",340.0,120.0,9.0,tq,,no,9.0,,9.0,70.0,50.0,120.0,RR n. 2/2024
+9.0,9.0,A14,nd,"Clementine frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,25.0,140.0,50.0,190.0,RR n. 2/2024
+10.0,10.0,A15,nd,"Cotogno (frutti, legno e foglie)",340.0,,60.0,tq,,no,60.0,,25.0,140.0,50.0,190.0,
+11.0,11.0,A16,nd,"Fico frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,,,0.0,,
+12.0,12.0,A17,nd,"Kaki frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,25.0,60.0,40.0,100.0,RR n. 2/2024
+13.0,13.0,A18,nd,"Limone frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,30.0,120.0,50.0,170.0,RR n. 2/2024
+14.0,14.0,A19,nd,Luppolo (verde),340.0,,14.0,tq,,no,14.0,,14.0,120.0,40.0,160.0,
+15.0,15.0,A20,nd,"Mandarino frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,25.0,140.0,50.0,190.0,RR n. 2/2024
+16.0,16.0,A21,nd,"Mandorlo frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,,,0.0,,
+17.0,17.0,A22,nd,"Melo frutti, legno e foglie",340.0,120.0,35.0,tq,,no,35.0,,40.0,80.0,60.0,140.0,RR n. 2/2024
+18.0,18.0,A23,nd,Mirtillo,340.0,,17.5,nd,,no,0.0,,17.5,125.0,30.0,155.0,
+19.0,19.0,A24,nd,"Nashi frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,,,0.0,,
+20.0,20.0,A25,nd,"Nespolo frutti, legno e foglie",340.0,,,nd,nd,no,0.0,,,,0.0,,
+21.0,21.0,A26,nd,"Nettarine frutti, legno e foglie",340.0,175.0,25.0,tq,,no,25.0,,25.0,100.0,50.0,150.0,RR n. 2/2024
+22.0,22.0,A27,nd,"Nocciolo frutti, legno e foglie",340.0,100.0,2.0,tq,,no,2.0,,,,0.0,,
+23.0,23.0,A28,nd,"Noce da frutto frutti, legno e foglie",340.0,120.0,4.0,tq,,no,4.0,,4.0,90.0,50.0,140.0,RR n. 2/2024
+24.0,24.0,A29,nd,"Olivo olive, legno e foglie",340.0,,,nd,nd,no,0.0,,4.0,70.0,30.0,100.0,RR n. 2/2024
+25.0,25.0,A30,nd,"Pero media produzione frutti, legno e foglie",340.0,120.0,30.0,tq,,no,30.0,,30.0,90.0,50.0,140.0,RR n. 2/2024
+26.0,26.0,A31,nd,"Pero alta produzione frutti, legno e foglie",340.0,120.0,30.0,tq,,no,30.0,,40.0,120.0,50.0,170.0,RR n. 2/2024
+27.0,27.0,A32,nd,"Pesco frutti, legno e foglie",340.0,175.0,25.0,tq,,no,25.0,,25.0,100.0,50.0,150.0,RR n. 2/2024
+28.0,28.0,A33,nd,Pioppo,340.0,,,nd,nd,no,0.0,,,,0.0,,
+29.0,29.0,A34,nd,Pioppo da energia,340.0,,,nd,nd,no,0.0,,,,0.0,,
+30.0,30.0,A35,nd,"Susino frutti, legno e foglie",340.0,120.0,20.0,tq,,no,20.0,,25.0,90.0,50.0,140.0,RR n. 2/2024
+31.0,31.0,A36,nd,"Uva da tavola grappoli, tralci e foglie",340.0,100.0,18.0,tq,,no,18.0,,25.0,90.0,50.0,140.0,RR n. 2/2024
+32.0,32.0,A37,nd,"Vite per uva da vino (collina e montagna) grappoli, tralci e foglie ",340.0,70.0,9.0,tq,,no,9.0,,10.0,50.0,40.0,90.0,RR n. 2/2024
+33.0,33.0,A38,nd,"Vite per uva da vino (pianura) grappoli, legno e foglie",340.0,100.0,18.0,tq,,no,18.0,,20.0,80.0,30.0,110.0,RR n. 2/2024
+34.0,1.0,E1,nd,Altri cereali a paglia (pianta intera),340.0,,,nd,nd,no,0.0,,,,0.0,,
+35.0,2.0,E2,nd,Avena,340.0,110.0,4.5,tq,gran,no,4.5,87.0,3.2,60.0,40.0,100.0,RR n. 2/2024
+36.0,3.0,E3,nd,Avena pianta intera,340.0,110.0,4.5,tq,gran,no,4.5,87.0,3.2,60.0,40.0,100.0,RR n. 2/2024
+37.0,4.0,E4,nd,Barbababietola da zucchero (pianta intera),340.0,160.0,60.0,tq,,no,60.0,23.0,70.0,120.0,40.0,160.0,RR n. 2/2024
+38.0,5.0,E5,nd,Barbabietola da zucchero  (radici),340.0,160.0,60.0,tq,,no,60.0,23.0,50.0,120.0,40.0,160.0,RR n. 2/2024
+39.0,6.0,E6,nd,Canapa da fibra,340.0,,,nd,nd,no,0.0,30.0,,,0.0,,
+40.0,7.0,E7,nd,Cavolo abissino,340.0,,,nd,nd,no,0.0,90.0,,,0.0,,
+41.0,8.0,E8,nd,Cece,340.0,80.0,3.0,tq,,no,3.0,86.0,2.0,40.0,30.0,70.0,RR n. 2/2024
+42.0,9.0,E9,nd,Colza,340.0,150.0,4.0,tq,gran,no,4.0,90.0,2.5,135.0,40.0,175.0,RR n. 2/2024
+43.0,10.0,E10,nd,Colza pianta intera,340.0,150.0,4.0,tq,gran,no,4.0,90.0,2.5,135.0,40.0,175.0,RR n. 2/2024
+44.0,11.0,E11,nd,Farro,340.0,,,nd,nd,no,0.0,87.0,2.0,40.0,30.0,70.0,RR n. 2/2024
+45.0,12.0,E12,nd,Farro (pianta intera),340.0,,,nd,nd,no,0.0,87.0,2.0,40.0,30.0,70.0,RR n. 2/2024
+46.0,13.0,E13,nd,Favino da granella,340.0,,,nd,nd,no,0.0,86.0,2.0,0.0,40.0,40.0,RR n. 2/2024
+47.0,14.0,E14,nd,Girasole (acheni),340.0,120.0,3.5,tq,gran,no,3.5,90.0,3.0,90.0,40.0,130.0,RR n. 2/2024
+48.0,15.0,E15,nd,Girasole (pianta intera),340.0,120.0,3.5,tq,gran,no,3.5,90.0,3.0,90.0,40.0,130.0,RR n. 2/2024
+49.0,16.0,E16,nd,Grano duro (granella),340.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,40.0,200.0,RR n. 2/2024
+50.0,17.0,E17,nd,Grano duro (pianta intera),340.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,40.0,200.0,RR n. 2/2024
+51.0,18.0,E18,nd,Grano tenero FP/FPS (granella),340.0,180.0,6.5,tq,gran,no,6.5,87.0,6.0,155.0,40.0,195.0,RR n. 2/2024
+52.0,19.0,E19,nd,Grano tenero FP/FPS (pianta intera),340.0,180.0,6.5,tq,gran,no,6.5,87.0,6.0,155.0,40.0,195.0,RR n. 2/2024
+53.0,20.0,E20,nd,Grano tenero biscottiero  (granella),340.0,180.0,6.5,tq,gran,no,6.5,87.0,6.0,140.0,40.0,180.0,RR n. 2/2024
+54.0,21.0,E21,nd,Grano tenero biscottiero pianta intera,340.0,180.0,6.5,tq,gran,no,6.5,87.0,6.0,140.0,40.0,180.0,RR n. 2/2024
+55.0,22.0,E22,nd,Grano tenero FF (granella),340.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,40.0,200.0,RR n. 2/2024
+56.0,23.0,E23,nd,Grano tenero FF (pianta intera),340.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,40.0,200.0,RR n. 2/2024
+57.0,24.0,E24,nd,Lenticchia,340.0,,,nd,nd,no,0.0,89.0,,,0.0,,
+58.0,25.0,E25,nd,Lino  fibra,340.0,,,nd,nd,no,0.0,90.0,,,0.0,,
+59.0,26.0,E26,nd,Lino granella,340.0,,,nd,nd,no,0.0,90.0,,,0.0,,
+60.0,27.0,E27,nd,Lupino,340.0,,,nd,nd,no,0.0,86.0,,,0.0,,
+61.0,28.0,E28,nd,Mais da granella 300-400 (granella),340.0,280.0,13.0,tq,gran,no,13.0,86.0,7.0,150.0,70.0,220.0,RR n. 2/2024
+62.0,29.0,E29,nd,Mais da granella 300-400 (pianta intera),340.0,280.0,13.0,tq,gran,sì,13.0,86.0,7.0,150.0,70.0,220.0,RR n. 2/2024
+63.0,30.0,E30,nd,Mais da granella 500-700 (granella),340.0,280.0,13.0,tq,gran,sì,13.0,86.0,12.0,240.0,70.0,310.0,RR n. 2/2024
+64.0,31.0,E31,nd,Mais da granella 500-700 (pianta intera),340.0,280.0,13.0,tq,gran,sì,13.0,86.0,12.0,240.0,70.0,310.0,RR n. 2/2024
+65.0,32.0,E32,nd,Mais dolce  (spighe),340.0,170.0,16.0,tq,spighe,no,16.0,27.5,16.0,170.0,40.0,210.0,RR n. 2/2024
+66.0,33.0,E33,nd,Mais dolce (pianta intera),340.0,170.0,16.0,tq,spighe,no,16.0,27.5,16.0,170.0,40.0,210.0,RR n. 2/2024
+67.0,34.0,E34,nd,Mais trinciato classe 500,340.0,280.0,23.0,s.s.,pianta,sì,76.66666666666667,30.0,45.0,150.0,50.0,200.0,RR n. 2/2024
+68.0,35.0,E35,nd,Mais trinciato classe 700,340.0,280.0,23.0,s.s.,pianta,sì,76.66666666666667,30.0,65.0,240.0,70.0,310.0,RR n. 2/2024
+69.0,36.0,E36,nd,Orzo (granella),340.0,150.0,6.0,tq,gran,no,6.0,87.0,6.5,125.0,40.0,165.0,RR n. 2/2024
+70.0,37.0,E37,nd,Orzo (pianta intera),340.0,150.0,6.0,tq,gran,no,6.0,87.0,6.5,125.0,40.0,165.0,RR n. 2/2024
+71.0,38.0,E38,nd,Panico,340.0,,,nd,nd,no,0.0,85.0,,,0.0,,
+72.0,39.0,E39,nd,Pisello proteico,50.0,,,nd,nd,no,0.0,87.0,5.0,40.0,20.0,60.0,RR n. 2/2024
+73.0,40.0,E40,nd,Pisello proteico + residui,50.0,,,nd,nd,no,0.0,87.0,5.0,40.0,20.0,60.0,RR n. 2/2024
+74.0,41.0,E41,nd,Rafano (da sovescio),340.0,,,nd,nd,no,0.0,15.0,,,0.0,,
+75.0,42.0,E42,nd,Riso (granella),340.0,160.0,7.0,tq,gran,no,7.0,86.0,7.0,110.0,40.0,150.0,RR n. 2/2024
+76.0,43.0,E43,nd,Riso (granella+paglia),340.0,160.0,7.0,tq,gran,no,7.0,86.0,7.0,110.0,40.0,150.0,RR n. 2/2024
+77.0,44.0,E44,nd,Segale (granella),340.0,120.0,4.5,tq,gran,no,4.5,87.0,4.0,100.0,50.0,150.0,RR n. 2/2024
+78.0,45.0,E45,nd,Segale pianta intera,340.0,120.0,4.5,tq,gran,no,4.5,87.0,4.0,100.0,50.0,150.0,RR n. 2/2024
+79.0,46.0,E46,nd,Senape indiana,340.0,,,nd,nd,no,0.0,90.0,,,0.0,,
+80.0,47.0,E47,nd,Soia (granella),120.0,30.0,3.5,tq,gran,no,3.5,86.0,3.5,0.0,120.0,120.0,RR n. 2/2024
+81.0,48.0,E48,nd,Soia (pianta intera),120.0,30.0,3.5,tq,gran,no,3.5,86.0,3.5,0.0,120.0,120.0,RR n. 2/2024
+82.0,49.0,E49,nd,Sorgo da foraggio,340.0,,,nd,nd,no,0.0,30.0,,,0.0,,
+83.0,50.0,E50,nd,Sorgo da granella  (solo granella),340.0,220.0,7.5,tq,gran,no,7.5,86.0,7.5,160.0,30.0,190.0,RR n. 2/2024
+84.0,51.0,E51,nd,Sorgo da granella (pianta intera),340.0,220.0,7.5,tq,gran,no,7.5,86.0,7.5,160.0,30.0,190.0,RR n. 2/2024
+85.0,52.0,E52,nd,Tabacco Bright,340.0,200.0,4.4,tq,,no,4.4,81.0,,,0.0,,
+86.0,53.0,E53,nd,Tabacco Bright pianta intera,340.0,200.0,4.4,tq,,no,4.4,81.0,,,0.0,,
+87.0,54.0,E54,nd,Tabacco Burley,340.0,200.0,4.4,tq,,no,4.4,81.0,,,0.0,,
+88.0,55.0,E55,nd,Tabacco Burley pianta intera,340.0,200.0,4.4,tq,,no,4.4,81.0,,,0.0,,
+89.0,56.0,E56,nd,Triticale,340.0,150.0,6.0,tq,gran,no,6.0,87.0,7.5,140.0,50.0,190.0,RR n. 2/2024
+90.0,57.0,E57,nd,Triticale pianta intera,340.0,150.0,6.0,tq,gran,no,6.0,87.0,7.5,140.0,50.0,190.0,RR n. 2/2024
+91.0,1.0,F1,nd,Avena insilata,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+92.0,2.0,F2,nd,Colza insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+93.0,3.0,F3,nd,Erba mazzolina,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,12.5,200.0,50.0,250.0,RR n. 2/2024
+94.0,4.0,F4,nd,Erba medica,100.0,170.0,,,,no,0.0,85.0,12.5,0.0,100.0,100.0,RR n. 2/2024
+95.0,5.0,F5,nd,Erbai aut prim. Di cer. O cruc.,340.0,120.0,7.0,s.s.,fieno,no,8.23529411764706,85.0,,,0.0,,
+96.0,6.0,F6,nd,Erbai aut prim. Di leguminose,340.0,,,nd,nd,no,0.0,85.0,,,0.0,,
+97.0,7.0,F7,nd,Erbai biennali o Prati avv. di Graminacee,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,,,0.0,,
+98.0,8.0,F8,nd,Erbai biennali misti o Prati avv. Polifita,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,,,0.0,,
+99.0,9.0,F9,nd,Farro insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+100.0,10.0,F10,nd,Festuca arundinacea,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,12.5,200.0,50.0,250.0,RR n. 2/2024
+101.0,11.0,F11,nd,Fleolo (coda di topo),340.0,,,nd,nd,no,0.0,85.0,,,0.0,,
+102.0,12.0,F12,nd,Grano duro  insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+103.0,13.0,F13,nd,Grano tenero  insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+104.0,14.0,F14,nd,Loglio da insilare,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+105.0,15.0,F15,nd,Loiessa,340.0,120.0,7.0,s.s.,gran,no,8.23529411764706,85.0,,,0.0,,
+106.0,16.0,F16,nd,Loietto perenne,340.0,,,nd,nd,no,0.0,85.0,,,0.0,,
+107.0,17.0,F17,nd,Orzo insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+108.0,18.0,F18,nd,Prati di graminacee,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,,,0.0,,
+109.0,19.0,F19,nd,Prati di trifoglio,340.0,170.0,11.0,s.s.,fieno,no,10.0,85.0,,,0.0,,
+110.0,20.0,F20,nd,Prati di leguminose in purezza - Trifoglio,340.0,170.0,8.5,s.s.,fieno,no,8.23529411764706,85.0,8.5,0.0,0.0,0.0,
+111.0,21.0,F21,nd,Prati di leguminose in purezza - Ginestrino,340.0,170.0,7.0,s.s.,fieno,no,9.411764705882353,85.0,7.0,0.0,0.0,0.0,
+112.0,22.0,F22,nd,Prati di leguminose in purezza - Sulla,340.0,170.0,8.0,s.s.,fieno,no,7.647058823529412,85.0,8.0,0.0,0.0,0.0,
+113.0,23.0,F23,nd,Prati di leguminose in purezza - Lupinella,340.0,170.0,6.5,s.s.,fieno,no,15.294117647058824,85.0,6.5,0.0,0.0,0.0,
+114.0,24.0,F24,nd,Prati pascoli in collina,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,,,0.0,,
+115.0,25.0,F25,nd,Prati polifiti >50% leguminose,340.0,,,nd,nd,no,0.0,85.0,,,0.0,,
+116.0,26.0,F26,nd,Prati polifiti,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,8.5,155.0,45.0,200.0,RR n. 2/2024
+117.0,27.0,F27,nd,Prati stabili in pianura,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,13.0,140.0,20.0,160.0,RR n. 2/2024
+118.0,28.0,F28,nd,Prato misto,340.0,300.0,13.0,s.s.,fieno,no,15.294117647058824,85.0,,,0.0,,
+119.0,29.0,F29,nd,Segale insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+120.0,30.0,F30,nd,Triticale insilato,340.0,,,nd,nd,no,0.0,35.0,,,0.0,,
+121.0,1.0,O1,nd,Aglio,340.0,170.0,9.0,tq,bulbi,no,9.0,30.0,9.0,110.0,60.0,170.0,RR n. 2/2024
+122.0,2.0,O2,nd,Asparago verde (pianta intera),340.0,210.0,8.0,tq,turrioni,no,8.0,15.0,8.0,180.0,30.0,210.0,RR n. 2/2024
+123.0,3.0,O3,nd,Asparago verde alta produzione,340.0,210.0,10.5,tq,turrioni,no,10.5,15.0,10.5,200.0,30.0,230.0,Ricalcolato col DPI
+124.0,4.0,O4,nd,Basilico media produzione,340.0,110.0,20.0,tq,,no,20.0,7.7,20.0,100.0,40.0,140.0,RR n. 2/2024
+125.0,5.0,O5,nd,Basilico alta produzione più tagli,340.0,100.0,55.0,tq,,no,55.0,,55.0,60.0,40.0,100.0,Ricalcolato col DPI
+126.0,6.0,O6,nd,Bietola da costa e da foglia m. fresco  media produzione,340.0,190.0,35.0,tq,,no,35.0,10.7,25.0,150.0,40.0,190.0,RR n. 2/2024
+127.0,7.0,O7,nd,Bietola da costa e da foglia m. fresco  alta produzione più tagli,340.0,190.0,35.0,tq,,no,35.0,10.7,35.0,160.0,40.0,200.0,RR n. 2/2024
+128.0,8.0,O8,nd,Bietola da foglie per l'industria media produzione più tagli,340.0,190.0,35.0,tq,,no,35.0,10.7,25.0,110.0,40.0,150.0,RR n. 2/2024
+129.0,9.0,O9,nd,Bietola da costa per l'industria alta produzione più tagli,340.0,280.0,25.0,tq,,no,25.0,,35.0,160.0,40.0,200.0,RR n. 2/2024
+130.0,10.0,O10,nd,Broccoletto  - Cime di rapa,340.0,,,nd,nd,no,0.0,8.6,,,0.0,,
+131.0,11.0,O11,nd,Broccolo media produzione,340.0,180.0,20.0,tq,,no,20.0,10.0,20.0,130.0,50.0,180.0,RR n. 2/2024
+132.0,12.0,O12,nd,Broccolo alta produzione,340.0,180.0,20.0,tq,,no,20.0,10.0,32.5,160.0,50.0,210.0,RR n. 2/2024
+133.0,13.0,O13,nd,Cappuccio media produzione,340.0,250.0,27.0,tq,,no,27.0,7.8,27.0,150.0,40.0,190.0,RR n. 2/2024
+134.0,14.0,O14,nd,Cappuccio alta produzione,340.0,250.0,27.0,tq,,no,27.0,7.8,50.0,180.0,40.0,220.0,RR n. 2/2024
+135.0,15.0,O15,nd,Carciofo,340.0,,,nd,nd,no,0.0,16.0,15.5,180.0,50.0,230.0,RR n. 2/2024
+136.0,16.0,O16,nd,Cardo media produzione,340.0,,,nd,nd,no,0.0,5.7,25.5,120.0,50.0,170.0,calcolato col DPI
+137.0,17.0,O17,nd,Cardo alta produzione,340.0,,,nd,nd,no,0.0,5.7,32.5,150.0,50.0,200.0,calcolato col DPI
+138.0,18.0,O18,nd,Carota,340.0,195.0,55.0,tq,,no,55.0,12.0,50.0,120.0,50.0,170.0,RR n. 2/2024
+139.0,19.0,O19,nd,Cavolfiore media produzione,340.0,225.0,35.0,tq,,no,35.0,9.5,35.0,150.0,40.0,190.0,RR n. 2/2024
+140.0,20.0,O20,nd,Cavolfiore alta produzione,340.0,225.0,35.0,tq,,no,35.0,9.5,45.0,180.0,40.0,220.0,RR n. 2/2024
+141.0,21.0,O21,nd,Cavolo verza mercato media produzione,340.0,165.0,30.0,tq,,no,30.0,9.5,24.0,130.0,50.0,180.0,RR n. 2/2024
+142.0,22.0,O22,nd,Cavolo verza mercato alta produzione,340.0,165.0,30.0,tq,,no,30.0,9.5,50.0,160.0,50.0,210.0,RR n. 2/2024
+143.0,23.0,O23,nd,"Cavolo Riccio, Cavolo nero e Cavolo Rapa",340.0,180.0,20.0,tq,nd,no,20.0,9.5,20.0,130.0,50.0,180.0,calcolato col DPI
+144.0,24.0,O24,nd,Cetriolo da mensa media produzione,340.0,225.0,25.0,tq,,no,25.0,5.0,120.0,175.0,40.0,215.0,RR n. 2/2024
+145.0,25.0,O25,nd,Cetriolo da mensa alta produzione,340.0,225.0,25.0,tq,,no,25.0,5.0,150.0,210.0,40.0,250.0,RR n. 2/2024
+146.0,26.0,O26,nd,Cicoria da mercato media produzione,340.0,210.0,32.0,tq,,no,32.0,6.6,28.0,140.0,40.0,180.0,RR n. 2/2024
+147.0,27.0,O27,nd,Cicoria da mercato alta produzione,340.0,210.0,32.0,tq,,no,32.0,6.6,37.5,165.0,40.0,205.0,RR n. 2/2024
+148.0,28.0,O28,nd,Cicoria da industria alta produzione più tagli,340.0,210.0,32.0,tq,,no,32.0,6.6,28.0,140.0,40.0,180.0,RR n. 2/2024
+149.0,29.0,O29,nd,Cipolla media produzione,340.0,160.0,35.0,tq,,no,35.0,7.9,45.0,130.0,50.0,180.0,RR n. 2/2024
+150.0,30.0,O30,nd,Cipolla alta produzione,340.0,160.0,65.0,tq,,no,65.0,7.9,65.0,180.0,50.0,230.0,Ricalcolato col DPI
+151.0,31.0,O31,nd,Cocomero,340.0,130.0,60.0,tq,,no,60.0,5.0,60.0,100.0,30.0,130.0,RR n. 2/2024
+152.0,32.0,O32,nd,Endivie (indivie riccia e scarola) media produzione,340.0,130.0,35.0,tq,,no,35.0,,34.0,130.0,40.0,170.0,RR n. 2/2024
+153.0,33.0,O33,nd,Endivie (indivie riccia e scarola) alta produzione,340.0,130.0,35.0,tq,,no,35.0,,45.0,160.0,40.0,200.0,RR n. 2/2024
+154.0,34.0,O34,nd,Fagiolino,340.0,70.0,9.0,tq,,no,9.0,,9.0,70.0,25.0,95.0,RR n. 2/2024
+155.0,35.0,O35,nd,Fagiolo in baccelli da sgranare,340.0,70.0,4.0,tq,,no,4.0,50.0,5.0,70.0,25.0,95.0,RR n. 2/2024
+156.0,36.0,O36,nd,Fagiolo secco,340.0,,,nd,nd,no,0.0,86.0,,,0.0,,
+157.0,37.0,O37,nd,Fava da consumo fresco,340.0,,,nd,nd,no,0.0,16.0,,,0.0,,
+158.0,38.0,O38,nd,Finocchio,340.0,240.0,38.0,tq,,no,38.0,6.8,30.0,160.0,50.0,210.0,RR n. 2/2024
+159.0,39.0,O39,nd,Fragola ,340.0,160.0,35.0,tq,,no,35.0,10.0,30.0,120.0,40.0,160.0,RR n. 2/2024
+160.0,40.0,O40,nd,Lattuga,340.0,130.0,30.0,tq,,no,30.0,5.7,32.0,110.0,40.0,150.0,RR n. 2/2024
+161.0,41.0,O41,nd,Lattuga coltura protetta,340.0,,,nd,nd,no,0.0,,,,0.0,,
+162.0,42.0,O42,nd,Melanzana in pieno campo media produzione,340.0,175.0,70.0,tq,,no,70.0,7.3,80.0,250.0,50.0,300.0,RR n. 2/2024
+163.0,43.0,O43,nd,Melanzana coltura protetta alta produzione,340.0,175.0,70.0,tq,,no,70.0,7.3,150.0,300.0,50.0,350.0,RR n. 2/2024
+164.0,44.0,O44,nd,Melone,340.0,140.0,35.0,tq,,no,35.0,,40.0,120.0,40.0,160.0,RR n. 2/2024
+165.0,45.0,O45,nd,Patata,340.0,190.0,48.0,tq,,no,48.0,21.5,47.5,190.0,40.0,230.0,RR n. 2/2024
+166.0,46.0,O46,nd,Peperone in serra alta produzione,340.0,200.0,50.0,tq,,no,50.0,7.7,70.0,190.0,40.0,230.0,RR n. 2/2024
+167.0,47.0,O47,nd,Peperone in serra media produzione,340.0,200.0,50.0,tq,,no,50.0,,50.0,160.0,40.0,200.0,
+168.0,48.0,O48,nd,Piccoli frutti,340.0,200.0,50.0,tq,,no,50.0,,,,0.0,,
+169.0,49.0,O49,nd,Pisello da industria (grani),340.0,,,,,no,0.0,,6.0,50.0,20.0,70.0,
+170.0,50.0,O50,nd,Pisello da mercato fresco (baccelli),340.0,,,nd,nd,no,0.0,20.0,6.0,50.0,20.0,70.0,RR n. 2/2024
+171.0,51.0,O51,nd,Pomodoro da industria media produzione,340.0,180.0,80.0,tq,,no,80.0,8.0,70.0,130.0,40.0,170.0,RR n. 2/2024
+172.0,52.0,O52,nd,Pomodoro da industria alta produzione,340.0,180.0,80.0,tq,,no,80.0,8.0,90.0,150.0,40.0,190.0,
+173.0,53.0,O53,nd,Pomodoro da mensa a pieno campo,340.0,180.0,80.0,tq,,no,80.0,8.0,70.0,130.0,40.0,170.0,RR n. 2/2024
+174.0,54.0,O54,nd,Pomodoro da mensa in serra,340.0,180.0,80.0,tq,,no,80.0,8.0,115.0,230.0,40.0,270.0,RR n. 2/2024
+175.0,55.0,O55,nd,Porro,340.0,126.0,35.0,tq,,no,35.0,,40.0,180.0,50.0,230.0,RR n. 2/2024
+176.0,56.0,O56,nd,Prezzemolo media produzione,340.0,100.0,20.0,tq,,no,20.0,12.2,20.0,80.0,30.0,110.0,RR n. 2/2024
+177.0,57.0,O57,nd,Prezzemolo alta produzione più tagli,340.0,100.0,20.0,tq,,no,20.0,12.2,43.5,50.0,30.0,80.0,RR n. 2/2024
+178.0,58.0,O58,nd,Radicchio (cicoria a foglie colorate) media produzione,340.0,190.0,20.0,tq,,no,20.0,11.9,20.0,130.0,30.0,160.0,RR n. 2/2024
+179.0,59.0,O59,nd,Radicchio (cicoria a foglie colorate) alta produzione,340.0,190.0,20.0,tq,,no,20.0,11.9,35.0,150.0,30.0,180.0,RR n. 2/2024
+180.0,60.0,O60,nd,Rapa,340.0,,,nd,nd,no,0.0,6.7,35.0,,0.0,,
+181.0,61.0,O61,nd,Ravanello,340.0,80.0,30.0,tq,,no,30.0,5.4,30.0,80.0,25.0,105.0,RR n. 2/2024
+182.0,62.0,O62,nd,Rucola media produzione,340.0,130.0,30.0,tq,,no,30.0,5.7,18.5,110.0,30.0,140.0,calcolato col DPI
+183.0,63.0,O63,nd,Rucola alta produzione con più tagli,340.0,150.0,30.0,tq,,no,30.0,5.7,37.0,80.0,30.0,110.0,calcolato col DPI
+184.0,64.0,O64,nd,Scalogno,340.0,120.0,8.0,tq,,no,8.0,,8.0,90.0,40.0,130.0,RR n. 2/2024
+185.0,65.0,O65,nd,Sedano media produzione,340.0,250.0,80.0,tq,,no,80.0,11.7,50.0,240.0,50.0,290.0,RR n. 2/2024
+186.0,66.0,O66,nd,Sedano alta produzione,340.0,250.0,80.0,tq,,no,80.0,11.7,80.0,270.0,50.0,320.0,RR n. 2/2024
+187.0,67.0,O67,nd,Spinacio alta produzione con più tagli,340.0,190.0,20.0,tq,,no,20.0,,27.5,110.0,40.0,150.0,RR n. 2/2024
+188.0,68.0,O68,nd,Spinacio media produzione,340.0,125.0,13.0,tq,,no,13.0,9.9,20.0,150.0,40.0,190.0,RR n. 2/2024
+189.0,69.0,O69,nd,Verza - cavolo da mercato media produzione,340.0,150.0,35.0,tq,,no,35.0,9.3,24.0,130.0,50.0,180.0,RR n. 2/2024
+190.0,70.0,O70,nd,Verza - cavolo da mercato alta produzione,340.0,150.0,35.0,tq,,no,35.0,9.3,50.0,160.0,50.0,210.0,RR n. 2/2024
+191.0,71.0,O71,nd,Verza da industria,340.0,150.0,35.0,tq,,no,35.0,9.3,35.0,150.0,40.0,190.0,RR n. 2/2024
+192.0,72.0,O72,nd,Zucca,340.0,210.0,40.0,tq,,no,40.0,5.6,35.0,110.0,30.0,140.0,RR n. 2/2024
+193.0,73.0,O73,nd,Zucchino da industria media produzione,340.0,190.0,50.0,tq,,no,50.0,,50.0,175.0,40.0,215.0,RR n. 2/2024
+194.0,74.0,O74,nd,Zucchino da industria alta produzione,340.0,190.0,50.0,tq,,no,50.0,,65.0,200.0,40.0,240.0,RR n. 2/2024
+195.0,75.0,O75,nd,Zucchino da mercato fresco media produzione,340.0,190.0,50.0,tq,,no,50.0,6.4,40.0,150.0,40.0,190.0,RR n. 2/2024
+196.0,76.0,O76,nd,Zucchino da mercato  fresco alta produzione,340.0,190.0,50.0,tq,,no,50.0,7.4,50.0,180.0,40.0,220.0,RR n. 2/2024
+197.0,1.0,S1,nd,Barbabiertola da seme (fase porta seme),340.0,,,,seme,no,0.0,,,140.0,40.0,180.0,RR n. 2/2024
+198.0,2.0,S2,nd,Carota da seme (fase portaseme),340.0,,,,seme,no,0.0,,,120.0,30.0,150.0,RR n. 2/2024
+199.0,3.0,S3,nd,Carota da seme (fase vivaio),340.0,,,,tubero,no,0.0,,50.0,120.0,35.0,155.0,RR n. 2/2024
+200.0,4.0,S4,nd,Cavoli da seme,340.0,,,,seme,no,0.0,,,160.0,40.0,200.0,RR n. 2/2024
+201.0,5.0,S5,nd,Cetriolo da seme,340.0,,,,seme,no,0.0,,,180.0,40.0,220.0,RR n. 2/2024
+202.0,6.0,S6,nd,Cicoria da seme,340.0,,,,seme,no,0.0,,,140.0,40.0,180.0,RR n. 2/2024
+203.0,7.0,S7,nd,Cipolla da seme (fase portaseme),340.0,,,,seme,no,0.0,,,130.0,30.0,160.0,RR n. 2/2024
+204.0,8.0,S8,nd,Cipolla da seme (fase vivaio),340.0,,,,bulbi,no,0.0,,45.0,130.0,40.0,170.0,RR n. 2/2024
+205.0,9.0,S9,nd,Coriandolo da seme,340.0,,,,seme,no,0.0,,,70.0,20.0,90.0,RR n. 2/2024
+206.0,10.0,S10,nd,Erba medica  da seme,340.0,,,,seme,no,0.0,,,0.0,100.0,100.0,RR n. 2/2024
+207.0,11.0,S11,nd,Finocchio da seme,340.0,,,,seme,no,0.0,,,100.0,20.0,120.0,RR n. 2/2024
+208.0,12.0,S12,nd,Frumento duro da seme (granella),340.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,30.0,190.0,RR n. 2/2024
+209.0,13.0,S13,nd,Frumento tenero da seme (granella),340.0,180.0,6.5,tq,gran,no,6.5,87.0,6.0,140.0,40.0,180.0,RR n. 2/2024
+210.0,14.0,S14,nd,Girasole da seme (granella),340.0,120.0,3.5,tq,gran,no,3.5,90.0,3.0,90.0,40.0,130.0,RR n. 2/2024
+211.0,15.0,S15,nd,Lattuga da seme,340.0,130.0,,,seme,no,0.0,,,100.0,30.0,130.0,RR n. 2/2024
+212.0,16.0,S16,nd,Orzo da seme (granella),340.0,150.0,6.0,tq,gran,no,6.0,87.0,6.5,125.0,40.0,165.0,RR n. 2/2024
+213.0,17.0,S17,nd,Pisello proteico da seme (granella),50.0,,,,gran,no,0.0,,,50.0,30.0,80.0,RR n. 2/2024
+214.0,18.0,S18,nd,Prezzemolo da seme,340.0,,,,seme,no,0.0,,,100.0,20.0,120.0,RR n. 2/2024
+215.0,19.0,S19,nd,Ravanello da seme,340.0,,,,seme,no,0.0,,,150.0,40.0,190.0,RR n. 2/2024
+216.0,20.0,S20,nd,Segale da seme (granella),340.0,120.0,4.5,tq,gran,no,4.5,87.0,4.0,100.0,50.0,150.0,RR n. 2/2024
+217.0,21.0,S21,nd,Soia da seme (granella),120.0,30.0,,tq,gran,no,0.0,86.0,3.5,0.0,120.0,120.0,RR n. 2/2024
+218.0,22.0,S22,nd,Triticale da seme (granella),340.0,150.0,6.0,tq,gran,no,6.0,87.0,7.5,140.0,50.0,190.0,RR n. 2/2024
+219.0,23.0,S23,nd,Trifoglio da seme (trifoglio),340.0,170.0,,tq,gran,no,,,,0.0,0.0,0.0,
+220.0,1.0,BL1,1° taglio,Bietola da foglia,340.0,,,tq,foglie,sì,,,11.5,60.0,30.0,90.0,RR n. 2/2024
+221.0,1.0,BL1,2° taglio o succ.,Bietola da foglia,340.0,,,tq,foglie,sì,,,11.5,30.0,30.0,60.0,RR n. 2/2024
+222.0,3.0,BL3,1° taglio,Cicorino,340.0,,,tq,foglie,sì,,,12.0,60.0,40.0,100.0,RR n. 2/2024
+223.0,3.0,BL5,2° taglio o succ.,Cicorino,340.0,,,tq,foglie,sì,,,12.0,40.0,40.0,80.0,RR n. 2/2024
+224.0,5.0,BL5,1° taglio,Foglie e steli di Brassica,340.0,,,tq,foglie,sì,,,10.0,40.0,20.0,60.0,RR n. 2/2024
+225.0,5.0,BL5,2° taglio o succ.,Foglie e steli di Brassica,340.0,,,tq,foglie,sì,,,10.0,20.0,20.0,40.0,RR n. 2/2024
+226.0,7.0,BL7,un ciclo intero,Lattuga da cespo,340.0,,,tq,foglie,sì,,,32.0,110.0,30.0,140.0,RR n. 2/2024
+227.0,8.0,BL8,1° taglio,Lattughino 1° taglio,340.0,,,tq,foglie,sì,,,11.5,25.0,20.0,45.0,RR n. 2/2024
+228.0,9.0,BL9,2° taglio o succ.,Lattughino 2° taglio,340.0,,,tq,foglie,sì,,,11.5,15.0,20.0,35.0,RR n. 2/2024
+229.0,10.0,BL10,1° taglio,Rucola 1° taglio,340.0,,,tq,foglie,sì,,,8.5,40.0,20.0,60.0,RR n. 2/2024
+230.0,11.0,BL11,2° taglio o succ.,Rucola 2° taglio,340.0,,,tq,foglie,sì,,,8.5,15.0,20.0,35.0,RR n. 2/2024
+231.0,12.0,BL12,1° taglio,Spinacino 1° taglio,340.0,,,tq,foglie,sì,,,6.0,25.0,20.0,45.0,RR n. 2/2024
+232.0,13.0,BL13,2° taglio o succ.,Spinacino 2° taglio,340.0,,,tq,foglie,sì,,,6.0,15.0,20.0,35.0,RR n. 2/2024
+233.0,14.0,BL14,un ciclo intero,Valerianella,340.0,,,tq,foglie,sì,,,9.0,40.0,20.0,60.0,RR n. 2/2024
+234.0,15.0,BL15,un ciclo intero,baby leaf generica,340.0,,,tq,foglie,sì,,,10.0,40.0,20.0,60.0,RR n. 2/2024
+1.0,2.0,3,4,5,6.0,7.0,8.0,9,10,11,12.0,13.0,14.0,15.0,16.0,17.0,18
+,,ID_Coltura,fase,Coltura attualmente selezionata,,,,,,,,,,,,,nota
+50.0,17.0,E17,nd,Grano duro (pianta intera),120.0,190.0,6.0,tq,gran,no,6.0,87.0,6.0,160.0,40.0,200.0,RR n. 2/2024
+,,ID_Pre,,Precessione,,,,,,,,,,,,,kg/ha
+,,6,,Mais stocchi asportati,,0.0,,,,,-10.0,,6.0,,,142.24599999999998,200

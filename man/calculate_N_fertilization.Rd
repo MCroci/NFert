@@ -9,8 +9,8 @@ calculate_N_fertilization(n_balance, method = "standard")
 \arguments{
 \item{n_balance}{A data frame returned by \code{N_balance()} containing nitrogen balance components.}
 
-\item{method}{The calculation method to use. Default is "standard" which uses the formula:
-N_fert = A - B + C1 + C2 + D - E - Forg - G}
+\item{method}{The calculation method to use. Default is "standard" which uses the DPI formula:
+N_fert = A - B + C1 + C2 + D - E - F - Forg - G}
 }
 \value{
 A numeric value representing the nitrogen fertilization requirement in kg/ha.
@@ -22,9 +22,9 @@ Calculates the final nitrogen fertilization requirement (N_fert) from a nitrogen
 This function calculates the final nitrogen fertilization requirement based on the nitrogen
 balance components. If the result is negative, it returns 0 (no fertilization needed).
 
-The standard formula is:
+The standard (DPI) formula is:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{N_fert = A - B + C1 + C2 + D - E - Forg - G
+\if{html}{\out{<div class="sourceCode">}}\preformatted{N_fert = A - B + C1 + C2 + D - E - F - Forg - G
 }\if{html}{\out{</div>}}
 
 Where:
@@ -34,7 +34,8 @@ Where:
 \item C1, C2: Leaching losses
 \item D: Immobilization losses
 \item E: Nitrogen from previous crop residues
-\item Forg: Nitrogen from organic fertilizer
+\item F: Nitrogen from previous years' organic fertilization (0 if not in balance)
+\item Forg: Nitrogen from organic fertilizer (current year)
 \item G: Natural nitrogen contribution
 }
 }

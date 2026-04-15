@@ -1,0 +1,17 @@
+ID_MO,source,frequency,value,source_it
+1,Manures,every year,0.5,Ammendante
+1,Manures,every 2 years,0.3,Ammendante
+1,Manures,every 3 years,0.2,Ammendante
+1,Manures,occasional,0.2,Ammendante
+2,Cattle slurry,every year,0.3,Liquame bovino/digestato
+2,Cattle slurry,every 2 years,0.15,Liquame bovino/digestato
+2,Cattle slurry,every 3 years,0.1,Liquame bovino/digestato
+2,Cattle slurry,occasional,0.0,Liquame bovino/digestato
+3,Pig slurry or poultry manure,every year,0.15,Liquame suino e/o pollina
+3,Pig slurry or poultry manure,every 2 years,0.1,Liquame suino e/o pollina
+3,Pig slurry or poultry manure,every 3 years,0.05,Liquame suino e/o pollina
+3,Pig slurry or poultry manure,occasional,0.0,Liquame suino e/o pollina
+4,None,every year,0.0,Nessuno
+4,None,every 2 years,0.0,Nessuno
+4,None,every 3 years,0.0,Nessuno
+4,None,occasional,0.0,Nessuno

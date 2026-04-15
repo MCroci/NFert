@@ -1,0 +1,23 @@
+ID_Mo,modality_epoch
+1.0,Su terreno nudo  e semina nell'anno successivo
+2.0,Su residui pagliosi e semina nell'anno successivo
+3.0,Alla preparazione del terreno e semina nel medesimo anno
+4.0,In copertura con fertirrigazione
+5.0,In copertura con fertirrigazione a bassa pressione
+6.0,In copertura con interramento
+7.0,In copertura in primavera senza interramento
+8.0,In copertura in estate senza interramento
+9.0,Su residui pagliosi e semina nel medesimo anno 
+10.0,Presemina
+11.0,In copertura nella fase di pieno accestimento (fine inverno)
+12.0,In copertura nella fase di levata
+13.0,Ripresa vegetativa e tagli primaverili
+14.0,Tagli estivi o autunno precoci (< 15/10)
+15.0,Tardo autunno (>15/10)
+16.0,Preimpianto distante dalla crescita
+17.0,Preimpianto vicino alla crescita
+18.0,In primavera su frutteto inerbito o con interramento
+19.0,In estate o fine inverno su frutteto inerbito o con interramento
+20.0,In primavera su frutteto lavorato senza interramento
+21.0,In estate autunno su frutteto lavorato senza interramento
+22.0,Prima o durante il rapido accrescimento

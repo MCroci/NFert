@@ -20,7 +20,13 @@ N_balance(
   source = "Cattle slurry",
   fertorg_frequency = "every year",
   location = "Plain adjacent to urbanized areas",
-  forg_quantity = 100
+  forg_quantity = 100,
+  organic_previous_year_N = 0,
+  soil_group = NULL,
+  distribution_efficiency = NULL,
+  soil_seeding = c("traditional", "no-till"),
+  greenhouse = FALSE,
+  E_to_D = TRUE
 )
 }
 \arguments{
@@ -55,28 +61,55 @@ N_balance(
 \item{location}{Location of the field relative to urban areas.}
 
 \item{forg_quantity}{Quantity of organic fertilizer applied (kg/ha).}
+
+\item{organic_previous_year_N}{Optional. Total N (kg/ha) from organic fertilization
+applied in the previous year (same source/frequency). If provided, term F (residual
+N from previous years' organic, DPI §3.1.6) is included. Default 0.}
+
+\item{soil_group}{Optional. Soil group (e.g. from \code{calc_soil_group_and_id_rag()})
+to use DPI efficiency for current-year organic. If set, \code{distribution_efficiency}
+should also be set.}
+
+\item{distribution_efficiency}{Optional. "efficient", "medium", or "low" (DPI distribution).
+Used with \code{soil_group} for DPI organic N efficiency.}
+
+\item{soil_seeding}{One of \code{"traditional"} (default) or \code{"no-till"}. If \code{"no-till"},
+DPI 2026 detrazione of 3 kg/ha is applied to b1 (N pronto).}
+
+\item{greenhouse}{Logical. If \code{TRUE}, 2 kg/ha are added to D (DPI 2026 in-serra factor).
+Default \code{FALSE}.}
+
+\item{E_to_D}{Logical. If \code{TRUE} (default), a negative \code{E} (precessione che immobilizza,
+es. stocchi interrati = -40) viene sommata a \code{D} come nel foglio C&D di
+Fert_Office v1.26 (cella I21 "E da conteggiare"), e \code{E} in output viene azzerato.
+Se \code{FALSE}, \code{E} resta negativo e il saldo è mantenuto dalla formula in
+\code{calculate_N_fertilization()}.}
 }
 \value{
 A data frame containing the calculated nitrogen balance components (all in kg/ha):
 \itemize{
 \item A: Total nitrogen demand of the crop (kg/ha).
 \item B: Total soil nitrogen supply (sum of b1 and b2) (kg/ha).
-\item b1: Readily available mineral nitrogen in the soil (kg/ha).
-\item b2: Mineralizable nitrogen from soil organic matter (kg/ha).
+\item b1: Readily available mineral nitrogen (DPI B2) (kg/ha).
+\item b2: Mineralizable N from soil organic matter (DPI B1) (kg/ha).
 \item C1: Nitrogen leaching loss in winter (kg/ha).
 \item C2: Nitrogen leaching loss in spring (kg/ha).
-\item D: Nitrogen immobilization loss (kg/ha).
-\item E: Nitrogen from previous crop residues (kg/ha).
-\item Forg: Nitrogen from organic fertilizer (kg/ha).
+\item D: Nitrogen immobilization loss (kg/ha). Includes the abs(E) contribution
+if \code{E_to_D = TRUE} and E < 0, and \code{+2} if \code{greenhouse = TRUE}.
+\item E: Nitrogen from previous crop residues (kg/ha). If \code{E_to_D = TRUE} and
+the raw value is negative, this column reports 0 (moved to D).
+\item F: Nitrogen from previous years' organic fertilization (kg/ha).
+\item Forg: Nitrogen from organic fertilizer (current year, efficient N) (kg/ha).
 \item G: Natural nitrogen contribution (e.g., from rainfall) (kg/ha).
+\item surplus_pluviometrico: Logical flag (DPI 2026 scheda standard).
 }
 }
 \description{
 Calculates the nitrogen balance of a crop considering various soil and environmental factors.
 }
 \details{
-The nitrogen fertilization requirement can be calculated as:
-N_fert = A - B + C1 + C2 + D - E - Forg - G
+The nitrogen fertilization requirement (DPI formula) is:
+N_fert = A - B + C1 + C2 + D - E - F - Forg - G
 }
 \examples{
 N_balance(expected_yield_tons_ha = 15, crop = "Mais trinciato (classe 700)",

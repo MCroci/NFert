@@ -2,7 +2,7 @@
 % Please edit documentation in R/calc_soil_N_available.R
 \name{soil_fertility}
 \alias{soil_fertility}
-\title{Calculate soil fertility parameters.}
+\title{Calculate soil fertility parameters (B = B1 + B2 in DPI).}
 \usage{
 soil_fertility(
   Ntot = 1.2,
@@ -10,13 +10,14 @@ soil_fertility(
   soil.group = "Sandy textures",
   CN = 8,
   ccp = "Autumn-winter crop <150 days",
+  soil_seeding = c("traditional", "no-till"),
   coefN_readily = NFert::coefN_readily,
   coefN_mineralised = NFert::coefN_mineralised,
   coef_time = NFert::coef_time
 )
 }
 \arguments{
-\item{Ntot}{Total nitrogen content in the soil (kg/ha).}
+\item{Ntot}{Total nitrogen content in the soil (e.g. g/kg or ‰).}
 
 \item{SOM}{Soil organic matter content (\%).}
 
@@ -25,15 +26,24 @@ soil_fertility(
 \item{CN}{Carbon-to-nitrogen ratio.}
 
 \item{ccp}{Crop category and planting period (e.g., "Autumn-winter crop <150 days").}
+
+\item{soil_seeding}{Seeding mode, one of \code{"traditional"} (default) or \code{"no-till"}.
+DPI 2026 applies a detrazione of 3 kg N/ha on b1 (readily available N, "N pronto")
+for semina su sodo, because tillage-driven mineralisation is absent. See
+foglio B, cella \verb{Detrazione per semina su sodo = 3} in Fert_Office v1.26.}
+
+\item{coefN_readily, coefN_mineralised, coef_time}{Lookup tables.}
 }
 \value{
-A named vector containing:
+A named list containing:
 \itemize{
-\item b1: N_readily_available: Readily available nitrogen (kg/ha).
-\item b2: N_mineralized: Mineralized nitrogen (kg/ha).
+\item b1: Readily available nitrogen (kg/ha), DPI B2.
+\item b2: Mineralized nitrogen from SOM (kg/ha), DPI B1.
 \item units: The units of the output values ("kg/ha").
 }
 }
 \description{
-This function estimates the amount of readily available and mineralized nitrogen in the soil.
+Estimates readily available and mineralized nitrogen in the soil. DPI naming:
+b1 = readily available N from soil total N (DPI B2); b2 = mineralized N from
+SOM (DPI B1). Total B = b1 + b2.
 }

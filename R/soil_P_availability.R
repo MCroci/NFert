@@ -1,0 +1,146 @@
+#' Classify Olsen phosphorus availability
+#'
+#' Classifies soil phosphorus availability using the Olsen method, following
+#' DPI Emilia-Romagna 2026 (Fert_Office v1.26 foglio `Gri_P`). The input may be
+#' expressed either as elemental P or as P2O5 equivalent; the conversion
+#' factor is P2O5 = P / 0.436681.
+#'
+#' @param value Numeric. Olsen phosphorus value in ppm.
+#' @param unit Either `"P"` or `"P2O5"` (default `"P"`).
+#' @param gri_p.table Lookup table, default `NFert::gri_p.table`.
+#' @param gri_p_meta Conversion metadata, default `NFert::gri_p_meta`.
+#'
+#' @return A list with:
+#'   - `value_ppm_P`, `value_ppm_P2O5`: input converted to both units.
+#'   - `ID_Gri_P`: class id (1 molto bassa ... 5 molto elevata).
+#'   - `rating`: human-readable class.
+#'   - `soil_class`: DPI "Classe dotaz." (`molto scarso`, `scarso`, `normale`, `molto alto`).
+#'   - `strategy`: one of `"Arricchimento"`, `"Mantenimento"`, `"Riduzione"`.
+#'
+#' @examples
+#' classify_P_olsen(value = 15, unit = "P2O5")
+#' classify_P_olsen(value = 6.55, unit = "P")
+#' @export
+classify_P_olsen <- function(value,
+                             unit = c("P", "P2O5"),
+                             gri_p.table = NFert::gri_p.table,
+                             gri_p_meta  = NFert::gri_p_meta) {
+  unit <- match.arg(unit)
+  if (!is.numeric(value) || length(value) != 1 || is.na(value) || value < 0) {
+    stop("`value` must be a single non-negative numeric.")
+  }
+
+  if (unit == "P") {
+    ppm_P    <- value
+    ppm_P2O5 <- value / as.numeric(gri_p_meta$P2O5_to_P[1])
+  } else {
+    ppm_P2O5 <- value
+    ppm_P    <- value * as.numeric(gri_p_meta$P2O5_to_P[1])
+  }
+
+  # Match class by P2O5 range (DPI)
+  t <- gri_p.table
+  id <- NA_integer_
+  rating <- NA_character_
+  soil_class <- NA_character_
+  for (i in seq_len(nrow(t))) {
+    lo <- as.numeric(t$min_P2O5_ppm[i])
+    hi <- as.numeric(t$max_P2O5_ppm[i])
+    if (!is.na(lo) && !is.na(hi) && ppm_P2O5 >= lo && ppm_P2O5 < hi) {
+      id <- as.integer(t$ID_Gri_P[i])
+      rating <- as.character(t$rating[i])
+      soil_class <- as.character(t$`class`[i])
+      break
+    }
+  }
+
+  # DPI-style strategy: scarsa (1,2) = Arricchimento; normale (3,4) = Mantenimento; molto elevata (5) = Riduzione
+  strategy <- if (is.na(id)) NA_character_ else
+    if (id %in% 1:2) "Arricchimento" else
+      if (id %in% 3:4) "Mantenimento" else "Riduzione"
+
+  list(
+    value_ppm_P    = ppm_P,
+    value_ppm_P2O5 = ppm_P2O5,
+    ID_Gri_P       = id,
+    rating         = rating,
+    soil_class     = soil_class,
+    strategy       = strategy
+  )
+}
+
+#' Compute soil P availability terms (B1 / A mantenimento / B2) for the P balance
+#'
+#' Implements the DPI 2026 Allegato 2 logic coded in Fert_Office v1.26 foglio
+#' `Gri_P`: depending on the phosphorus availability class (`Arricchimento`,
+#' `Mantenimento`, `Riduzione`) returns the contribution that goes onto the
+#' NECESSITA' side (B1, A anticipations) or onto the DISPONIBILITA' side (B2).
+#'
+#' The B1 arricchimento term equals the distance of the analytical value from
+#' the upper bound of the "bassa" class (22.9 ppm P2O5), multiplied by the soil
+#' weight at 30 cm (t/ha) and by the P immobilisation factor `f_imm_P = 1.6`.
+#'
+#' @param olsen_value Numeric, Olsen P or P2O5 ppm.
+#' @param unit `"P"` or `"P2O5"` (default `"P"`).
+#' @param soil_group One of `"Sabbiosi"`, `"Medio impasto"`, `"Argillosi e limosi"`
+#'   (must match `ragg_tes.table$group`).
+#' @param A_demand_P2O5 Crop P2O5 demand (kg/ha) (from `calc_crop_P_demand()`).
+#' @param depth_cm Soil depth used for weight (default 30 cm).
+#' @param gri_p.table,gri_p_meta,ragg_tes.table Lookup tables.
+#'
+#' @return A list with `strategy`, `B1` (arricchimento kg/ha), `A_mantenimento`,
+#'   `B2` (riduzione kg/ha), and diagnostic `soil_weight_t_ha`, `f_imm_P`.
+#' @examples
+#' soil_P_availability(olsen_value = 15, unit = "P2O5",
+#'                     soil_group = "Medio impasto", A_demand_P2O5 = 63.6)
+#' @export
+soil_P_availability <- function(olsen_value,
+                                unit = c("P", "P2O5"),
+                                soil_group,
+                                A_demand_P2O5,
+                                depth_cm = 30,
+                                gri_p.table = NFert::gri_p.table,
+                                gri_p_meta  = NFert::gri_p_meta,
+                                ragg_tes.table = NFert::ragg_tes.table) {
+  unit <- match.arg(unit)
+  cls <- classify_P_olsen(olsen_value, unit = unit,
+                          gri_p.table = gri_p.table, gri_p_meta = gri_p_meta)
+
+  # Universal join on ID_Rag (works regardless of the textual convention)
+  id_rag <- normalise_soil_group(soil_group)$id_rag
+  rt_idx <- match(id_rag, ragg_tes.table$ID_Rag)
+  if (is.na(rt_idx)) {
+    stop(sprintf("ID_Rag %d not found in ragg_tes.table.", id_rag))
+  }
+  weight_col <- paste0("peso_", depth_cm, "cm")
+  if (!(weight_col %in% names(ragg_tes.table))) {
+    stop(sprintf("Soil weight column '%s' not found in ragg_tes.table.", weight_col))
+  }
+  soil_weight_t_ha <- as.numeric(ragg_tes.table[[weight_col]][rt_idx])
+  f_imm <- as.numeric(gri_p_meta$f_imm_P[1])
+
+  # Upper bound of "bassa" class = 22.9 ppm P2O5 (DPI 2026)
+  # Deficit (positive) when P2O5 ppm < 22.9
+  upper_bassa <- max(gri_p.table$max_P2O5_ppm[gri_p.table$ID_Gri_P == 2], na.rm = TRUE)
+
+  B1 <- 0
+  A_mant <- A_demand_P2O5
+  B2 <- 0
+  if (!is.na(cls$strategy) && cls$strategy == "Arricchimento") {
+    deficit <- max(0, upper_bassa - cls$value_ppm_P2O5)
+    B1 <- deficit * soil_weight_t_ha / 1000 * f_imm
+  } else if (!is.na(cls$strategy) && cls$strategy == "Riduzione") {
+    A_mant <- 0
+  }
+
+  list(
+    strategy = cls$strategy,
+    ID_Gri_P = cls$ID_Gri_P,
+    rating   = cls$rating,
+    B1 = B1,
+    A_mantenimento = A_mant,
+    B2 = B2,
+    soil_weight_t_ha = soil_weight_t_ha,
+    f_imm_P = f_imm
+  )
+}
