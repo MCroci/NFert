@@ -4,7 +4,7 @@
 #'
 #' @param expected_yield_tons_ha Expected crop yield in tons per hectare.
 #' @param crop Name of the crop.
-#' @param ccp Crop calendar period (e.g., "Spring-summer crop 100–130 days").
+#' @param ccp Crop calendar period (e.g., "Spring-summer crop 100-130 days").
 #' @param sand Percentage of sand in the soil.
 #' @param clay Percentage of clay in the soil.
 #' @param Ntot Total nitrogen content in the soil (%).
@@ -17,26 +17,24 @@
 #' @param source Source of organic fertilizer (e.g., "Cattle slurry").
 #' @param fertorg_frequency Frequency of organic fertilizer application (e.g., "every year").
 #' @param location Location of the field relative to urban areas.
-#' @param forg_quantity Quantity of organic fertilizer applied (m³/ha or t/ha, depending on source).
+#' @param forg_quantity Quantity of organic fertilizer applied (m3/ha or t/ha, depending on source).
 #'   Use \code{0} for no organic application: \code{Forg} is set to 0 without calling
 #'   \code{organic_fertilization()}.
 #' @param organic_previous_year_N Optional. Total N (kg/ha) from organic fertilization
 #'   applied in the previous year (same source/frequency). If provided, term F (residual
-#'   N from previous years' organic, DPI §3.1.6) is included. Default 0.
+#'   N from previous years' organic, DPI section 3.1.6) is included. Default 0.
 #' @param soil_group Optional. Soil group (e.g. from \code{calc_soil_group_and_id_rag()})
 #'   to use DPI efficiency for current-year organic. If set, \code{distribution_efficiency}
 #'   should also be set.
 #' @param distribution_efficiency Optional. "efficient", "medium", or "low" (DPI distribution).
 #'   Used with \code{soil_group} for DPI organic N efficiency.
 #' @param soil_seeding One of `"traditional"` (default) or `"no-till"`. If `"no-till"`,
-#'   DPI 2026 detrazione of 3 kg/ha is applied to b1 (N pronto).
-#' @param greenhouse Logical. If `TRUE`, 2 kg/ha are added to D (DPI 2026 in-serra factor).
+#'   DPI 2026 applies a 3 kg/ha reduction to b1 (readily available N).
+#' @param greenhouse Logical. If `TRUE`, 2 kg/ha are added to D (DPI 2026 greenhouse factor).
 #'   Default `FALSE`.
-#' @param E_to_D Logical. If `TRUE` (default), a negative `E` (precessione che immobilizza,
-#'   es. stocchi interrati = -40) viene sommata a `D` come nel foglio C&D di
-#'   Fert_Office v1.26 (cella I21 "E da conteggiare"), e `E` in output viene azzerato.
-#'   Se `FALSE`, `E` resta negativo e il saldo è mantenuto dalla formula in
-#'   `calculate_N_fertilization()`.
+#' @param E_to_D Logical. If `TRUE` (default), negative `E` (e.g. buried stalks = -40) is
+#'   added to `D` as in Fert_Office v1.26 sheet C&D, and `E` in the output is set to 0.
+#'   If `FALSE`, `E` stays negative and the balance uses `calculate_N_fertilization()`.
 #'
 #' @return A data frame containing the calculated nitrogen balance components (all in kg/ha):
 #'         \itemize{
@@ -53,7 +51,7 @@
 #'           \item F: Nitrogen from previous years' organic fertilization (kg/ha).
 #'           \item Forg: Nitrogen from organic fertilizer (current year, efficient N) (kg/ha).
 #'           \item G: Natural nitrogen contribution (e.g., from rainfall) (kg/ha).
-#'           \item surplus_pluviometrico: Logical flag (DPI 2026 scheda standard).
+#'           \item surplus_pluviometrico: Logical flag (DPI 2026 standard sheet, surplus rain).
 #'         }
 #'
 #' @details The nitrogen fertilization requirement (DPI formula) is:
@@ -62,14 +60,14 @@
 #'
 #' @examples
 #' N_balance(expected_yield_tons_ha = 15, crop = "Mais trinciato (classe 700)",
-#'           ccp = "Spring-summer crop 100–130 days", sand = 50, clay = 35,
+#'           ccp = "Spring-summer crop 100-130 days", sand = 50, clay = 35,
 #'           Ntot = 1.2, SOM = 1.2, CN = 9.5, oxygen_availability = "Normal",
 #'           winter_rain = 160, start_spring_rain = 40,
 #'           prev_crop = "Winter cereals straw removal", source = "Cattle slurry",
 #'           fertorg_frequency = "every year", location = "Plain adjacent to urbanized areas",
 #'           forg_quantity = 100)
 
-N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (granella)", ccp = "Spring-summer crop 100–130 days",
+N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (granella)", ccp = "Spring-summer crop 100-130 days",
                       sand = 50, clay = 35, Ntot = 1.2, SOM = 1.2, CN = 9.5, oxygen_availability = "Normal",
                       winter_rain = 160, start_spring_rain = 40,
                       prev_crop = "Winter cereals straw removal", source = "Cattle slurry", fertorg_frequency = "every year",

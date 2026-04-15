@@ -19,8 +19,9 @@ test_that("N_balance returns correct structure", {
   )
   
   expect_s3_class(result, "data.frame")
-  expect_named(result, c("A", "B", "b1", "b2", "C1", "C2", "D", "E", "F", "Forg", "G"))
-  expect_true(all(is.numeric(result[1, ])))
+  expect_named(result, c("A", "B", "b1", "b2", "C1", "C2", "D", "E", "F", "Forg", "G", "surplus_pluviometrico"))
+  num_cols <- setdiff(names(result), "surplus_pluviometrico")
+  expect_true(all(vapply(num_cols, function(nm) is.numeric(result[[nm]][1]), logical(1))))
   expect_equal(nrow(result), 1)
 })
 

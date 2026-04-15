@@ -53,5 +53,5 @@ tri2 <- function(clay = 10, sand = 35) {
     stop("Invalid clay and sand combination. No corresponding soil texture class found.")
   }
 
-  return(res)
+  as.integer(round(res))
 }

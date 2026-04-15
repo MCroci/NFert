@@ -92,5 +92,6 @@ dose_standard_PK <- function(crop,
 }
 
 #' @rdname dose_standard_PK
+#' @param ... Passed to \code{dose_standard_PK()}.
 #' @export
 scheda_PK <- function(...) dose_standard_PK(...)

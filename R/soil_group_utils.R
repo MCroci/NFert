@@ -58,6 +58,21 @@ normalise_soil_group <- function(x) {
 #' resolve_id_rag("Loamy textures")
 #' resolve_id_rag(clay = 18.5, sand = 15.5)
 #' @export
+#' Resolve soil weight column name in `texture_groups.table`
+#'
+#' Supports both `soil_weight_*cm` (CSV) and legacy `peso_*cm` column names.
+#' @noRd
+.texture_group_weight_col <- function(depth_cm, texture_groups.table) {
+  c1 <- paste0("soil_weight_", depth_cm, "cm")
+  c2 <- paste0("peso_", depth_cm, "cm")
+  if (c1 %in% names(texture_groups.table)) return(c1)
+  if (c2 %in% names(texture_groups.table)) return(c2)
+  stop(sprintf(
+    "No soil weight column for depth %s cm (expected '%s' or '%s') in texture_groups.table.",
+    depth_cm, c1, c2
+  ))
+}
+
 resolve_id_rag <- function(soil_group = NULL, clay = NULL, sand = NULL) {
   if (!is.null(soil_group)) {
     return(normalise_soil_group(soil_group)$id_rag)

@@ -1,3 +1,20 @@
+#' @noRd
+.crop_alias_to_canonical <- function() {
+  # Common English / legacy names -> canonical Italian `uptake_table$crop`
+  stats::setNames(
+    c(
+      "Mais trinciato classe 700",
+      "Mais trinciato classe 700",
+      "Mais trinciato classe 700"
+    ),
+    c(
+      "Mais trinciato (classe 700)",
+      "Maize silage (class 700)",
+      "Shredded corn class 700"
+    )
+  )
+}
+
 #' Resolve a crop name (Italian or English) to its canonical entry
 #'
 #' NFert reference tables (`uptake_table`, `mas.table`, `crops.table`,
@@ -17,22 +34,6 @@
 #' resolve_crop("Durum wheat (whole plant)")
 #' resolve_crop("Grano duro (pianta intera)")
 #' @export
-.crop_alias_to_canonical <- function() {
-  # Common English / legacy names -> canonical Italian `uptake_table$crop`
-  stats::setNames(
-    c(
-      "Mais trinciato classe 700",
-      "Mais trinciato classe 700",
-      "Mais trinciato classe 700"
-    ),
-    c(
-      "Mais trinciato (classe 700)",
-      "Maize silage (class 700)",
-      "Shredded corn class 700"
-    )
-  )
-}
-
 resolve_crop <- function(x, table = NFert::uptake_table) {
   if (!is.character(x) || length(x) != 1 || is.na(x)) {
     stop("`x` must be a single non-NA character.")

@@ -34,7 +34,7 @@ estimate_soil_P_end_of_cycle <- function(P2O5_start_ppm,
   id_rag <- normalise_soil_group(soil_group)$id_rag
   rt_idx <- match(id_rag, texture_groups.table$ID_Rag)
   if (is.na(rt_idx)) stop(sprintf("ID_Rag %d not found in texture_groups.table.", id_rag))
-  w_col <- paste0("peso_", depth_cm, "cm")
+  w_col <- .texture_group_weight_col(depth_cm, texture_groups.table)
   soil_weight_t_ha <- as.numeric(texture_groups.table[[w_col]][rt_idx])
   f_imm <- as.numeric(p_availability_meta$P_immobilisation_factor[1])
 
@@ -72,7 +72,7 @@ estimate_soil_K_end_of_cycle <- function(K2O_start_ppm,
   id_rag <- normalise_soil_group(soil_group)$id_rag
   rt_idx <- match(id_rag, texture_groups.table$ID_Rag)
   if (is.na(rt_idx)) stop(sprintf("ID_Rag %d not found in texture_groups.table.", id_rag))
-  w_col <- paste0("peso_", depth_cm, "cm")
+  w_col <- .texture_group_weight_col(depth_cm, texture_groups.table)
   soil_weight_t_ha <- as.numeric(texture_groups.table[[w_col]][rt_idx])
 
   H <- K_leaching_by_clay(clay_pct)

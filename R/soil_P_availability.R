@@ -112,10 +112,7 @@ soil_P_availability <- function(olsen_value,
   if (is.na(rt_idx)) {
     stop(sprintf("ID_Rag %d not found in texture_groups.table.", id_rag))
   }
-  weight_col <- paste0("peso_", depth_cm, "cm")
-  if (!(weight_col %in% names(texture_groups.table))) {
-    stop(sprintf("Soil weight column '%s' not found in texture_groups.table.", weight_col))
-  }
+  weight_col <- .texture_group_weight_col(depth_cm, texture_groups.table)
   soil_weight_t_ha <- as.numeric(texture_groups.table[[weight_col]][rt_idx])
   f_imm <- as.numeric(p_availability_meta$P_immobilisation_factor[1])
 

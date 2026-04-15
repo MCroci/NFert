@@ -95,7 +95,11 @@ dose_standard_N <- function(crop,
   # Only apply defaults if the user passed a *logical* TRUE; if numeric, use the numeric
   dec_total <- 0
   for (nm in names(dec_defaults)) {
-    v <- decrements[[nm]]
+    v <- if (length(decrements) && !is.null(names(decrements)) && nm %in% names(decrements)) {
+      decrements[[nm]]
+    } else {
+      NULL
+    }
     if (is.null(v)) next
     if (is.logical(v)) {
       if (isTRUE(v)) dec_total <- dec_total + dec_defaults[[nm]]
@@ -109,7 +113,11 @@ dose_standard_N <- function(crop,
                     rain_surplus = 0, compacted_no_till = 10)
   inc_total <- 0
   for (nm in names(inc_defaults)) {
-    v <- increments[[nm]]
+    v <- if (length(increments) && !is.null(names(increments)) && nm %in% names(increments)) {
+      increments[[nm]]
+    } else {
+      NULL
+    }
     if (is.null(v)) next
     if (is.logical(v)) {
       if (isTRUE(v)) inc_total <- inc_total + inc_defaults[[nm]]
@@ -146,5 +154,6 @@ dose_standard_N <- function(crop,
 }
 
 #' @rdname dose_standard_N
+#' @param ... Passed to \code{dose_standard_N()}.
 #' @export
 scheda_N <- function(...) dose_standard_N(...)

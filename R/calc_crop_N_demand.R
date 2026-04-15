@@ -6,8 +6,6 @@
 #' A = unit crop absorption (kg N/t yield) * expected production (t/ha)
 #'
 #' @param expected_yield_tons_ha Expected crop yield in tons per hectare (t/ha).
-#' @param uptake_table A data frame containing unit crop absorptions for different crops.
-#'   It should have at least two columns: "crop" (character) and "N" (numeric).
 #' @param crop The name of the crop for which to calculate the requirement. Must be a valid
 #'   value in the `crop` column of the `uptake_table`.
 #'

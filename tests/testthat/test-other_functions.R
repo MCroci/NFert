@@ -38,7 +38,7 @@ test_that("leaching_loss returns correct structure", {
   )
   
   expect_type(result, "list")
-  expect_named(result, c("C1", "C2"))
+  expect_named(result, c("C1", "C2", "surplus_pluviometrico"))
   expect_true(is.numeric(result$C1))
   expect_true(is.numeric(result$C2))
   expect_true(result$C1 >= 0)

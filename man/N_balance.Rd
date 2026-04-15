@@ -60,7 +60,9 @@ N_balance(
 
 \item{location}{Location of the field relative to urban areas.}
 
-\item{forg_quantity}{Quantity of organic fertilizer applied (kg/ha).}
+\item{forg_quantity}{Quantity of organic fertilizer applied (m³/ha or t/ha, depending on source).
+Use \code{0} for no organic application: \code{Forg} is set to 0 without calling
+\code{organic_fertilization()}.}
 
 \item{organic_previous_year_N}{Optional. Total N (kg/ha) from organic fertilization
 applied in the previous year (same source/frequency). If provided, term F (residual

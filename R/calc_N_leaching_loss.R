@@ -17,7 +17,6 @@
 #' @param oxygen_availability Oxygen availability level in the soil (e.g., "Normal").
 #' @param id_rag Soil drainage index (ID_Rag).
 #' @param b1 Readily available nitrogen in the soil (kg/ha).
-#' @param method Leaching loss calculation method ("precipitation" or "drainage"). Default is "precipitation".
 #'
 #' @return A list containing:
 #'         - C1: Nitrogen leaching loss in the autumn-winter season (kg/ha).

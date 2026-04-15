@@ -61,9 +61,9 @@ estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50,
 
   # Generate diagnostic plots
   if (plot) {
-    oldpar <- par(no.readonly = TRUE)
-    on.exit(par(oldpar))
-    par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+    oldpar <- graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(oldpar))
+    graphics::par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
     # NDVI distribution
     raster::hist(ndvi_raster, main = "NDVI Distribution",
