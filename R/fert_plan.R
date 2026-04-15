@@ -3,10 +3,10 @@
 #' Builds the fertilisation distribution plan for a crop according to DPI
 #' Emilia-Romagna 2026 (Fert_Office v1.26 foglio `Distribuz`). Combines:
 #'
-#' - Organic applications (one or more matrices from `fert_org.table`, with
-#'   efficiency selected from `efficienza.table` by soil group, dose level,
+#' - Organic applications (one or more matrices from `organic_fertilizers.table`, with
+#'   efficiency selected from `efficiency.table` by soil group, dose level,
 #'   and sector of matrix).
-#' - Mineral / synthesis fertilisers (from `concimi.table` or user-specified
+#' - Mineral / synthesis fertilisers (from `mineral_fertilizers.table` or user-specified
 #'   triplets of N, P2O5, K2O titres).
 #'
 #' For each input row the function computes the "useful" contribution to the
@@ -18,21 +18,21 @@
 #' @param soil_group Italian DPI texture group.
 #' @param n_balance,p_balance,k_balance Optional numeric requirements (kg/ha).
 #' @param organic_rows A list of lists, each with:
-#'   - `fertilizer`: name matching `fert_org.table$fertilizer` (or a custom
+#'   - `fertilizer`: name matching `organic_fertilizers.table$fertilizer` (or a custom
 #'     name plus explicit titres)
 #'   - `quantity_t_ha`: amount in t/ha (fresh matter)
 #'   - `year`: application year (e.g. 2024, 2025)
-#'   - `modality_epoch`: ID or label from `mod_distribuz.table`
+#'   - `modality_epoch`: ID or label from `distribution_modalities.table`
 #'   - `level` (optional): efficiency level `"bassa"/"media"/"alta"` if you
 #'     want to override the default selection.
-#'   - Optional `N_pct`, `P2O5_pct`, `K2O_pct`, `ss_pct` override the table.
+#'   - Optional `N_pct`, `P2O5_pct`, `K2O_pct`, `dry_matter_pct` override the table.
 #' @param mineral_rows A list of lists, each with:
-#'   - `concime`: matching `concimi.table$concime`, or custom
+#'   - `fertilizer`: matching `mineral_fertilizers.table$fertilizer`, or custom
 #'   - `quantity_q_ha`: quintals/ha (100 kg/ha)
-#'   - `modality_epoch`: ID or label from `mod_distribuz.table`
+#'   - `modality_epoch`: ID or label from `distribution_modalities.table`
 #'   - `N`, `P2O5`, `K2O` titres (kg per q) if custom.
 #' @param zvn Logical, if TRUE, enforce the ZVN 170 kg N/ha zootec cap.
-#' @param fert_org.table,concimi.table,efficienza.table,mod_distribuz.table,ragg_tes.table Defaults.
+#' @param organic_fertilizers.table,mineral_fertilizers.table,efficiency.table,distribution_modalities.table,texture_groups.table Defaults.
 #'
 #' @return A list with:
 #'   - `rows`: per-application data frame (fertilizer, quantity, delivered N/P/K, efficiency, useful N/P/K)
@@ -45,11 +45,11 @@ plan_distribution <- function(soil_group,
                               organic_rows = list(),
                               mineral_rows = list(),
                               zvn = FALSE,
-                              fert_org.table      = NFert::fert_org.table,
-                              concimi.table       = NFert::concimi.table,
-                              efficienza.table    = NFert::efficienza.table,
-                              mod_distribuz.table = NFert::mod_distribuz.table,
-                              ragg_tes.table      = NFert::ragg_tes.table) {
+                              organic_fertilizers.table      = NFert::organic_fertilizers.table,
+                              mineral_fertilizers.table       = NFert::mineral_fertilizers.table,
+                              efficiency.table    = NFert::efficiency.table,
+                              distribution_modalities.table = NFert::distribution_modalities.table,
+                              texture_groups.table      = NFert::texture_groups.table) {
 
   ID_Rag <- normalise_soil_group(soil_group)$id_rag
 
@@ -57,9 +57,9 @@ plan_distribution <- function(soil_group,
 
   lookup_mod <- function(mod) {
     if (is.numeric(mod)) return(as.integer(mod))
-    idx <- match(mod, mod_distribuz.table$modality_epoch)
+    idx <- match(mod, distribution_modalities.table$modality_epoch)
     if (is.na(idx)) return(NA_integer_)
-    as.integer(mod_distribuz.table$ID_Mo[idx])
+    as.integer(distribution_modalities.table$ID_Mo[idx])
   }
 
   dose_level_from_kg <- function(kg_N) {
@@ -76,17 +76,17 @@ plan_distribution <- function(soil_group,
   for (r in organic_rows) {
     fert <- r$fertilizer
     q    <- if (!is.null(r$quantity_t_ha)) r$quantity_t_ha else 0
-    row_fo <- fert_org.table[fert_org.table$fertilizer == fert, , drop = FALSE]
+    row_fo <- organic_fertilizers.table[organic_fertilizers.table$fertilizer == fert, , drop = FALSE]
     if (nrow(row_fo) == 0 && (is.null(r$N_pct) || is.null(r$P2O5_pct) || is.null(r$K2O_pct))) {
-      warning(sprintf("Organic fertilizer '%s' not in fert_org.table and no titres given; skipping.", fert))
+      warning(sprintf("Organic fertilizer '%s' not in organic_fertilizers.table and no titres given; skipping.", fert))
       next
     }
     N_pct   <- if (!is.null(r$N_pct))    r$N_pct    else as.numeric(row_fo$avg_N[1])
     P_pct   <- if (!is.null(r$P2O5_pct)) r$P2O5_pct else as.numeric(row_fo$avg_P2O5[1])
     K_pct   <- if (!is.null(r$K2O_pct))  r$K2O_pct  else as.numeric(row_fo$avg_K2O[1])
-    ss_pct  <- if (!is.null(r$ss_pct))   r$ss_pct   else as.numeric(row_fo$avg_ss[1])
-    sector  <- if (nrow(row_fo) > 0) as.character(row_fo$tipo[1]) else NA
-    zootec  <- if (nrow(row_fo) > 0) identical(as.character(row_fo$zootec_100pct[1]), "sì") else FALSE
+    dry_matter_pct  <- if (!is.null(r$dry_matter_pct))   r$dry_matter_pct   else as.numeric(row_fo$avg_dm[1])
+    sector  <- if (nrow(row_fo) > 0) as.character(row_fo$type_id[1]) else NA
+    zootec  <- if (nrow(row_fo) > 0) isTRUE(as.logical(row_fo$fully_zootec[1])) else FALSE
 
     # Kg delivered (fresh): titres are kg/t of fresh matter
     N_kg  <- q * N_pct
@@ -100,10 +100,10 @@ plan_distribution <- function(soil_group,
     # Efficiency lookup: (ID_Rag, ID_Liv, sector, N_org_id)
     eff <- NA_real_
     if (!is.na(sector)) {
-      e <- efficienza.table[
-        efficienza.table$ID_Rag == ID_Rag &
-          efficienza.table$ID_Liv == ID_Liv &
-          efficienza.table$ID_Sett == sector, , drop = FALSE]
+      e <- efficiency.table[
+        efficiency.table$ID_Rag == ID_Rag &
+          efficiency.table$ID_Liv == ID_Liv &
+          efficiency.table$sector_id == sector, , drop = FALSE]
       if (nrow(e) > 0) eff <- as.numeric(e$efficiency_pct[1])
     }
     # Fallback: medium-medium-60%
@@ -128,9 +128,9 @@ plan_distribution <- function(soil_group,
 
   # -------- Mineral --------
   for (r in mineral_rows) {
-    conc <- r$concime
+    conc <- r$fertilizer
     q    <- if (!is.null(r$quantity_q_ha)) r$quantity_q_ha else 0
-    row_c <- concimi.table[concimi.table$concime == conc, , drop = FALSE]
+    row_c <- mineral_fertilizers.table[mineral_fertilizers.table$fertilizer == conc, , drop = FALSE]
     if (nrow(row_c) == 0 && (is.null(r$N) || is.null(r$P2O5) || is.null(r$K2O))) {
       warning(sprintf("Mineral '%s' not found and no titres given; skipping.", conc))
       next

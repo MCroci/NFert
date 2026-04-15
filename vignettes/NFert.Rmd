@@ -98,7 +98,7 @@ Let's start with a basic example calculating the nitrogen balance for a wheat cr
 # Calculate nitrogen balance for winter wheat
 wheat_balance <- N_balance(
   expected_yield_tons_ha = 8,
-  crop = "Grano tenero FF (granella)",
+  crop = "Soft wheat FF - strong (grain)",
   ccp = "Autumn-winter crop <150 days",
   sand = 30,
   clay = 25,
@@ -133,7 +133,7 @@ The crop nitrogen demand is calculated based on expected yield and crop-specific
 # Calculate crop nitrogen demand
 crop_demand <- calc_crop_N_demand(
   expected_yield_tons_ha = 10,
-  crop = "Grano tenero FF (granella)"
+  crop = "Soft wheat FF - strong (grain)"
 )
 
 print(crop_demand)
@@ -237,8 +237,8 @@ organic_N <- organic_fertilization(
 
 cat("Organic fertilizer N (Forg):", organic_N, "kg/ha\n")
 
-# Compare different organic sources
-sources <- c("Cattle slurry", "Composted manure", "Pig slurry")
+# Compare different organic sources (names must match `f.table$source`)
+sources <- c("Cattle slurry", "Manures", "Pig slurry or poultry manure")
 organic_comparison <- data.frame(
   source = sources,
   N_contribution = sapply(sources, function(s) {
@@ -272,8 +272,8 @@ Let's work through a complete example for maize production:
 ```{r maize-workflow}
 # Step 1: Define field parameters
 maize_params <- list(
-  expected_yield = 12,  # tons/ha
-  crop = "Shredded corn class 700",
+  expected_yield_tons_ha = 12,  # tons/ha
+  crop = "Mais trinciato classe 700",  # or "Maize silage (class 700)" (alias)
   ccp = "Spring-summer crop 100–130 days",
   clay = 28,
   sand = 32,
@@ -335,7 +335,7 @@ check_MAS("Mais da granella", 250)             # OK (MAS 260 or 280 depending on
 
 # After calculating requirement, verify against MAS
 required_N <- calculate_N_fertilization(wheat_balance)
-check_MAS("Grano tenero FF (granella)", round(required_N, 0))
+check_MAS("Soft wheat FF - strong (grain)", round(required_N, 0))
 ```
 
 Soia: MAS N = 30 kg/ha (ZVN 2025); in case of failed rhizobium, up to 120 kg/ha is allowed. Reductions: −40 kg/ha after prato ≥3 years; −60 kg/ha after medicaio ≥3 years. In ZVN, respect the 170 kg N/ha/year limit from livestock effluents (farm average). All fertilizations must be recorded in field sheets within 7 days (DPI cap. 11).
@@ -348,7 +348,7 @@ Compare different management scenarios for the same field:
 # Base scenario parameters
 base_params <- list(
   expected_yield_tons_ha = 10,
-  crop = "Grano tenero FF (granella)",
+  crop = "Soft wheat FF - strong (grain)",
   ccp = "Autumn-winter crop <150 days",
   clay = 22,
   sand = 30,
@@ -470,8 +470,8 @@ For agricultural consultants managing multiple fields:
 fields_data <- data.frame(
   field_id = c("Field_A", "Field_B", "Field_C"),
   expected_yield = c(9, 11, 8),
-  crop = c("Grano tenero FF (granella)", "Shredded corn class 700", 
-           "Grano tenero FF (granella)"),
+  crop = c("Soft wheat FF - strong (grain)", "Mais trinciato classe 700",
+           "Soft wheat FF - strong (grain)"),
   ccp = c("Autumn-winter crop <150 days", "Spring-summer crop 100–130 days",
           "Autumn-winter crop <150 days"),
   clay = c(20, 30, 18),
@@ -539,7 +539,7 @@ Understand how different factors affect nitrogen requirements:
 # Base scenario
 base_scenario <- N_balance(
   expected_yield_tons_ha = 10,
-  crop = "Grano tenero FF (granella)",
+  crop = "Soft wheat FF - strong (grain)",
   ccp = "Autumn-winter crop <150 days",
   clay = 22, sand = 30,
   Ntot = 1.2, SOM = 2.0, CN = 9,
@@ -559,7 +559,7 @@ SOM_values <- c(1.5, 2.0, 2.5, 3.0, 3.5)
 SOM_impact <- sapply(SOM_values, function(som) {
   sc <- N_balance(
     expected_yield_tons_ha = 10,
-    crop = "Grano tenero FF (granella)",
+    crop = "Soft wheat FF - strong (grain)",
     ccp = "Autumn-winter crop <150 days",
     clay = 22, sand = 30,
     Ntot = 1.2, SOM = som, CN = 9,
@@ -579,7 +579,7 @@ rainfall_values <- c(100, 130, 160, 190, 220)
 rainfall_impact <- sapply(rainfall_values, function(wr) {
   sc <- N_balance(
     expected_yield_tons_ha = 10,
-    crop = "Grano tenero FF (granella)",
+    crop = "Soft wheat FF - strong (grain)",
     ccp = "Autumn-winter crop <150 days",
     clay = 22, sand = 30,
     Ntot = 1.2, SOM = 2.0, CN = 9,
@@ -699,7 +699,7 @@ tryCatch({
 # The function will warn you about NA components
 result <- N_balance(
   expected_yield_tons_ha = 10,
-  crop = "Grano tenero FF (granella)",
+  crop = "Soft wheat FF - strong (grain)",
   ccp = "Autumn-winter crop <150 days",
   sand = 30, clay = 25,
   # ... other parameters

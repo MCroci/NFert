@@ -25,6 +25,9 @@ calc_crop_N_demand <- function(expected_yield_tons_ha = 10,
 
   uptake_table <- NFert::uptake_table
 
+  # Accept either Italian (canonical) or English crop name
+  crop <- resolve_crop(crop, table = uptake_table)
+
   # Error Handling and Input Validation
   if (!crop %in% uptake_table$crop) {
     stop(paste("Crop '", crop, "' not found in the uptake table."))
@@ -34,9 +37,9 @@ calc_crop_N_demand <- function(expected_yield_tons_ha = 10,
     stop("Expected yield must be a positive value.")
   }
 
-  # Extraction and Calculation
-  N_perc <- uptake_table$N[uptake_table$crop == crop]
-  N_requirement_kg_ha <- expected_yield_tons_ha * N_perc * 10  # Directly calculate kg/ha
+  # Extraction and Calculation (use first match if crop appears multiple times)
+  N_perc <- uptake_table$N[uptake_table$crop == crop][1]
+  N_requirement_kg_ha <- expected_yield_tons_ha * N_perc * 10  # kg/ha
 
   # Return with Units
   return(list(

@@ -10,8 +10,8 @@ normalise_soil_group(x)
 \item{x}{Character string. Soil group name in any supported convention.}
 }
 \value{
-A list with \code{id_rag} (1 = Sabbiosi, 2 = Medio impasto,
-3 = Argillosi e limosi), \code{it_plural}, \code{it_singular}, \code{en}.
+A list with \code{id_rag} (1 = Sandy, 2 = Loamy, 3 = Clay), \code{en}
+(canonical English), \code{it_plural}, \code{it_singular}.
 }
 \description{
 NFert tables use three parallel naming conventions for the DPI 2026
@@ -27,10 +27,9 @@ texture grouping:
 "Sabbioso", "Franco", "Argilloso".
 }
 
-This helper accepts any of these forms (case-insensitive, partial match
-allowed for the first two letters) and returns the canonical Italian
-plural form together with the universal \code{ID_Rag} integer key used
-internally to join the lookup tables.
+This helper accepts any of these forms (case-insensitive) and returns the
+canonical English form (used by NFert >= 0.4.0 lookup tables) plus the
+universal \code{ID_Rag} integer key used internally to join the lookup tables.
 }
 \examples{
 normalise_soil_group("Loamy textures")

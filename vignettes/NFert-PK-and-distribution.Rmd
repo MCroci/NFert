@@ -83,7 +83,7 @@ resolve_id_rag(clay = 18.5, sand = 15.5)
 
 ```{r setup, message = FALSE}
 # Crop and yield
-crop  <- "Grano duro (pianta intera)"
+crop  <- "Durum wheat (whole plant)"
 yield <- 6   # t/ha
 
 # Soil (sample: Sabbia 15.5%, Argilla 18.5% -> FL, Medio impasto)
@@ -130,7 +130,7 @@ classify_carbonate_att(caco3_att)
 classify_SOM(SOM = SOM, soil_group = "Medio impasto")
 
 # Maximum annual SO input (for ammendanti)
-max_SO_input("Normale")
+max_SO_input("normal")
 ```
 
 # Nitrogen balance (Allegato 2)
@@ -336,7 +336,7 @@ scheda_N(
 )
 ```
 
-When the cumulated dose overshoots `dose_max_N`, the function caps it and
+When the cumulated dose overshoots `max_N_dose`, the function caps it and
 flags `mas_exceeded = TRUE`:
 
 ```{r scheda-n-cap}
@@ -353,15 +353,15 @@ For P and K the base dose depends on the initial soil dotation class:
 ```{r scheda-pk}
 scheda_PK(
   crop = crop,
-  soil_P_class = "Normale",
-  soil_K_class = "Normale"
+  soil_P_class = "normal",
+  soil_K_class = "normal"
 )
 
 # Example: enrichment under low P dotation
 scheda_PK(
   crop = crop,
-  soil_P_class = "Bassa",
-  soil_K_class = "Normale",
+  soil_P_class = "low",
+  soil_K_class = "normal",
   P_increments = c(ristoppio = 20)
 )
 ```
@@ -371,9 +371,9 @@ scheda_PK(
 Once the required N, P, K doses are known, the plan distributes them across
 epochs and methods. `plan_distribution()` accepts:
 
-- A list of organic applications (matrix name from `fert_org.table`,
+- A list of organic applications (matrix name from `organic_fertilizers.table`,
   quantity in t/ha, year, modality-epoch id, optional efficiency level).
-- A list of mineral applications (name from `concimi.table`, quantity in
+- A list of mineral applications (name from `mineral_fertilizers.table`, quantity in
   q/ha, modality-epoch).
 - Optional target doses (for Eccesso/Deficit alerts) and a ZVN flag.
 
@@ -391,7 +391,7 @@ plan <- plan_distribution(
          level         = "media")
   ),
   mineral_rows = list(
-    list(concime       = "UREA AGRICOLA PRIL.46%",
+    list(fertilizer       = "UREA AGRICOLA PRIL.46%",
          quantity_q_ha = 3,
          modality_epoch = 11)
   ),
@@ -410,11 +410,11 @@ plan$zvn_alert
 
 ## Choosing a distribution modality
 
-Modalities are catalogued in `mod_distribuz.table` and their compatibility
-with crop cycles in `ciclo_modalita.table`:
+Modalities are catalogued in `distribution_modalities.table` and their compatibility
+with crop cycles in `cycle_modality.table`:
 
 ```{r mod}
-head(NFert::mod_distribuz.table, 12)
+head(NFert::distribution_modalities.table, 12)
 ```
 
 ## Fertiliser sources
@@ -423,11 +423,11 @@ Available organic matrices and mineral products:
 
 ```{r fert-sources}
 # Organic: 21 matrices with their N, P, K and dry-matter titres
-head(NFert::fert_org.table[, c("fertilizer", "avg_ss", "avg_N",
-                               "avg_P2O5", "avg_K2O", "zootec_100pct")], 10)
+head(NFert::organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
+                               "avg_P2O5", "avg_K2O", "fully_zootec")], 10)
 
 # Mineral: 146 commercial fertilisers
-head(NFert::concimi.table, 10)
+head(NFert::mineral_fertilizers.table, 10)
 ```
 
 ## DPI 2026 organic N efficiency
@@ -439,10 +439,10 @@ matrix has 220 entries:
 
 ```{r eff}
 # Medium impasto, dose media (125-249 kg N/ha), bovino:
-NFert::efficienza.table[
-  NFert::efficienza.table$ID_Rag == 2 &
-    NFert::efficienza.table$ID_Liv == 2 &
-    NFert::efficienza.table$ID_Sett == "bov",
+NFert::efficiency.table[
+  NFert::efficiency.table$ID_Rag == 2 &
+    NFert::efficiency.table$ID_Liv == 2 &
+    NFert::efficiency.table$sector_id == "bov",
 ]
 ```
 
@@ -477,7 +477,7 @@ A second scenario with different crop, cycle, irrigation and precessione.
 ```{r maize}
 mais_bal <- N_balance(
   expected_yield_tons_ha = 15,
-  crop = "Mais trinciato (classe 700)",
+  crop = "Maize silage (class 700)",
   ccp  = "Spring-summer crop 100-130 days",
   sand = 50, clay = 30,
   Ntot = 1.2, SOM = 1.6, CN = 10,
@@ -629,7 +629,7 @@ plan_vr <- plan_distribution(
   n_balance  = n_dose, p_balance = 0, k_balance = 0,
   organic_rows = list(),
   mineral_rows = list(
-    list(concime       = "UREA AGRICOLA PRIL.46%",
+    list(fertilizer       = "UREA AGRICOLA PRIL.46%",
          quantity_q_ha = q_urea_per_ha,
          modality_epoch = 11)            # In copertura - pieno accestimento
   )
@@ -659,18 +659,18 @@ NFert exposes 33 internal tables; the most useful in day-to-day work:
 ```{r tables}
 # Crop master list
 head(NFert::uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
-                              "yield_ref")], 5)
+                              "reference_yield")], 5)
 
 # MAS (massimali) 2026
-head(NFert::mas.table[, c("crop_id", "crop", "MAS_N", "N_standard",
-                           "dose_max_N")], 5)
+head(NFert::mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
+                           "max_N_dose")], 5)
 
 # Gri_P and Gri_K classes
-NFert::gri_p.table
-NFert::gri_k.table
+NFert::p_availability.table
+NFert::k_availability.table
 
 # Texture grouping with soil weights
-NFert::ragg_tes.table
+NFert::texture_groups.table
 ```
 
 # Notes and limitations
@@ -681,7 +681,7 @@ NFert::ragg_tes.table
 - The `plan_distribution()` function checks totals vs balance targets and
   the ZVN 170 kg N/ha limit, but does not yet check MAS per single
   application nor the specific modality-cycle DPI constraints
-  (`ciclo_modalita.table`). A future release will add these checks.
+  (`cycle_modality.table`). A future release will add these checks.
 - The `s2.rast` dataset is a minimal Sentinel-2 NDVI raster used only for
   vignettes and examples; for production use, replace it with your own NDVI
   raster (Sentinel-2, drone, or any other source) at the desired

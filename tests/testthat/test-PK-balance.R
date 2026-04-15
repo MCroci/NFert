@@ -13,6 +13,34 @@
 library(testthat)
 context("DPI 2026 P & K balance benchmark")
 
+test_that("resolve_crop accepts Italian or English crop names", {
+  skip_if_not_installed("NFert")
+  # Italian (canonical) works
+  expect_equal(resolve_crop("Grano duro (pianta intera)"),
+               "Grano duro (pianta intera)")
+  # English alias resolves to canonical Italian
+  expect_equal(resolve_crop("Durum wheat (whole plant)"),
+               "Grano duro (pianta intera)")
+  # Case-insensitive English
+  expect_equal(resolve_crop("durum wheat (whole plant)"),
+               "Grano duro (pianta intera)")
+})
+
+test_that("calc_crop_N_demand and P_balance accept English crop names", {
+  skip_if_not_installed("NFert")
+  d_it <- calc_crop_N_demand(6, "Grano duro (pianta intera)")
+  d_en <- calc_crop_N_demand(6, "Durum wheat (whole plant)")
+  expect_equal(d_it$N_requirement, d_en$N_requirement)
+
+  p_it <- P_balance(6, "Grano duro (pianta intera)",
+                    olsen_value = 15, olsen_unit = "P2O5",
+                    clay = 18.5, sand = 15.5)
+  p_en <- P_balance(6, "Durum wheat (whole plant)",
+                    olsen_value = 15, olsen_unit = "P2O5",
+                    clay = 18.5, sand = 15.5)
+  expect_equal(p_it$P2O5_required, p_en$P2O5_required)
+})
+
 test_that("normalise_soil_group accepts all naming conventions", {
   skip_if_not_installed("NFert")
   # Italian plural (canonical)
@@ -30,7 +58,7 @@ test_that("normalise_soil_group accepts all naming conventions", {
   # Case-insensitive
   expect_equal(normalise_soil_group("medio impasto")$id_rag, 2L)
   # Returns canonical Italian plural
-  expect_equal(normalise_soil_group("Loamy textures")$it_plural, "Medio impasto")
+  expect_equal(normalise_soil_group("Loamy textures")$en, "Medio impasto")
   expect_equal(normalise_soil_group("Franco")$en, "Loamy textures")
   # Unknown -> error
   expect_error(normalise_soil_group("foo"))
@@ -121,7 +149,7 @@ test_that("plan_distribution aggregates organic + mineral and checks excess", {
     organic_rows = list(list(fertilizer = "letame bovino",
                              quantity_t_ha = 20, year = 2025,
                              modality_epoch = 1, level = "media")),
-    mineral_rows = list(list(concime = "UREA AGRICOLA PRIL.46%",
+    mineral_rows = list(list(fertilizer = "UREA AGRICOLA PRIL.46%",
                              quantity_q_ha = 3,
                              modality_epoch = 11)),
     zvn = TRUE
@@ -150,7 +178,7 @@ test_that("end-of-cycle soil P estimation returns consistent ppm", {
 test_that("scheda_PK returns base doses for grano duro", {
   skip_if_not_installed("NFert")
   r <- scheda_PK(crop = "Grano duro (pianta intera)",
-                 soil_P_class = "Normale", soil_K_class = "Normale")
+                 soil_P_class = "normal", soil_K_class = "normal")
   expect_true(!is.na(r$dose_base_P2O5))
   expect_true(!is.na(r$dose_base_K2O))
   expect_equal(r$dose_final_P2O5, r$dose_base_P2O5)  # no adjustments
@@ -162,5 +190,5 @@ test_that("soil chemistry classifiers work", {
   expect_equal(classify_carbonate_tot(15)$class, "Mediamente calcareo")
   expect_equal(classify_carbonate_att(6.8)$class, "Elevato")
   expect_equal(classify_CEC(18)$class, "media")
-  expect_equal(max_SO_input("Normale"), 11)
+  expect_equal(max_SO_input("normal"), 11)
 })

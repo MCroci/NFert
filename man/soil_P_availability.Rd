@@ -10,9 +10,9 @@ soil_P_availability(
   soil_group,
   A_demand_P2O5,
   depth_cm = 30,
-  gri_p.table = NFert::gri_p.table,
-  gri_p_meta = NFert::gri_p_meta,
-  ragg_tes.table = NFert::ragg_tes.table
+  p_availability.table = NFert::p_availability.table,
+  p_availability_meta = NFert::p_availability_meta,
+  texture_groups.table = NFert::texture_groups.table
 )
 }
 \arguments{
@@ -21,17 +21,17 @@ soil_P_availability(
 \item{unit}{\code{"P"} or \code{"P2O5"} (default \code{"P"}).}
 
 \item{soil_group}{One of \code{"Sabbiosi"}, \code{"Medio impasto"}, \code{"Argillosi e limosi"}
-(must match \code{ragg_tes.table$group}).}
+(must match \code{texture_groups.table$group}).}
 
 \item{A_demand_P2O5}{Crop P2O5 demand (kg/ha) (from \code{calc_crop_P_demand()}).}
 
 \item{depth_cm}{Soil depth used for weight (default 30 cm).}
 
-\item{gri_p.table, gri_p_meta, ragg_tes.table}{Lookup tables.}
+\item{p_availability.table, p_availability_meta, texture_groups.table}{Lookup tables.}
 }
 \value{
 A list with \code{strategy}, \code{B1} (arricchimento kg/ha), \code{A_mantenimento},
-\code{B2} (riduzione kg/ha), and diagnostic \code{soil_weight_t_ha}, \code{f_imm_P}.
+\code{B2} (riduzione kg/ha), and diagnostic \code{soil_weight_t_ha}, \code{P_immobilisation_factor}.
 }
 \description{
 Implements the DPI 2026 Allegato 2 logic coded in Fert_Office v1.26 foglio
@@ -42,7 +42,7 @@ NECESSITA' side (B1, A anticipations) or onto the DISPONIBILITA' side (B2).
 \details{
 The B1 arricchimento term equals the distance of the analytical value from
 the upper bound of the "bassa" class (22.9 ppm P2O5), multiplied by the soil
-weight at 30 cm (t/ha) and by the P immobilisation factor \code{f_imm_P = 1.6}.
+weight at 30 cm (t/ha) and by the P immobilisation factor \code{P_immobilisation_factor = 1.6}.
 }
 \examples{
 soil_P_availability(olsen_value = 15, unit = "P2O5",

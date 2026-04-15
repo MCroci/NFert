@@ -9,14 +9,14 @@
 #' @name NFert-data
 #' @aliases uptake_table e.table f.table g.table soil.table tri2.table tri3.table
 #'          ca.table cb.table coefN_readily coefN_mineralised coef_time s2.rast
-#'          mas.table crops.table gruppo.table ragg_tes.table so.table
-#'          so_max_input ph.table calcare_tot.table calcare_att.table
-#'          gri_p.table gri_p_meta gri_k.table tipo_fert.table fert_org.table
-#'          efficienza.table mod_distribuz.table ciclo_modalita.table
-#'          cicli.table cicli_fase.table cd.table
+#'          mas.table crops.table crop_groups.table texture_groups.table so.table
+#'          so_max_input ph.table total_carbonate.table active_carbonate.table
+#'          p_availability.table p_availability_meta k_availability.table fertilizer_types.table organic_fertilizers.table
+#'          efficiency.table distribution_modalities.table cycle_modality.table
+#'          cycles.table cycle_phases.table c_d.table
 #'          standard_pk_doses.table standard_decrements.table
 #'          standard_increments.table standard_multicycle.table
-#'          concimi.table
+#'          mineral_fertilizers.table
 #'
 #' @details
 #' These datasets are loaded automatically with the package using `LazyData: true`
@@ -47,38 +47,38 @@
 #'   \item{coefN_mineralised}{Mineralisation coefficient per soil group x C/N.}
 #'   \item{coef_time}{`C_tempo` time adjustment factors by phase x cycle; in
 #'         v0.2.0 also carries DPI 2026 percentages for N, P2O5 and K2O allowed
-#'         per phase, plus `anticipazioni` and `allevamento` flags.}
+#'         per phase, plus `advance_allowed` and `husbandry` flags.}
 #'   \item{s2.rast}{Example Sentinel-2 NDVI raster for vignettes.}
 #' }
 #'
 #' @section DPI 2026 additional lookup tables (v0.2.0):
 #' \describe{
 #'   \item{mas.table}{Maximum allowed doses (MAS) per crop (DPI 2026, RR 2/2024);
-#'         includes standard N dose, MAS_N, incremento_max, dose_max_N.}
+#'         includes standard N dose, MAS_N, max_increment, max_N_dose.}
 #'   \item{crops.table}{Crop master list with genus/species, N fixation % and
-#'         `detrazione_sodo` flag (from foglio `Coltura`).}
-#'   \item{gruppo.table}{6 crop macro-groups: arboree, erbacee, foraggere,
+#'         `no_till_reduction` flag (from foglio `Coltura`).}
+#'   \item{crop_groups.table}{6 crop macro-groups: arboree, erbacee, foraggere,
 #'         orticole, da_seme, baby_life.}
-#'   \item{ragg_tes.table}{Texture grouping with `peso_specifico`, P
+#'   \item{texture_groups.table}{Texture grouping with `specific_weight`, P
 #'         immobilisation factor and soil weight at 20/30/40/50 cm.}
 #'   \item{so.table, so_max_input}{SOM class (12) and maximum annual SO input
 #'         (t ss/ha) per class.}
 #'   \item{ph.table}{Soil pH classes (7).}
-#'   \item{calcare_tot.table, calcare_att.table}{Total and active carbonate
+#'   \item{total_carbonate.table, active_carbonate.table}{Total and active carbonate
 #'         classes for soil reactivity.}
-#'   \item{gri_p.table, gri_p_meta}{Olsen-P availability classes and
+#'   \item{p_availability.table, p_availability_meta}{Olsen-P availability classes and
 #'         P <-> P2O5 conversion + P immobilisation factor.}
-#'   \item{gri_k.table}{Exchangeable-K availability classes per texture grouping.}
-#'   \item{tipo_fert.table}{Fertiliser type classification (11 classes).}
-#'   \item{fert_org.table}{21 organic matrices with ss, N, P2O5, K2O (min/avg/max),
+#'   \item{k_availability.table}{Exchangeable-K availability classes per texture grouping.}
+#'   \item{fertilizer_types.table}{Fertiliser type classification (11 classes).}
+#'   \item{organic_fertilizers.table}{21 organic matrices with ss, N, P2O5, K2O (min/avg/max),
 #'         zootec flag, SO increment.}
-#'   \item{efficienza.table}{DPI 2026 organic N efficiency: ID_Rag x level x
+#'   \item{efficiency.table}{DPI 2026 organic N efficiency: ID_Rag x level x
 #'         sector x dose (220 rows).}
-#'   \item{mod_distribuz.table}{22 distribution modalities (epoch + technique).}
-#'   \item{ciclo_modalita.table}{Compatibility matrix crop-cycle x distribution
+#'   \item{distribution_modalities.table}{22 distribution modalities (epoch + technique).}
+#'   \item{cycle_modality.table}{Compatibility matrix crop-cycle x distribution
 #'         modality x efficiency level.}
-#'   \item{cicli.table, cicli_fase.table}{Crop cycles (6) and phase-duration (17).}
-#'   \item{cd.table}{Combined C (leaching) and fc_D (immobilisation) lookup
+#'   \item{cycles.table, cycle_phases.table}{Crop cycles (6) and phase-duration (17).}
+#'   \item{c_d.table}{Combined C (leaching) and fc_D (immobilisation) lookup
 #'         (foglio C&D of Fert_Office v1.26).}
 #' }
 #'
@@ -93,20 +93,20 @@
 #'   \item{standard_increments.table}{Crop-level catalogue of increment
 #'         factors (Resa alta, SO basso, Ristoppio paglie, Surplus pluvio,
 #'         Terreno compattato, ecc.) for the scheda method; includes
-#'         N_Inc_Max, Inc_P2O5_Max, Inc_K2O_Max DPI 2026 caps.}
+#'         inc_N_max, Inc_P2O5_Max, Inc_K2O_Max DPI 2026 caps.}
 #'   \item{standard_multicycle.table}{Pluriennali and multi-cut specific
-#'         data (I/II anno allevamento, inizio produzione, incremento per
+#'         data (I/II anno husbandry, inizio produzione, incremento per
 #'         taglio by K dotation class).}
-#'   \item{concimi.table}{146 mineral / organo-mineral fertilisers from
+#'   \item{mineral_fertilizers.table}{146 mineral / organo-mineral fertilisers from
 #'         Fert_Office v1.26 foglio Concimi with N, P2O5, K2O titres (kg/q).}
 #' }
 #'
 #' @examples
 #' head(NFert::uptake_table)
 #' head(NFert::mas.table)
-#' head(NFert::gri_p.table)
-#' head(NFert::gri_k.table)
-#' head(NFert::fert_org.table)
+#' head(NFert::p_availability.table)
+#' head(NFert::k_availability.table)
+#' head(NFert::organic_fertilizers.table)
 #'
 #' @keywords datasets internal
 NULL

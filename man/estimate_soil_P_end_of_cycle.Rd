@@ -11,8 +11,8 @@ estimate_soil_P_end_of_cycle(
   P2O5_removed,
   soil_group,
   depth_cm = 30,
-  ragg_tes.table = NFert::ragg_tes.table,
-  gri_p_meta = NFert::gri_p_meta
+  texture_groups.table = NFert::texture_groups.table,
+  p_availability_meta = NFert::p_availability_meta
 )
 }
 \arguments{
@@ -28,7 +28,7 @@ estimate_soil_P_end_of_cycle(
 
 \item{depth_cm}{Soil depth (default 30 cm).}
 
-\item{ragg_tes.table, gri_p_meta}{Lookups.}
+\item{texture_groups.table, p_availability_meta}{Lookups.}
 }
 \value{
 Numeric ppm P2O5 at end of cycle.
@@ -40,7 +40,7 @@ soil P2O5 at the end of the cycle in ppm P2O5 (useful as input for the
 following year's calculation). Formula from Fert_Office v1.26 foglio
 \verb{Gri_P!C27}:
 \preformatted{
-  P2O5_end_ppm = P2O5_start_ppm + (P2O5_applied - P2O5_removed) / (peso_30cm/1000) / f_imm_P
+  P2O5_end_ppm = P2O5_start_ppm + (P2O5_applied - P2O5_removed) / (soil_weight_30cm/1000) / P_immobilisation_factor
 }
 }
 \examples{

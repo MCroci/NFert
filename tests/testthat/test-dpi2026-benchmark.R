@@ -76,7 +76,7 @@ test_that("scheda_N cap at MAS when decrements < increments overshoot dose_max",
     increments = c(straw_burial = 100, compacted_no_till = 100)
   )
   expect_true(res$mas_exceeded)
-  expect_equal(res$dose_final, res$dose_max_N)
+  expect_equal(res$dose_final, res$max_N_dose)
 })
 
 test_that("no-till soil_seeding reduces b1 by 3 kg/ha", {

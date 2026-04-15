@@ -23,10 +23,10 @@
 #'           soil_P_class = "Normale",
 #'           soil_K_class = "Normale")
 #' @export
-scheda_PK <- function(crop,
+dose_standard_PK <- function(crop,
                       phase = NULL,
-                      soil_P_class = c("Normale","Bassa","Elevata","Molto_Bassa"),
-                      soil_K_class = c("Normale","Bassa","Elevata","Molto_Bassa"),
+                      soil_P_class = c("normal","low","high","very_low"),
+                      soil_K_class = c("normal","low","high","very_low"),
                       P_decrements = numeric(), P_increments = numeric(),
                       K_decrements = numeric(), K_increments = numeric(),
                       standard_pk_doses.table = NFert::standard_pk_doses.table) {
@@ -37,6 +37,9 @@ scheda_PK <- function(crop,
   if (missing(crop) || !is.character(crop) || length(crop) != 1) {
     stop("`crop` must be a single crop name string.")
   }
+
+  # Accept Italian or English crop name
+  crop <- resolve_crop(crop, table = standard_pk_doses.table)
 
   # Locate crop row
   t <- standard_pk_doses.table
@@ -51,8 +54,8 @@ scheda_PK <- function(crop,
   if (length(idx) > 1) idx <- idx[1]
   row <- t[idx, , drop = FALSE]
 
-  P_col <- paste0("P2O5_dot_", soil_P_class)
-  K_col <- paste0("K2O_dot_",  soil_K_class)
+  P_col <- paste0("P2O5_", soil_P_class)
+  K_col <- paste0("K2O_",  soil_K_class)
   dose_base_P <- suppressWarnings(as.numeric(row[[P_col]]))
   dose_base_K <- suppressWarnings(as.numeric(row[[K_col]]))
 
@@ -87,3 +90,7 @@ scheda_PK <- function(crop,
     reference = "DPI Emilia-Romagna 2026, Fert_Office v1.26 (Scheda_PK)"
   )
 }
+
+#' @rdname dose_standard_PK
+#' @export
+scheda_PK <- function(...) dose_standard_PK(...)

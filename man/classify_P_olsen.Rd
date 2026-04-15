@@ -7,8 +7,8 @@
 classify_P_olsen(
   value,
   unit = c("P", "P2O5"),
-  gri_p.table = NFert::gri_p.table,
-  gri_p_meta = NFert::gri_p_meta
+  p_availability.table = NFert::p_availability.table,
+  p_availability_meta = NFert::p_availability_meta
 )
 }
 \arguments{
@@ -16,9 +16,9 @@ classify_P_olsen(
 
 \item{unit}{Either \code{"P"} or \code{"P2O5"} (default \code{"P"}).}
 
-\item{gri_p.table}{Lookup table, default \code{NFert::gri_p.table}.}
+\item{p_availability.table}{Lookup table, default \code{NFert::p_availability.table}.}
 
-\item{gri_p_meta}{Conversion metadata, default \code{NFert::gri_p_meta}.}
+\item{p_availability_meta}{Conversion metadata, default \code{NFert::p_availability_meta}.}
 }
 \value{
 A list with:

@@ -4,12 +4,15 @@
 \alias{classify_carbonate_tot}
 \title{Classify total carbonate (CaCO3 \%)}
 \usage{
-classify_carbonate_tot(caco3_tot, calcare_tot.table = NFert::calcare_tot.table)
+classify_carbonate_tot(
+  caco3_tot,
+  total_carbonate.table = NFert::total_carbonate.table
+)
 }
 \arguments{
 \item{caco3_tot}{Numeric.}
 
-\item{calcare_tot.table}{Lookup.}
+\item{total_carbonate.table}{Lookup.}
 }
 \value{
 List with \code{ID} and \code{class}.

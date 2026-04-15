@@ -4,12 +4,15 @@
 \alias{classify_carbonate_att}
 \title{Classify active carbonate}
 \usage{
-classify_carbonate_att(caco3_att, calcare_att.table = NFert::calcare_att.table)
+classify_carbonate_att(
+  caco3_att,
+  active_carbonate.table = NFert::active_carbonate.table
+)
 }
 \arguments{
 \item{caco3_att}{Numeric \%.}
 
-\item{calcare_att.table}{Lookup.}
+\item{active_carbonate.table}{Lookup.}
 }
 \value{
 List with \code{ID} and \code{class}.

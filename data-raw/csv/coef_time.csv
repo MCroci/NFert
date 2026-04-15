@@ -1,18 +1,18 @@
 ID_Fa_D,ccp,ccp_it,C_tempo,precession_to_count,N_pct,P2O5_pct,K2O_pct,advance_allowed,husbandry,ID_Sta,growing_season
 1,pre planting,pre impianto,0.2,True,0.0,1.0,1.0,True,False,9.0,undefined
-2,1st husbandry year,I anno allev.,1.0,False,0.4,0.3,0.3,False,True,3.0,year
-3,2nd husbandry year,II anno allev.,1.0,False,0.5,0.5,0.5,False,True,3.0,year
+2,1st woody crop,I anno allev.,1.0,False,0.4,0.3,0.3,False,True,3.0,year
+3,2nd woody crop,II anno allev.,1.0,False,0.5,0.5,0.5,False,True,3.0,year
 4,full production,piena produzione,1.0,False,1.0,1.0,1.0,False,False,3.0,year
 5,1st cut,1° taglio,0.11,False,1.0,1.0,1.0,False,False,8.0,short
 6,2nd cut or later,2° taglio o succ.,0.1,False,1.0,1.0,1.0,False,False,8.0,short
 7,full cycle,un ciclo intero,0.12,False,1.0,1.0,1.0,False,False,8.0,short
 8,second harvest,secondo raccolto,0.35,False,1.0,1.0,1.0,False,False,2.0,summer-autumn
-9,Spring-summer <70 days,Primaverile-estiva <70 gg,0.3,True,1.0,1.0,1.0,False,False,5.0,spring-summer
-10,Spring-summer 70-100 days,Primaverile-estiva  70–100 gg,0.5,True,1.0,1.0,1.0,False,False,5.0,spring-summer
-11,Spring-summer 100-130 days,Primaverile-estiva  100–130 gg,0.67,True,1.0,1.0,1.0,False,False,5.0,spring-summer
-12,Spring-summer >130 days,Primaverile-estiva  >130 gg,0.75,True,1.0,1.0,1.0,False,False,5.0,spring-summer
-13,Autumn-winter <150 days,Autunno-vernina <150 gg,0.5,True,1.0,1.0,1.0,False,False,1.0,autumn-winter-spring
-14,Autumn-winter >150 days,Autunno-vernina >150 gg,0.6,True,1.0,1.0,1.0,False,False,1.0,autumn-winter-spring
+9,Spring-summer crop <70 days,Primaverile-estiva <70 gg,0.3,True,1.0,1.0,1.0,False,False,5.0,spring-summer
+10,Spring-summer crop 70-100 days,Primaverile-estiva  70–100 gg,0.5,True,1.0,1.0,1.0,False,False,5.0,spring-summer
+11,Spring-summer crop 100-130 days,Primaverile-estiva  100–130 gg,0.67,True,1.0,1.0,1.0,False,False,5.0,spring-summer
+12,Spring-summer crop >130 days,Primaverile-estiva  >130 gg,0.75,True,1.0,1.0,1.0,False,False,5.0,spring-summer
+13,Autumn-winter crop <150 days,Autunno-vernina <150 gg,0.5,True,1.0,1.0,1.0,False,False,1.0,autumn-winter-spring
+14,Autumn-winter crop >150 days,Autunno-vernina >150 gg,0.6,True,1.0,1.0,1.0,False,False,1.0,autumn-winter-spring
 15,pre planting autumn,pre impianto autunno,0.35,True,0.0,1.0,1.0,True,False,7.0,autumn-winter
 16,1st year - spring planting,1° anno - impianto a primavera,0.75,True,1.0,1.0,1.0,True,False,6.0,spring-summer-autumn-winter
 17,In production,In produzione,1.0,False,1.0,1.0,1.0,False,False,4.0,year

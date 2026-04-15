@@ -12,7 +12,7 @@ K_balance(
   soil_group = NULL,
   clay = NULL,
   sand = NULL,
-  anticipazioni_K2O = 0,
+  advance_K2O = 0,
   include_leaching = TRUE
 )
 }
@@ -29,7 +29,7 @@ K_balance(
 
 \item{clay, sand}{Soil clay/sand percentages (\%).}
 
-\item{anticipazioni_K2O}{Anticipazioni anni futuri (default 0).}
+\item{advance_K2O}{Advance anni futuri (default 0).}
 
 \item{include_leaching}{Logical, use clay-based H leaching (default TRUE).}
 }
@@ -43,7 +43,7 @@ Implements the K2O balance of Fert_Office v1.26 foglio \code{Bilancio} / \code{G
 Formula:
 \preformatted{
   K2O da apportare = A (asportazione) + H (lisciviazione clay-based) + B1 (arricchimento)
-                     + A2 (anticipazioni) - B2 (riduzione)
+                     + A2 (advance_allowed) - B2 (riduzione)
 }
 with A set to 0 in "Riduzione" strategy.
 }

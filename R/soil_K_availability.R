@@ -7,8 +7,8 @@
 #'
 #' @param value Numeric K or K2O value in ppm.
 #' @param unit `"K"` (default) or `"K2O"`. Conversion K2O = K / 0.83333.
-#' @param soil_group Texture grouping (must match `gri_k.table$group`).
-#' @param gri_k.table Lookup table, default `NFert::gri_k.table`.
+#' @param soil_group Texture grouping (must match `k_availability.table$group`).
+#' @param k_availability.table Lookup table, default `NFert::k_availability.table`.
 #'
 #' @return A list with `value_ppm_K`, `value_ppm_K2O`, `ID_Gri_K`, `rating`,
 #'   `strategy` (`Arricchimento` / `Mantenimento` / `Riduzione`).
@@ -18,7 +18,7 @@
 classify_K <- function(value,
                        unit = c("K", "K2O"),
                        soil_group,
-                       gri_k.table = NFert::gri_k.table) {
+                       k_availability.table = NFert::k_availability.table) {
   unit <- match.arg(unit)
   if (!is.numeric(value) || length(value) != 1 || is.na(value) || value < 0) {
     stop("`value` must be a single non-negative numeric.")
@@ -33,11 +33,11 @@ classify_K <- function(value,
     ppm_K    <- value * 0.83333
   }
 
-  # Normalise to canonical Italian plural form used in gri_k.table
-  sg <- normalise_soil_group(soil_group)$it_plural
-  t <- gri_k.table[gri_k.table$group == sg, , drop = FALSE]
+  # Normalise to canonical Italian plural form used in k_availability.table
+  sg <- normalise_soil_group(soil_group)$en
+  t <- k_availability.table[k_availability.table$group == sg, , drop = FALSE]
   if (nrow(t) == 0) {
-    stop(sprintf("soil_group '%s' (canonical: '%s') not found in gri_k.table.",
+    stop(sprintf("soil_group '%s' (canonical: '%s') not found in k_availability.table.",
                  soil_group, sg))
   }
 
@@ -88,7 +88,7 @@ K_leaching_by_clay <- function(clay_pct) {
 #' @param A_demand_K2O Crop K2O demand (kg/ha) from `calc_crop_K_demand()`.
 #' @param clay_pct Clay percentage, used to compute leaching `H`.
 #' @param include_leaching Logical, add K leaching to mantenimento term. Default TRUE.
-#' @param gri_k.table Lookup table.
+#' @param k_availability.table Lookup table.
 #'
 #' @return A list with `strategy`, `ID_Gri_K`, `B1`, `A_mantenimento` (asportazione + H),
 #'   `B2`, `H` (leaching).
@@ -101,10 +101,10 @@ soil_K_availability <- function(k_value, unit = c("K","K2O"),
                                 soil_group, A_demand_K2O,
                                 clay_pct,
                                 include_leaching = TRUE,
-                                gri_k.table = NFert::gri_k.table) {
+                                k_availability.table = NFert::k_availability.table) {
   unit <- match.arg(unit)
   cls <- classify_K(k_value, unit = unit, soil_group = soil_group,
-                    gri_k.table = gri_k.table)
+                    k_availability.table = k_availability.table)
   H <- if (isTRUE(include_leaching)) K_leaching_by_clay(clay_pct) else 0
 
   B1 <- 0; A_mant <- A_demand_K2O + H; B2 <- 0

@@ -11,7 +11,7 @@ soil_K_availability(
   A_demand_K2O,
   clay_pct,
   include_leaching = TRUE,
-  gri_k.table = NFert::gri_k.table
+  k_availability.table = NFert::k_availability.table
 )
 }
 \arguments{
@@ -23,7 +23,7 @@ soil_K_availability(
 
 \item{include_leaching}{Logical, add K leaching to mantenimento term. Default TRUE.}
 
-\item{gri_k.table}{Lookup table.}
+\item{k_availability.table}{Lookup table.}
 }
 \value{
 A list with \code{strategy}, \code{ID_Gri_K}, \code{B1}, \code{A_mantenimento} (asportazione + H),

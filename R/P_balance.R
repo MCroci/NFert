@@ -4,7 +4,7 @@
 #'
 #' Formula:
 #' \preformatted{
-#'   P2O5 da apportare = A (asportazione) + B1 (arricchimento) + A2 (anticipazioni)
+#'   P2O5 da apportare = A (asportazione) + B1 (arricchimento) + A2 (advance_allowed)
 #'                        - B2 (riduzione)
 #' }
 #' with A set to 0 in "Riduzione" strategy and B2 used only as placeholder.
@@ -16,7 +16,7 @@
 #' @param soil_group DPI texture group; if `NULL` and `clay`/`sand` given, derived
 #'   via `calc_soil_group_and_id_rag()` and mapped to Italian Ragg.
 #' @param clay,sand Soil clay/sand percentages (%).
-#' @param anticipazioni_P2O5 Anticipazioni anni futuri (default 0 kg/ha).
+#' @param advance_P2O5 Advance anni futuri (default 0 kg/ha).
 #' @param depth_cm Soil depth for enrichment calculation (default 30 cm).
 #'
 #' @return A data frame with A, B1, A2, B2, `strategy`, `ID_Gri_P`, `P2O5_required`.
@@ -32,7 +32,7 @@ P_balance <- function(expected_yield_tons_ha,
                       olsen_unit = c("P", "P2O5"),
                       soil_group = NULL,
                       clay = NULL, sand = NULL,
-                      anticipazioni_P2O5 = 0,
+                      advance_P2O5 = 0,
                       depth_cm = 30) {
   olsen_unit <- match.arg(olsen_unit)
 
@@ -41,15 +41,15 @@ P_balance <- function(expected_yield_tons_ha,
       stop("Provide either `soil_group` or both `clay` and `sand`.")
     }
     sp <- calc_soil_group_and_id_rag(clay = clay, sand = sand)
-    soil_group <- normalise_soil_group(sp$soil.group)$it_plural
+    soil_group <- normalise_soil_group(sp$soil.group)$en
   } else {
     # Accept any naming convention; canonicalise
-    soil_group <- normalise_soil_group(soil_group)$it_plural
+    soil_group <- normalise_soil_group(soil_group)$en
   }
 
   A <- calc_crop_P_demand(expected_yield_tons_ha, crop)$P2O5_requirement
   if (is.na(A)) {
-    return(data.frame(A = NA_real_, B1 = NA_real_, A2 = anticipazioni_P2O5,
+    return(data.frame(A = NA_real_, B1 = NA_real_, A2 = advance_P2O5,
                       B2 = NA_real_, strategy = NA_character_,
                       ID_Gri_P = NA_integer_, P2O5_required = NA_real_))
   }
@@ -60,13 +60,13 @@ P_balance <- function(expected_yield_tons_ha,
                                depth_cm = depth_cm)
 
   P2O5_required <- max(0,
-                       avail$A_mantenimento + avail$B1 + anticipazioni_P2O5 - avail$B2)
+                       avail$A_mantenimento + avail$B1 + advance_P2O5 - avail$B2)
 
   data.frame(
     A  = avail$A_mantenimento,   # asportazione effettiva (0 se Riduzione)
     A_fabbisogno = A,
     B1 = avail$B1,
-    A2 = anticipazioni_P2O5,
+    A2 = advance_P2O5,
     B2 = avail$B2,
     strategy = avail$strategy,
     ID_Gri_P = avail$ID_Gri_P,

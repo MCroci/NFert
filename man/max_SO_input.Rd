@@ -2,26 +2,26 @@
 % Please edit documentation in R/max_SO_input.R
 \name{max_SO_input}
 \alias{max_SO_input}
-\title{Maximum annual organic matter input (t ss/ha)}
+\title{Maximum annual organic matter input (t dry matter / ha)}
 \usage{
 max_SO_input(
-  so_class = c("Scarsa", "Normale", "Elevata"),
+  so_class = c("Poor", "Normal", "Rich"),
   so_max_input = NFert::so_max_input
 )
 }
 \arguments{
-\item{so_class}{One of \code{"Scarsa"}, \code{"Normale"}, \code{"Elevata"}.}
+\item{so_class}{One of \code{"Poor"}, \code{"Normal"}, \code{"Rich"}.}
 
 \item{so_max_input}{Lookup table (default \code{NFert::so_max_input}).}
 }
 \value{
-Numeric t ss/ha.
+Numeric t dry matter / ha.
 }
 \description{
 Returns the DPI 2026 maximum annual input of soil organic matter (SO) as
 dry matter t/ha, based on the classification of initial SO in soil:
-"Scarsa" = 13, "Normale" = 11, "Elevata" = 9 (Fert_Office v1.26 foglio SO).
+"Poor" = 13, "Normal" = 11, "Rich" = 9 (Fert_Office v1.26 foglio SO).
 }
 \examples{
-max_SO_input("Normale")
+max_SO_input("Normal")
 }

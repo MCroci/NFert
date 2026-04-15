@@ -12,14 +12,13 @@
 #'         "Sabbioso", "Franco", "Argilloso".
 #' }
 #'
-#' This helper accepts any of these forms (case-insensitive, partial match
-#' allowed for the first two letters) and returns the canonical Italian
-#' plural form together with the universal `ID_Rag` integer key used
-#' internally to join the lookup tables.
+#' This helper accepts any of these forms (case-insensitive) and returns the
+#' canonical English form (used by NFert >= 0.4.0 lookup tables) plus the
+#' universal `ID_Rag` integer key used internally to join the lookup tables.
 #'
 #' @param x Character string. Soil group name in any supported convention.
-#' @return A list with `id_rag` (1 = Sabbiosi, 2 = Medio impasto,
-#'   3 = Argillosi e limosi), `it_plural`, `it_singular`, `en`.
+#' @return A list with `id_rag` (1 = Sandy, 2 = Loamy, 3 = Clay), `en`
+#'   (canonical English), `it_plural`, `it_singular`.
 #' @examples
 #' normalise_soil_group("Loamy textures")
 #' normalise_soil_group("Medio impasto")

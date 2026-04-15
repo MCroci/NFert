@@ -12,7 +12,7 @@ P_balance(
   soil_group = NULL,
   clay = NULL,
   sand = NULL,
-  anticipazioni_P2O5 = 0,
+  advance_P2O5 = 0,
   depth_cm = 30
 )
 }
@@ -30,7 +30,7 @@ via \code{calc_soil_group_and_id_rag()} and mapped to Italian Ragg.}
 
 \item{clay, sand}{Soil clay/sand percentages (\%).}
 
-\item{anticipazioni_P2O5}{Anticipazioni anni futuri (default 0 kg/ha).}
+\item{advance_P2O5}{Advance anni futuri (default 0 kg/ha).}
 
 \item{depth_cm}{Soil depth for enrichment calculation (default 30 cm).}
 }
@@ -43,7 +43,7 @@ Implements the P2O5 balance of Fert_Office v1.26 foglio \code{Bilancio}.
 \details{
 Formula:
 \preformatted{
-  P2O5 da apportare = A (asportazione) + B1 (arricchimento) + A2 (anticipazioni)
+  P2O5 da apportare = A (asportazione) + B1 (arricchimento) + A2 (advance_allowed)
                        - B2 (riduzione)
 }
 with A set to 0 in "Riduzione" strategy and B2 used only as placeholder.

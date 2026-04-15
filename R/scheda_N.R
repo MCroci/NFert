@@ -2,7 +2,7 @@
 #'
 #' Implements the DPI 2026 simplified "Scheda a dose Standard" method for nitrogen,
 #' as coded in Fert_Office v1.26 sheet `Scheda_N`. Starts from a crop-specific
-#' standard base dose (from `mas.table$N_standard`) and applies user-selected
+#' standard base dose (from `mas.table$standard_N`) and applies user-selected
 #' decrement and increment factors. The final dose is then capped at MAS
 #' (maximum allowed dose) from DPI 2026 Allegato 9 / Reg. reg. 2/2024.
 #'
@@ -33,14 +33,14 @@
 #'   Missing names default to 0.
 #' @param mas.table Reference MAS lookup (default `NFert::mas.table`).
 #' @param apply_mas_cap Logical, default `TRUE`. Cap the final dose at
-#'   `dose_max_N = N_standard + incremento_max` from MAS.
+#'   `max_N_dose = standard_N + max_increment` from MAS.
 #'
 #' @return A named list with components:
 #'   - `dose_base`: standard dose from MAS (kg N/ha)
 #'   - `total_decrement`, `total_increment`
 #'   - `dose_recalculated`: dose after increments/decrements
-#'   - `dose_max_N`: DPI 2026 cap
-#'   - `dose_final`: min(dose_recalculated, dose_max_N) if `apply_mas_cap = TRUE`
+#'   - `max_N_dose`: DPI 2026 cap
+#'   - `dose_final`: min(dose_recalculated, max_N_dose) if `apply_mas_cap = TRUE`
 #'   - `mas_exceeded`: logical
 #'
 #' @examples
@@ -50,7 +50,7 @@
 #'          increments = c(straw_burial = 30,
 #'                         compacted_no_till = 10))
 #' @export
-scheda_N <- function(crop,
+dose_standard_N <- function(crop,
                      phase = NULL,
                      decrements = numeric(),
                      increments = numeric(),
@@ -60,6 +60,9 @@ scheda_N <- function(crop,
   if (missing(crop) || !is.character(crop) || length(crop) != 1) {
     stop("`crop` must be a single crop name string.")
   }
+
+  # Accept Italian or English crop name
+  crop <- resolve_crop(crop, table = mas.table)
 
   # Lookup crop row(s)
   idx <- which(mas.table$crop == crop)
@@ -80,10 +83,10 @@ scheda_N <- function(crop,
   }
 
   row <- mas.table[idx, , drop = FALSE]
-  dose_base <- suppressWarnings(as.numeric(row$N_standard))
-  dose_max  <- suppressWarnings(as.numeric(row$dose_max_N))
+  dose_base <- suppressWarnings(as.numeric(row$standard_N))
+  dose_max  <- suppressWarnings(as.numeric(row$max_N_dose))
   if (is.na(dose_base)) {
-    stop(sprintf("No standard N dose (N_standard) available for crop '%s' in mas.table.", crop))
+    stop(sprintf("No standard N dose (standard_N) available for crop '%s' in mas.table.", crop))
   }
 
   # ---- Decrementi ----
@@ -134,10 +137,14 @@ scheda_N <- function(crop,
     total_decrement = dec_total,
     total_increment = inc_total,
     dose_recalculated = dose_recalc,
-    dose_max_N = dose_max,
+    max_N_dose = dose_max,
     dose_final = dose_final,
     mas_exceeded = exceeded,
     units = "kg N/ha",
     reference = "DPI Emilia-Romagna 2026, Fert_Office v1.26 (Scheda_N)"
   )
 }
+
+#' @rdname dose_standard_N
+#' @export
+scheda_N <- function(...) dose_standard_N(...)

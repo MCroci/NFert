@@ -29,6 +29,7 @@ soil_fertility <- function(Ntot = 1.2, SOM = 2, soil.group = "Sandy textures",
                                    coef_time = NFert::coef_time
                                    ) {
   soil_seeding <- match.arg(soil_seeding)
+  ccp <- resolve_ccp(ccp, table = coef_time)
   CN_class <- ifelse(CN<9, "<9", ifelse(CN>=9 & CN<12, "9-12", ">12") )
 
   coef.N.readily <- as.numeric( coefN_readily[coefN_readily[,"group"]==soil.group, "coef.N.readily"] )

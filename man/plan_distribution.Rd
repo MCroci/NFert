@@ -12,11 +12,11 @@ plan_distribution(
   organic_rows = list(),
   mineral_rows = list(),
   zvn = FALSE,
-  fert_org.table = NFert::fert_org.table,
-  concimi.table = NFert::concimi.table,
-  efficienza.table = NFert::efficienza.table,
-  mod_distribuz.table = NFert::mod_distribuz.table,
-  ragg_tes.table = NFert::ragg_tes.table
+  organic_fertilizers.table = NFert::organic_fertilizers.table,
+  mineral_fertilizers.table = NFert::mineral_fertilizers.table,
+  efficiency.table = NFert::efficiency.table,
+  distribution_modalities.table = NFert::distribution_modalities.table,
+  texture_groups.table = NFert::texture_groups.table
 )
 }
 \arguments{
@@ -26,27 +26,27 @@ plan_distribution(
 
 \item{organic_rows}{A list of lists, each with:
 \itemize{
-\item \code{fertilizer}: name matching \code{fert_org.table$fertilizer} (or a custom
+\item \code{fertilizer}: name matching \code{organic_fertilizers.table$fertilizer} (or a custom
 name plus explicit titres)
 \item \code{quantity_t_ha}: amount in t/ha (fresh matter)
 \item \code{year}: application year (e.g. 2024, 2025)
-\item \code{modality_epoch}: ID or label from \code{mod_distribuz.table}
+\item \code{modality_epoch}: ID or label from \code{distribution_modalities.table}
 \item \code{level} (optional): efficiency level \code{"bassa"/"media"/"alta"} if you
 want to override the default selection.
-\item Optional \code{N_pct}, \code{P2O5_pct}, \code{K2O_pct}, \code{ss_pct} override the table.
+\item Optional \code{N_pct}, \code{P2O5_pct}, \code{K2O_pct}, \code{dry_matter_pct} override the table.
 }}
 
 \item{mineral_rows}{A list of lists, each with:
 \itemize{
-\item \code{concime}: matching \code{concimi.table$concime}, or custom
+\item \code{fertilizer}: matching \code{mineral_fertilizers.table$fertilizer}, or custom
 \item \code{quantity_q_ha}: quintals/ha (100 kg/ha)
-\item \code{modality_epoch}: ID or label from \code{mod_distribuz.table}
+\item \code{modality_epoch}: ID or label from \code{distribution_modalities.table}
 \item \code{N}, \code{P2O5}, \code{K2O} titres (kg per q) if custom.
 }}
 
 \item{zvn}{Logical, if TRUE, enforce the ZVN 170 kg N/ha zootec cap.}
 
-\item{fert_org.table, concimi.table, efficienza.table, mod_distribuz.table, ragg_tes.table}{Defaults.}
+\item{organic_fertilizers.table, mineral_fertilizers.table, efficiency.table, distribution_modalities.table, texture_groups.table}{Defaults.}
 }
 \value{
 A list with:
@@ -63,10 +63,10 @@ Emilia-Romagna 2026 (Fert_Office v1.26 foglio \code{Distribuz}). Combines:
 }
 \details{
 \itemize{
-\item Organic applications (one or more matrices from \code{fert_org.table}, with
-efficiency selected from \code{efficienza.table} by soil group, dose level,
+\item Organic applications (one or more matrices from \code{organic_fertilizers.table}, with
+efficiency selected from \code{efficiency.table} by soil group, dose level,
 and sector of matrix).
-\item Mineral / synthesis fertilisers (from \code{concimi.table} or user-specified
+\item Mineral / synthesis fertilisers (from \code{mineral_fertilizers.table} or user-specified
 triplets of N, P2O5, K2O titres).
 }
 

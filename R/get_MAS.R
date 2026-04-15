@@ -8,13 +8,13 @@
 #'
 #' @param crop Character. Crop name (as in DPI nomenclature). Use
 #'   `get_MAS(NULL)` or `get_MAS()` to list all crops.
-#' @param mas_table Data frame with columns `crop`, `mas_N`, `yield_ref`, `type`.
+#' @param mas_table Data frame with columns `crop`, `mas_N`, `reference_yield`, `type`.
 #'   If NULL, uses the built-in table for the chosen `edition`.
 #' @param edition Character. `"2026"` (default) or `"2025"`. 2025 = Guida DPI
 #'   2025 (ZVN table); 2026 = FertDPI / Allegato 9 style.
 #'
 #' @return For `get_MAS(crop)`: a one-row data frame with columns
-#'   `crop`, `mas_N`, `yield_ref` (and if present `mas_P2O5`, `yield_ref_min`,
+#'   `crop`, `mas_N`, `reference_yield` (and if present `mas_P2O5`, `yield_ref_min`,
 #'   `yield_ref_max`), `type`, or all rows if `crop` is NULL. For `check_MAS`: a list with
 #'   `ok` (logical), `mas_N`, `N_planned`, `message`.
 #'
@@ -35,6 +35,11 @@ get_MAS <- function(crop = NULL, mas_table = NULL, edition = c("2026", "2025")) 
   if (is.null(mas_table)) mas_table <- if (edition == "2025") .mas_table_dpi2025() else .mas_table_dpi2026()
   if (is.null(crop)) return(mas_table)
   crop <- as.character(crop)
+  # Accept English crop name if mas_table has crop_en
+  if ('crop_en' %in% names(mas_table) && !(crop %in% mas_table$crop)) {
+    j <- which(tolower(mas_table$crop_en) == tolower(crop))
+    if (length(j) > 0) crop <- as.character(mas_table$crop[j[1]])
+  }
   i <- match(crop, mas_table$crop)
   if (is.na(i)) {
     warning("Crop '", crop, "' not found in MAS table. Return NULL. Use get_MAS() to see available crops.")
@@ -101,7 +106,7 @@ check_MAS <- function(crop, N_planned, mas_table = NULL, edition = c("2026", "20
       "Asparago verde"
     ),
     mas_N = c(180L, 180L, 190L, 190L, 150L, 280L, 280L, 280L, 30L, 160L, 180L, 190L, 120L, 120L, 175L, 100L, 210L),
-    yield_ref = c(6.5, 6.5, 6.0, 6.0, 6.0, 13.0, 23.0, 23.0, NA_real_, 60.0, 80.0, 48.0, 35.0, 30.0, 25.0, 18.0, 7.0),
+    reference_yield = c(6.5, 6.5, 6.0, 6.0, 6.0, 13.0, 23.0, 23.0, NA_real_, 60.0, 80.0, 48.0, 35.0, 30.0, 25.0, 18.0, 7.0),
     type = c(
       "Erbacee", "Erbacee", "Erbacee", "Erbacee", "Erbacee", "Erbacee", "Erbacee", "Erbacee",
       "Erbacee", "Erbacee", "Orticole", "Orticole", "Arboree", "Arboree", "Arboree", "Arboree", "Orticole"

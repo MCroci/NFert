@@ -41,6 +41,7 @@ natural_contribution <- function(location = "Plain adjacent to urbanized areas",
     return(NA)
   }
 
+  ccp <- resolve_ccp(ccp, table = coef_time)
   if (!ccp %in% coef_time$ccp) {
     warning(paste("CCP '", ccp, "' not found in the table. Returning NA."))
     return(NA)

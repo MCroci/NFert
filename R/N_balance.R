@@ -17,7 +17,9 @@
 #' @param source Source of organic fertilizer (e.g., "Cattle slurry").
 #' @param fertorg_frequency Frequency of organic fertilizer application (e.g., "every year").
 #' @param location Location of the field relative to urban areas.
-#' @param forg_quantity Quantity of organic fertilizer applied (kg/ha).
+#' @param forg_quantity Quantity of organic fertilizer applied (m³/ha or t/ha, depending on source).
+#'   Use \code{0} for no organic application: \code{Forg} is set to 0 without calling
+#'   \code{organic_fertilization()}.
 #' @param organic_previous_year_N Optional. Total N (kg/ha) from organic fertilization
 #'   applied in the previous year (same source/frequency). If provided, term F (residual
 #'   N from previous years' organic, DPI §3.1.6) is included. Default 0.
@@ -149,13 +151,19 @@ N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (gran
     source = source,
     frequency = fertorg_frequency
   )
-  Forg <- organic_fertilization(
-    source = source,
-    frequency = fertorg_frequency,
-    quantity = forg_quantity,
-    soil_group = soil_group,
-    distribution_efficiency = distribution_efficiency
-  )
+  # Skip organic_fertilization when quantity is 0 (avoids error in older package versions;
+  # same result as organic_fertilization(..., quantity = 0) returning 0)
+  Forg <- if (isTRUE(forg_quantity == 0)) {
+    0
+  } else {
+    organic_fertilization(
+      source = source,
+      frequency = fertorg_frequency,
+      quantity = forg_quantity,
+      soil_group = soil_group,
+      distribution_efficiency = distribution_efficiency
+    )
+  }
   G <- natural_contribution(location = location, ccp = ccp)
 
   # Check for NA values and warn user
@@ -175,21 +183,25 @@ N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (gran
                   ". These may indicate missing data or invalid input values."))
   }
 
+  # Defensive: if any component is length-0 (failed silent lookup), report it
+  pieces <- list(A = A, B = B_total, b1 = B[["b1"]], b2 = B[["b2"]],
+                 C1 = C[["C1"]], C2 = C[["C2"]], D = D, E = E,
+                 F = F_prev, Forg = Forg, G = G,
+                 surplus_pluviometrico = C[["surplus_pluviometrico"]])
+  empty <- names(pieces)[vapply(pieces, function(p) length(p) == 0, logical(1))]
+  if (length(empty) > 0) {
+    stop(sprintf(
+      "N_balance(): the following balance component(s) returned length-0 (silent lookup failure): %s.\n%s",
+      paste(empty, collapse = ", "),
+      "Check that `crop`, `ccp`, `prev_crop`, `source`, `location` and soil group all match values present in the lookup tables."))
+  }
+
+  # Coerce length-1 vectors (handles the case where `A` is length 2 due to
+  # crop appearing twice in uptake_table)
+  pieces <- lapply(pieces, function(p) p[1])
+
   # Build result data frame (DPI: N = A - B + C + D - E - F - Forg - G)
-  Nfert <- data.frame(
-    A = A,
-    B = B_total,
-    b1 = B[["b1"]],
-    b2 = B[["b2"]],
-    C1 = C[["C1"]],
-    C2 = C[["C2"]],
-    D = D,
-    E = E,
-    F = F_prev,
-    Forg = Forg,
-    G = G,
-    surplus_pluviometrico = C[["surplus_pluviometrico"]]
-  )
+  Nfert <- as.data.frame(pieces, stringsAsFactors = FALSE)
 
   return(Nfert)
 }

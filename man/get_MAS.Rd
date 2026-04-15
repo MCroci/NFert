@@ -10,7 +10,7 @@ get_MAS(crop = NULL, mas_table = NULL, edition = c("2026", "2025"))
 \item{crop}{Character. Crop name (as in DPI nomenclature). Use
 \code{get_MAS(NULL)} or \code{get_MAS()} to list all crops.}
 
-\item{mas_table}{Data frame with columns \code{crop}, \code{mas_N}, \code{yield_ref}, \code{type}.
+\item{mas_table}{Data frame with columns \code{crop}, \code{mas_N}, \code{reference_yield}, \code{type}.
 If NULL, uses the built-in table for the chosen \code{edition}.}
 
 \item{edition}{Character. \code{"2026"} (default) or \code{"2025"}. 2025 = Guida DPI
@@ -18,7 +18,7 @@ If NULL, uses the built-in table for the chosen \code{edition}.}
 }
 \value{
 For \code{get_MAS(crop)}: a one-row data frame with columns
-\code{crop}, \code{mas_N}, \code{yield_ref} (and if present \code{mas_P2O5}, \code{yield_ref_min},
+\code{crop}, \code{mas_N}, \code{reference_yield} (and if present \code{mas_P2O5}, \code{yield_ref_min},
 \code{yield_ref_max}), \code{type}, or all rows if \code{crop} is NULL. For \code{check_MAS}: a list with
 \code{ok} (logical), \code{mas_N}, \code{N_planned}, \code{message}.
 }

@@ -30,15 +30,15 @@ classify_pH <- function(pH, ph.table = NFert::ph.table) {
 
 #' Classify total carbonate (CaCO3 %)
 #' @param caco3_tot Numeric.
-#' @param calcare_tot.table Lookup.
+#' @param total_carbonate.table Lookup.
 #' @return List with `ID` and `class`.
 #' @examples classify_carbonate_tot(15)
 #' @export
-classify_carbonate_tot <- function(caco3_tot, calcare_tot.table = NFert::calcare_tot.table) {
+classify_carbonate_tot <- function(caco3_tot, total_carbonate.table = NFert::total_carbonate.table) {
   if (!is.numeric(caco3_tot) || length(caco3_tot) != 1 || is.na(caco3_tot)) {
     stop("`caco3_tot` must be a single numeric.")
   }
-  t <- calcare_tot.table
+  t <- total_carbonate.table
   for (i in seq_len(nrow(t))) {
     lo <- as.numeric(t$min[i]); hi <- as.numeric(t$max[i])
     if (!is.na(lo) && !is.na(hi) && caco3_tot >= lo && caco3_tot < hi) {
@@ -51,15 +51,15 @@ classify_carbonate_tot <- function(caco3_tot, calcare_tot.table = NFert::calcare
 
 #' Classify active carbonate
 #' @param caco3_att Numeric %.
-#' @param calcare_att.table Lookup.
+#' @param active_carbonate.table Lookup.
 #' @return List with `ID` and `class`.
 #' @examples classify_carbonate_att(6.8)
 #' @export
-classify_carbonate_att <- function(caco3_att, calcare_att.table = NFert::calcare_att.table) {
+classify_carbonate_att <- function(caco3_att, active_carbonate.table = NFert::active_carbonate.table) {
   if (!is.numeric(caco3_att) || length(caco3_att) != 1 || is.na(caco3_att)) {
     stop("`caco3_att` must be a single numeric.")
   }
-  t <- calcare_att.table
+  t <- active_carbonate.table
   for (i in seq_len(nrow(t))) {
     lo <- as.numeric(t$min[i]); hi <- as.numeric(t$max[i])
     if (!is.na(lo) && !is.na(hi) && caco3_att >= lo && caco3_att < hi) {

@@ -17,7 +17,7 @@ Alta = iniezione, fertirrigazione, interramento entro 4 h; Media = rasoterra con
 Bassa = spandimento superficiale senza incorporazione.}
 }
 \value{
-Numeric. Efficiency as a fraction in \verb{[0, 1]}, or \code{NA} if not found.
+Numeric. Efficiency as a fraction between 0 and 1, or \code{NA} if not found.
 For ammendanti (compost, letame maturo, digestato palabile) returns 0.40 (40\%).
 }
 \description{

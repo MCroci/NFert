@@ -17,6 +17,7 @@ calc_crop_P_demand <- function(expected_yield_tons_ha,
   if (!is.numeric(expected_yield_tons_ha) || expected_yield_tons_ha < 0) {
     stop("`expected_yield_tons_ha` must be non-negative numeric.")
   }
+  crop <- resolve_crop(crop, table = uptake_table)
   idx <- which(uptake_table$crop == crop)
   if (length(idx) == 0) stop(sprintf("Crop '%s' not found in uptake_table.", crop))
   idx <- idx[1]
@@ -45,6 +46,7 @@ calc_crop_K_demand <- function(expected_yield_tons_ha,
   if (!is.numeric(expected_yield_tons_ha) || expected_yield_tons_ha < 0) {
     stop("`expected_yield_tons_ha` must be non-negative numeric.")
   }
+  crop <- resolve_crop(crop, table = uptake_table)
   idx <- which(uptake_table$crop == crop)
   if (length(idx) == 0) stop(sprintf("Crop '%s' not found in uptake_table.", crop))
   idx <- idx[1]

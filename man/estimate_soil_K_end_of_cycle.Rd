@@ -11,7 +11,7 @@ estimate_soil_K_end_of_cycle(
   clay_pct,
   soil_group,
   depth_cm = 30,
-  ragg_tes.table = NFert::ragg_tes.table
+  texture_groups.table = NFert::texture_groups.table
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ estimate_soil_K_end_of_cycle(
 
 \item{depth_cm}{Default 30 cm.}
 
-\item{ragg_tes.table}{Lookup.}
+\item{texture_groups.table}{Lookup.}
 }
 \value{
 Numeric ppm K2O at end of cycle.
@@ -33,7 +33,7 @@ Numeric ppm K2O at end of cycle.
 \description{
 Simplified relationship:
 \preformatted{
-  K2O_end_ppm = K2O_start_ppm + (K2O_applied - K2O_removed - K2O_leaching) / (peso_30cm/1000)
+  K2O_end_ppm = K2O_start_ppm + (K2O_applied - K2O_removed - K2O_leaching) / (soil_weight_30cm/1000)
 }
 The lisciviazione (H) is taken from \code{K_leaching_by_clay(clay_pct)}.
 }

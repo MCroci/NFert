@@ -10,6 +10,7 @@
 #' @param source The source of organic fertilizer (e.g., "Cattle slurry", "Composted manure").
 #' @param frequency The frequency of application (e.g., "every year", "every two years").
 #' @param quantity The amount of organic fertilizer applied per application (in m³/ha or t/ha).
+#'   Use \code{0} for no organic application (returns 0 kg N/ha).
 #' @param soil_group Optional. Soil group from \code{calc_soil_group_and_id_rag()}
 #'   (e.g. "Sandy textures", "Franco") to use DPI efficiency by texture. If \code{NULL},
 #'   efficiency is taken from \code{f.table} (no texture/distribution).
@@ -35,8 +36,11 @@ organic_fertilization <- function(source = "Cattle slurry", frequency = "every y
                                   distribution_efficiency = NULL,
                                   f.table = NFert::f.table) {
 
-  if (quantity <= 0) {
-    stop("Quantity of organic fertilizer must be a positive value.")
+  if (quantity < 0) {
+    stop("Quantity of organic fertilizer cannot be negative.")
+  }
+  if (quantity == 0) {
+    return(0)
   }
 
   use_dpi_efficiency <- !is.null(soil_group) && !is.null(distribution_efficiency)

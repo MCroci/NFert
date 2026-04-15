@@ -1,5 +1,92 @@
 # NFert News
 
+## Version 0.4.0 (2026-04-15) - English-only naming (BREAKING)
+
+### Crop names: bilingual (Italian canonical + English alias)
+
+* New `crop_en` column added to `uptake_table`, `mas.table`, `crops.table`
+  and `standard_pk_doses.table`. The Italian DPI label remains the
+  canonical join key in `crop`, while `crop_en` provides an English
+  translation for the most common DPI 2026 crops (54 of 235 crops
+  curated; the rest fall back to the Italian name).
+* New `resolve_crop()` helper accepts either the Italian or the English
+  crop name (case-insensitive) and returns the canonical Italian form.
+* All public functions that look up by crop (`calc_crop_N_demand()`,
+  `calc_crop_P_demand()`, `calc_crop_K_demand()`, `dose_standard_N()`,
+  `dose_standard_PK()`, `get_MAS()`, `check_MAS()`) now route through
+  `resolve_crop()`, so the user can pass English names indifferently.
+* New `list_crops()` helper returns the full Italian/English mapping.
+
+### BREAKING CHANGES
+
+* All Italian column names replaced with English equivalents. Italian
+  originals are preserved in `_it` companion columns where helpful.
+* All Italian dataset names renamed:
+  - `gruppo.table` -> `crop_groups.table`
+  - `ragg_tes.table` -> `texture_groups.table`
+  - `gri_p.table` -> `p_availability.table` (+ `gri_p_meta` -> `p_availability_meta`)
+  - `gri_k.table` -> `k_availability.table`
+  - `tipo_fert.table` -> `fertilizer_types.table`
+  - `fert_org.table` -> `organic_fertilizers.table`
+  - `efficienza.table` -> `efficiency.table`
+  - `mod_distribuz.table` -> `distribution_modalities.table`
+  - `ciclo_modalita.table` -> `cycle_modality.table`
+  - `cicli.table` -> `cycles.table`
+  - `cicli_fase.table` -> `cycle_phases.table`
+  - `cd.table` -> `c_d.table`
+  - `concimi.table` -> `mineral_fertilizers.table`
+  - `calcare_tot.table` -> `total_carbonate.table`
+  - `calcare_att.table` -> `active_carbonate.table`
+* Italian function names kept as backward-compatible aliases:
+  `scheda_N()` -> `dose_standard_N()`, `scheda_PK()` -> `dose_standard_PK()`.
+* `scheda_PK()` class arguments renamed: `"Normale"` -> `"normal"`,
+  `"Bassa"` -> `"low"`, `"Elevata"` -> `"high"`,
+  `"Molto_Bassa"` -> `"very_low"`.
+* `max_SO_input()` class argument renamed: `"Scarsa"` -> `"Poor"`,
+  `"Normale"` -> `"Normal"`, `"Elevata"` -> `"Rich"`.
+* `normalise_soil_group()$en` is now the canonical form (was Italian plural).
+* Soil group values in `texture_groups.table`, `k_availability.table`,
+  `so.table`, etc. are now English ("Sandy textures", "Loamy textures",
+  "Clay textures").
+* Several column renames inside tables (English-only naming):
+  - `uptake_table`: `bilancio` -> `balance`, `yield_ref` -> `reference_yield`,
+    `fabb_*_std` -> `std_*_demand`, `parte_asportata` -> `harvested_part`.
+  - `mas.table`: `resa_standard` -> `standard_yield`, `N_standard` ->
+    `standard_N`, `incremento_max` -> `max_increment`,
+    `dose_max_N` -> `max_N_dose`, `N_max_teorico` -> `max_theoretical_N`,
+    `ss_pct` -> `dry_matter_pct`, `asciutto_irriguo` -> `dry_or_irrigated`.
+  - `crops.table`: `cic_id` -> `cycle_id`, `detrazione_sodo` ->
+    `no_till_reduction`, `group_prog` -> `group_progressive`.
+  - `texture_groups.table`: `peso_specifico` -> `specific_weight`,
+    `f_imm_P` -> `P_immobilisation_factor`,
+    `peso_*cm` -> `soil_weight_*cm`.
+  - `organic_fertilizers.table`: `tipo` -> `type_id`,
+    `avg_ss/min_ss/max_ss` -> `avg_dm/min_dm/max_dm`,
+    `zootec_100pct` -> `fully_zootec`, `incremento_SO` -> `SO_increment`.
+  - `mineral_fertilizers.table`: `concime` -> `fertilizer`,
+    `ID_Conc_min` -> `ID_min`.
+  - `coef_time`: `precessione_da_conteggiare` -> `precession_to_count`,
+    `anticipazioni` -> `advance_allowed`, `allevamento` -> `husbandry`.
+  - `standard_pk_doses.table`: `Resa_Standard` -> `standard_yield`,
+    `N_Standard` -> `standard_N`, `P2O5_dot_*` -> `P2O5_*` (with English
+    classes), `K2O_dot_*` -> `K2O_*`.
+  - `standard_decrements.table` / `standard_increments.table`: full
+    translation (e.g. `Rid_N_Resa` -> `red_N_yield`,
+    `Inc_N_Surplus_pluvio` -> `inc_N_rain_surplus`, `N_Inc_Max` ->
+    `inc_N_max`, etc.).
+  - `standard_multicycle.table`: `N_I_anno_allev` ->
+    `N_1st_husbandry_year`, `Inc_N_inizio_produz` ->
+    `inc_N_start_production`, `piu_tagli` -> `multi_cuts`,
+    `incremento_per_taglio` -> `increment_per_cut`.
+
+### Migration notes
+
+* User code passing Italian soil-group strings still works through
+  `normalise_soil_group()` which accepts all conventions.
+* User code calling `scheda_N()` / `scheda_PK()` continues to work.
+* User code accessing data columns by Italian names must be updated to
+  the English equivalent (full mapping in `data-raw/build-rda.R`).
+
 ## Version 0.3.0 (2026-04-15) - Full N + P + K balance and distribution plan
 
 ### Major

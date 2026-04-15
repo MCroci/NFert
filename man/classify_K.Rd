@@ -8,7 +8,7 @@ classify_K(
   value,
   unit = c("K", "K2O"),
   soil_group,
-  gri_k.table = NFert::gri_k.table
+  k_availability.table = NFert::k_availability.table
 )
 }
 \arguments{
@@ -16,9 +16,9 @@ classify_K(
 
 \item{unit}{\code{"K"} (default) or \code{"K2O"}. Conversion K2O = K / 0.83333.}
 
-\item{soil_group}{Texture grouping (must match \code{gri_k.table$group}).}
+\item{soil_group}{Texture grouping (must match \code{k_availability.table$group}).}
 
-\item{gri_k.table}{Lookup table, default \code{NFert::gri_k.table}.}
+\item{k_availability.table}{Lookup table, default \code{NFert::k_availability.table}.}
 }
 \value{
 A list with \code{value_ppm_K}, \code{value_ppm_K2O}, \code{ID_Gri_K}, \code{rating},
