@@ -14,7 +14,8 @@ estimate_N_rate_from_calibration_curve(
 )
 }
 \arguments{
-\item{raster}{A RasterLayer object containing NDVI values.}
+\item{raster}{A \code{raster::RasterLayer} with NDVI values, or a \code{RasterBrick} /
+\code{RasterStack} (the layer named \code{NDVI} is used if present, otherwise the first layer).}
 
 \item{minN}{The minimum N rate (kg/ha) corresponding to the minimum NDVI.}
 

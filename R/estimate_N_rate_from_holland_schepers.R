@@ -3,7 +3,8 @@
 #' This function estimates nitrogen (N) application rates based on NDVI values using the Holland & Schepers (H&S) algorithm.
 #' It calculates a sufficiency index (SI) for each pixel in the NDVI raster, then adjusts a base N rate to determine the recommended N dose.
 #'
-#' @param ndvi_raster A RasterLayer object containing NDVI values (0-1 scale).
+#' @param ndvi_raster A `raster::RasterLayer` with NDVI (0--1), or a `RasterBrick` /
+#'   `RasterStack` (layer named `NDVI` if present, else first layer).
 #' @param base_N_rate The base N rate (kg/ha) to be adjusted (default = 50).
 #' @param plot Logical indicating whether to create diagnostic plots (default = TRUE).
 #'
@@ -27,10 +28,8 @@
 #' }
 
 estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50, plot = TRUE) {
+  ndvi_raster <- .as_raster_layer_ndvi(ndvi_raster)
   # Validate inputs
-  if (!inherits(ndvi_raster, "RasterLayer")) {
-    stop("Input must be a single-layer Raster object.")
-  }
   if (!raster::isLonLat(ndvi_raster) && is.na(raster::projection(ndvi_raster))) {
     warning("Raster projection information missing. Ensure NDVI values are in 0-1 range.")
   }

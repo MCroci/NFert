@@ -24,15 +24,17 @@ scheda_PK(...)
 
 \item{phase}{Optional phase name.}
 
-\item{soil_P_class}{One of \code{"Molto_Bassa"}, \code{"Bassa"}, \code{"Normale"} (default),
-\code{"Elevata"}. Selects the P2O5 base dose column.}
+\item{soil_P_class}{One of \code{"normal"} (default), \code{"low"}, \code{"high"}, \code{"very_low"}.
+Selects the \code{P2O5_<class>} column in \code{standard_pk_doses.table}.}
 
-\item{soil_K_class}{Same levels for potassium.}
+\item{soil_K_class}{Same four levels for potassium (\code{K2O_<class>} columns).}
 
 \item{P_decrements, P_increments, K_decrements, K_increments}{Named numeric
 vectors of adjustments (kg/ha). See \code{scheda_N()} for the same pattern.}
 
 \item{standard_pk_doses.table}{Lookup (default \code{NFert::standard_pk_doses.table}).}
+
+\item{...}{Passed to \code{dose_standard_PK()}.}
 }
 \value{
 A named list with \code{dose_base_P2O5}, \code{dose_base_K2O},
@@ -47,7 +49,9 @@ decrements and increments are applied. No MAS cap exists for P/K in DPI
 2026 (the MAS applies to N only).
 }
 \examples{
-scheda_PK(crop = "Grano duro (pianta intera)",
-          soil_P_class = "Normale",
-          soil_K_class = "Normale")
+scheda_PK(
+  crop = "Grano duro (pianta intera)",
+  soil_P_class = "normal",
+  soil_K_class = "normal"
+)
 }

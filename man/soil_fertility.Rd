@@ -17,7 +17,7 @@ soil_fertility(
 )
 }
 \arguments{
-\item{Ntot}{Total nitrogen content in the soil (e.g. g/kg or ‰).}
+\item{Ntot}{Total nitrogen content in the soil (e.g. g/kg or per mille).}
 
 \item{SOM}{Soil organic matter content (\%).}
 

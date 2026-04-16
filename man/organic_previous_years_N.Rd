@@ -23,13 +23,13 @@ Returns 0 if N_applied_previous_year is 0, NA, or NULL.
 Residual N available to the crop from organic fertilizer applied in previous
 years. DPI formula: F = N_applied_previous_year (kg/ha) x Recovery_coeff.
 Recovery coefficient depends on organic type and application frequency
-(Guida DPI 2026, §3.1.6).
+(Guida DPI 2026, sec. 3.1.6).
 }
 \examples{
 organic_previous_years_N(100, "Cattle slurry", "every year")   # 30 kg/ha
 organic_previous_years_N(80, "Composted manure", "every two years")  # 24 kg/ha
 }
 \references{
-DPI Emilia-Romagna, Guida alla fertilizzazione 2026, §3.1.6 – N da fertilizzazioni
+DPI Emilia-Romagna, Guida alla fertilizzazione 2026, sec. 3.1.6 - N da fertilizzazioni
 organiche degli anni precedenti.
 }

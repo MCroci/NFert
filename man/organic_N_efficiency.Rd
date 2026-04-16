@@ -22,7 +22,7 @@ For ammendanti (compost, letame maturo, digestato palabile) returns 0.40 (40\%).
 }
 \description{
 Returns the fraction of total organic N that is available to the crop in the
-year of application, according to DPI (tipo di effluente, tessitura, modalità
+year of application, according to DPI (tipo di effluente, tessitura, modalita
 di distribuzione). Used when \code{soil_group} and \code{distribution_efficiency}
 are passed to \code{organic_fertilization()}.
 }
@@ -32,5 +32,5 @@ organic_N_efficiency("Composted manure", "Franco", "medium")  # 0.40
 }
 \references{
 DPI Emilia-Romagna, Guida alla fertilizzazione; FertDPI foglio Efficienza.
-Terreno sabbioso/franco/argilloso × distribuzione efficiente/media/poco efficiente.
+Terreno sabbioso/franco/argilloso x distribuzione efficiente/media/poco efficiente.
 }

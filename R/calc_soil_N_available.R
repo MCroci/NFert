@@ -4,7 +4,7 @@
 #' b1 = readily available N from soil total N (DPI B2); b2 = mineralized N from
 #' SOM (DPI B1). Total B = b1 + b2.
 #'
-#' @param Ntot Total nitrogen content in the soil (e.g. g/kg or ‰).
+#' @param Ntot Total nitrogen content in the soil (e.g. g/kg or per mille).
 #' @param SOM Soil organic matter content (%).
 #' @param soil.group Soil group (e.g., "Sandy textures").
 #' @param CN Carbon-to-nitrogen ratio.

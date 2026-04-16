@@ -76,7 +76,14 @@ plan_distribution <- function(soil_group,
   for (r in organic_rows) {
     fert <- r$fertilizer
     q    <- if (!is.null(r$quantity_t_ha)) r$quantity_t_ha else 0
-    row_fo <- organic_fertilizers.table[organic_fertilizers.table$fertilizer == fert, , drop = FALSE]
+    # Accept English (`fertilizer`) or Italian (`fertilizer_it`) matrix name,
+    # case-insensitive.
+    row_fo <- organic_fertilizers.table[
+      tolower(organic_fertilizers.table$fertilizer) == tolower(fert), , drop = FALSE]
+    if (nrow(row_fo) == 0 && "fertilizer_it" %in% names(organic_fertilizers.table)) {
+      row_fo <- organic_fertilizers.table[
+        tolower(organic_fertilizers.table$fertilizer_it) == tolower(fert), , drop = FALSE]
+    }
     if (nrow(row_fo) == 0 && (is.null(r$N_pct) || is.null(r$P2O5_pct) || is.null(r$K2O_pct))) {
       warning(sprintf("Organic fertilizer '%s' not in organic_fertilizers.table and no titres given; skipping.", fert))
       next
@@ -130,7 +137,12 @@ plan_distribution <- function(soil_group,
   for (r in mineral_rows) {
     conc <- r$fertilizer
     q    <- if (!is.null(r$quantity_q_ha)) r$quantity_q_ha else 0
-    row_c <- mineral_fertilizers.table[mineral_fertilizers.table$fertilizer == conc, , drop = FALSE]
+    row_c <- mineral_fertilizers.table[
+      tolower(mineral_fertilizers.table$fertilizer) == tolower(conc), , drop = FALSE]
+    if (nrow(row_c) == 0 && "fertilizer_it" %in% names(mineral_fertilizers.table)) {
+      row_c <- mineral_fertilizers.table[
+        tolower(mineral_fertilizers.table$fertilizer_it) == tolower(conc), , drop = FALSE]
+    }
     if (nrow(row_c) == 0 && (is.null(r$N) || is.null(r$P2O5) || is.null(r$K2O))) {
       warning(sprintf("Mineral '%s' not found and no titres given; skipping.", conc))
       next

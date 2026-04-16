@@ -22,8 +22,6 @@ leaching_loss(
 \item{id_rag}{Soil drainage index (ID_Rag).}
 
 \item{b1}{Readily available nitrogen in the soil (kg/ha).}
-
-\item{method}{Leaching loss calculation method ("precipitation" or "drainage"). Default is "precipitation".}
 }
 \value{
 A list containing:

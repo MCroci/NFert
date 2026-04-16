@@ -9,7 +9,7 @@
 #'
 #' @param source The source of organic fertilizer (e.g., "Cattle slurry", "Composted manure").
 #' @param frequency The frequency of application (e.g., "every year", "every two years").
-#' @param quantity The amount of organic fertilizer applied per application (in m³/ha or t/ha).
+#' @param quantity The amount of organic fertilizer applied per application (in m3/ha cubic metres, or t/ha).
 #'   Use \code{0} for no organic application (returns 0 kg N/ha).
 #' @param soil_group Optional. Soil group from \code{calc_soil_group_and_id_rag()}
 #'   (e.g. "Sandy textures", "Franco") to use DPI efficiency by texture. If \code{NULL},
@@ -24,7 +24,7 @@
 #'
 #' @references
 #' DPI Emilia-Romagna, Guida alla fertilizzazione; efficienza in funzione di
-#' tipologia di effluente, tessitura e modalità di distribuzione (Tabella 7 Norme Generali).
+#' tipologia di effluente, tessitura e modalita di distribuzione (Tabella 7 Norme Generali).
 #'
 #' @export
 #' @examples
@@ -78,7 +78,7 @@ organic_fertilization <- function(source = "Cattle slurry", frequency = "every y
   }
 }
 
-#' Typical N content (kg N per m³ or per t) by source – DPI/Guida
+#' Typical N content (kg N per m³ or per t) by source, DPI/Guida
 #' @noRd
 .organic_N_content <- function(source) {
   tab <- .organic_N_content_table()

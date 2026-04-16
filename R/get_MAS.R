@@ -19,7 +19,7 @@
 #'   `ok` (logical), `mas_N`, `N_planned`, `message`.
 #'
 #' @references
-#' DPI Emilia-Romagna – Norme Generali 2025, Allegato 9; Guida alla
+#' DPI Emilia-Romagna - Norme Generali 2025, Allegato 9; Guida alla
 #' Fertilizzazione Minerale e Organica 2025 (N, P, K). Reg. reg. 2/2024.
 #' DPI 2026, FertDPI / Fert_Office_v1_26.
 #'
@@ -81,7 +81,7 @@ check_MAS <- function(crop, N_planned, mas_table = NULL, edition = c("2026", "20
   list(ok = ok, mas_N = mas_N, N_planned = N_planned, message = msg)
 }
 
-#' Built-in MAS table – DPI 2025 Guida (ZVN, resa riferimento)
+#' Built-in MAS table - DPI 2025 Guida (ZVN, resa riferimento)
 #' Reg. reg. 2/2024, Allegato 9.
 #' @noRd
 .mas_table_dpi2025 <- function() {

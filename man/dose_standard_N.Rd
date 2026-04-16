@@ -19,7 +19,7 @@ scheda_N(...)
 \arguments{
 \item{crop}{Crop name exactly as in \code{NFert::mas.table$crop}.}
 
-\item{phase}{Optional phase string (e.g. "Primaverile-estiva 100–130 gg") for crops
+\item{phase}{Optional phase string (e.g. "Primaverile-estiva 100-130 gg") for crops
 with multiple fases. If \code{NULL} (default) and the crop has multiple rows, the
 first match is used and a note is emitted.}
 
@@ -35,6 +35,8 @@ Missing names default to 0.}
 
 \item{apply_mas_cap}{Logical, default \code{TRUE}. Cap the final dose at
 \code{max_N_dose = standard_N + max_increment} from MAS.}
+
+\item{...}{Passed to \code{dose_standard_N()}.}
 }
 \value{
 A named list with components:

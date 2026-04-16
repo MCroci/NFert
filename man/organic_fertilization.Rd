@@ -18,7 +18,7 @@ organic_fertilization(
 
 \item{frequency}{The frequency of application (e.g., "every year", "every two years").}
 
-\item{quantity}{The amount of organic fertilizer applied per application (in m³/ha or t/ha).
+\item{quantity}{The amount of organic fertilizer applied per application (in m3/ha cubic metres, or t/ha).
 Use \code{0} for no organic application (returns 0 kg N/ha).}
 
 \item{soil_group}{Optional. Soil group from \code{calc_soil_group_and_id_rag()}
@@ -50,5 +50,5 @@ organic_fertilization("Cattle slurry", "every year", 80,
 }
 \references{
 DPI Emilia-Romagna, Guida alla fertilizzazione; efficienza in funzione di
-tipologia di effluente, tessitura e modalità di distribuzione (Tabella 7 Norme Generali).
+tipologia di effluente, tessitura e modalita di distribuzione (Tabella 7 Norme Generali).
 }

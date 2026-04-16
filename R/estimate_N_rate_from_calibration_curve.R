@@ -1,9 +1,40 @@
+.as_raster_layer_ndvi <- function(x) {
+  if (!requireNamespace("raster", quietly = TRUE)) {
+    stop("Package 'raster' is required for NDVI raster operations.", call. = FALSE)
+  }
+  if (inherits(x, "RasterLayer")) {
+    return(x)
+  }
+  if (inherits(x, c("RasterBrick", "RasterStack"))) {
+    nl <- raster::nlayers(x)
+    if (nl < 1L) {
+      stop("NDVI raster has no layers.", call. = FALSE)
+    }
+    layer <- 1L
+    nm <- names(x)
+    if (length(nm) >= nl) {
+      nm_use <- nm[seq_len(nl)]
+      idx <- which(!is.na(nm_use) & tolower(trimws(nm_use)) == "ndvi")
+      if (length(idx)) {
+        layer <- idx[1L]
+      } else {
+        idx <- grep("^ndvi", nm_use, ignore.case = TRUE)
+        if (length(idx)) layer <- idx[1L]
+      }
+    }
+    return(raster::raster(x, layer = layer))
+  }
+  stop("Input must be a raster::RasterLayer, RasterBrick, or RasterStack (NDVI layer).",
+       call. = FALSE)
+}
+
 #' Nitrogen Rate Estimation from NDVI using Calibration
 #'
 #' This function estimates nitrogen (N) application rates based on NDVI values using either
 #' a two-point or three-point calibration method.
 #'
-#' @param raster A RasterLayer object containing NDVI values.
+#' @param raster A `raster::RasterLayer` with NDVI values, or a `RasterBrick` /
+#'   `RasterStack` (the layer named `NDVI` is used if present, otherwise the first layer).
 #' @param minN The minimum N rate (kg/ha) corresponding to the minimum NDVI.
 #' @param maxN The maximum N rate (kg/ha) corresponding to the maximum NDVI.
 #' @param meanN The mean N rate (kg/ha) corresponding to the mean NDVI (only used for three-point calibration).
@@ -26,13 +57,13 @@
 
 estimate_N_rate_from_calibration_curve <- function(raster, minN, maxN, meanN = NULL,
                                                    calibration_type = "two-point", plot = FALSE) {
-  # Validate input raster
-  if (!inherits(raster, "RasterLayer") || !is.numeric(raster[])) {
-    stop("Input must be a single-layer Raster object with numeric NDVI values.")
+  raster <- .as_raster_layer_ndvi(raster)
+  ndvi_values <- raster::getValues(raster)
+  if (!is.numeric(ndvi_values)) {
+    stop("NDVI raster values must be numeric.", call. = FALSE)
   }
 
   # Extract NDVI values and calculate statistics
-  ndvi_values <- raster::getValues(raster)
   ndvi_min <- min(ndvi_values, na.rm = TRUE)
   ndvi_max <- max(ndvi_values, na.rm = TRUE)
 

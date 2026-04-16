@@ -4,14 +4,19 @@
 #' dry matter t/ha, based on the classification of initial SO in soil:
 #' "Poor" = 13, "Normal" = 11, "Rich" = 9 (Fert_Office v1.26 foglio SO).
 #'
-#' @param so_class One of `"Poor"`, `"Normal"`, `"Rich"`.
+#' @param so_class One of `"Poor"`, `"Normal"`, `"Rich"` (case-insensitive).
 #' @param so_max_input Lookup table (default `NFert::so_max_input`).
 #' @return Numeric t dry matter / ha.
 #' @examples max_SO_input("Normal")
 #' @export
 max_SO_input <- function(so_class = c("Poor", "Normal", "Rich"),
                          so_max_input = NFert::so_max_input) {
-  so_class <- match.arg(so_class)
+  choices <- c("Poor", "Normal", "Rich")
+  if (length(so_class) == 1L && !is.na(so_class) && !so_class %in% choices) {
+    i <- match(tolower(so_class), tolower(choices))
+    if (!is.na(i)) so_class <- choices[i]
+  }
+  so_class <- match.arg(so_class, choices)
   v <- so_max_input$max_t_dm_ha[so_max_input$`class` == so_class]
   as.numeric(v[1])
 }
@@ -49,12 +54,23 @@ classify_SOM <- function(SOM, soil_group, so.table = NFert::so.table) {
     if (SOM < b[2]) "low" else
       if (SOM < b[3]) "medium" else "high"
 
-  # Map to "Poor" / "Normal" / "Rich" (keys of so_max_input)
-  cl <- switch(rating,
-    "very low" = "Poor",
-    "low"      = "Poor",
-    "medium"   = "Normal",
-    "high"     = "Rich")
-
-  list(rating = rating, class = cl, SOM = SOM, soil_group = sg)
-}
+  # Map 4-class rating to the 3-class scheme used for the SO input cap.
+  # Rationale: "very low" and "low" both translate to Scarsa/Poor, "medium"
+  # to Normale/Normal, and "high" to Elevata/Rich (Fert_Office v1.26 foglio SO).
+  class_en <- switch(rating,
+                     "very low" = "Poor",
+                     "low"      = "Poor",
+                     "medium"   = "Normal",
+                     "high"     = "Rich",
+                     NA_character_)
+  class_it <- switch(class_en,
+                     "Poor"   = "Scarsa",
+                     "Normal" = "Normale",
+                     "Rich"   = "Elevata",
+                     NA_character_)
+  list(rating      = rating,
+       class       = class_en,
+       class_it    = class_it,
+       SOM         = SOM,
+       soil_group  = sg)
+} 

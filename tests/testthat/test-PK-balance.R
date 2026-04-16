@@ -191,4 +191,5 @@ test_that("soil chemistry classifiers work", {
   expect_equal(classify_carbonate_att(6.8)$class, "High")
   expect_equal(classify_CEC(18)$class, "media")
   expect_equal(max_SO_input("Normal"), 11)
+  expect_equal(classify_SOM(SOM = 2, soil_group = "Medio impasto")$class, "Normal")
 })

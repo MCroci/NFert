@@ -9,9 +9,9 @@
 #'
 #' @param crop Crop name (matches `standard_pk_doses.table$crop`).
 #' @param phase Optional phase name.
-#' @param soil_P_class One of `"Molto_Bassa"`, `"Bassa"`, `"Normale"` (default),
-#'   `"Elevata"`. Selects the P2O5 base dose column.
-#' @param soil_K_class Same levels for potassium.
+#' @param soil_P_class One of `"normal"` (default), `"low"`, `"high"`, `"very_low"`.
+#'   Selects the \code{P2O5_<class>} column in \code{standard_pk_doses.table}.
+#' @param soil_K_class Same four levels for potassium (\code{K2O_<class>} columns).
 #' @param P_decrements,P_increments,K_decrements,K_increments Named numeric
 #'   vectors of adjustments (kg/ha). See `scheda_N()` for the same pattern.
 #' @param standard_pk_doses.table Lookup (default `NFert::standard_pk_doses.table`).
@@ -19,9 +19,11 @@
 #' @return A named list with `dose_base_P2O5`, `dose_base_K2O`,
 #'   `dose_final_P2O5`, `dose_final_K2O`, and subtotals.
 #' @examples
-#' scheda_PK(crop = "Grano duro (pianta intera)",
-#'           soil_P_class = "Normale",
-#'           soil_K_class = "Normale")
+#' scheda_PK(
+#'   crop = "Grano duro (pianta intera)",
+#'   soil_P_class = "normal",
+#'   soil_K_class = "normal"
+#' )
 #' @export
 dose_standard_PK <- function(crop,
                       phase = NULL,

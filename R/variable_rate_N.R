@@ -9,7 +9,7 @@
 #'
 #' 1. **Calibration curve** (`method = "calibration"`): the agronomic balance
 #'    determines the *target field-average* dose; the function then derives a
-#'    `minN`/`maxN` envelope around it (default ±25%) and applies the linear
+#'    `minN`/`maxN` envelope around it (default +/- 25%) and applies the linear
 #'    NDVI-driven calibration (low NDVI = more N, high NDVI = less N).
 #' 2. **Holland & Schepers** (`method = "holland"`): the agronomic balance is
 #'    used as the **base N rate** of the H&S sufficiency-index algorithm.
@@ -18,7 +18,8 @@
 #' raster of variable rates integrates (mean) to approximately the input
 #' `n_dose`, ensuring the agronomic constraint (MAS, ZVN) is respected.
 #'
-#' @param ndvi_raster A `raster::RasterLayer` with NDVI values (0-1).
+#' @param ndvi_raster A `raster::RasterLayer` with NDVI (0--1), or a `RasterBrick` /
+#'   `RasterStack` (layer \code{NDVI} if present, otherwise the first layer).
 #' @param n_dose Numeric. Field-average N dose (kg/ha) from `N_balance()` +
 #'   `calculate_N_fertilization()`, `scheda_N()$dose_final`, or any custom
 #'   target.

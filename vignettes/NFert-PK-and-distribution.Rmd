@@ -17,13 +17,15 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment  = "#>",
   fig.width  = 6,
-  fig.height = 4
+  fig.height = 4,
+  fig.align  = "center",
+  dpi        = 120
 )
 ```
 
 # Introduction
 
-This vignette shows how to use **NFert 0.3.0** to compute a full nitrogen,
+This vignette shows how to use **NFert 0.4.0** to compute a full nitrogen,
 phosphorus and potassium fertilisation plan following the
 *Disciplinari di Produzione Integrata* (DPI) Emilia-Romagna 2026. The
 package reproduces the logic of the official regional tool
@@ -127,10 +129,11 @@ soil_props
 classify_pH(pH)
 classify_carbonate_tot(caco3_tot)
 classify_carbonate_att(caco3_att)
-classify_SOM(SOM = SOM, soil_group = "Medio impasto")
+som_cls <- classify_SOM(SOM = SOM, soil_group = "Medio impasto")
+som_cls
 
 # Maximum annual SO input (for ammendanti)
-max_SO_input("normal")
+max_SO_input(som_cls$class)
 ```
 
 # Nitrogen balance (Allegato 2)
@@ -183,6 +186,23 @@ n_dose <- calculate_N_fertilization(n_bal)
 n_dose
 ```
 
+```{r fig-n-balance, fig.width=7, fig.height=5, out.width="100%"}
+# Signed terms in N_fert = A - B + C1 + C2 + D - E - F - Forg - G (kg N/ha)
+signed <- c(
+  A = n_bal$A, B = -n_bal$B, C1 = n_bal$C1, C2 = n_bal$C2, D = n_bal$D,
+  E = -n_bal$E, F = -n_bal$F, Forg = -n_bal$Forg, G = -n_bal$G
+)
+op <- par(mar = c(7, 4, 3, 1))
+cols <- grDevices::hcl.colors(length(signed), "BluYl", alpha = 0.9)
+barplot(
+  as.numeric(signed), names.arg = names(signed), las = 2, col = cols,
+  border = NA, ylab = "kg N/ha",
+  main = "N balance terms (signed toward mineral N need)"
+)
+abline(h = 0, lty = 2, col = "gray40")
+par(op)
+```
+
 The result matches the Fert_Office `Bilancio` sheet: A = 186.6, B = 73.84,
 D = 39.536 (includes `|E|` = 10), G = 10.05, and
 **N required ≈ 142.25 kg/ha**.
@@ -191,7 +211,18 @@ D = 39.536 (includes `|E|` = 10), G = 10.05, and
 
 ```{r mas}
 get_MAS(crop = crop)
-check_MAS(crop = crop, planned_N = n_dose)
+check_MAS(crop, n_dose)
+```
+
+```{r fig-mas, fig.width=5.5, fig.height=4.5, out.width="85%"}
+mas_row <- get_MAS(crop = crop)
+mas_n <- mas_row$mas_N[1]
+vals <- c(`Planned N` = n_dose, `MAS N` = mas_n)
+bp <- barplot(
+  vals, col = grDevices::hcl.colors(2, "Peach", rev = TRUE), border = NA,
+  ylab = "kg N/ha", main = "Planned N dose vs maximum allowed (MAS)"
+)
+text(bp, vals + 0.04 * max(vals, na.rm = TRUE), labels = round(vals, 1), pos = 3, cex = 0.9)
 ```
 
 ## Component functions (pedagogical use)
@@ -292,6 +323,23 @@ k_cls
 sapply(c(2, 10, 18.5, 30), K_leaching_by_clay)
 ```
 
+```{r fig-k-leach, fig.width=7, fig.height=4.5, out.width="100%"}
+clay_seq <- seq(0, 45, length.out = 300)
+h_seq <- vapply(clay_seq, K_leaching_by_clay, numeric(1))
+plot(
+  clay_seq, h_seq, type = "s", lwd = 2,
+  col = grDevices::hcl.colors(1, "Teal"),
+  xlab = "Clay (%)",
+  ylab = expression("H — K leaching coefficient (kg K"[2]*"O/ha)"),
+  main = "K balance: clay-dependent leaching term (DPI step function)"
+)
+rug(c(2, 10, 18.5, 30), col = "gray55")
+points(
+  c(2, 10, 18.5, 30), sapply(c(2, 10, 18.5, 30), K_leaching_by_clay),
+  pch = 21, bg = "coral", col = "white", cex = 1.2
+)
+```
+
 ## K balance
 
 ```{r k-balance}
@@ -301,6 +349,19 @@ k_bal <- K_balance(
   clay = clay, sand = sand
 )
 k_bal
+```
+
+```{r fig-npk, fig.width=6.5, fig.height=4.5, out.width="100%"}
+npk <- c(
+  `N (mineral)` = n_dose,
+  `P2O5` = p_bal$P2O5_required,
+  `K2O` = k_bal$K2O_required
+)
+barplot(
+  npk, col = grDevices::hcl.colors(3, "Dark 3", alpha = 0.92), border = NA,
+  ylab = "kg/ha",
+  main = "Recommended N, P2O5 and K2O inputs (benchmark scenario)"
+)
 ```
 
 Scenario: K = 150 ppm K2O is "media" in Medio impasto → Mantenimento.
@@ -553,7 +614,7 @@ pixel at the MAS limit.
 ```{r prec-ag-setup, eval = requireNamespace("raster", quietly = TRUE)}
 library(raster)
 
-# NDVI raster: small Sentinel-2 example provided with NFert
+# NDVI raster: example from NFert (RasterLayer or multi-band stack; functions use the NDVI layer if named)
 data(s2.rast)
 ndvi <- s2.rast
 ndvi

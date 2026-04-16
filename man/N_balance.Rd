@@ -7,7 +7,7 @@
 N_balance(
   expected_yield_tons_ha = 15,
   crop = "Grano tenero FF (granella)",
-  ccp = "Spring-summer crop 100–130 days",
+  ccp = "Spring-summer crop 100-130 days",
   sand = 50,
   clay = 35,
   Ntot = 1.2,
@@ -34,7 +34,7 @@ N_balance(
 
 \item{crop}{Name of the crop.}
 
-\item{ccp}{Crop calendar period (e.g., "Spring-summer crop 100–130 days").}
+\item{ccp}{Crop calendar period (e.g., "Spring-summer crop 100-130 days").}
 
 \item{sand}{Percentage of sand in the soil.}
 
@@ -60,13 +60,13 @@ N_balance(
 
 \item{location}{Location of the field relative to urban areas.}
 
-\item{forg_quantity}{Quantity of organic fertilizer applied (m³/ha or t/ha, depending on source).
+\item{forg_quantity}{Quantity of organic fertilizer applied (m3/ha or t/ha, depending on source).
 Use \code{0} for no organic application: \code{Forg} is set to 0 without calling
 \code{organic_fertilization()}.}
 
 \item{organic_previous_year_N}{Optional. Total N (kg/ha) from organic fertilization
 applied in the previous year (same source/frequency). If provided, term F (residual
-N from previous years' organic, DPI §3.1.6) is included. Default 0.}
+N from previous years' organic, DPI section 3.1.6) is included. Default 0.}
 
 \item{soil_group}{Optional. Soil group (e.g. from \code{calc_soil_group_and_id_rag()})
 to use DPI efficiency for current-year organic. If set, \code{distribution_efficiency}
@@ -76,16 +76,14 @@ should also be set.}
 Used with \code{soil_group} for DPI organic N efficiency.}
 
 \item{soil_seeding}{One of \code{"traditional"} (default) or \code{"no-till"}. If \code{"no-till"},
-DPI 2026 detrazione of 3 kg/ha is applied to b1 (N pronto).}
+DPI 2026 applies a 3 kg/ha reduction to b1 (readily available N).}
 
-\item{greenhouse}{Logical. If \code{TRUE}, 2 kg/ha are added to D (DPI 2026 in-serra factor).
+\item{greenhouse}{Logical. If \code{TRUE}, 2 kg/ha are added to D (DPI 2026 greenhouse factor).
 Default \code{FALSE}.}
 
-\item{E_to_D}{Logical. If \code{TRUE} (default), a negative \code{E} (precessione che immobilizza,
-es. stocchi interrati = -40) viene sommata a \code{D} come nel foglio C&D di
-Fert_Office v1.26 (cella I21 "E da conteggiare"), e \code{E} in output viene azzerato.
-Se \code{FALSE}, \code{E} resta negativo e il saldo è mantenuto dalla formula in
-\code{calculate_N_fertilization()}.}
+\item{E_to_D}{Logical. If \code{TRUE} (default), negative \code{E} (e.g. buried stalks = -40) is
+added to \code{D} as in Fert_Office v1.26 sheet C&D, and \code{E} in the output is set to 0.
+If \code{FALSE}, \code{E} stays negative and the balance uses \code{calculate_N_fertilization()}.}
 }
 \value{
 A data frame containing the calculated nitrogen balance components (all in kg/ha):
@@ -103,7 +101,7 @@ the raw value is negative, this column reports 0 (moved to D).
 \item F: Nitrogen from previous years' organic fertilization (kg/ha).
 \item Forg: Nitrogen from organic fertilizer (current year, efficient N) (kg/ha).
 \item G: Natural nitrogen contribution (e.g., from rainfall) (kg/ha).
-\item surplus_pluviometrico: Logical flag (DPI 2026 scheda standard).
+\item surplus_pluviometrico: Logical flag (DPI 2026 standard sheet, surplus rain).
 }
 }
 \description{
@@ -115,7 +113,7 @@ N_fert = A - B + C1 + C2 + D - E - F - Forg - G
 }
 \examples{
 N_balance(expected_yield_tons_ha = 15, crop = "Mais trinciato (classe 700)",
-          ccp = "Spring-summer crop 100–130 days", sand = 50, clay = 35,
+          ccp = "Spring-summer crop 100-130 days", sand = 50, clay = 35,
           Ntot = 1.2, SOM = 1.2, CN = 9.5, oxygen_availability = "Normal",
           winter_rain = 160, start_spring_rain = 40,
           prev_crop = "Winter cereals straw removal", source = "Cattle slurry",

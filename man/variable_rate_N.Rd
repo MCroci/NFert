@@ -16,7 +16,8 @@ variable_rate_N(
 )
 }
 \arguments{
-\item{ndvi_raster}{A \code{raster::RasterLayer} with NDVI values (0-1).}
+\item{ndvi_raster}{A \code{raster::RasterLayer} with NDVI (0--1), or a \code{RasterBrick} /
+\code{RasterStack} (layer \code{NDVI} if present, otherwise the first layer).}
 
 \item{n_dose}{Numeric. Field-average N dose (kg/ha) from \code{N_balance()} +
 \code{calculate_N_fertilization()}, \code{scheda_N()$dose_final}, or any custom
@@ -57,7 +58,7 @@ Two integration patterns are supported:
 \enumerate{
 \item \strong{Calibration curve} (\code{method = "calibration"}): the agronomic balance
 determines the \emph{target field-average} dose; the function then derives a
-\code{minN}/\code{maxN} envelope around it (default ±25\%) and applies the linear
+\code{minN}/\code{maxN} envelope around it (default +/- 25\%) and applies the linear
 NDVI-driven calibration (low NDVI = more N, high NDVI = less N).
 \item \strong{Holland & Schepers} (\code{method = "holland"}): the agronomic balance is
 used as the \strong{base N rate} of the H&S sufficiency-index algorithm.

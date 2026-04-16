@@ -11,7 +11,8 @@ estimate_N_rate_from_holland_schepers(
 )
 }
 \arguments{
-\item{ndvi_raster}{A RasterLayer object containing NDVI values (0-1 scale).}
+\item{ndvi_raster}{A \code{raster::RasterLayer} with NDVI (0--1), or a \code{RasterBrick} /
+\code{RasterStack} (layer named \code{NDVI} if present, else first layer).}
 
 \item{base_N_rate}{The base N rate (kg/ha) to be adjusted (default = 50).}
 

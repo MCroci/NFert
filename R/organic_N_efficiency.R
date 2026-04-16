@@ -1,7 +1,7 @@
 #' Organic nitrogen efficiency by material, soil texture and distribution (DPI)
 #'
 #' Returns the fraction of total organic N that is available to the crop in the
-#' year of application, according to DPI (tipo di effluente, tessitura, modalità
+#' year of application, according to DPI (tipo di effluente, tessitura, modalita
 #' di distribuzione). Used when \code{soil_group} and \code{distribution_efficiency}
 #' are passed to \code{organic_fertilization()}.
 #'
@@ -17,7 +17,7 @@
 #'
 #' @references
 #' DPI Emilia-Romagna, Guida alla fertilizzazione; FertDPI foglio Efficienza.
-#' Terreno sabbioso/franco/argilloso × distribuzione efficiente/media/poco efficiente.
+#' Terreno sabbioso/franco/argilloso x distribuzione efficiente/media/poco efficiente.
 #'
 #' @export
 #' @examples

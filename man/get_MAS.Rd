@@ -37,7 +37,7 @@ check_MAS("Mais da granella", 250)
 check_MAS("Frumento tenero (granella)", 210)  # over MAS
 }
 \references{
-DPI Emilia-Romagna – Norme Generali 2025, Allegato 9; Guida alla
+DPI Emilia-Romagna - Norme Generali 2025, Allegato 9; Guida alla
 Fertilizzazione Minerale e Organica 2025 (N, P, K). Reg. reg. 2/2024.
 DPI 2026, FertDPI / Fert_Office_v1_26.
 }

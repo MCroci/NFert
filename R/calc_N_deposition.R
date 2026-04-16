@@ -28,7 +28,10 @@
 #' @export
 #'
 #' @examples
-#' natural_contribution(location = "Plain adjacent to urbanized areas", ccp = "Autumn-winter crop <150 days")
+#' natural_contribution(
+#'   location = "Plain adjacent to urbanized areas",
+#'   ccp = "Autumn-winter crop <150 days"
+#' )
 
 natural_contribution <- function(location = "Plain adjacent to urbanized areas",
                                  ccp = "Autumn-winter crop <150 days",

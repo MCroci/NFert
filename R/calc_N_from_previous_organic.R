@@ -3,7 +3,7 @@
 #' Residual N available to the crop from organic fertilizer applied in previous
 #' years. DPI formula: F = N_applied_previous_year (kg/ha) x Recovery_coeff.
 #' Recovery coefficient depends on organic type and application frequency
-#' (Guida DPI 2026, §3.1.6).
+#' (Guida DPI 2026, sec. 3.1.6).
 #'
 #' @param N_applied_previous_year Numeric. Total N (kg/ha) applied in the previous year
 #'   from organic fertilization (same type and frequency as current practice).
@@ -15,7 +15,7 @@
 #'   Returns 0 if N_applied_previous_year is 0, NA, or NULL.
 #'
 #' @references
-#' DPI Emilia-Romagna, Guida alla fertilizzazione 2026, §3.1.6 – N da fertilizzazioni
+#' DPI Emilia-Romagna, Guida alla fertilizzazione 2026, sec. 3.1.6 - N da fertilizzazioni
 #' organiche degli anni precedenti.
 #'
 #' @export
@@ -55,7 +55,7 @@ organic_previous_years_N <- function(N_applied_previous_year, source, frequency)
 }
 
 #' DPI recovery coefficients: organic_type x frequency -> recovery (0-1)
-#' Guida §3.1.6 – Ammendante 50/30/20/20; Liquame bovino 30/15/10/0; Suino/pollina 15/10/5/0
+#' Guida sec. 3.1.6 - Ammendante 50/30/20/20; Liquame bovino 30/15/10/0; Suino/pollina 15/10/5/0
 #' @noRd
 .organic_recovery_table <- function() {
   data.frame(

@@ -14,9 +14,6 @@ calc_crop_N_demand(
 
 \item{crop}{The name of the crop for which to calculate the requirement. Must be a valid
 value in the \code{crop} column of the \code{uptake_table}.}
-
-\item{uptake_table}{A data frame containing unit crop absorptions for different crops.
-It should have at least two columns: "crop" (character) and "N" (numeric).}
 }
 \value{
 A list containing:

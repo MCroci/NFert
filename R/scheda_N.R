@@ -22,7 +22,7 @@
 #' | Incremento  | Terreno compattato o semina su sodo              | 10            |
 #'
 #' @param crop Crop name exactly as in `NFert::mas.table$crop`.
-#' @param phase Optional phase string (e.g. "Primaverile-estiva 100–130 gg") for crops
+#' @param phase Optional phase string (e.g. "Primaverile-estiva 100-130 gg") for crops
 #'   with multiple fases. If `NULL` (default) and the crop has multiple rows, the
 #'   first match is used and a note is emitted.
 #' @param decrements Named numeric vector (kg/ha) with one or more of:

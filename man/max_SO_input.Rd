@@ -10,7 +10,7 @@ max_SO_input(
 )
 }
 \arguments{
-\item{so_class}{One of \code{"Poor"}, \code{"Normal"}, \code{"Rich"}.}
+\item{so_class}{One of \code{"Poor"}, \code{"Normal"}, \code{"Rich"} (case-insensitive).}
 
 \item{so_max_input}{Lookup table (default \code{NFert::so_max_input}).}
 }
