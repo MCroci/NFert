@@ -18,3 +18,4 @@
 ^output_.*$
 ^_pkgdown\.yml$
 ^pkgdown$
+^\.github$
