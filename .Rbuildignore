@@ -14,3 +14,5 @@
 ^INSTALL_RTOOLS\.md$
 ^Guida_Fertilizzazione_DPI.*\.md$
 ^references$
+^NFert_SoftwareX_article_.*\.docx$
+^output_.*$

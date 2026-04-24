@@ -31,206 +31,206 @@ id,crop_id,crop,N,P2O5,K2O,balance,reference_yield,std_N_demand,std_P2O5_demand,
 30.0,A35,"Susino frutti, legno e foglie",0.49,0.1,0.49,sì,25.0,122.5,25.0,122.5,frutti,"Plum - fruit, wood and leaves"
 31.0,A36,"Uva da tavola grappoli, tralci e foglie",0.51,0.06,0.48,sì,25.0,127.5,15.0,120.0,grappoli uva,"Table grape - bunches, shoots and leaves"
 32.0,A37,"Vite per uva da vino (collina e montagna) grappoli, tralci e foglie ",0.57,0.26,0.67,sì,10.0,56.99999999999999,26.0,67.0,grappoli uva,"Grapevine for wine (hill and mountain) - bunches, shoots and leaves"
-33.0,A38,"Vite per uva da vino (pianura) grappoli, legno e foglie",0.62,0.28,0.74,sì,20.0,124.0,56.00000000000001,148.0,grappoli uva,"Vite per uva da vino (pianura) grappoli, legno e foglie"
-34.0,E1,Altri cereali a paglia (pianta intera),2.225,0.8580000000000001,1.7670000000000003,sì,,,,,granella + paglia,Altri cereali a paglia (pianta intera)
-35.0,E2,Avena,2.24,0.67,0.51,sì,3.2,71.68,21.44,16.32,granella,Avena
-36.0,E3,Avena pianta intera,2.24,0.93,2.19,sì,3.2,71.68,29.760000000000005,70.08,granella + paglia,Avena pianta intera
-37.0,E4,Barbababietola da zucchero (pianta intera),0.31,0.16,0.33,sì,70.0,217.0,112.0,231.0,radici + colletti + foglie,Barbababietola da zucchero (pianta intera)
-38.0,E5,Barbabietola da zucchero  (radici),0.31,0.14,0.21,sì,50.0,155.0,70.00000000000001,105.0,radici + colletti + foglie,Barbabietola da zucchero  (radici)
-39.0,E6,Canapa da fibra,0.43,0.2,0.6,sì,,,,,pianta intera,Canapa da fibra
-40.0,E7,Cavolo abissino,6.91,,,no,,,,,parte aerea,Cavolo abissino
-41.0,E8,Cece,3.68,1.08,1.74,sì,2.0,73.60000000000001,21.6,34.8,grani,Cece
-42.0,E9,Colza,6.21,1.28,0.99,sì,2.5,155.25,32.0,24.75,semi,Colza
-43.0,E10,Colza pianta intera,6.21,2.66,7.86,sì,2.5,155.25,66.5,196.50000000000003,semi + residui,Colza pianta intera
-44.0,E11,Farro,2.7,0.87,0.52,sì,2.0,54.0,17.4,10.4,granella,Farro
-45.0,E12,Farro (pianta intera),2.7,0.98,1.53,sì,2.0,54.0,19.6,30.6,granella + residui,Farro (pianta intera)
-46.0,E13,Favino da granella,4.3,1.0,4.4,sì,2.0,86.0,20.0,88.0,granella,Favino da granella
-47.0,E14,Girasole (acheni),4.31,1.24,1.15,sì,3.0,129.3,37.2,34.5,acheni,Girasole (acheni)
-48.0,E15,Girasole (pianta intera),4.31,1.9,8.51,sì,3.0,129.3,56.99999999999999,255.3,acheni + residui,Girasole (pianta intera)
+33.0,A38,"Vite per uva da vino (pianura) grappoli, legno e foglie",0.62,0.28,0.74,sì,20.0,124.0,56.00000000000001,148.0,grappoli uva,"Vineyard (plain) - grapes, wood and leaves"
+34.0,E1,Altri cereali a paglia (pianta intera),2.225,0.8580000000000001,1.7670000000000003,sì,,,,,granella + paglia,Other straw cereals (whole plant)
+35.0,E2,Avena,2.24,0.67,0.51,sì,3.2,71.68,21.44,16.32,granella,Oat
+36.0,E3,Avena pianta intera,2.24,0.93,2.19,sì,3.2,71.68,29.760000000000005,70.08,granella + paglia,Oat (whole plant)
+37.0,E4,Barbababietola da zucchero (pianta intera),0.31,0.16,0.33,sì,70.0,217.0,112.0,231.0,radici + colletti + foglie,Sugar beet (whole plant)
+38.0,E5,Barbabietola da zucchero  (radici),0.31,0.14,0.21,sì,50.0,155.0,70.00000000000001,105.0,radici + colletti + foglie,Sugar beet (roots)
+39.0,E6,Canapa da fibra,0.43,0.2,0.6,sì,,,,,pianta intera,Fibre hemp
+40.0,E7,Cavolo abissino,6.91,,,no,,,,,parte aerea,Abyssinian cabbage
+41.0,E8,Cece,3.68,1.08,1.74,sì,2.0,73.60000000000001,21.6,34.8,grani,Chickpea
+42.0,E9,Colza,6.21,1.28,0.99,sì,2.5,155.25,32.0,24.75,semi,Rapeseed
+43.0,E10,Colza pianta intera,6.21,2.66,7.86,sì,2.5,155.25,66.5,196.50000000000003,semi + residui,Rapeseed (whole plant)
+44.0,E11,Farro,2.7,0.87,0.52,sì,2.0,54.0,17.4,10.4,granella,Spelt
+45.0,E12,Farro (pianta intera),2.7,0.98,1.53,sì,2.0,54.0,19.6,30.6,granella + residui,Spelt (whole plant)
+46.0,E13,Favino da granella,4.3,1.0,4.4,sì,2.0,86.0,20.0,88.0,granella,Faba bean (grain)
+47.0,E14,Girasole (acheni),4.31,1.24,1.15,sì,3.0,129.3,37.2,34.5,acheni,Sunflower (achenes)
+48.0,E15,Girasole (pianta intera),4.31,1.9,8.51,sì,3.0,129.3,56.99999999999999,255.3,acheni + residui,Sunflower (whole plant)
 49.0,E16,Grano duro (granella),3.11,0.85,0.59,sì,6.0,186.6,51.0,35.4,granella,Durum wheat (grain)
 50.0,E17,Grano duro (pianta intera),3.11,1.06,1.99,sì,6.0,186.6,63.6,119.4,granella + residui,Durum wheat (whole plant)
 51.0,E18,Grano tenero FP/FPS (granella),2.96,0.78,0.5,sì,6.0,177.59999999999997,46.8,30.0,granella,Soft wheat FP/FPS (grain)
 52.0,E19,Grano tenero FP/FPS (pianta intera),2.96,0.98,1.87,sì,6.0,177.59999999999997,58.8,112.2,granella + residui,Soft wheat FP/FPS (whole plant)
-53.0,E20,Grano tenero biscottiero  (granella),2.81,0.98,0.61,sì,6.0,168.6,58.8,36.6,granella,Grano tenero biscottiero  (granella)
-54.0,E21,Grano tenero biscottiero pianta intera,2.81,1.19,2.29,sì,6.0,168.6,71.39999999999999,137.4,granella + residui,Grano tenero biscottiero pianta intera
+53.0,E20,Grano tenero biscottiero  (granella),2.81,0.98,0.61,sì,6.0,168.6,58.8,36.6,granella,Biscuit wheat (grain)
+54.0,E21,Grano tenero biscottiero pianta intera,2.81,1.19,2.29,sì,6.0,168.6,71.39999999999999,137.4,granella + residui,Biscuit wheat (whole plant)
 55.0,E22,Grano tenero FF (granella),3.11,0.87,0.53,sì,6.0,186.6,52.2,31.8,granella,Soft wheat FF - strong (grain)
 56.0,E23,Grano tenero FF (pianta intera),3.11,1.06,1.99,sì,6.0,186.6,63.6,119.4,granella + residui,Soft wheat FF - strong (whole plant)
-57.0,E24,Lenticchia,4.21,0.95,1.22,sì,,,,,granella,Lenticchia
-58.0,E25,Lino  fibra,2.59,1.8,3.2,sì,,,,,pianta intera,Lino  fibra
-59.0,E26,Lino granella,3.63,1.4,1.3,sì,,,,,granella,Lino granella
-60.0,E27,Lupino,4.3,1.0,4.4,sì,,,,,granella,Lupino
-61.0,E28,Mais da granella 300-400 (granella),2.27,0.69,0.38,sì,7.0,158.9,48.3,26.6,granella,Mais da granella 300-400 (granella)
-62.0,E29,Mais da granella 300-400 (pianta intera),2.27,1.0,2.23,sì,7.0,158.9,70.0,156.1,granella + residui,Mais da granella 300-400 (pianta intera)
-63.0,E30,Mais da granella 500-700 (granella),2.27,0.69,0.38,sì,12.0,272.40000000000003,82.8,45.60000000000001,granella,Mais da granella 500-700 (granella)
-64.0,E31,Mais da granella 500-700 (pianta intera),2.27,1.0,2.23,sì,12.0,272.40000000000003,120.0,267.6,granella + residui,Mais da granella 500-700 (pianta intera)
-65.0,E32,Mais dolce  (spighe),1.42,0.42,0.23,sì,16.0,227.2,67.2,36.8,spighe,Mais dolce  (spighe)
-66.0,E33,Mais dolce (pianta intera),1.42,0.54,0.98,sì,16.0,227.2,86.4,156.8,spighe + residui,Mais dolce (pianta intera)
-67.0,E34,Mais trinciato classe 500,0.39,0.15,0.33,sì,45.0,175.5,67.5,148.5,pianta intera,Mais trinciato classe 500
-68.0,E35,Mais trinciato classe 700,0.39,0.15,0.33,sì,65.0,253.5,97.5,214.5,pianta intera,Mais trinciato classe 700
+57.0,E24,Lenticchia,4.21,0.95,1.22,sì,,,,,granella,Lentil
+58.0,E25,Lino  fibra,2.59,1.8,3.2,sì,,,,,pianta intera,Fibre flax
+59.0,E26,Lino granella,3.63,1.4,1.3,sì,,,,,granella,Linseed (grain)
+60.0,E27,Lupino,4.3,1.0,4.4,sì,,,,,granella,Lupin
+61.0,E28,Mais da granella 300-400 (granella),2.27,0.69,0.38,sì,7.0,158.9,48.3,26.6,granella,Grain maize 300-400 (grain)
+62.0,E29,Mais da granella 300-400 (pianta intera),2.27,1.0,2.23,sì,7.0,158.9,70.0,156.1,granella + residui,Grain maize 300-400 (whole plant)
+63.0,E30,Mais da granella 500-700 (granella),2.27,0.69,0.38,sì,12.0,272.40000000000003,82.8,45.60000000000001,granella,Grain maize 500-700 (grain)
+64.0,E31,Mais da granella 500-700 (pianta intera),2.27,1.0,2.23,sì,12.0,272.40000000000003,120.0,267.6,granella + residui,Grain maize 500-700 (whole plant)
+65.0,E32,Mais dolce  (spighe),1.42,0.42,0.23,sì,16.0,227.2,67.2,36.8,spighe,Sweet maize (ears)
+66.0,E33,Mais dolce (pianta intera),1.42,0.54,0.98,sì,16.0,227.2,86.4,156.8,spighe + residui,Sweet maize (whole plant)
+67.0,E34,Mais trinciato classe 500,0.39,0.15,0.33,sì,45.0,175.5,67.5,148.5,pianta intera,Silage maize (class 500)
+68.0,E35,Mais trinciato classe 700,0.39,0.15,0.33,sì,65.0,253.5,97.5,214.5,pianta intera,Silage maize (class 700)
 69.0,E36,Orzo (granella),2.24,0.8,0.52,sì,6.5,145.60000000000002,52.0,33.8,granella,Barley (grain)
 70.0,E37,Orzo (pianta intera),2.24,0.98,1.89,sì,6.5,145.60000000000002,63.7,122.85,granella + residui,Barley (whole plant)
-71.0,E38,Panico,1.49,0.39,1.79,sì,,,,,granella,Panico
-72.0,E39,Pisello proteico,4.55,0.88,1.28,sì,5.0,227.5,44.0,64.0,granella,Pisello proteico
-73.0,E40,Pisello proteico + residui,4.55,1.16,4.23,sì,5.0,227.5,58.0,211.50000000000003,granellam + residui,Pisello proteico + residui
-74.0,E41,Rafano (da sovescio),0.13,0.09,0.44,sì,,,,,pianta intera,Rafano (da sovescio)
-75.0,E42,Riso (granella),2.03,0.7,0.55,sì,7.0,142.1,48.99999999999999,38.50000000000001,granella,Riso (granella)
-76.0,E43,Riso (granella+paglia),2.03,0.92,2.07,sì,7.0,142.1,64.4,144.89999999999998,granella + paglia,Riso (granella+paglia)
+71.0,E38,Panico,1.49,0.39,1.79,sì,,,,,granella,Foxtail millet
+72.0,E39,Pisello proteico,4.55,0.88,1.28,sì,5.0,227.5,44.0,64.0,granella,Protein pea
+73.0,E40,Pisello proteico + residui,4.55,1.16,4.23,sì,5.0,227.5,58.0,211.50000000000003,granellam + residui,Protein pea + residues
+74.0,E41,Rafano (da sovescio),0.13,0.09,0.44,sì,,,,,pianta intera,Horseradish (green manure)
+75.0,E42,Riso (granella),2.03,0.7,0.55,sì,7.0,142.1,48.99999999999999,38.50000000000001,granella,Rice (grain)
+76.0,E43,Riso (granella+paglia),2.03,0.92,2.07,sì,7.0,142.1,64.4,144.89999999999998,granella + paglia,Rice (grain + straw)
 77.0,E44,Segale (granella),2.78,0.7,0.5,sì,4.0,111.2,28.0,20.0,granella,Rye (grain)
-78.0,E45,Segale pianta intera,2.78,1.23,3.11,sì,4.0,111.2,49.2,124.4,granella + paglia,Segale pianta intera
-79.0,E46,Senape indiana,6.91,,,no,,,,,semi,Senape indiana
+78.0,E45,Segale pianta intera,2.78,1.23,3.11,sì,4.0,111.2,49.2,124.4,granella + paglia,Rye (whole plant)
+79.0,E46,Senape indiana,6.91,,,no,,,,,semi,Indian mustard
 80.0,E47,Soia (granella),6.3,1.36,2.01,sì,3.5,220.5,47.60000000000001,70.35,granella,Soybean (grain)
-81.0,E48,Soia (pianta intera),6.3,1.76,3.05,sì,3.5,220.5,61.6,106.75,granella + residui,Soia (pianta intera)
+81.0,E48,Soia (pianta intera),6.3,1.76,3.05,sì,3.5,220.5,61.6,106.75,granella + residui,Soybean (whole plant)
 82.0,E49,Sorgo da foraggio,0.3,0.1,0.35,sì,,,,,pianta intera trinciata o verde,Forage sorghum
-83.0,E50,Sorgo da granella  (solo granella),2.47,0.73,0.43,sì,7.5,185.25000000000003,54.75,32.25,granella,Sorgo da granella  (solo granella)
-84.0,E51,Sorgo da granella (pianta intera),2.47,0.95,1.57,sì,7.5,185.25000000000003,71.25,117.75,granella + residui,Sorgo da granella (pianta intera)
-85.0,E52,Tabacco Bright,2.62,0.6,3.5,sì,,,,,,Tabacco Bright
-86.0,E53,Tabacco Bright pianta intera,2.62,1.04,4.09,sì,,,,,,Tabacco Bright pianta intera
-87.0,E54,Tabacco Burley,3.71,0.3,3.7,sì,,,,,,Tabacco Burley
-88.0,E55,Tabacco Burley pianta intera,3.71,0.62,5.11,sì,,,,,,Tabacco Burley pianta intera
+83.0,E50,Sorgo da granella  (solo granella),2.47,0.73,0.43,sì,7.5,185.25000000000003,54.75,32.25,granella,Grain sorghum (grain only)
+84.0,E51,Sorgo da granella (pianta intera),2.47,0.95,1.57,sì,7.5,185.25000000000003,71.25,117.75,granella + residui,Grain sorghum (whole plant)
+85.0,E52,Tabacco Bright,2.62,0.6,3.5,sì,,,,,,Bright tobacco
+86.0,E53,Tabacco Bright pianta intera,2.62,1.04,4.09,sì,,,,,,Bright tobacco (whole plant)
+87.0,E54,Tabacco Burley,3.71,0.3,3.7,sì,,,,,,Burley tobacco
+88.0,E55,Tabacco Burley pianta intera,3.71,0.62,5.11,sì,,,,,,Burley tobacco (whole plant)
 89.0,E56,Triticale,2.54,0.7,0.5,sì,7.5,190.5,52.5,37.5,granella,Triticale
-90.0,E57,Triticale pianta intera,2.54,1.1,3.0,sì,7.5,190.5,82.5,225.0,granella + paglia,Triticale pianta intera
-91.0,F1,Avena insilata,0.46,0.2015,0.4744999999999999,sì,14.76923076923077,67.93846153846155,29.760000000000005,70.07999999999998,pianta trinciata,Avena insilata
-92.0,F2,Colza insilato,0.94,0.402093023255814,1.1881395348837214,sì,16.538461538461537,155.46153846153845,66.5,196.50000000000009,pianta trinciata,Colza insilato
-93.0,F3,Erba mazzolina,1.89,0.47,2.81,sì,12.5,,,,fieno,Erba mazzolina
+90.0,E57,Triticale pianta intera,2.54,1.1,3.0,sì,7.5,190.5,82.5,225.0,granella + paglia,Triticale (whole plant)
+91.0,F1,Avena insilata,0.46,0.2015,0.4744999999999999,sì,14.76923076923077,67.93846153846155,29.760000000000005,70.07999999999998,pianta trinciata,Oat silage
+92.0,F2,Colza insilato,0.94,0.402093023255814,1.1881395348837214,sì,16.538461538461537,155.46153846153845,66.5,196.50000000000009,pianta trinciata,Rapeseed silage
+93.0,F3,Erba mazzolina,1.89,0.47,2.81,sì,12.5,,,,fieno,Orchardgrass
 94.0,F4,Erba medica,2.06,0.53,2.03,sì,12.5,,,,fieno,Alfalfa
-95.0,F5,Erbai aut prim. Di cer. O cruc.,1.36,0.65,1.22,sì,11.0,149.60000000000002,71.5,134.2,fieno,Erbai aut prim. Di cer. O cruc.
-96.0,F6,Erbai aut prim. Di leguminose,0.68,0.27,1.08,sì,25.0,170.0,67.5,270.0,foraggio verde,Erbai aut prim. Di leguminose
-97.0,F7,Erbai biennali o Prati avv. di Graminacee,2.07,0.55,2.45,sì,,,,,fieno,Erbai biennali o Prati avv. di Graminacee
-98.0,F8,Erbai biennali misti o Prati avv. Polifita,1.79,0.75,2.7,sì,,,,,fieno,Erbai biennali misti o Prati avv. Polifita
-99.0,F9,Farro insilato,0.5,0.182,0.2841428571428571,sì,10.769230769230768,53.84615384615384,19.6,30.599999999999994,pianta trinciata,Farro insilato
-100.0,F10,Festuca arundinacea,2.04,0.65,1.22,sì,12.5,255.0,81.25,152.5,fieno,Festuca arundinacea
-101.0,F11,Fleolo (coda di topo),2.07,0.65,1.22,sì,12.5,258.74999999999994,81.25,152.5,fieno,Fleolo (coda di topo)
+95.0,F5,Erbai aut prim. Di cer. O cruc.,1.36,0.65,1.22,sì,11.0,149.60000000000002,71.5,134.2,fieno,Autumn-spring cereal/crucifer grass
+96.0,F6,Erbai aut prim. Di leguminose,0.68,0.27,1.08,sì,25.0,170.0,67.5,270.0,foraggio verde,Autumn-spring legume grass
+97.0,F7,Erbai biennali o Prati avv. di Graminacee,2.07,0.55,2.45,sì,,,,,fieno,Biennial or grass-meadow
+98.0,F8,Erbai biennali misti o Prati avv. Polifita,1.79,0.75,2.7,sì,,,,,fieno,Biennial mixed or polyphytic meadow
+99.0,F9,Farro insilato,0.5,0.182,0.2841428571428571,sì,10.769230769230768,53.84615384615384,19.6,30.599999999999994,pianta trinciata,Spelt silage
+100.0,F10,Festuca arundinacea,2.04,0.65,1.22,sì,12.5,255.0,81.25,152.5,fieno,Tall fescue
+101.0,F11,Fleolo (coda di topo),2.07,0.65,1.22,sì,12.5,258.74999999999994,81.25,152.5,fieno,Timothy grass
 102.0,F12,Grano duro  insilato,0.62,0.212,0.3979999999999999,sì,30.0,186.0,63.6,119.4,pianta trinciata,Durum wheat silage
-103.0,F13,Grano tenero  insilato,0.56,0.238,0.458,sì,30.0,168.0,71.39999999999999,137.4,pianta trinciata,Grano tenero  insilato
-104.0,F14,Loglio da insilare,0.9,0.4,0.8,sì,22.0,198.0,88.0,176.0,pianta trinciata,Loglio da insilare
-105.0,F15,Loiessa,1.53,0.69,2.25,sì,12.5,191.25,86.25,281.25,fieno,Loiessa
-106.0,F16,Loietto perenne,2.07,0.69,2.25,sì,9.0,186.3,62.1,202.5,fieno,Loietto perenne
-107.0,F17,Orzo insilato,0.44,0.193030303030303,0.3722727272727272,sì,33.0,145.2,63.70000000000001,122.85,pianta trinciata,Orzo insilato
-108.0,F18,Prati di graminacee,1.95,0.72,1.81,sì,10.0,195.0,72.0,181.0,fieno,Prati di graminacee
-109.0,F19,Prati di trifoglio,2.07,0.6,2.45,sì,11.0,227.7,66.0,269.5,fieno,Prati di trifoglio
-110.0,F20,Prati di leguminose in purezza - Trifoglio,2.07,0.6,2.45,sì,8.5,175.95,51.0,208.25000000000003,fieno,Prati di leguminose in purezza - Trifoglio
-111.0,F21,Prati di leguminose in purezza - Ginestrino,2.07,0.6,2.45,sì,7.0,144.89999999999998,42.0,171.50000000000003,fieno,Prati di leguminose in purezza - Ginestrino
-112.0,F22,Prati di leguminose in purezza - Sulla,2.07,0.6,2.45,sì,8.0,165.6,48.0,196.0,fieno,Prati di leguminose in purezza - Sulla
-113.0,F23,Prati di leguminose in purezza - Lupinella,2.07,0.6,2.45,sì,6.5,134.54999999999998,39.0,159.25,fieno,Prati di leguminose in purezza - Lupinella
-114.0,F24,Prati pascoli in collina,2.27,0.39,2.3,sì,,,,,pascolo + fieno,Prati pascoli in collina
-115.0,F25,Prati polifiti >50% leguminose,2.48,0.47,2.3,sì,,,,,fieno,Prati polifiti >50% leguminose
-116.0,F26,Prati polifiti,2.25,0.51,2.04,sì,8.5,191.25,43.35,173.4,fieno,Prati polifiti
-117.0,F27,Prati stabili in pianura,1.83,0.72,1.81,sì,8.5,155.55,61.2,153.85,fieno,Prati stabili in pianura
-118.0,F28,Prato misto,1.8,,,no,,,,,fieno,Prato misto
-119.0,F29,Segale insilato,0.51,0.2236363636363636,0.5654545454545454,sì,22.0,112.2,49.2,124.4,pianta trinciata,Segale insilato
-120.0,F30,Triticale insilato,0.51,0.2229729729729729,0.6081081081081081,sì,37.0,188.7,82.5,225.0,pianta trinciata,Triticale insilato
+103.0,F13,Grano tenero  insilato,0.56,0.238,0.458,sì,30.0,168.0,71.39999999999999,137.4,pianta trinciata,Soft wheat silage
+104.0,F14,Loglio da insilare,0.9,0.4,0.8,sì,22.0,198.0,88.0,176.0,pianta trinciata,Ryegrass for silage
+105.0,F15,Loiessa,1.53,0.69,2.25,sì,12.5,191.25,86.25,281.25,fieno,Italian ryegrass
+106.0,F16,Loietto perenne,2.07,0.69,2.25,sì,9.0,186.3,62.1,202.5,fieno,Perennial ryegrass
+107.0,F17,Orzo insilato,0.44,0.193030303030303,0.3722727272727272,sì,33.0,145.2,63.70000000000001,122.85,pianta trinciata,Barley silage
+108.0,F18,Prati di graminacee,1.95,0.72,1.81,sì,10.0,195.0,72.0,181.0,fieno,Grass meadows
+109.0,F19,Prati di trifoglio,2.07,0.6,2.45,sì,11.0,227.7,66.0,269.5,fieno,Clover meadow
+110.0,F20,Prati di leguminose in purezza - Trifoglio,2.07,0.6,2.45,sì,8.5,175.95,51.0,208.25000000000003,fieno,Pure legume meadow - Clover
+111.0,F21,Prati di leguminose in purezza - Ginestrino,2.07,0.6,2.45,sì,7.0,144.89999999999998,42.0,171.50000000000003,fieno,Pure legume meadow - Birdsfoot trefoil
+112.0,F22,Prati di leguminose in purezza - Sulla,2.07,0.6,2.45,sì,8.0,165.6,48.0,196.0,fieno,Pure legume meadow - Sulla
+113.0,F23,Prati di leguminose in purezza - Lupinella,2.07,0.6,2.45,sì,6.5,134.54999999999998,39.0,159.25,fieno,Pure legume meadow - Sainfoin
+114.0,F24,Prati pascoli in collina,2.27,0.39,2.3,sì,,,,,pascolo + fieno,Hill pastures
+115.0,F25,Prati polifiti >50% leguminose,2.48,0.47,2.3,sì,,,,,fieno,Polyphytic meadows (>50% legumes)
+116.0,F26,Prati polifiti,2.25,0.51,2.04,sì,8.5,191.25,43.35,173.4,fieno,Polyphytic meadows
+117.0,F27,Prati stabili in pianura,1.83,0.72,1.81,sì,8.5,155.55,61.2,153.85,fieno,Permanent lowland meadows
+118.0,F28,Prato misto,1.8,,,no,,,,,fieno,Mixed meadow
+119.0,F29,Segale insilato,0.51,0.2236363636363636,0.5654545454545454,sì,22.0,112.2,49.2,124.4,pianta trinciata,Rye silage
+120.0,F30,Triticale insilato,0.51,0.2229729729729729,0.6081081081081081,sì,37.0,188.7,82.5,225.0,pianta trinciata,Triticale silage
 121.0,O1,Aglio,1.08,0.27,0.95,sì,9.0,97.2,24.3,85.49999999999999,bulbi,Garlic
-122.0,O2,Asparago verde (pianta intera),2.56,0.66,2.24,sì,8.0,204.8,52.8,179.20000000000002,turrioni + parte aerea asportata a fine estate,Asparago verde (pianta intera)
-123.0,O3,Asparago verde alta produzione,2.56,0.66,2.24,sì,20.0,512.0,132.0,448.00000000000006,turrioni + parte aerea asportata a fine estate,Asparago verde alta produzione
-124.0,O4,Basilico media produzione,0.37,0.13,0.39,sì,20.0,74.0,26.0,78.0,foglie,Basilico media produzione
-125.0,O5,Basilico alta produzione più tagli,0.37,0.13,0.39,sì,55.0,203.5,71.5,214.5,foglie,Basilico alta produzione più tagli
-126.0,O6,Bietola da costa e da foglia m. fresco  media produzione,0.46,0.19,0.57,sì,25.0,115.0,47.5,142.49999999999997,foglie,Bietola da costa e da foglia m. fresco  media produzione
-127.0,O7,Bietola da costa e da foglia m. fresco  alta produzione più tagli,0.46,0.19,0.57,sì,35.0,161.0,66.5,199.5,foglie,Bietola da costa e da foglia m. fresco  alta produzione più tagli
-128.0,O8,Bietola da foglie per l'industria media produzione più tagli,0.54,0.3,0.55,sì,25.0,135.0,75.0,137.50000000000003,foglie,Bietola da foglie per l'industria media produzione più tagli
-129.0,O9,Bietola da costa per l'industria alta produzione più tagli,0.54,0.3,0.55,sì,35.0,189.00000000000003,105.0,192.5,foglie,Bietola da costa per l'industria alta produzione più tagli
-130.0,O10,Broccoletto  - Cime di rapa,0.41,0.16,0.49,sì,,,,,infiorescenze + foglie,Broccoletto  - Cime di rapa
-131.0,O11,Broccolo media produzione,0.52,0.18,0.57,sì,20.0,104.0,36.0,114.0,infiorescenze,Broccolo media produzione
-132.0,O12,Broccolo alta produzione,0.52,0.18,0.57,sì,32.5,169.00000000000003,58.5,185.25,infiorescenze,Broccolo alta produzione
-133.0,O13,Cappuccio media produzione,0.53,0.19,0.53,sì,27.0,143.1,51.3,143.1,teste,Cappuccio media produzione
-134.0,O14,Cappuccio alta produzione,0.53,0.19,0.53,sì,50.0,265.0,95.0,265.0,teste,Cappuccio alta produzione
+122.0,O2,Asparago verde (pianta intera),2.56,0.66,2.24,sì,8.0,204.8,52.8,179.20000000000002,turrioni + parte aerea asportata a fine estate,Green asparagus (whole plant)
+123.0,O3,Asparago verde alta produzione,2.56,0.66,2.24,sì,20.0,512.0,132.0,448.00000000000006,turrioni + parte aerea asportata a fine estate,Green asparagus (high yield)
+124.0,O4,Basilico media produzione,0.37,0.13,0.39,sì,20.0,74.0,26.0,78.0,foglie,Basil (medium yield)
+125.0,O5,Basilico alta produzione più tagli,0.37,0.13,0.39,sì,55.0,203.5,71.5,214.5,foglie,"Basil (high yield, multi-cut)"
+126.0,O6,Bietola da costa e da foglia m. fresco  media produzione,0.46,0.19,0.57,sì,25.0,115.0,47.5,142.49999999999997,foglie,"Chard and leaf beet (fresh market, medium yield)"
+127.0,O7,Bietola da costa e da foglia m. fresco  alta produzione più tagli,0.46,0.19,0.57,sì,35.0,161.0,66.5,199.5,foglie,"Chard and leaf beet (fresh market, high yield, multi-cut)"
+128.0,O8,Bietola da foglie per l'industria media produzione più tagli,0.54,0.3,0.55,sì,25.0,135.0,75.0,137.50000000000003,foglie,"Leaf beet (processing, medium yield, multi-cut)"
+129.0,O9,Bietola da costa per l'industria alta produzione più tagli,0.54,0.3,0.55,sì,35.0,189.00000000000003,105.0,192.5,foglie,"Chard (processing, high yield, multi-cut)"
+130.0,O10,Broccoletto  - Cime di rapa,0.41,0.16,0.49,sì,,,,,infiorescenze + foglie,Broccoli rabe / turnip tops
+131.0,O11,Broccolo media produzione,0.52,0.18,0.57,sì,20.0,104.0,36.0,114.0,infiorescenze,Broccoli (medium yield)
+132.0,O12,Broccolo alta produzione,0.52,0.18,0.57,sì,32.5,169.00000000000003,58.5,185.25,infiorescenze,Broccoli (high yield)
+133.0,O13,Cappuccio media produzione,0.53,0.19,0.53,sì,27.0,143.1,51.3,143.1,teste,Head cabbage (medium yield)
+134.0,O14,Cappuccio alta produzione,0.53,0.19,0.53,sì,50.0,265.0,95.0,265.0,teste,Head cabbage (high yield)
 135.0,O15,Carciofo,0.81,0.21,1.08,sì,15.5,125.55,32.55,167.40000000000003,capolini (cuore),Artichoke
-136.0,O16,Cardo media produzione,0.59,0.11,0.53,sì,25.5,150.45,28.05,135.15,costole,Cardo media produzione
-137.0,O17,Cardo alta produzione,0.59,0.11,0.53,sì,32.5,191.75,35.75,172.25,costole,Cardo alta produzione
+136.0,O16,Cardo media produzione,0.59,0.11,0.53,sì,25.5,150.45,28.05,135.15,costole,Cardoon (medium yield)
+137.0,O17,Cardo alta produzione,0.59,0.11,0.53,sì,32.5,191.75,35.75,172.25,costole,Cardoon (high yield)
 138.0,O18,Carota,0.41,0.16,0.69,sì,50.0,205.0,80.0,345.0,radici,Carrot
-139.0,O19,Cavolfiore media produzione,0.47,0.15,0.56,sì,35.0,164.5,52.5,196.0,infiorescenze (palle),Cavolfiore media produzione
-140.0,O20,Cavolfiore alta produzione,0.47,0.15,0.56,sì,45.0,211.5,67.5,252.00000000000003,infiorescenze (palle),Cavolfiore alta produzione
-141.0,O21,Cavolo verza mercato media produzione,0.55,0.2,0.57,sì,24.0,132.0,48.00000000000001,136.8,teste,Cavolo verza mercato media produzione
-142.0,O22,Cavolo verza mercato alta produzione,0.55,0.2,0.57,sì,50.0,275.00000000000006,100.0,284.99999999999994,teste,Cavolo verza mercato alta produzione
-143.0,O23,"Cavolo Riccio, Cavolo nero e Cavolo Rapa",0.44,0.19,0.41,sì,20.0,88.0,38.0,82.0,foglie,"Cavolo Riccio, Cavolo nero e Cavolo Rapa"
-144.0,O24,Cetriolo da mensa media produzione,0.18,0.08,0.25,sì,120.0,216.0,96.0,300.0,frutti (peponidi),Cetriolo da mensa media produzione
-145.0,O25,Cetriolo da mensa alta produzione,0.18,0.08,0.25,sì,150.0,270.0,120.0,375.0,frutti (peponidi),Cetriolo da mensa alta produzione
-146.0,O26,Cicoria da mercato media produzione,0.44,0.32,0.88,sì,28.0,123.2,89.60000000000001,246.4,foglie/cespi,Cicoria da mercato media produzione
-147.0,O27,Cicoria da mercato alta produzione,0.44,0.32,0.88,sì,37.5,165.0,120.0,330.0,foglie/cespi,Cicoria da mercato alta produzione
-148.0,O28,Cicoria da industria alta produzione più tagli,0.44,0.32,0.88,sì,28.0,123.2,89.60000000000001,246.4,foglie,Cicoria da industria alta produzione più tagli
-149.0,O29,Cipolla media produzione,0.31,0.12,0.32,sì,45.0,139.5,53.99999999999999,144.0,bulbi,Cipolla media produzione
-150.0,O30,Cipolla alta produzione,0.31,0.12,0.32,sì,60.0,186.0,72.0,192.0,bulbi,Cipolla alta produzione
-151.0,O31,Cocomero,0.19,0.12,0.29,sì,60.0,114.0,72.0,174.0,frutti (peponidi),Cocomero
-152.0,O32,Endivie (indivie riccia e scarola) media produzione,0.47,0.32,0.85,sì,34.0,159.79999999999998,108.8,289.0,cespi,Endivie (indivie riccia e scarola) media produzione
-153.0,O33,Endivie (indivie riccia e scarola) alta produzione,0.47,0.32,0.85,sì,45.0,211.5,144.0,382.5,cespi,Endivie (indivie riccia e scarola) alta produzione
-154.0,O34,Fagiolino,0.75,0.25,0.75,sì,9.0,67.5,22.5,67.5,baccelli,Fagiolino
-155.0,O35,Fagiolo in baccelli da sgranare,3.84,2.06,3.46,sì,5.0,192.0,103.0,173.0,baccelli da sgranare,Fagiolo in baccelli da sgranare
-156.0,O36,Fagiolo secco,6.6,3.55,5.95,sì,3.0,198.0,106.5,178.5,granella,Fagiolo secco
-157.0,O37,Fava da consumo fresco,0.74,0.21,0.42,sì,25.0,185.0,52.5,105.0,baccelli,Fava da consumo fresco
+139.0,O19,Cavolfiore media produzione,0.47,0.15,0.56,sì,35.0,164.5,52.5,196.0,infiorescenze (palle),Cauliflower (medium yield)
+140.0,O20,Cavolfiore alta produzione,0.47,0.15,0.56,sì,45.0,211.5,67.5,252.00000000000003,infiorescenze (palle),Cauliflower (high yield)
+141.0,O21,Cavolo verza mercato media produzione,0.55,0.2,0.57,sì,24.0,132.0,48.00000000000001,136.8,teste,"Savoy cabbage (fresh market, medium yield)"
+142.0,O22,Cavolo verza mercato alta produzione,0.55,0.2,0.57,sì,50.0,275.00000000000006,100.0,284.99999999999994,teste,"Savoy cabbage (fresh market, high yield)"
+143.0,O23,"Cavolo Riccio, Cavolo nero e Cavolo Rapa",0.44,0.19,0.41,sì,20.0,88.0,38.0,82.0,foglie,"Kale, black cabbage and kohlrabi"
+144.0,O24,Cetriolo da mensa media produzione,0.18,0.08,0.25,sì,120.0,216.0,96.0,300.0,frutti (peponidi),Fresh cucumber (medium yield)
+145.0,O25,Cetriolo da mensa alta produzione,0.18,0.08,0.25,sì,150.0,270.0,120.0,375.0,frutti (peponidi),Fresh cucumber (high yield)
+146.0,O26,Cicoria da mercato media produzione,0.44,0.32,0.88,sì,28.0,123.2,89.60000000000001,246.4,foglie/cespi,"Chicory (fresh market, medium yield)"
+147.0,O27,Cicoria da mercato alta produzione,0.44,0.32,0.88,sì,37.5,165.0,120.0,330.0,foglie/cespi,"Chicory (fresh market, high yield)"
+148.0,O28,Cicoria da industria alta produzione più tagli,0.44,0.32,0.88,sì,28.0,123.2,89.60000000000001,246.4,foglie,"Chicory (processing, high yield, multi-cut)"
+149.0,O29,Cipolla media produzione,0.31,0.12,0.32,sì,45.0,139.5,53.99999999999999,144.0,bulbi,Onion (medium yield)
+150.0,O30,Cipolla alta produzione,0.31,0.12,0.32,sì,60.0,186.0,72.0,192.0,bulbi,Onion (high yield)
+151.0,O31,Cocomero,0.19,0.12,0.29,sì,60.0,114.0,72.0,174.0,frutti (peponidi),Watermelon
+152.0,O32,Endivie (indivie riccia e scarola) media produzione,0.47,0.32,0.85,sì,34.0,159.79999999999998,108.8,289.0,cespi,Endive and escarole (medium yield)
+153.0,O33,Endivie (indivie riccia e scarola) alta produzione,0.47,0.32,0.85,sì,45.0,211.5,144.0,382.5,cespi,Endive and escarole (high yield)
+154.0,O34,Fagiolino,0.75,0.25,0.75,sì,9.0,67.5,22.5,67.5,baccelli,Green bean
+155.0,O35,Fagiolo in baccelli da sgranare,3.84,2.06,3.46,sì,5.0,192.0,103.0,173.0,baccelli da sgranare,Shelling bean in pods
+156.0,O36,Fagiolo secco,6.6,3.55,5.95,sì,3.0,198.0,106.5,178.5,granella,Dry bean
+157.0,O37,Fava da consumo fresco,0.74,0.21,0.42,sì,25.0,185.0,52.5,105.0,baccelli,Fresh broad bean
 158.0,O38,Finocchio,0.58,0.11,0.81,sì,30.0,174.0,33.0,243.0,grumoli,Fennel
-159.0,O39,Fragola ,0.45,0.23,0.71,sì,30.0,135.0,69.0,213.0,frutti,Fragola 
+159.0,O39,Fragola ,0.45,0.23,0.71,sì,30.0,135.0,69.0,213.0,frutti,Strawberry
 160.0,O40,Lattuga,0.31,0.09,0.5,sì,32.0,99.2,28.8,160.0,cespi,Lettuce
-161.0,O41,Lattuga coltura protetta,0.31,0.09,0.5,sì,32.0,99.2,28.8,160.0,cespi,Lattuga coltura protetta
-162.0,O42,Melanzana in pieno campo media produzione,0.52,0.19,0.62,sì,80.0,416.0,152.0,496.0,frutti (bacche),Melanzana in pieno campo media produzione
-163.0,O43,Melanzana coltura protetta alta produzione,0.52,0.19,0.62,sì,150.0,780.0,285.0,930.0,frutti (bacche),Melanzana coltura protetta alta produzione
+161.0,O41,Lattuga coltura protetta,0.31,0.09,0.5,sì,32.0,99.2,28.8,160.0,cespi,Lettuce (greenhouse)
+162.0,O42,Melanzana in pieno campo media produzione,0.52,0.19,0.62,sì,80.0,416.0,152.0,496.0,frutti (bacche),"Eggplant (field, medium yield)"
+163.0,O43,Melanzana coltura protetta alta produzione,0.52,0.19,0.62,sì,150.0,780.0,285.0,930.0,frutti (bacche),"Eggplant (greenhouse, high yield)"
 164.0,O44,Melone,0.39,0.17,0.57,sì,40.0,156.0,68.0,228.0,frutti (peponidi),Melon
 165.0,O45,Patata,0.42,0.15,0.7,sì,47.5,199.5,71.25,332.5,tuberi,Potato
-166.0,O46,Peperone in serra alta produzione,0.38,0.14,0.5,sì,70.0,266.0,98.0,350.0,bacche,Peperone in serra alta produzione
-167.0,O47,Peperone in serra media produzione,0.38,0.14,0.5,sì,50.0,190.0,70.00000000000001,250.0,bacche,Peperone in serra media produzione
-168.0,O48,Piccoli frutti,1.5,,,no,,,,,,Piccoli frutti
-169.0,O49,Pisello da industria (grani),3.958333333333333,0.6583333333333334,1.875,sì,5.0,197.91666666666663,32.91666666666667,93.75,semi freschi (grani),Pisello da industria (grani)
-170.0,O50,Pisello da mercato fresco (baccelli),4.75,0.79,2.25,sì,6.0,285.0,47.400000000000006,135.0,baccelli,Pisello da mercato fresco (baccelli)
-171.0,O51,Pomodoro da industria media produzione,0.26,0.13,0.37,sì,70.0,182.0,91.0,259.0,bacche,Pomodoro da industria media produzione
-172.0,O52,Pomodoro da industria alta produzione,0.26,0.13,0.37,sì,90.0,234.00000000000003,117.0,333.0,bacche,Pomodoro da industria alta produzione
-173.0,O53,Pomodoro da mensa a pieno campo,0.26,0.12,0.41,sì,70.0,182.0,84.0,287.0,bacche,Pomodoro da mensa a pieno campo
-174.0,O54,Pomodoro da mensa in serra,0.26,0.1,0.4,sì,115.0,299.0,115.0,460.0,bacche,Pomodoro da mensa in serra
-175.0,O55,Porro,0.38,0.14,0.36,sì,40.0,152.0,56.00000000000001,144.0,,Porro
-176.0,O56,Prezzemolo media produzione,0.24,0.14,0.45,sì,20.0,48.0,28.000000000000004,90.0,,Prezzemolo media produzione
-177.0,O57,Prezzemolo alta produzione più tagli,0.24,0.14,0.45,sì,43.5,104.4,60.900000000000006,195.75,,Prezzemolo alta produzione più tagli
-178.0,O58,Radicchio (cicoria a foglie colorate) media produzione,0.46,0.3,0.45,sì,20.0,92.0,60.0,90.0,,Radicchio (cicoria a foglie colorate) media produzione
-179.0,O59,Radicchio (cicoria a foglie colorate) alta produzione,0.46,0.3,0.45,sì,35.0,161.0,105.0,157.5,,Radicchio (cicoria a foglie colorate) alta produzione
-180.0,O60,Rapa,0.31,0.26,1.2,sì,35.0,108.5,91.0,420.0,radici,Rapa
-181.0,O61,Ravanello,0.46,0.19,0.36,sì,30.0,138.0,57.0,108.0,,Ravanello
-182.0,O62,Rucola media produzione,0.49,0.14,0.53,sì,18.5,90.65,25.9,98.05,,Rucola media produzione
-183.0,O63,Rucola alta produzione con più tagli,0.49,0.14,0.53,sì,37.0,181.3,51.8,196.1,,Rucola alta produzione con più tagli
-184.0,O64,Scalogno,0.27,0.13,0.27,sì,8.0,21.6,10.4,21.6,,Scalogno
-185.0,O65,Sedano media produzione,0.54,0.2,0.75,sì,50.0,270.0,100.0,375.0,,Sedano media produzione
-186.0,O66,Sedano alta produzione,0.54,0.2,0.75,sì,80.0,432.0,160.0,600.0,,Sedano alta produzione
-187.0,O67,Spinacio alta produzione con più tagli,0.61,0.18,0.7,sì,27.5,167.75,49.5,192.5,,Spinacio alta produzione con più tagli
-188.0,O68,Spinacio media produzione,0.61,0.18,0.7,sì,20.0,122.0,36.0,140.0,,Spinacio media produzione
-189.0,O69,Verza - cavolo da mercato media produzione,0.55,0.2,0.57,sì,24.0,132.0,48.00000000000001,136.8,,Verza - cavolo da mercato media produzione
-190.0,O70,Verza - cavolo da mercato alta produzione,0.55,0.2,0.57,sì,50.0,275.00000000000006,100.0,284.99999999999994,,Verza - cavolo da mercato alta produzione
-191.0,O71,Verza da industria,0.41,0.21,0.55,sì,35.0,143.5,73.5,192.5,,Verza da industria
+166.0,O46,Peperone in serra alta produzione,0.38,0.14,0.5,sì,70.0,266.0,98.0,350.0,bacche,"Pepper (greenhouse, high yield)"
+167.0,O47,Peperone in serra media produzione,0.38,0.14,0.5,sì,50.0,190.0,70.00000000000001,250.0,bacche,"Pepper (greenhouse, medium yield)"
+168.0,O48,Piccoli frutti,1.5,,,no,,,,,,Berries
+169.0,O49,Pisello da industria (grani),3.958333333333333,0.6583333333333334,1.875,sì,5.0,197.91666666666663,32.91666666666667,93.75,semi freschi (grani),Processing pea (grain)
+170.0,O50,Pisello da mercato fresco (baccelli),4.75,0.79,2.25,sì,6.0,285.0,47.400000000000006,135.0,baccelli,Fresh-market pea (pods)
+171.0,O51,Pomodoro da industria media produzione,0.26,0.13,0.37,sì,70.0,182.0,91.0,259.0,bacche,Processing tomato (medium yield)
+172.0,O52,Pomodoro da industria alta produzione,0.26,0.13,0.37,sì,90.0,234.00000000000003,117.0,333.0,bacche,Processing tomato (high yield)
+173.0,O53,Pomodoro da mensa a pieno campo,0.26,0.12,0.41,sì,70.0,182.0,84.0,287.0,bacche,Fresh-market tomato (field)
+174.0,O54,Pomodoro da mensa in serra,0.26,0.1,0.4,sì,115.0,299.0,115.0,460.0,bacche,Fresh-market tomato (greenhouse)
+175.0,O55,Porro,0.38,0.14,0.36,sì,40.0,152.0,56.00000000000001,144.0,,Leek
+176.0,O56,Prezzemolo media produzione,0.24,0.14,0.45,sì,20.0,48.0,28.000000000000004,90.0,,Parsley (medium yield)
+177.0,O57,Prezzemolo alta produzione più tagli,0.24,0.14,0.45,sì,43.5,104.4,60.900000000000006,195.75,,"Parsley (high yield, multi-cut)"
+178.0,O58,Radicchio (cicoria a foglie colorate) media produzione,0.46,0.3,0.45,sì,20.0,92.0,60.0,90.0,,"Radicchio (red chicory, medium yield)"
+179.0,O59,Radicchio (cicoria a foglie colorate) alta produzione,0.46,0.3,0.45,sì,35.0,161.0,105.0,157.5,,"Radicchio (red chicory, high yield)"
+180.0,O60,Rapa,0.31,0.26,1.2,sì,35.0,108.5,91.0,420.0,radici,Turnip
+181.0,O61,Ravanello,0.46,0.19,0.36,sì,30.0,138.0,57.0,108.0,,Radish
+182.0,O62,Rucola media produzione,0.49,0.14,0.53,sì,18.5,90.65,25.9,98.05,,Rocket (medium yield)
+183.0,O63,Rucola alta produzione con più tagli,0.49,0.14,0.53,sì,37.0,181.3,51.8,196.1,,"Rocket (high yield, multi-cut)"
+184.0,O64,Scalogno,0.27,0.13,0.27,sì,8.0,21.6,10.4,21.6,,Shallot
+185.0,O65,Sedano media produzione,0.54,0.2,0.75,sì,50.0,270.0,100.0,375.0,,Celery (medium yield)
+186.0,O66,Sedano alta produzione,0.54,0.2,0.75,sì,80.0,432.0,160.0,600.0,,Celery (high yield)
+187.0,O67,Spinacio alta produzione con più tagli,0.61,0.18,0.7,sì,27.5,167.75,49.5,192.5,,"Spinach (high yield, multi-cut)"
+188.0,O68,Spinacio media produzione,0.61,0.18,0.7,sì,20.0,122.0,36.0,140.0,,Spinach (medium yield)
+189.0,O69,Verza - cavolo da mercato media produzione,0.55,0.2,0.57,sì,24.0,132.0,48.00000000000001,136.8,,"Savoy cabbage (fresh market, medium yield)"
+190.0,O70,Verza - cavolo da mercato alta produzione,0.55,0.2,0.57,sì,50.0,275.00000000000006,100.0,284.99999999999994,,"Savoy cabbage (fresh market, high yield)"
+191.0,O71,Verza da industria,0.41,0.21,0.55,sì,35.0,143.5,73.5,192.5,,Savoy cabbage (processing)
 192.0,O72,Zucca,0.39,0.1,0.7,sì,35.0,136.5,35.0,245.0,,Pumpkin
-193.0,O73,Zucchino da industria media produzione,0.49,0.17,0.85,sì,50.0,245.0,85.0,425.0,,Zucchino da industria media produzione
-194.0,O74,Zucchino da industria alta produzione,0.49,0.17,0.85,sì,65.0,318.5,110.5,552.5,,Zucchino da industria alta produzione
-195.0,O75,Zucchino da mercato fresco media produzione,0.44,0.16,0.78,sì,40.0,176.0,64.0,312.0,,Zucchino da mercato fresco media produzione
-196.0,O76,Zucchino da mercato  fresco alta produzione,0.44,0.16,0.78,sì,50.0,220.0,80.0,390.0,,Zucchino da mercato  fresco alta produzione
-197.0,S1,Barbabiertola da seme (fase porta seme),0.0,0.0,0.0,no,,,,,,Barbabiertola da seme (fase porta seme)
-198.0,S2,Carota da seme (fase portaseme),0.0,0.0,0.0,no,,,,,,Carota da seme (fase portaseme)
-199.0,S3,Carota da seme (fase vivaio),0.41,0.16,0.69,sì,50.0,205.0,80.0,345.0,,Carota da seme (fase vivaio)
-200.0,S4,Cavoli da seme,0.0,0.0,0.0,no,,,,,,Cavoli da seme
-201.0,S5,Cetriolo da seme,0.0,0.0,0.0,no,,,,,,Cetriolo da seme
-202.0,S6,Cicoria da seme,0.0,0.0,0.0,no,,,,,,Cicoria da seme
-203.0,S7,Cipolla da seme (fase portaseme),0.0,0.0,0.0,no,,,,,,Cipolla da seme (fase portaseme)
-204.0,S8,Cipolla da seme (fase vivaio),0.31,0.12,0.32,sì,45.0,139.5,53.99999999999999,144.0,,Cipolla da seme (fase vivaio)
-205.0,S9,Coriandolo da seme,0.0,0.0,0.0,no,,,,,,Coriandolo da seme
-206.0,S10,Erba medica  da seme,2.06,0.53,2.03,sì,,,,,,Erba medica  da seme
-207.0,S11,Finocchio da seme,0.0,0.0,0.0,no,,,,,,Finocchio da seme
-208.0,S12,Frumento duro da seme (granella),3.11,0.85,0.59,sì,6.0,186.6,51.0,35.4,,Frumento duro da seme (granella)
-209.0,S13,Frumento tenero da seme (granella),2.96,0.78,0.5,sì,6.0,177.59999999999997,46.8,30.0,,Frumento tenero da seme (granella)
-210.0,S14,Girasole da seme (granella),4.31,1.24,1.15,sì,3.0,129.3,37.2,34.5,,Girasole da seme (granella)
-211.0,S15,Lattuga da seme,0.0,0.0,0.0,no,,,,,,Lattuga da seme
-212.0,S16,Orzo da seme (granella),2.24,0.8,0.52,sì,6.5,145.60000000000002,52.0,33.8,,Orzo da seme (granella)
-213.0,S17,Pisello proteico da seme (granella),4.55,0.88,1.28,sì,,,,,,Pisello proteico da seme (granella)
-214.0,S18,Prezzemolo da seme,0.0,0.0,0.0,no,,,,,,Prezzemolo da seme
-215.0,S19,Ravanello da seme,0.0,0.0,0.0,no,,,,,,Ravanello da seme
-216.0,S20,Segale da seme (granella),2.78,0.7,0.5,sì,4.0,111.2,28.0,20.0,granella,Segale da seme (granella)
-217.0,S21,Soia da seme (granella),6.3,1.36,2.01,sì,3.5,220.5,47.60000000000001,70.35,,Soia da seme (granella)
-218.0,S22,Triticale da seme (granella),2.54,0.7,0.5,sì,11.5,292.1,80.49999999999999,57.5,granella,Triticale da seme (granella)
-219.0,S23,Trifoglio da seme (trifoglio),2.07,0.6,2.45,sì,,,,,,Trifoglio da seme (trifoglio)
-220.0,BL1,Bietola da foglia,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Bietola da foglia
-221.0,BL2,Bietola da foglia,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Bietola da foglia
-222.0,BL3,Cicorino,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Cicorino
-223.0,BL4,Cicorino,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Cicorino
-224.0,BL5,Foglie e steli di Brassica,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Foglie e steli di Brassica
-225.0,BL6,Foglie e steli di Brassica,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Foglie e steli di Brassica
-226.0,BL7,Lattuga da cespo,0.27,0.08,0.47,sì,12.0,32.400000000000006,9.6,56.4,,Lattuga da cespo
-227.0,BL8,Lattughino 1° taglio,0.485,0.14,0.527,sì,10.0,48.5,14.000000000000002,52.7,,Lattughino 1° taglio
-228.0,BL9,Lattughino 2° taglio,0.485,0.14,0.527,sì,10.0,48.5,14.000000000000002,52.7,,Lattughino 2° taglio
-229.0,BL10,Rucola 1° taglio,0.43,0.13,0.45,sì,10.0,43.0,13.0,45.0,,Rucola 1° taglio
-230.0,BL11,Rucola 2° taglio,0.54,0.15,0.6,sì,32.0,172.8,48.0,192.0,,Rucola 2° taglio
-231.0,BL12,Spinacino 1° taglio,0.338,0.133,0.711,sì,32.0,108.16,42.56,227.52,,Spinacino 1° taglio
-232.0,BL13,Spinacino 2° taglio,0.338,0.133,0.711,sì,11.5,38.870000000000005,15.295000000000002,81.76499999999999,,Spinacino 2° taglio
-233.0,BL14,Valerianella,0.494,0.146,0.584,sì,11.5,56.81,16.79,67.16,,Valerianella
-234.0,BL15,baby leaf generica,0.385,0.116,0.57,sì,11.5,44.275000000000006,13.34,65.55,,baby leaf generica
+193.0,O73,Zucchino da industria media produzione,0.49,0.17,0.85,sì,50.0,245.0,85.0,425.0,,"Courgette (processing, medium yield)"
+194.0,O74,Zucchino da industria alta produzione,0.49,0.17,0.85,sì,65.0,318.5,110.5,552.5,,"Courgette (processing, high yield)"
+195.0,O75,Zucchino da mercato fresco media produzione,0.44,0.16,0.78,sì,40.0,176.0,64.0,312.0,,"Courgette (fresh market, medium yield)"
+196.0,O76,Zucchino da mercato  fresco alta produzione,0.44,0.16,0.78,sì,50.0,220.0,80.0,390.0,,"Courgette (fresh market, high yield)"
+197.0,S1,Barbabiertola da seme (fase porta seme),0.0,0.0,0.0,no,,,,,,Sugar beet seed (seed phase)
+198.0,S2,Carota da seme (fase portaseme),0.0,0.0,0.0,no,,,,,,Carrot seed (seed phase)
+199.0,S3,Carota da seme (fase vivaio),0.41,0.16,0.69,sì,50.0,205.0,80.0,345.0,,Carrot seed (nursery phase)
+200.0,S4,Cavoli da seme,0.0,0.0,0.0,no,,,,,,Cabbage (seed)
+201.0,S5,Cetriolo da seme,0.0,0.0,0.0,no,,,,,,Cucumber (seed)
+202.0,S6,Cicoria da seme,0.0,0.0,0.0,no,,,,,,Chicory (seed)
+203.0,S7,Cipolla da seme (fase portaseme),0.0,0.0,0.0,no,,,,,,Onion seed (seed phase)
+204.0,S8,Cipolla da seme (fase vivaio),0.31,0.12,0.32,sì,45.0,139.5,53.99999999999999,144.0,,Onion seed (nursery phase)
+205.0,S9,Coriandolo da seme,0.0,0.0,0.0,no,,,,,,Coriander (seed)
+206.0,S10,Erba medica  da seme,2.06,0.53,2.03,sì,,,,,,Alfalfa (seed)
+207.0,S11,Finocchio da seme,0.0,0.0,0.0,no,,,,,,Fennel (seed)
+208.0,S12,Frumento duro da seme (granella),3.11,0.85,0.59,sì,6.0,186.6,51.0,35.4,,"Durum wheat (seed, grain)"
+209.0,S13,Frumento tenero da seme (granella),2.96,0.78,0.5,sì,6.0,177.59999999999997,46.8,30.0,,"Soft wheat (seed, grain)"
+210.0,S14,Girasole da seme (granella),4.31,1.24,1.15,sì,3.0,129.3,37.2,34.5,,"Sunflower (seed, grain)"
+211.0,S15,Lattuga da seme,0.0,0.0,0.0,no,,,,,,Lettuce (seed)
+212.0,S16,Orzo da seme (granella),2.24,0.8,0.52,sì,6.5,145.60000000000002,52.0,33.8,,"Barley (seed, grain)"
+213.0,S17,Pisello proteico da seme (granella),4.55,0.88,1.28,sì,,,,,,"Protein pea (seed, grain)"
+214.0,S18,Prezzemolo da seme,0.0,0.0,0.0,no,,,,,,Parsley (seed)
+215.0,S19,Ravanello da seme,0.0,0.0,0.0,no,,,,,,Radish (seed)
+216.0,S20,Segale da seme (granella),2.78,0.7,0.5,sì,4.0,111.2,28.0,20.0,granella,"Rye (seed, grain)"
+217.0,S21,Soia da seme (granella),6.3,1.36,2.01,sì,3.5,220.5,47.60000000000001,70.35,,"Soybean (seed, grain)"
+218.0,S22,Triticale da seme (granella),2.54,0.7,0.5,sì,11.5,292.1,80.49999999999999,57.5,granella,"Triticale (seed, grain)"
+219.0,S23,Trifoglio da seme (trifoglio),2.07,0.6,2.45,sì,,,,,,Clover (seed)
+220.0,BL1,Bietola da foglia,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Leaf beet
+221.0,BL2,Bietola da foglia,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Leaf beet
+222.0,BL3,Cicorino,0.0,0.0,0.0,no,11.5,0.0,0.0,0.0,,Baby chicory
+223.0,BL4,Cicorino,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Baby chicory
+224.0,BL5,Foglie e steli di Brassica,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Brassica leaves and stems
+225.0,BL6,Foglie e steli di Brassica,0.0,0.0,0.0,no,12.0,0.0,0.0,0.0,,Brassica leaves and stems
+226.0,BL7,Lattuga da cespo,0.27,0.08,0.47,sì,12.0,32.400000000000006,9.6,56.4,,Head lettuce
+227.0,BL8,Lattughino 1° taglio,0.485,0.14,0.527,sì,10.0,48.5,14.000000000000002,52.7,,Baby lettuce (first cut)
+228.0,BL9,Lattughino 2° taglio,0.485,0.14,0.527,sì,10.0,48.5,14.000000000000002,52.7,,Baby lettuce (second cut)
+229.0,BL10,Rucola 1° taglio,0.43,0.13,0.45,sì,10.0,43.0,13.0,45.0,,Rocket (first cut)
+230.0,BL11,Rucola 2° taglio,0.54,0.15,0.6,sì,32.0,172.8,48.0,192.0,,Rocket (second cut)
+231.0,BL12,Spinacino 1° taglio,0.338,0.133,0.711,sì,32.0,108.16,42.56,227.52,,Baby spinach (first cut)
+232.0,BL13,Spinacino 2° taglio,0.338,0.133,0.711,sì,11.5,38.870000000000005,15.295000000000002,81.76499999999999,,Baby spinach (second cut)
+233.0,BL14,Valerianella,0.494,0.146,0.584,sì,11.5,56.81,16.79,67.16,,Corn salad
+234.0,BL15,baby leaf generica,0.385,0.116,0.57,sì,11.5,44.275000000000006,13.34,65.55,,generic baby leaf
 50.0,E17,Grano duro (pianta intera),3.11,1.06,1.99,sì,6.0,186.6,63.6,119.4,granella + residui,Durum wheat (whole plant)

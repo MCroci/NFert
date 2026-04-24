@@ -1,0 +1,426 @@
+{
+  "type": "FeatureCollection",
+  "name": "NFert_example_farm",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "metadata": {
+    "description": "Fictitious 35.5 ha demo farm in the Po Valley (Piacenza area). Each feature carries the columns expected by N_balance() using the canonical English names of the DPI 2026 reference tables rebuilt by data-raw/build-rda.R.",
+    "reference_parameterisation": "Emilia-Romagna DPI 2026",
+    "generated_by": "NFert v0.12.0",
+    "language": "en"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.715,
+              45.048
+            ],
+            [
+              9.7184,
+              45.048
+            ],
+            [
+              9.7184,
+              45.05035
+            ],
+            [
+              9.715,
+              45.05035
+            ],
+            [
+              9.715,
+              45.048
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P01",
+        "plot_name": "Campo Grande",
+        "area_ha": 5.2,
+        "crop": "Silage maize (class 700)",
+        "expected_yield_tons_ha": 60,
+        "ccp": "Spring-summer crop 100-130 days",
+        "sand": 50,
+        "clay": 35,
+        "Ntot": 1.2,
+        "SOM": 1.2,
+        "CN": 9.5,
+        "oxygen_availability": "Normal",
+        "winter_rain": 160,
+        "start_spring_rain": 40,
+        "prev_crop": "Maize stalks removed",
+        "source": "Cattle slurry",
+        "fertorg_frequency": "every year",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 100
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7187,
+              45.048
+            ],
+            [
+              9.7211,
+              45.048
+            ],
+            [
+              9.7211,
+              45.0502
+            ],
+            [
+              9.7187,
+              45.0502
+            ],
+            [
+              9.7187,
+              45.048
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P02",
+        "plot_name": "Poplar Strip",
+        "area_ha": 3.4,
+        "crop": "Soft wheat FF - strong (grain)",
+        "expected_yield_tons_ha": 7.5,
+        "ccp": "Autumn-winter crop <150 days",
+        "sand": 38,
+        "clay": 42,
+        "Ntot": 1.4,
+        "SOM": 1.5,
+        "CN": 9.0,
+        "oxygen_availability": "Normal",
+        "winter_rain": 170,
+        "start_spring_rain": 50,
+        "prev_crop": "Soybean",
+        "source": "None",
+        "fertorg_frequency": "occasional",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7215,
+              45.048
+            ],
+            [
+              9.7257,
+              45.048
+            ],
+            [
+              9.7257,
+              45.0508
+            ],
+            [
+              9.7215,
+              45.0508
+            ],
+            [
+              9.7215,
+              45.048
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P03",
+        "plot_name": "Lower Ditch",
+        "area_ha": 7.8,
+        "crop": "Grain maize 500-700 (grain)",
+        "expected_yield_tons_ha": 11,
+        "ccp": "Spring-summer crop 100-130 days",
+        "sand": 55,
+        "clay": 30,
+        "Ntot": 1.1,
+        "SOM": 1.1,
+        "CN": 10.1,
+        "oxygen_availability": "Normal",
+        "winter_rain": 155,
+        "start_spring_rain": 38,
+        "prev_crop": "Soybean",
+        "source": "Cattle slurry",
+        "fertorg_frequency": "every 2 years",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 60
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7125,
+              45.051
+            ],
+            [
+              9.7145,
+              45.051
+            ],
+            [
+              9.7145,
+              45.05295
+            ],
+            [
+              9.7125,
+              45.05295
+            ],
+            [
+              9.7125,
+              45.051
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P04",
+        "plot_name": "Dovecote Field",
+        "area_ha": 2.1,
+        "crop": "Soybean (grain)",
+        "expected_yield_tons_ha": 4.5,
+        "ccp": "Spring-summer crop 100-130 days",
+        "sand": 60,
+        "clay": 22,
+        "Ntot": 1.0,
+        "SOM": 1.0,
+        "CN": 10.8,
+        "oxygen_availability": "Normal",
+        "winter_rain": 158,
+        "start_spring_rain": 42,
+        "prev_crop": "Maize stalks buried",
+        "source": "None",
+        "fertorg_frequency": "occasional",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7122,
+              45.0535
+            ],
+            [
+              9.7154,
+              45.0535
+            ],
+            [
+              9.7154,
+              45.056
+            ],
+            [
+              9.7122,
+              45.056
+            ],
+            [
+              9.7122,
+              45.0535
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P05",
+        "plot_name": "Old Meadow",
+        "area_ha": 4.5,
+        "crop": "Alfalfa",
+        "expected_yield_tons_ha": 12,
+        "ccp": "Spring-summer crop 100-130 days",
+        "sand": 33,
+        "clay": 45,
+        "Ntot": 1.6,
+        "SOM": 2.1,
+        "CN": 8.8,
+        "oxygen_availability": "Normal",
+        "winter_rain": 172,
+        "start_spring_rain": 50,
+        "prev_crop": "Alfalfa in good conditions",
+        "source": "None",
+        "fertorg_frequency": "every year",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7185,
+              45.0512
+            ],
+            [
+              9.7223,
+              45.0512
+            ],
+            [
+              9.7223,
+              45.05385
+            ],
+            [
+              9.7185,
+              45.05385
+            ],
+            [
+              9.7185,
+              45.0512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P06",
+        "plot_name": "Riverbank",
+        "area_ha": 6.0,
+        "crop": "Silage maize (class 500)",
+        "expected_yield_tons_ha": 55,
+        "ccp": "Spring-summer crop 100-130 days",
+        "sand": 48,
+        "clay": 34,
+        "Ntot": 1.2,
+        "SOM": 1.3,
+        "CN": 9.6,
+        "oxygen_availability": "Slow",
+        "winter_rain": 165,
+        "start_spring_rain": 45,
+        "prev_crop": "Maize stalks buried",
+        "source": "Cattle slurry",
+        "fertorg_frequency": "every year",
+        "location": "Plain adjacent to urbanized areas",
+        "forg_quantity": 90
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7222,
+              45.0512
+            ],
+            [
+              9.7248,
+              45.0512
+            ],
+            [
+              9.7248,
+              45.0535
+            ],
+            [
+              9.7222,
+              45.0535
+            ],
+            [
+              9.7222,
+              45.0512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P07",
+        "plot_name": "New Barn",
+        "area_ha": 3.7,
+        "crop": "Durum wheat (grain)",
+        "expected_yield_tons_ha": 6.5,
+        "ccp": "Autumn-winter crop <150 days",
+        "sand": 58,
+        "clay": 27,
+        "Ntot": 1.0,
+        "SOM": 0.9,
+        "CN": 10.5,
+        "oxygen_availability": "Normal",
+        "winter_rain": 152,
+        "start_spring_rain": 38,
+        "prev_crop": "Sugar beet",
+        "source": "None",
+        "fertorg_frequency": "occasional",
+        "location": "Isolated plain",
+        "forg_quantity": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              9.7155,
+              45.0542
+            ],
+            [
+              9.7178,
+              45.0542
+            ],
+            [
+              9.7178,
+              45.05645
+            ],
+            [
+              9.7155,
+              45.05645
+            ],
+            [
+              9.7155,
+              45.0542
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "plot_id": "P08",
+        "plot_name": "Woodlot Field",
+        "area_ha": 2.8,
+        "crop": "Barley (grain)",
+        "expected_yield_tons_ha": 5.2,
+        "ccp": "Autumn-winter crop <150 days",
+        "sand": 42,
+        "clay": 36,
+        "Ntot": 1.3,
+        "SOM": 1.4,
+        "CN": 9.2,
+        "oxygen_availability": "Normal",
+        "winter_rain": 168,
+        "start_spring_rain": 46,
+        "prev_crop": "Maize stalks buried",
+        "source": "Cattle slurry",
+        "fertorg_frequency": "every 2 years",
+        "location": "Isolated plain",
+        "forg_quantity": 45
+      }
+    }
+  ]
+}

@@ -58,7 +58,7 @@ N da apportare = **A** − **B** + **C** + **D** − **E** − **F** − **G**
 - **C** = Perdite per lisciviazione: **Ca** (autunno-inverno: &lt;150 mm nessuna; 150–250 mm perdita progressiva; &gt;250 mm tutto l’N pronto) + **Cb** (febbraio: 1 kg N/ha ogni 10 mm oltre 250 mm cumulati).  
 - **D** = Immobilizzazione e dispersione = B × fattore di correzione *fc* (in funzione di ossigeno e tessitura: es. buona 0,15–0,25, moderata 0,20–0,30, impedita 0,30–0,40).  
 - **E** = N da residui della precessione (tabella: cereali paglia asportata −10, interrata −30; medica +80; soia 0; leguminose da granella +40; ecc.).  
-- **F** = N da fertilizzazioni organiche anni precedenti (ammendanti 50/30/20 %; liquame bovino 30/15/10; suino/pollina 15/10/5).  
+- **F** = N da fertilizzazioni organiche anni precedenti (ammendanti 50/30/20 %; Cattle slurry 30/15/10; suino/pollina 15/10/5).  
 - **G** = Apporti naturali (precipitazioni; fissazione per leguminose).
 
 NFert computes the balance and subtracts the current-year organic N (Forg) to obtain the mineral N to apply. Fractioning rules (max 100 kg/ha N per intervention for herbaceous crops, 60 kg/ha for tree crops; min 7 days between interventions) and presemina/autumn caps (e.g. max 30 kg/ha presemina, max 40 kg/ha arboree before 15 Oct) are set by DPI and must be respected in the field plan.
@@ -71,11 +71,31 @@ NFert computes the balance and subtracts the current-year organic N (Forg) to ob
 
 ## Package Overview
 
-NFert provides three main categories of functions:
+NFert provides the following categories of functions:
 
-1. **Complete nitrogen balance calculation** - The `N_balance()` function
-2. **Individual component functions** - For specific calculations (soil fertility, leaching, etc.)
-3. **Precision agriculture functions** - For variable rate application based on NDVI
+1. **Field-scale nitrogen balance** - `N_balance()` plus the ten
+   component helpers (crop demand, soil supply, leaching, immobilisation,
+   previous-crop residue, organic contributions, natural deposition).
+2. **Phosphorus and potassium balance** - `P_balance()`, `K_balance()`.
+3. **Distribution plan** - `plan_distribution()` with MAS and 170 kg N
+   ZVN checks.
+4. **Precision agriculture** - `variable_rate_N()`,
+   `estimate_N_rate_from_calibration_curve()` and
+   `estimate_N_rate_from_holland_schepers()` for VI-based VRT;
+   `build_strip_prescription()` for machine-width strips along an A-B
+   line; `export_prescription()` / `export_prescription_all()` for
+   Shapefile, GeoJSON, KML, GeoPackage, John Deere, Trimble and ISOXML
+   TASKDATA formats.
+5. **Remote-sensing diagnosis** - `compute_vi()` (six VIs),
+   `compute_NNI()` / `compute_NNI_from_S2()` / `crop_params_NNI()`
+   for the GPR-based pipeline, `nni_from_vi_empirical()` for the
+   single-VI regression path, `estimate_biophysical()` for canopy
+   trait retrieval.
+6. **Farm-level workflow** - `farm_balance()` iterates `N_balance()`
+   over every feature of a GeoJSON / Shapefile and returns an
+   enriched `sf` layer ready for export.
+7. **Shiny application** - `run_app()` opens a six-tab web interface
+   with interactive forms, leaflet maps and one-click export.
 
 # Installation and Setup
 
@@ -273,7 +293,7 @@ Let's work through a complete example for maize production:
 # Step 1: Define field parameters
 maize_params <- list(
   expected_yield_tons_ha = 12,  # tons/ha
-  crop = "Mais trinciato classe 700",  # or "Maize silage (class 700)" (alias)
+  crop = "Silage maize (class 700)",  # or "Silage maize (class 700)" (alias)
   ccp = "Spring-summer crop 100–130 days",
   clay = 28,
   sand = 32,
@@ -324,14 +344,14 @@ get_MAS()
 get_MAS(edition = "2025")
 
 # Get MAS for a specific crop
-get_MAS("Frumento tenero (granella)")
-get_MAS("Frumento tenero (granella)", edition = "2025")  # 180 kg/ha
-get_MAS("Mais da granella", edition = "2025")            # 280 kg/ha (irriguo)
+get_MAS("Soft wheat FF - strong (grain)")
+get_MAS("Soft wheat FF - strong (grain)", edition = "2025")  # 180 kg/ha
+get_MAS("Grain maize 500-700 (grain)", edition = "2025")            # 280 kg/ha (irriguo)
 
 # Check if a planned N dose is within MAS
-check_MAS("Frumento tenero (granella)", 180)   # OK
-check_MAS("Frumento tenero (granella)", 220)   # Over MAS
-check_MAS("Mais da granella", 250)             # OK (MAS 260 or 280 depending on edition)
+check_MAS("Soft wheat FF - strong (grain)", 180)   # OK
+check_MAS("Soft wheat FF - strong (grain)", 220)   # Over MAS
+check_MAS("Grain maize 500-700 (grain)", 250)             # OK (MAS 260 or 280 depending on edition)
 
 # After calculating requirement, verify against MAS
 required_N <- calculate_N_fertilization(wheat_balance)
@@ -492,7 +512,7 @@ For agricultural consultants managing multiple fields:
 fields_data <- data.frame(
   field_id = c("Field_A", "Field_B", "Field_C"),
   expected_yield = c(9, 11, 8),
-  crop = c("Soft wheat FF - strong (grain)", "Mais trinciato classe 700",
+  crop = c("Soft wheat FF - strong (grain)", "Silage maize (class 700)",
            "Soft wheat FF - strong (grain)"),
   ccp = c("Autumn-winter crop <150 days", "Spring-summer crop 100–130 days",
           "Autumn-winter crop <150 days"),
@@ -692,7 +712,7 @@ tryCatch({
   calc_crop_N_demand(crop = "Wheat")  # Wrong name
 }, error = function(e) {
   cat("Error:", e$message, "\n")
-  cat("Solution: Use 'Grano tenero FF (granella)' instead\n")
+  cat("Solution: Use 'Soft wheat FF - strong (grain)' instead\n")
 })
 ```
 

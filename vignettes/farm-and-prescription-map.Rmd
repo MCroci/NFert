@@ -1,0 +1,137 @@
+---
+title: "Farm-level balance and strip-prescription map"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Farm-level balance and strip-prescription map}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
+                      fig.width = 7, fig.height = 5,
+                      warning = FALSE, message = FALSE)
+```
+
+This vignette walks through the end-to-end workflow that NFert v0.13
+supports:
+
+  1. Load a farm layout (GeoJSON) with per-plot agronomic inputs.
+  2. Run the DPI-2026 N balance on every plot.
+  3. Build a machine-width strip prescription map for one plot.
+  4. Export the prescription in the formats accepted by the on-board
+     monitor of the target tractor (Shapefile, ISOXML TASKDATA.XML,
+     John Deere / Trimble flavours, etc.).
+
+## 1. Load the demo farm
+
+The package ships with a fictitious 35.5 ha farm near Piacenza with 8
+plots carrying all the columns required by `N_balance()`:
+
+```{r eval = requireNamespace("sf", quietly = TRUE)}
+library(NFert)
+library(sf)
+ex   <- system.file("extdata/example_farm.geojson", package = "NFert")
+farm <- sf::st_read(ex, quiet = TRUE)
+farm[, c("plot_id", "plot_name", "crop", "area_ha")]
+```
+
+## 2. Per-plot N balance
+
+`farm_balance()` applies `N_balance()` to every feature and appends
+`N_target`, `MAS_cap`, `MAS_ok` and `N_total_kg` to the layer. Italian
+legacy strings are accepted in input and translated on the fly.
+
+```{r eval = requireNamespace("sf", quietly = TRUE)}
+farm_out <- farm_balance(farm)
+farm_out[, c("plot_id", "crop", "N_target", "MAS_cap",
+             "MAS_ok", "N_total_kg")]
+```
+
+## 3. Strip prescription along an A-B line
+
+`build_strip_prescription()` tiles one plot with parallel strips of a
+user-supplied working width. If no A-B line is given, the longest side
+of the field is used as driving direction. Dose variability can be
+driven by a uniform target, a VI calibration curve, NNI zones, or
+quantile classes.
+
+```{r eval = requireNamespace("sf", quietly = TRUE), fig.height = 5}
+field <- farm[1, ]          # Campo Grande, 5.2 ha silage maize
+
+# Option A: uniform 226 kg N/ha (from the balance), 24 m spreader
+rx_uni <- build_strip_prescription(
+  field         = field,
+  machine_width = 24,
+  variability   = "uniform",
+  n_target      = 226)
+
+plot(sf::st_geometry(rx_uni), col = "#D5E4F0",
+     border = "#1F4E79", main = "Uniform strips, 24 m")
+```
+
+Swapping in a VI calibration curve makes the dose decrease with
+vigour; the mean across the field is preserved (mass-balance
+constraint) by default.
+
+```{r eval = FALSE}
+# Option B: VI calibration (requires an NDVI raster)
+rx_cal <- build_strip_prescription(
+  field         = field,
+  machine_width = 24,
+  variability   = "calibration",
+  vi_raster     = my_ndvi_raster,
+  n_target      = 226,
+  min_dose      = 80,  max_dose = 260,
+  vi_low        = 0.35, vi_high = 0.80)
+```
+
+A 2-D **grid** (variable dose cell-by-cell) is produced by passing
+`cell_length > 0`; an explicit A-B direction is set with
+`angle_deg` (degrees, 0 = east, 90 = north) or by supplying an
+`sf` LINESTRING in `ab_line`:
+
+```{r eval = FALSE}
+# Option C: 24 m working width x 50 m along-strip cells, AB = 30 deg
+rx_grid <- build_strip_prescription(
+  field         = field,
+  machine_width = 24,
+  cell_length   = 50,
+  angle_deg     = 30,
+  variability   = "classes",
+  vi_raster     = my_ndvi_raster,
+  n_target      = 226,
+  min_dose      = 80, max_dose = 260,
+  n_classes     = 5)
+
+# Option D: NNI-driven zones
+rx_nni <- build_strip_prescription(
+  field         = field,
+  machine_width = 24,
+  cell_length   = 0,           # continuous strips
+  variability   = "nni",
+  nni_raster    = my_nni_map,
+  n_target      = 226,
+  min_dose      = 80, max_dose = 260,
+  thr_lo        = 0.90, thr_hi = 1.10)
+```
+
+## 4. Export to tractor-ready formats
+
+`export_prescription()` writes a single file; `export_prescription_all()`
+bundles several formats in one output folder.
+
+```{r eval = FALSE}
+export_prescription(rx_uni, "rx.shp",       format = "shp")
+export_prescription(rx_uni, "JD/rx.shp",    format = "johndeere")
+export_prescription(rx_uni, "TASKDATA",     format = "isoxml",
+  isoxml_opts = list(task_name = "N top-dress",
+                      product   = "Urea 46 pct",
+                      unit      = "kg/ha"))
+
+export_prescription_all(rx_uni, "rx_bundle", "campo_grande",
+  formats = c("shp", "isoxml", "johndeere"))
+```
+
+The Shiny interface (`NFert::run_app()`) exposes the same flow with
+interactive forms and a leaflet preview.

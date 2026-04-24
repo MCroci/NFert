@@ -12,21 +12,24 @@ resolve_crop(x, table = NFert::uptake_table)
 \item{table}{Lookup table; default \code{NFert::uptake_table}.}
 }
 \value{
-Character. The canonical Italian crop name.
+Character. The canonical crop name (English, as in the
+\code{crop} column).
 }
 \description{
 NFert reference tables (\code{uptake_table}, \code{mas.table}, \code{crops.table},
-\code{standard_pk_doses.table}) carry the official Italian DPI crop names in
-the column \code{crop} and an English translation in \code{crop_en}. This helper
-accepts either form (case-insensitive, exact match) and returns the
-canonical Italian name used as join key.
+\code{standard_pk_doses.table}) carry the canonical English crop names in
+the column \code{crop} (since NFert 0.12.0), with the Italian translation
+in \code{crop_it} and a duplicate of the English name in \code{crop_en} for
+backward compatibility. This helper accepts any of the three forms
+(case-insensitive, whitespace-normalised, exact match) and returns
+the canonical English key used for joins downstream.
 }
 \details{
-If the input matches no Italian or English crop name, the input is
-returned unchanged together with a warning, so the caller can decide how
-to handle the mismatch.
+If the input matches none of the columns, the input is returned
+unchanged together with a warning.
 }
 \examples{
-resolve_crop("Durum wheat (whole plant)")
-resolve_crop("Grano duro (pianta intera)")
+resolve_crop("Durum wheat (grain)")
+resolve_crop("Grano duro (granella)")
+resolve_crop("Mais trinciato classe 700")
 }

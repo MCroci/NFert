@@ -31,207 +31,207 @@ id,group_progressive,crop_id,crop,n_fixation_pct,cycle_id,cultivation,N_limit,no
 30.0,30.0,A35,"Susino frutti, legno e foglie",0.0,p,pieno campo,340.0,False,Prunus,domestica,"Plum - fruit, wood and leaves"
 31.0,31.0,A36,"Uva da tavola grappoli, tralci e foglie",0.0,p,pieno campo,340.0,False,,,"Table grape - bunches, shoots and leaves"
 32.0,32.0,A37,"Vite per uva da vino (collina e montagna) grappoli, tralci e foglie ",0.0,p,pieno campo,340.0,False,Vitis,vinifera,"Grapevine for wine (hill and mountain) - bunches, shoots and leaves"
-33.0,33.0,A38,"Vite per uva da vino (pianura) grappoli, legno e foglie",0.0,p,pieno campo,340.0,False,Vitis,vinifera,"Vite per uva da vino (pianura) grappoli, legno e foglie"
-34.0,1.0,E1,Altri cereali a paglia (pianta intera),0.0,m,pieno campo,340.0,True,,,Altri cereali a paglia (pianta intera)
-35.0,2.0,E2,Avena,0.0,m,pieno campo,340.0,True,Avena,sativa,Avena
-36.0,3.0,E3,Avena pianta intera,0.0,m,pieno campo,340.0,True,Avena,sativa,Avena pianta intera
-37.0,4.0,E4,Barbababietola da zucchero (pianta intera),0.0,m,pieno campo,340.0,False,Beta,vulgaris var. saccarifera,Barbababietola da zucchero (pianta intera)
-38.0,5.0,E5,Barbabietola da zucchero  (radici),0.0,m,pieno campo,340.0,False,Beta,vulgaris var. saccarifera,Barbabietola da zucchero  (radici)
-39.0,6.0,E6,Canapa da fibra,0.0,m,pieno campo,340.0,False,,,Canapa da fibra
-40.0,7.0,E7,Cavolo abissino,0.0,m,pieno campo,340.0,False,,,Cavolo abissino
-41.0,8.0,E8,Cece,50.0,m,pieno campo,70.0,False,Cicer,arietinum,Cece
-42.0,9.0,E9,Colza,0.0,m,pieno campo,340.0,False,Brassica,napus,Colza
-43.0,10.0,E10,Colza pianta intera,0.0,m,pieno campo,340.0,False,Brassica,napus,Colza pianta intera
-44.0,11.0,E11,Farro,0.0,m,pieno campo,340.0,True,Triticum,"monococcum, dicoccum, spelta",Farro
-45.0,12.0,E12,Farro (pianta intera),0.0,m,pieno campo,340.0,True,Triticum,"monococcum, dicoccum, spelta",Farro (pianta intera)
-46.0,13.0,E13,Favino da granella,85.0,m,pieno campo,40.0,False,Vicia,faba,Favino da granella
-47.0,14.0,E14,Girasole (acheni),0.0,m,pieno campo,340.0,True,Heliantus,annuus,Girasole (acheni)
-48.0,15.0,E15,Girasole (pianta intera),0.0,m,pieno campo,340.0,True,Heliantus,annuus,Girasole (pianta intera)
+33.0,33.0,A38,"Vite per uva da vino (pianura) grappoli, legno e foglie",0.0,p,pieno campo,340.0,False,Vitis,vinifera,"Vineyard (plain) - grapes, wood and leaves"
+34.0,1.0,E1,Altri cereali a paglia (pianta intera),0.0,m,pieno campo,340.0,True,,,Other straw cereals (whole plant)
+35.0,2.0,E2,Avena,0.0,m,pieno campo,340.0,True,Avena,sativa,Oat
+36.0,3.0,E3,Avena pianta intera,0.0,m,pieno campo,340.0,True,Avena,sativa,Oat (whole plant)
+37.0,4.0,E4,Barbababietola da zucchero (pianta intera),0.0,m,pieno campo,340.0,False,Beta,vulgaris var. saccarifera,Sugar beet (whole plant)
+38.0,5.0,E5,Barbabietola da zucchero  (radici),0.0,m,pieno campo,340.0,False,Beta,vulgaris var. saccarifera,Sugar beet (roots)
+39.0,6.0,E6,Canapa da fibra,0.0,m,pieno campo,340.0,False,,,Fibre hemp
+40.0,7.0,E7,Cavolo abissino,0.0,m,pieno campo,340.0,False,,,Abyssinian cabbage
+41.0,8.0,E8,Cece,50.0,m,pieno campo,70.0,False,Cicer,arietinum,Chickpea
+42.0,9.0,E9,Colza,0.0,m,pieno campo,340.0,False,Brassica,napus,Rapeseed
+43.0,10.0,E10,Colza pianta intera,0.0,m,pieno campo,340.0,False,Brassica,napus,Rapeseed (whole plant)
+44.0,11.0,E11,Farro,0.0,m,pieno campo,340.0,True,Triticum,"monococcum, dicoccum, spelta",Spelt
+45.0,12.0,E12,Farro (pianta intera),0.0,m,pieno campo,340.0,True,Triticum,"monococcum, dicoccum, spelta",Spelt (whole plant)
+46.0,13.0,E13,Favino da granella,85.0,m,pieno campo,40.0,False,Vicia,faba,Faba bean (grain)
+47.0,14.0,E14,Girasole (acheni),0.0,m,pieno campo,340.0,True,Heliantus,annuus,Sunflower (achenes)
+48.0,15.0,E15,Girasole (pianta intera),0.0,m,pieno campo,340.0,True,Heliantus,annuus,Sunflower (whole plant)
 49.0,16.0,E16,Grano duro (granella),0.0,m,pieno campo,340.0,True,Triticum,durum,Durum wheat (grain)
 50.0,17.0,E17,Grano duro (pianta intera),0.0,m,pieno campo,340.0,True,Triticum,durum,Durum wheat (whole plant)
 51.0,18.0,E18,Grano tenero FP/FPS (granella),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Soft wheat FP/FPS (grain)
 52.0,19.0,E19,Grano tenero FP/FPS (pianta intera),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Soft wheat FP/FPS (whole plant)
-53.0,20.0,E20,Grano tenero biscottiero  (granella),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Grano tenero biscottiero  (granella)
-54.0,21.0,E21,Grano tenero biscottiero pianta intera,0.0,m,pieno campo,340.0,True,Triticum,aestivum,Grano tenero biscottiero pianta intera
+53.0,20.0,E20,Grano tenero biscottiero  (granella),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Biscuit wheat (grain)
+54.0,21.0,E21,Grano tenero biscottiero pianta intera,0.0,m,pieno campo,340.0,True,Triticum,aestivum,Biscuit wheat (whole plant)
 55.0,22.0,E22,Grano tenero FF (granella),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Soft wheat FF - strong (grain)
 56.0,23.0,E23,Grano tenero FF (pianta intera),0.0,m,pieno campo,340.0,True,Triticum,aestivum,Soft wheat FF - strong (whole plant)
-57.0,24.0,E24,Lenticchia,85.0,m,pieno campo,30.0,False,,,Lenticchia
-58.0,25.0,E25,Lino  fibra,0.0,m,pieno campo,340.0,False,,,Lino  fibra
-59.0,26.0,E26,Lino granella,0.0,m,pieno campo,340.0,False,,,Lino granella
-60.0,27.0,E27,Lupino,85.0,m,pieno campo,340.0,False,,,Lupino
-61.0,28.0,E28,Mais da granella 300-400 (granella),0.0,m,pieno campo,340.0,True,Zea,mays,Mais da granella 300-400 (granella)
-62.0,29.0,E29,Mais da granella 300-400 (pianta intera),0.0,m,pieno campo,340.0,True,Zea,mays,Mais da granella 300-400 (pianta intera)
-63.0,30.0,E30,Mais da granella 500-700 (granella),0.0,m,pieno campo,340.0,True,Zea,mays,Mais da granella 500-700 (granella)
-64.0,31.0,E31,Mais da granella 500-700 (pianta intera),0.0,m,pieno campo,340.0,True,Zea,mays,Mais da granella 500-700 (pianta intera)
-65.0,32.0,E32,Mais dolce  (spighe),0.0,m,pieno campo,340.0,False,Zea,mays,Mais dolce  (spighe)
-66.0,33.0,E33,Mais dolce (pianta intera),0.0,m,pieno campo,340.0,False,Zea,mays,Mais dolce (pianta intera)
-67.0,34.0,E34,Mais trinciato classe 500,0.0,m,pieno campo,340.0,True,Zea,mays,Mais trinciato classe 500
-68.0,35.0,E35,Mais trinciato classe 700,0.0,m,pieno campo,340.0,True,Zea,mays,Mais trinciato classe 700
+57.0,24.0,E24,Lenticchia,85.0,m,pieno campo,30.0,False,,,Lentil
+58.0,25.0,E25,Lino  fibra,0.0,m,pieno campo,340.0,False,,,Fibre flax
+59.0,26.0,E26,Lino granella,0.0,m,pieno campo,340.0,False,,,Linseed (grain)
+60.0,27.0,E27,Lupino,85.0,m,pieno campo,340.0,False,,,Lupin
+61.0,28.0,E28,Mais da granella 300-400 (granella),0.0,m,pieno campo,340.0,True,Zea,mays,Grain maize 300-400 (grain)
+62.0,29.0,E29,Mais da granella 300-400 (pianta intera),0.0,m,pieno campo,340.0,True,Zea,mays,Grain maize 300-400 (whole plant)
+63.0,30.0,E30,Mais da granella 500-700 (granella),0.0,m,pieno campo,340.0,True,Zea,mays,Grain maize 500-700 (grain)
+64.0,31.0,E31,Mais da granella 500-700 (pianta intera),0.0,m,pieno campo,340.0,True,Zea,mays,Grain maize 500-700 (whole plant)
+65.0,32.0,E32,Mais dolce  (spighe),0.0,m,pieno campo,340.0,False,Zea,mays,Sweet maize (ears)
+66.0,33.0,E33,Mais dolce (pianta intera),0.0,m,pieno campo,340.0,False,Zea,mays,Sweet maize (whole plant)
+67.0,34.0,E34,Mais trinciato classe 500,0.0,m,pieno campo,340.0,True,Zea,mays,Silage maize (class 500)
+68.0,35.0,E35,Mais trinciato classe 700,0.0,m,pieno campo,340.0,True,Zea,mays,Silage maize (class 700)
 69.0,36.0,E36,Orzo (granella),0.0,m,pieno campo,340.0,True,Hordeum,vulgare,Barley (grain)
 70.0,37.0,E37,Orzo (pianta intera),0.0,m,pieno campo,340.0,True,Hordeum,vulgare,Barley (whole plant)
-71.0,38.0,E38,Panico,0.0,m,pieno campo,340.0,False,,,Panico
-72.0,39.0,E39,Pisello proteico,85.0,m,pieno campo,30.0,False,Pisum,sativum,Pisello proteico
-73.0,40.0,E40,Pisello proteico + residui,85.0,m,pieno campo,30.0,False,Pisum,sativum,Pisello proteico + residui
-74.0,41.0,E41,Rafano (da sovescio),0.0,m,pieno campo,340.0,False,,,Rafano (da sovescio)
-75.0,42.0,E42,Riso (granella),0.0,m,pieno campo,340.0,False,Oryza,sativa,Riso (granella)
-76.0,43.0,E43,Riso (granella+paglia),0.0,m,pieno campo,340.0,False,Oryza,sativa,Riso (granella+paglia)
+71.0,38.0,E38,Panico,0.0,m,pieno campo,340.0,False,,,Foxtail millet
+72.0,39.0,E39,Pisello proteico,85.0,m,pieno campo,30.0,False,Pisum,sativum,Protein pea
+73.0,40.0,E40,Pisello proteico + residui,85.0,m,pieno campo,30.0,False,Pisum,sativum,Protein pea + residues
+74.0,41.0,E41,Rafano (da sovescio),0.0,m,pieno campo,340.0,False,,,Horseradish (green manure)
+75.0,42.0,E42,Riso (granella),0.0,m,pieno campo,340.0,False,Oryza,sativa,Rice (grain)
+76.0,43.0,E43,Riso (granella+paglia),0.0,m,pieno campo,340.0,False,Oryza,sativa,Rice (grain + straw)
 77.0,44.0,E44,Segale (granella),0.0,m,pieno campo,340.0,True,Secale,cereale,Rye (grain)
-78.0,45.0,E45,Segale pianta intera,0.0,m,pieno campo,340.0,True,Secale,cereale,Segale pianta intera
-79.0,46.0,E46,Senape indiana,0.0,m,pieno campo,340.0,False,Brassica,juncea,Senape indiana
+78.0,45.0,E45,Segale pianta intera,0.0,m,pieno campo,340.0,True,Secale,cereale,Rye (whole plant)
+79.0,46.0,E46,Senape indiana,0.0,m,pieno campo,340.0,False,Brassica,juncea,Indian mustard
 80.0,47.0,E47,Soia (granella),90.0,m,pieno campo,0.0,True,Glicine,max,Soybean (grain)
-81.0,48.0,E48,Soia (pianta intera),90.0,m,pieno campo,0.0,True,Glicine,max,Soia (pianta intera)
+81.0,48.0,E48,Soia (pianta intera),90.0,m,pieno campo,0.0,True,Glicine,max,Soybean (whole plant)
 82.0,49.0,E49,Sorgo da foraggio,0.0,m,pieno campo,340.0,True,Sorghum,"bicolor,  ssp. sudanense",Forage sorghum
-83.0,50.0,E50,Sorgo da granella  (solo granella),0.0,m,pieno campo,340.0,True,Sorghum,"bicolor,  ssp. bicolor",Sorgo da granella  (solo granella)
-84.0,51.0,E51,Sorgo da granella (pianta intera),0.0,m,pieno campo,340.0,True,Sorghum,"bicolor,  ssp. bicolor",Sorgo da granella (pianta intera)
-85.0,52.0,E52,Tabacco Bright,0.0,m,pieno campo,340.0,False,,,Tabacco Bright
-86.0,53.0,E53,Tabacco Bright pianta intera,0.0,m,pieno campo,340.0,False,,,Tabacco Bright pianta intera
-87.0,54.0,E54,Tabacco Burley,0.0,m,pieno campo,340.0,False,,,Tabacco Burley
-88.0,55.0,E55,Tabacco Burley pianta intera,0.0,m,pieno campo,340.0,False,,,Tabacco Burley pianta intera
+83.0,50.0,E50,Sorgo da granella  (solo granella),0.0,m,pieno campo,340.0,True,Sorghum,"bicolor,  ssp. bicolor",Grain sorghum (grain only)
+84.0,51.0,E51,Sorgo da granella (pianta intera),0.0,m,pieno campo,340.0,True,Sorghum,"bicolor,  ssp. bicolor",Grain sorghum (whole plant)
+85.0,52.0,E52,Tabacco Bright,0.0,m,pieno campo,340.0,False,,,Bright tobacco
+86.0,53.0,E53,Tabacco Bright pianta intera,0.0,m,pieno campo,340.0,False,,,Bright tobacco (whole plant)
+87.0,54.0,E54,Tabacco Burley,0.0,m,pieno campo,340.0,False,,,Burley tobacco
+88.0,55.0,E55,Tabacco Burley pianta intera,0.0,m,pieno campo,340.0,False,,,Burley tobacco (whole plant)
 89.0,56.0,E56,Triticale,0.0,m,pieno campo,340.0,True,Triticosecale,,Triticale
-90.0,57.0,E57,Triticale pianta intera,0.0,m,pieno campo,340.0,True,Triticosecale,,Triticale pianta intera
-91.0,1.0,F1,Avena insilata,0.0,m,pieno campo,340.0,False,Avena,sativa,Avena insilata
-92.0,2.0,F2,Colza insilato,0.0,m,pieno campo,340.0,False,,,Colza insilato
-93.0,3.0,F3,Erba mazzolina,0.0,p,pieno campo,340.0,True,,,Erba mazzolina
+90.0,57.0,E57,Triticale pianta intera,0.0,m,pieno campo,340.0,True,Triticosecale,,Triticale (whole plant)
+91.0,1.0,F1,Avena insilata,0.0,m,pieno campo,340.0,False,Avena,sativa,Oat silage
+92.0,2.0,F2,Colza insilato,0.0,m,pieno campo,340.0,False,,,Rapeseed silage
+93.0,3.0,F3,Erba mazzolina,0.0,p,pieno campo,340.0,True,,,Orchardgrass
 94.0,4.0,F4,Erba medica,100.0,p,pieno campo,0.0,False,Medicago,sativa,Alfalfa
-95.0,5.0,F5,Erbai aut prim. Di cer. O cruc.,0.0,m,pieno campo,340.0,True,,,Erbai aut prim. Di cer. O cruc.
-96.0,6.0,F6,Erbai aut prim. Di leguminose,50.0,m,pieno campo,340.0,True,,,Erbai aut prim. Di leguminose
-97.0,7.0,F7,Erbai biennali o Prati avv. di Graminacee,0.0,p,pieno campo,340.0,True,,,Erbai biennali o Prati avv. di Graminacee
-98.0,8.0,F8,Erbai biennali misti o Prati avv. Polifita,0.0,p,pieno campo,340.0,True,,,Erbai biennali misti o Prati avv. Polifita
-99.0,9.0,F9,Farro insilato,0.0,m,pieno campo,340.0,True,,,Farro insilato
-100.0,10.0,F10,Festuca arundinacea,0.0,p,pieno campo,340.0,True,,,Festuca arundinacea
-101.0,11.0,F11,Fleolo (coda di topo),0.0,p,pieno campo,340.0,True,,,Fleolo (coda di topo)
+95.0,5.0,F5,Erbai aut prim. Di cer. O cruc.,0.0,m,pieno campo,340.0,True,,,Autumn-spring cereal/crucifer grass
+96.0,6.0,F6,Erbai aut prim. Di leguminose,50.0,m,pieno campo,340.0,True,,,Autumn-spring legume grass
+97.0,7.0,F7,Erbai biennali o Prati avv. di Graminacee,0.0,p,pieno campo,340.0,True,,,Biennial or grass-meadow
+98.0,8.0,F8,Erbai biennali misti o Prati avv. Polifita,0.0,p,pieno campo,340.0,True,,,Biennial mixed or polyphytic meadow
+99.0,9.0,F9,Farro insilato,0.0,m,pieno campo,340.0,True,,,Spelt silage
+100.0,10.0,F10,Festuca arundinacea,0.0,p,pieno campo,340.0,True,,,Tall fescue
+101.0,11.0,F11,Fleolo (coda di topo),0.0,p,pieno campo,340.0,True,,,Timothy grass
 102.0,12.0,F12,Grano duro  insilato,0.0,m,pieno campo,340.0,True,,,Durum wheat silage
-103.0,13.0,F13,Grano tenero  insilato,0.0,m,pieno campo,340.0,True,,,Grano tenero  insilato
-104.0,14.0,F14,Loglio da insilare,0.0,m,pieno campo,340.0,True,,,Loglio da insilare
-105.0,15.0,F15,Loiessa,0.0,m,pieno campo,340.0,True,,,Loiessa
-106.0,16.0,F16,Loietto perenne,0.0,p,pieno campo,340.0,True,,,Loietto perenne
-107.0,17.0,F17,Orzo insilato,0.0,m,pieno campo,340.0,True,,,Orzo insilato
-108.0,18.0,F18,Prati di graminacee,0.0,p,pieno campo,340.0,False,,,Prati di graminacee
-109.0,19.0,F19,Prati di trifoglio,50.0,p,pieno campo,340.0,False,,,Prati di trifoglio
-110.0,20.0,F20,Prati di leguminose in purezza - Trifoglio,50.0,p,pieno campo,340.0,False,,,Prati di leguminose in purezza - Trifoglio
-111.0,21.0,F21,Prati di leguminose in purezza - Ginestrino,50.0,p,pieno campo,340.0,False,,,Prati di leguminose in purezza - Ginestrino
-112.0,22.0,F22,Prati di leguminose in purezza - Sulla,50.0,p,pieno campo,340.0,False,,,Prati di leguminose in purezza - Sulla
-113.0,23.0,F23,Prati di leguminose in purezza - Lupinella,50.0,p,pieno campo,340.0,False,,,Prati di leguminose in purezza - Lupinella
-114.0,24.0,F24,Prati pascoli in collina,0.0,p,pieno campo,340.0,False,,,Prati pascoli in collina
-115.0,25.0,F25,Prati polifiti >50% leguminose,30.0,p,pieno campo,340.0,False,,,Prati polifiti >50% leguminose
-116.0,26.0,F26,Prati polifiti,0.0,p,pieno campo,340.0,False,,,Prati polifiti
-117.0,27.0,F27,Prati stabili in pianura,0.0,p,pieno campo,340.0,False,,,Prati stabili in pianura
-118.0,28.0,F28,Prato misto,0.0,p,pieno campo,340.0,False,,,Prato misto
-119.0,29.0,F29,Segale insilato,0.0,m,pieno campo,340.0,True,,,Segale insilato
-120.0,30.0,F30,Triticale insilato,0.0,m,pieno campo,340.0,True,,,Triticale insilato
+103.0,13.0,F13,Grano tenero  insilato,0.0,m,pieno campo,340.0,True,,,Soft wheat silage
+104.0,14.0,F14,Loglio da insilare,0.0,m,pieno campo,340.0,True,,,Ryegrass for silage
+105.0,15.0,F15,Loiessa,0.0,m,pieno campo,340.0,True,,,Italian ryegrass
+106.0,16.0,F16,Loietto perenne,0.0,p,pieno campo,340.0,True,,,Perennial ryegrass
+107.0,17.0,F17,Orzo insilato,0.0,m,pieno campo,340.0,True,,,Barley silage
+108.0,18.0,F18,Prati di graminacee,0.0,p,pieno campo,340.0,False,,,Grass meadows
+109.0,19.0,F19,Prati di trifoglio,50.0,p,pieno campo,340.0,False,,,Clover meadow
+110.0,20.0,F20,Prati di leguminose in purezza - Trifoglio,50.0,p,pieno campo,340.0,False,,,Pure legume meadow - Clover
+111.0,21.0,F21,Prati di leguminose in purezza - Ginestrino,50.0,p,pieno campo,340.0,False,,,Pure legume meadow - Birdsfoot trefoil
+112.0,22.0,F22,Prati di leguminose in purezza - Sulla,50.0,p,pieno campo,340.0,False,,,Pure legume meadow - Sulla
+113.0,23.0,F23,Prati di leguminose in purezza - Lupinella,50.0,p,pieno campo,340.0,False,,,Pure legume meadow - Sainfoin
+114.0,24.0,F24,Prati pascoli in collina,0.0,p,pieno campo,340.0,False,,,Hill pastures
+115.0,25.0,F25,Prati polifiti >50% leguminose,30.0,p,pieno campo,340.0,False,,,Polyphytic meadows (>50% legumes)
+116.0,26.0,F26,Prati polifiti,0.0,p,pieno campo,340.0,False,,,Polyphytic meadows
+117.0,27.0,F27,Prati stabili in pianura,0.0,p,pieno campo,340.0,False,,,Permanent lowland meadows
+118.0,28.0,F28,Prato misto,0.0,p,pieno campo,340.0,False,,,Mixed meadow
+119.0,29.0,F29,Segale insilato,0.0,m,pieno campo,340.0,True,,,Rye silage
+120.0,30.0,F30,Triticale insilato,0.0,m,pieno campo,340.0,True,,,Triticale silage
 121.0,1.0,O1,Aglio,0.0,m,pieno campo,340.0,False,Allium,sativum,Garlic
-122.0,2.0,O2,Asparago verde (pianta intera),0.0,p,pieno campo,340.0,False,Asparagus,officinalis,Asparago verde (pianta intera)
-123.0,3.0,O3,Asparago verde alta produzione,0.0,p,pieno campo,340.0,False,Asparagus,officinalis,Asparago verde alta produzione
-124.0,4.0,O4,Basilico media produzione,0.0,m,pieno campo,340.0,False,Ocimum,basilicum,Basilico media produzione
-125.0,5.0,O5,Basilico alta produzione più tagli,0.0,m,pieno campo,340.0,False,Ocimum,basilicum,Basilico alta produzione più tagli
-126.0,6.0,O6,Bietola da costa e da foglia m. fresco  media produzione,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da costa e da foglia m. fresco  media produzione
-127.0,7.0,O7,Bietola da costa e da foglia m. fresco  alta produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da costa e da foglia m. fresco  alta produzione più tagli
-128.0,8.0,O8,Bietola da foglie per l'industria media produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da foglie per l'industria media produzione più tagli
-129.0,9.0,O9,Bietola da costa per l'industria alta produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da costa per l'industria alta produzione più tagli
-130.0,10.0,O10,Broccoletto  - Cime di rapa,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. gongylodes,Broccoletto  - Cime di rapa
-131.0,11.0,O11,Broccolo media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. botrytis,Broccolo media produzione
-132.0,12.0,O12,Broccolo alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. botrytis,Broccolo alta produzione
-133.0,13.0,O13,Cappuccio media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. capitata,Cappuccio media produzione
-134.0,14.0,O14,Cappuccio alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. capitata,Cappuccio alta produzione
+122.0,2.0,O2,Asparago verde (pianta intera),0.0,p,pieno campo,340.0,False,Asparagus,officinalis,Green asparagus (whole plant)
+123.0,3.0,O3,Asparago verde alta produzione,0.0,p,pieno campo,340.0,False,Asparagus,officinalis,Green asparagus (high yield)
+124.0,4.0,O4,Basilico media produzione,0.0,m,pieno campo,340.0,False,Ocimum,basilicum,Basil (medium yield)
+125.0,5.0,O5,Basilico alta produzione più tagli,0.0,m,pieno campo,340.0,False,Ocimum,basilicum,"Basil (high yield, multi-cut)"
+126.0,6.0,O6,Bietola da costa e da foglia m. fresco  media produzione,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,"Chard and leaf beet (fresh market, medium yield)"
+127.0,7.0,O7,Bietola da costa e da foglia m. fresco  alta produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,"Chard and leaf beet (fresh market, high yield, multi-cut)"
+128.0,8.0,O8,Bietola da foglie per l'industria media produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,"Leaf beet (processing, medium yield, multi-cut)"
+129.0,9.0,O9,Bietola da costa per l'industria alta produzione più tagli,0.0,m,pieno campo,340.0,False,Beta,vulgaris var. cycla,"Chard (processing, high yield, multi-cut)"
+130.0,10.0,O10,Broccoletto  - Cime di rapa,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. gongylodes,Broccoli rabe / turnip tops
+131.0,11.0,O11,Broccolo media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. botrytis,Broccoli (medium yield)
+132.0,12.0,O12,Broccolo alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. botrytis,Broccoli (high yield)
+133.0,13.0,O13,Cappuccio media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. capitata,Head cabbage (medium yield)
+134.0,14.0,O14,Cappuccio alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. capitata,Head cabbage (high yield)
 135.0,15.0,O15,Carciofo,0.0,p,pieno campo,340.0,False,,,Artichoke
-136.0,16.0,O16,Cardo media produzione,0.0,m,pieno campo,340.0,False,Cynara,cardunculus,Cardo media produzione
-137.0,17.0,O17,Cardo alta produzione,0.0,m,pieno campo,340.0,False,,,Cardo alta produzione
+136.0,16.0,O16,Cardo media produzione,0.0,m,pieno campo,340.0,False,Cynara,cardunculus,Cardoon (medium yield)
+137.0,17.0,O17,Cardo alta produzione,0.0,m,pieno campo,340.0,False,,,Cardoon (high yield)
 138.0,18.0,O18,Carota,0.0,m,pieno campo,340.0,False,Daucus,carota,Carrot
-139.0,19.0,O19,Cavolfiore media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cavolfiore media produzione
-140.0,20.0,O20,Cavolfiore alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cavolfiore alta produzione
-141.0,21.0,O21,Cavolo verza mercato media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cavolo verza mercato media produzione
-142.0,22.0,O22,Cavolo verza mercato alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cavolo verza mercato alta produzione
-143.0,23.0,O23,"Cavolo Riccio, Cavolo nero e Cavolo Rapa",0.0,m,pieno campo,340.0,False,Brassica,oleracea,"Cavolo Riccio, Cavolo nero e Cavolo Rapa"
-144.0,24.0,O24,Cetriolo da mensa media produzione,0.0,m,pieno campo,340.0,False,Cucumis,sativus,Cetriolo da mensa media produzione
-145.0,25.0,O25,Cetriolo da mensa alta produzione,0.0,m,pieno campo,340.0,False,Cucumis,sativus,Cetriolo da mensa alta produzione
-146.0,26.0,O26,Cicoria da mercato media produzione,0.0,m,pieno campo,340.0,False,Cichorium,intybus,Cicoria da mercato media produzione
-147.0,27.0,O27,Cicoria da mercato alta produzione,0.0,m,pieno campo,340.0,False,Cichorium,intybus var. foliosum,Cicoria da mercato alta produzione
-148.0,28.0,O28,Cicoria da industria alta produzione più tagli,0.0,m,pieno campo,340.0,False,Cichorium,intybus var. foliosum,Cicoria da industria alta produzione più tagli
-149.0,29.0,O29,Cipolla media produzione,0.0,m,pieno campo,340.0,False,Allium,cepa,Cipolla media produzione
-150.0,30.0,O30,Cipolla alta produzione,0.0,m,pieno campo,340.0,False,Allium,cepa,Cipolla alta produzione
-151.0,31.0,O31,Cocomero,0.0,m,pieno campo,340.0,False,Citrullus,lanatus,Cocomero
-152.0,32.0,O32,Endivie (indivie riccia e scarola) media produzione,0.0,m,pieno campo,340.0,False,Cichorium,endivia,Endivie (indivie riccia e scarola) media produzione
-153.0,33.0,O33,Endivie (indivie riccia e scarola) alta produzione,0.0,m,pieno campo,340.0,False,Cichorium,endivia,Endivie (indivie riccia e scarola) alta produzione
-154.0,34.0,O34,Fagiolino,75.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Fagiolino
-155.0,35.0,O35,Fagiolo in baccelli da sgranare,80.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Fagiolo in baccelli da sgranare
-156.0,36.0,O36,Fagiolo secco,80.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Fagiolo secco
-157.0,37.0,O37,Fava da consumo fresco,85.0,m,pieno campo,40.0,False,Vicia,faba var. major,Fava da consumo fresco
+139.0,19.0,O19,Cavolfiore media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cauliflower (medium yield)
+140.0,20.0,O20,Cavolfiore alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,Cauliflower (high yield)
+141.0,21.0,O21,Cavolo verza mercato media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,"Savoy cabbage (fresh market, medium yield)"
+142.0,22.0,O22,Cavolo verza mercato alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea,"Savoy cabbage (fresh market, high yield)"
+143.0,23.0,O23,"Cavolo Riccio, Cavolo nero e Cavolo Rapa",0.0,m,pieno campo,340.0,False,Brassica,oleracea,"Kale, black cabbage and kohlrabi"
+144.0,24.0,O24,Cetriolo da mensa media produzione,0.0,m,pieno campo,340.0,False,Cucumis,sativus,Fresh cucumber (medium yield)
+145.0,25.0,O25,Cetriolo da mensa alta produzione,0.0,m,pieno campo,340.0,False,Cucumis,sativus,Fresh cucumber (high yield)
+146.0,26.0,O26,Cicoria da mercato media produzione,0.0,m,pieno campo,340.0,False,Cichorium,intybus,"Chicory (fresh market, medium yield)"
+147.0,27.0,O27,Cicoria da mercato alta produzione,0.0,m,pieno campo,340.0,False,Cichorium,intybus var. foliosum,"Chicory (fresh market, high yield)"
+148.0,28.0,O28,Cicoria da industria alta produzione più tagli,0.0,m,pieno campo,340.0,False,Cichorium,intybus var. foliosum,"Chicory (processing, high yield, multi-cut)"
+149.0,29.0,O29,Cipolla media produzione,0.0,m,pieno campo,340.0,False,Allium,cepa,Onion (medium yield)
+150.0,30.0,O30,Cipolla alta produzione,0.0,m,pieno campo,340.0,False,Allium,cepa,Onion (high yield)
+151.0,31.0,O31,Cocomero,0.0,m,pieno campo,340.0,False,Citrullus,lanatus,Watermelon
+152.0,32.0,O32,Endivie (indivie riccia e scarola) media produzione,0.0,m,pieno campo,340.0,False,Cichorium,endivia,Endive and escarole (medium yield)
+153.0,33.0,O33,Endivie (indivie riccia e scarola) alta produzione,0.0,m,pieno campo,340.0,False,Cichorium,endivia,Endive and escarole (high yield)
+154.0,34.0,O34,Fagiolino,75.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Green bean
+155.0,35.0,O35,Fagiolo in baccelli da sgranare,80.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Shelling bean in pods
+156.0,36.0,O36,Fagiolo secco,80.0,m,pieno campo,75.0,False,Phaseolus,vulgaris,Dry bean
+157.0,37.0,O37,Fava da consumo fresco,85.0,m,pieno campo,40.0,False,Vicia,faba var. major,Fresh broad bean
 158.0,38.0,O38,Finocchio,0.0,m,pieno campo,340.0,False,Foeniculum,vulgare,Fennel
-159.0,39.0,O39,Fragola ,0.0,m,pieno campo,340.0,False,Fragraria,F. chiloensis x  F. virginiana,Fragola 
+159.0,39.0,O39,Fragola ,0.0,m,pieno campo,340.0,False,Fragraria,F. chiloensis x  F. virginiana,Strawberry
 160.0,40.0,O40,Lattuga,0.0,m,pieno campo,340.0,False,Lactuca,sativa,Lettuce
-161.0,41.0,O41,Lattuga coltura protetta,0.0,m,protetta,340.0,False,Lactuca,sativa,Lattuga coltura protetta
-162.0,42.0,O42,Melanzana in pieno campo media produzione,0.0,m,protetta,340.0,False,Solanum,melongena,Melanzana in pieno campo media produzione
-163.0,43.0,O43,Melanzana coltura protetta alta produzione,0.0,m,protetta,340.0,False,Solanum,melongena,Melanzana coltura protetta alta produzione
+161.0,41.0,O41,Lattuga coltura protetta,0.0,m,protetta,340.0,False,Lactuca,sativa,Lettuce (greenhouse)
+162.0,42.0,O42,Melanzana in pieno campo media produzione,0.0,m,protetta,340.0,False,Solanum,melongena,"Eggplant (field, medium yield)"
+163.0,43.0,O43,Melanzana coltura protetta alta produzione,0.0,m,protetta,340.0,False,Solanum,melongena,"Eggplant (greenhouse, high yield)"
 164.0,44.0,O44,Melone,0.0,m,protetta,340.0,False,Cucumis,melo,Melon
 165.0,45.0,O45,Patata,0.0,m,pieno campo,340.0,False,Solanum,tuberosum,Potato
-166.0,46.0,O46,Peperone in serra alta produzione,0.0,m,protetta,340.0,False,Capsicum,annuum,Peperone in serra alta produzione
-167.0,47.0,O47,Peperone in serra media produzione,0.0,m,pieno campo,340.0,False,Capsicum,annuum,Peperone in serra media produzione
-168.0,48.0,O48,Piccoli frutti,0.0,p,pieno campo,340.0,False,,,Piccoli frutti
-169.0,49.0,O49,Pisello da industria (grani),50.0,m,pieno campo,70.0,False,Pisum,sativum,Pisello da industria (grani)
-170.0,50.0,O50,Pisello da mercato fresco (baccelli),80.0,m,pieno campo,70.0,False,Pisum,sativum,Pisello da mercato fresco (baccelli)
-171.0,51.0,O51,Pomodoro da industria media produzione,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Pomodoro da industria media produzione
-172.0,52.0,O52,Pomodoro da industria alta produzione,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Pomodoro da industria alta produzione
-173.0,53.0,O53,Pomodoro da mensa a pieno campo,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Pomodoro da mensa a pieno campo
-174.0,54.0,O54,Pomodoro da mensa in serra,0.0,m,protetta,340.0,False,Solanum ,lycopersicum,Pomodoro da mensa in serra
-175.0,55.0,O55,Porro,0.0,m,pieno campo,340.0,False,Allium,porrum,Porro
-176.0,56.0,O56,Prezzemolo media produzione,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,Prezzemolo media produzione
-177.0,57.0,O57,Prezzemolo alta produzione più tagli,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,Prezzemolo alta produzione più tagli
-178.0,58.0,O58,Radicchio (cicoria a foglie colorate) media produzione,0.0,m,pieno campo,340.0,False,Cichorium ,intybus var. foliosum,Radicchio (cicoria a foglie colorate) media produzione
-179.0,59.0,O59,Radicchio (cicoria a foglie colorate) alta produzione,0.0,m,pieno campo,340.0,False,,,Radicchio (cicoria a foglie colorate) alta produzione
-180.0,60.0,O60,Rapa,0.0,m,pieno campo,340.0,False,Brassica,rapa,Rapa
-181.0,61.0,O61,Ravanello,0.0,m,pieno campo,340.0,False,Raphanus,sativus,Ravanello
-182.0,62.0,O62,Rucola media produzione,0.0,m,pieno campo,340.0,False,Eruca,vesicaria - sativa,Rucola media produzione
-183.0,63.0,O63,Rucola alta produzione con più tagli,0.0,m,pieno campo,340.0,False,Eruca,vesicaria - sativa,Rucola alta produzione con più tagli
-184.0,64.0,O64,Scalogno,0.0,m,pieno campo,340.0,False,Allium,ascalonicum,Scalogno
-185.0,65.0,O65,Sedano media produzione,0.0,m,pieno campo,340.0,False,Apium,graveolens,Sedano media produzione
-186.0,66.0,O66,Sedano alta produzione,0.0,m,pieno campo,340.0,False,Apium,graveolens,Sedano alta produzione
-187.0,67.0,O67,Spinacio alta produzione con più tagli,0.0,m,pieno campo,340.0,False,Spinacia,oleracea,Spinacio alta produzione con più tagli
-188.0,68.0,O68,Spinacio media produzione,0.0,m,pieno campo,340.0,False,Spinacia,oleracea,Spinacio media produzione
-189.0,69.0,O69,Verza - cavolo da mercato media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,Verza - cavolo da mercato media produzione
-190.0,70.0,O70,Verza - cavolo da mercato alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,Verza - cavolo da mercato alta produzione
-191.0,71.0,O71,Verza da industria,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,Verza da industria
+166.0,46.0,O46,Peperone in serra alta produzione,0.0,m,protetta,340.0,False,Capsicum,annuum,"Pepper (greenhouse, high yield)"
+167.0,47.0,O47,Peperone in serra media produzione,0.0,m,pieno campo,340.0,False,Capsicum,annuum,"Pepper (greenhouse, medium yield)"
+168.0,48.0,O48,Piccoli frutti,0.0,p,pieno campo,340.0,False,,,Berries
+169.0,49.0,O49,Pisello da industria (grani),50.0,m,pieno campo,70.0,False,Pisum,sativum,Processing pea (grain)
+170.0,50.0,O50,Pisello da mercato fresco (baccelli),80.0,m,pieno campo,70.0,False,Pisum,sativum,Fresh-market pea (pods)
+171.0,51.0,O51,Pomodoro da industria media produzione,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Processing tomato (medium yield)
+172.0,52.0,O52,Pomodoro da industria alta produzione,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Processing tomato (high yield)
+173.0,53.0,O53,Pomodoro da mensa a pieno campo,0.0,m,pieno campo,340.0,False,Solanum ,lycopersicum,Fresh-market tomato (field)
+174.0,54.0,O54,Pomodoro da mensa in serra,0.0,m,protetta,340.0,False,Solanum ,lycopersicum,Fresh-market tomato (greenhouse)
+175.0,55.0,O55,Porro,0.0,m,pieno campo,340.0,False,Allium,porrum,Leek
+176.0,56.0,O56,Prezzemolo media produzione,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,Parsley (medium yield)
+177.0,57.0,O57,Prezzemolo alta produzione più tagli,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,"Parsley (high yield, multi-cut)"
+178.0,58.0,O58,Radicchio (cicoria a foglie colorate) media produzione,0.0,m,pieno campo,340.0,False,Cichorium ,intybus var. foliosum,"Radicchio (red chicory, medium yield)"
+179.0,59.0,O59,Radicchio (cicoria a foglie colorate) alta produzione,0.0,m,pieno campo,340.0,False,,,"Radicchio (red chicory, high yield)"
+180.0,60.0,O60,Rapa,0.0,m,pieno campo,340.0,False,Brassica,rapa,Turnip
+181.0,61.0,O61,Ravanello,0.0,m,pieno campo,340.0,False,Raphanus,sativus,Radish
+182.0,62.0,O62,Rucola media produzione,0.0,m,pieno campo,340.0,False,Eruca,vesicaria - sativa,Rocket (medium yield)
+183.0,63.0,O63,Rucola alta produzione con più tagli,0.0,m,pieno campo,340.0,False,Eruca,vesicaria - sativa,"Rocket (high yield, multi-cut)"
+184.0,64.0,O64,Scalogno,0.0,m,pieno campo,340.0,False,Allium,ascalonicum,Shallot
+185.0,65.0,O65,Sedano media produzione,0.0,m,pieno campo,340.0,False,Apium,graveolens,Celery (medium yield)
+186.0,66.0,O66,Sedano alta produzione,0.0,m,pieno campo,340.0,False,Apium,graveolens,Celery (high yield)
+187.0,67.0,O67,Spinacio alta produzione con più tagli,0.0,m,pieno campo,340.0,False,Spinacia,oleracea,"Spinach (high yield, multi-cut)"
+188.0,68.0,O68,Spinacio media produzione,0.0,m,pieno campo,340.0,False,Spinacia,oleracea,Spinach (medium yield)
+189.0,69.0,O69,Verza - cavolo da mercato media produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,"Savoy cabbage (fresh market, medium yield)"
+190.0,70.0,O70,Verza - cavolo da mercato alta produzione,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,"Savoy cabbage (fresh market, high yield)"
+191.0,71.0,O71,Verza da industria,0.0,m,pieno campo,340.0,False,Brassica,oleracea var. sabauda,Savoy cabbage (processing)
 192.0,72.0,O72,Zucca,0.0,m,pieno campo,340.0,False,Cucurbita,maxima / moschata,Pumpkin
-193.0,73.0,O73,Zucchino da industria media produzione,0.0,m,pieno campo,340.0,False,Cucurbita,pepo,Zucchino da industria media produzione
-194.0,74.0,O74,Zucchino da industria alta produzione,0.0,m,pieno campo,340.0,False,Cucurbita,pepo,Zucchino da industria alta produzione
-195.0,75.0,O75,Zucchino da mercato fresco media produzione,0.0,m,protetta,340.0,False,Cucurbita,pepo,Zucchino da mercato fresco media produzione
-196.0,76.0,O76,Zucchino da mercato  fresco alta produzione,0.0,m,protetta,340.0,False,Cucurbita,pepo,Zucchino da mercato  fresco alta produzione
-197.0,1.0,S1,Barbabiertola da seme (fase porta seme),0.0,m,pieno campo,340.0,False,,,Barbabiertola da seme (fase porta seme)
-198.0,2.0,S2,Carota da seme (fase portaseme),0.0,m,pieno campo,340.0,False,,,Carota da seme (fase portaseme)
-199.0,3.0,S3,Carota da seme (fase vivaio),0.0,m,pieno campo,340.0,False,,,Carota da seme (fase vivaio)
-200.0,4.0,S4,Cavoli da seme,0.0,m,pieno campo,340.0,False,,,Cavoli da seme
-201.0,5.0,S5,Cetriolo da seme,0.0,m,pieno campo,340.0,False,,,Cetriolo da seme
-202.0,6.0,S6,Cicoria da seme,0.0,m,pieno campo,340.0,False,,,Cicoria da seme
-203.0,7.0,S7,Cipolla da seme (fase portaseme),0.0,m,pieno campo,340.0,False,,,Cipolla da seme (fase portaseme)
-204.0,8.0,S8,Cipolla da seme (fase vivaio),0.0,m,pieno campo,340.0,False,,,Cipolla da seme (fase vivaio)
-205.0,9.0,S9,Coriandolo da seme,0.0,m,pieno campo,340.0,False,Coriandrum,sativum,Coriandolo da seme
-206.0,10.0,S10,Erba medica  da seme,100.0,p,pieno campo,340.0,False,Medicago,sativa,Erba medica  da seme
-207.0,11.0,S11,Finocchio da seme,0.0,m,pieno campo,340.0,False,Foeniculum,vulgare,Finocchio da seme
-208.0,12.0,S12,Frumento duro da seme (granella),0.0,m,pieno campo,340.0,False,Triticum,durum,Frumento duro da seme (granella)
-209.0,13.0,S13,Frumento tenero da seme (granella),0.0,m,pieno campo,340.0,False,Triticum,aestivum,Frumento tenero da seme (granella)
-210.0,14.0,S14,Girasole da seme (granella),0.0,m,pieno campo,340.0,False,Heliantus,annuus,Girasole da seme (granella)
-211.0,15.0,S15,Lattuga da seme,0.0,m,pieno campo,340.0,False,Lactuca,sativa,Lattuga da seme
-212.0,16.0,S16,Orzo da seme (granella),0.0,m,pieno campo,340.0,False,Hordeum,vulgare,Orzo da seme (granella)
-213.0,17.0,S17,Pisello proteico da seme (granella),0.0,m,pieno campo,80.0,False,Pisum,sativum,Pisello proteico da seme (granella)
-214.0,18.0,S18,Prezzemolo da seme,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,Prezzemolo da seme
-215.0,19.0,S19,Ravanello da seme,0.0,m,pieno campo,340.0,False,Raphanus,sativus,Ravanello da seme
-216.0,20.0,S20,Segale da seme (granella),0.0,m,pieno campo,340.0,False,Secale,cereale,Segale da seme (granella)
-217.0,21.0,S21,Soia da seme (granella),0.0,m,pieno campo,0.0,False,Glicine,max,Soia da seme (granella)
-218.0,22.0,S22,Triticale da seme (granella),0.0,m,pieno campo,340.0,True,Triticosecale,,Triticale da seme (granella)
-219.0,23.0,S23,Trifoglio da seme (trifoglio),50.0,p,pieno campo,340.0,False,,,Trifoglio da seme (trifoglio)
-220.0,1.0,BL1,Bietola da foglia,0.0,c,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da foglia
-221.0,2.0,BL2,Bietola da foglia,0.0,c,pieno campo,340.0,False,Beta,vulgaris var. cycla,Bietola da foglia
-222.0,3.0,BL3,Cicorino,0.0,c,protetta,340.0,False,Cichorium,intybus var. foliosum,Cicorino
-223.0,4.0,BL4,Cicorino,0.0,c,protetta,340.0,False,Cichorium,intybus var. foliosum,Cicorino
-224.0,5.0,BL5,Foglie e steli di Brassica,0.0,c,protetta,340.0,False,Brassica,oleracea,Foglie e steli di Brassica
-225.0,6.0,BL6,Foglie e steli di Brassica,0.0,c,protetta,340.0,False,Brassica,oleracea,Foglie e steli di Brassica
-226.0,7.0,BL7,Lattuga da cespo,0.0,c,protetta,340.0,False,Lactuca,sativa,Lattuga da cespo
-227.0,8.0,BL8,Lattughino 1° taglio,0.0,c,protetta,340.0,False,Lactuca,sativa,Lattughino 1° taglio
-228.0,9.0,BL9,Lattughino 2° taglio,0.0,c,protetta,340.0,False,Lactuca,sativa,Lattughino 2° taglio
-229.0,10.0,BL10,Rucola 1° taglio,0.0,c,protetta,340.0,False,Eruca,vesicaria - sativa,Rucola 1° taglio
-230.0,11.0,BL11,Rucola 2° taglio,0.0,c,protetta,340.0,False,Eruca,vesicaria - sativa,Rucola 2° taglio
-231.0,12.0,BL12,Spinacino 1° taglio,0.0,c,protetta,340.0,False,Spinacia,oleracea,Spinacino 1° taglio
-232.0,13.0,BL13,Spinacino 2° taglio,1.0,c,protetta,340.0,False,Spinacia,oleracea,Spinacino 2° taglio
-233.0,14.0,BL14,Valerianella,0.0,c,protetta,340.0,False,Valerianella,locusta,Valerianella
-234.0,15.0,BL15,baby leaf generica,0.0,c,protetta,340.0,False,,,baby leaf generica
-,,ID_Coltura,Coltura attualmente selezionata,,ID_Cic,coltivazione usuale,,Detrazione x semina su sodo,,,Coltura attualmente selezionata
+193.0,73.0,O73,Zucchino da industria media produzione,0.0,m,pieno campo,340.0,False,Cucurbita,pepo,"Courgette (processing, medium yield)"
+194.0,74.0,O74,Zucchino da industria alta produzione,0.0,m,pieno campo,340.0,False,Cucurbita,pepo,"Courgette (processing, high yield)"
+195.0,75.0,O75,Zucchino da mercato fresco media produzione,0.0,m,protetta,340.0,False,Cucurbita,pepo,"Courgette (fresh market, medium yield)"
+196.0,76.0,O76,Zucchino da mercato  fresco alta produzione,0.0,m,protetta,340.0,False,Cucurbita,pepo,"Courgette (fresh market, high yield)"
+197.0,1.0,S1,Barbabiertola da seme (fase porta seme),0.0,m,pieno campo,340.0,False,,,Sugar beet seed (seed phase)
+198.0,2.0,S2,Carota da seme (fase portaseme),0.0,m,pieno campo,340.0,False,,,Carrot seed (seed phase)
+199.0,3.0,S3,Carota da seme (fase vivaio),0.0,m,pieno campo,340.0,False,,,Carrot seed (nursery phase)
+200.0,4.0,S4,Cavoli da seme,0.0,m,pieno campo,340.0,False,,,Cabbage (seed)
+201.0,5.0,S5,Cetriolo da seme,0.0,m,pieno campo,340.0,False,,,Cucumber (seed)
+202.0,6.0,S6,Cicoria da seme,0.0,m,pieno campo,340.0,False,,,Chicory (seed)
+203.0,7.0,S7,Cipolla da seme (fase portaseme),0.0,m,pieno campo,340.0,False,,,Onion seed (seed phase)
+204.0,8.0,S8,Cipolla da seme (fase vivaio),0.0,m,pieno campo,340.0,False,,,Onion seed (nursery phase)
+205.0,9.0,S9,Coriandolo da seme,0.0,m,pieno campo,340.0,False,Coriandrum,sativum,Coriander (seed)
+206.0,10.0,S10,Erba medica  da seme,100.0,p,pieno campo,340.0,False,Medicago,sativa,Alfalfa (seed)
+207.0,11.0,S11,Finocchio da seme,0.0,m,pieno campo,340.0,False,Foeniculum,vulgare,Fennel (seed)
+208.0,12.0,S12,Frumento duro da seme (granella),0.0,m,pieno campo,340.0,False,Triticum,durum,"Durum wheat (seed, grain)"
+209.0,13.0,S13,Frumento tenero da seme (granella),0.0,m,pieno campo,340.0,False,Triticum,aestivum,"Soft wheat (seed, grain)"
+210.0,14.0,S14,Girasole da seme (granella),0.0,m,pieno campo,340.0,False,Heliantus,annuus,"Sunflower (seed, grain)"
+211.0,15.0,S15,Lattuga da seme,0.0,m,pieno campo,340.0,False,Lactuca,sativa,Lettuce (seed)
+212.0,16.0,S16,Orzo da seme (granella),0.0,m,pieno campo,340.0,False,Hordeum,vulgare,"Barley (seed, grain)"
+213.0,17.0,S17,Pisello proteico da seme (granella),0.0,m,pieno campo,80.0,False,Pisum,sativum,"Protein pea (seed, grain)"
+214.0,18.0,S18,Prezzemolo da seme,0.0,m,pieno campo,340.0,False,Petroselinum,crispum,Parsley (seed)
+215.0,19.0,S19,Ravanello da seme,0.0,m,pieno campo,340.0,False,Raphanus,sativus,Radish (seed)
+216.0,20.0,S20,Segale da seme (granella),0.0,m,pieno campo,340.0,False,Secale,cereale,"Rye (seed, grain)"
+217.0,21.0,S21,Soia da seme (granella),0.0,m,pieno campo,0.0,False,Glicine,max,"Soybean (seed, grain)"
+218.0,22.0,S22,Triticale da seme (granella),0.0,m,pieno campo,340.0,True,Triticosecale,,"Triticale (seed, grain)"
+219.0,23.0,S23,Trifoglio da seme (trifoglio),50.0,p,pieno campo,340.0,False,,,Clover (seed)
+220.0,1.0,BL1,Bietola da foglia,0.0,c,pieno campo,340.0,False,Beta,vulgaris var. cycla,Leaf beet
+221.0,2.0,BL2,Bietola da foglia,0.0,c,pieno campo,340.0,False,Beta,vulgaris var. cycla,Leaf beet
+222.0,3.0,BL3,Cicorino,0.0,c,protetta,340.0,False,Cichorium,intybus var. foliosum,Baby chicory
+223.0,4.0,BL4,Cicorino,0.0,c,protetta,340.0,False,Cichorium,intybus var. foliosum,Baby chicory
+224.0,5.0,BL5,Foglie e steli di Brassica,0.0,c,protetta,340.0,False,Brassica,oleracea,Brassica leaves and stems
+225.0,6.0,BL6,Foglie e steli di Brassica,0.0,c,protetta,340.0,False,Brassica,oleracea,Brassica leaves and stems
+226.0,7.0,BL7,Lattuga da cespo,0.0,c,protetta,340.0,False,Lactuca,sativa,Head lettuce
+227.0,8.0,BL8,Lattughino 1° taglio,0.0,c,protetta,340.0,False,Lactuca,sativa,Baby lettuce (first cut)
+228.0,9.0,BL9,Lattughino 2° taglio,0.0,c,protetta,340.0,False,Lactuca,sativa,Baby lettuce (second cut)
+229.0,10.0,BL10,Rucola 1° taglio,0.0,c,protetta,340.0,False,Eruca,vesicaria - sativa,Rocket (first cut)
+230.0,11.0,BL11,Rucola 2° taglio,0.0,c,protetta,340.0,False,Eruca,vesicaria - sativa,Rocket (second cut)
+231.0,12.0,BL12,Spinacino 1° taglio,0.0,c,protetta,340.0,False,Spinacia,oleracea,Baby spinach (first cut)
+232.0,13.0,BL13,Spinacino 2° taglio,1.0,c,protetta,340.0,False,Spinacia,oleracea,Baby spinach (second cut)
+233.0,14.0,BL14,Valerianella,0.0,c,protetta,340.0,False,Valerianella,locusta,Corn salad
+234.0,15.0,BL15,baby leaf generica,0.0,c,protetta,340.0,False,,,generic baby leaf
+,,ID_Coltura,Coltura attualmente selezionata,,ID_Cic,coltivazione usuale,,Detrazione x semina su sodo,,,Currently selected crop
 50.0,17.0,E17,Grano duro (pianta intera),0.0,m,pieno campo,340.0,True,,,Durum wheat (whole plant)

@@ -1,252 +1,347 @@
 # NFert News
 
+## Version 0.13.1 (2026-04-24) - Strip-prescription builder + demo Shiny
+
+### New features
+
+* `build_strip_prescription()` tiles a field polygon with
+  machine-width strips along an A-B line (or the longest side by
+  default) and assigns a per-strip dose using one of four variability
+  methods: \code{"uniform"}, \code{"calibration"} (VI curve),
+  \code{"nni"} (NNI zones), \code{"classes"} (VI quantile classes).
+  The area-weighted mean dose is optionally rescaled to match the
+  field-level target, preserving the mass-balance constraint.
+  Output is a ready-to-export \code{sf} object consumed natively by
+  `export_prescription()`.
+
+* New Shiny sub-tab "Strip prescription (machine width)" inside the
+  Precision N tab. Controls: plot selector from the demo farm, machine
+  width slider, A-B source (long side / upload LINESTRING),
+  variability method, min/max/N-target sliders, \emph{Load demo NDVI}
+  and \emph{Load demo NNI} buttons that synthesise plausible rasters
+  programmatically. Download bundles all requested formats as a zip.
+
+* Demo loaders in the VRT sub-tab as well: "Load synthetic demo NDVI"
+  button bypasses the file-upload step so users can explore the
+  pipeline without having a real raster at hand.
+
+### Fixes
+
+* `resolve_crop()` now searches three columns (`crop`, `crop_it`,
+  `crop_en`) so legacy Italian strings keep working after the 0.12.0
+  English-canonical rebuild.
+* Vignette `NFert.Rmd` and test `test-dpi2026-benchmark.R` updated to
+  use the English canonical crop names that match the rebuilt tables.
+* New vignette `farm-and-prescription-map.Rmd` walks through the
+  end-to-end flow from farm GeoJSON to strip export.
+
+### Article
+
+* `NFert_SoftwareX_article_v12.docx` bumps the code metadata to
+  v0.13.0 and updates Fig. 1 with the Precision-agriculture module
+  listing `estimate_biophysical()`, `compute_NNI_from_S2()`,
+  `variable_rate_N()`, `build_strip_prescription()`,
+  `farm_balance()` and `export_prescription()`.
+
+## Version 0.13.0 (2026-04-24) - Prescription-map export + legume fix
+
+### New features
+
+* New `export_prescription()` writes a variable-rate prescription layer
+  (an `sf` object from `farm_balance()` or a raster from
+  `variable_rate_N()`) in one of the seven formats accepted by the
+  on-board monitors of modern tractors: Shapefile, GeoJSON, KML,
+  GeoPackage, \emph{John Deere-ready} Shapefile (integer `RATE`),
+  \emph{Trimble-ready} Shapefile (`TGT_RATE`), and ISOXML
+  (ISOBUS ISO 11783-10 `TASKDATA.XML`). Rasters are polygonised
+  on-the-fly; output is always reprojected to WGS84, validated,
+  sliver-cleaned, and the dose field is renamed to the convention of
+  the target format.
+
+* New `export_prescription_all()` convenience wrapper writes several
+  formats side-by-side into the same output folder. The Shiny "Farm /
+  Azienda" tab exposes it through a "Download prescription bundle"
+  button that produces a zip of the selected formats ready to be
+  loaded into the farm monitor.
+
+### Fixes
+
+* `calc_crop_N_demand()` now applies the biological N-fixation
+  correction for legumes, reducing the gross demand by
+  `n_fixation_pct` read from `NFert::crops.table`. Soybean (-90 %),
+  alfalfa (-100 %), faba bean / pea / lupin (-85 %), polyphytic legume
+  meadows (-50 %) are handled transparently. Non-legume crops are
+  unaffected. Set `apply_n_fixation = FALSE` to recover the pre-0.12.1
+  behaviour.
+
+* `farm_balance()` now accepts the legacy `oxygen_availability`
+  aliases `"Low"` / `"High"` / `"Reduced"` / `"Poor"` / `"Good"` and
+  translates them to the canonical `ca.table$availability` keys
+  (`"Slow"` / `"Normal"` / `"Fast"`), avoiding the "list cannot be
+  converted to double" crash on legacy GeoJSON files.
+
+### Dependencies
+
+* Added `xml2` to Suggests for the ISOXML writer.
+
+## Version 0.12.0 (2026-04-24) - English-only user-facing API
+
+### Breaking change: reference tables are now English-canonical
+
+* All bundled reference tables (`uptake_table`, `mas.table`,
+  `crops.table`, `e.table`, `organic_fertilizers.table`,
+  `distribution_modalities.table`, `cycle_modality.table`,
+  `cycles.table`, `cycle_phases.table`, `fertilizer_types.table`) now
+  use the English name in their primary lookup column (`crop`,
+  `previous_crop`, `fertilizer`, `modality_epoch`, `level`, `cycle`,
+  `type`, `phase_duration`). The Italian translation of each row is
+  kept in a secondary `*_it` column for reference.
+* `data-raw/build-rda.R` has been extended to swap `crop` and
+  `crop_en` columns in the three tables where Italian was still
+  primary, and the 182 Italian crop names in the source CSVs have
+  been filled in with their English translations. Re-run
+  `source("data-raw/build-rda.R")` once in R to regenerate the
+  `.rda` files.
+
+### New helpers
+
+* Exported `crop_en2it`, `prev_crop_en2it`, `source_en2it`,
+  `modality_epoch_en2it`, `level_en2it` dictionaries plus
+  `nfert_en2it()` / `nfert_it2en()` translators. They are now a pure
+  convenience for users migrating legacy scripts that still pass
+  Italian strings; no code inside NFert depends on them any longer.
+
+### User-facing updates
+
+* `inst/extdata/example_farm.geojson` carries English-only values that
+  match the canonical `crop_en` / `previous_crop` / `fertilizer`
+  entries of the rebuilt tables (`Silage maize (class 700)`, `Dairy
+  cattle slurry`, `Maize stalks removed`, ...).
+* The bundled Shiny app (tabs N balance, P/K balance, Distribution
+  plan, Precision N, Spatial balance, Farm / Azienda) is now
+  English-only: both labels and values passed to the internal
+  functions are English strings, matching the tables.
+* `farm_balance()` no longer translates its input; it simply routes
+  Italian legacy strings through `nfert_it2en()` so users do not
+  have to rewrite historical GeoJSONs.
+
+## Version 0.11.0 (2026-04-24) - Farm-level GeoJSON workflow
+
+### New features
+
+* `farm_balance()` reads a vector layer (GeoJSON, Shapefile, GeoPackage
+  or an in-memory `sf` object) where every feature is an agronomic plot
+  and runs `N_balance()` on each row, using the attributes as arguments.
+  Returns an enriched `sf` object with columns `N_target`, `MAS_cap`,
+  `MAS_ok`, `N_total_kg` and an optional `balance_error` message. When
+  `p_balance = TRUE` or `k_balance = TRUE` the P2O5 and K2O balances
+  are computed too (using `olsen_value` and `k_value` columns).
+  Italian and English aliases for crops and categorical inputs are both
+  accepted. An `output` path writes the enriched layer back to disk.
+
+* New Shiny tab "Farm / Azienda" shows an interactive Leaflet map of
+  the plots coloured by N target, KPIs for total ha / total kg N /
+  MAS breaches, a per-plot N* bar chart with the ZVN 170 kg/ha
+  reference, and the enriched layer can be downloaded as GeoJSON or
+  a summary CSV.
+
+* New runnable example `system.file("extdata/example_farm.geojson",
+  package = "NFert")`: a 35.5 ha fictitious farm with 8 plots in the
+  Pianura Padana, carrying all the columns needed by `N_balance()` so
+  the workflow can be exercised end-to-end without external data.
+
+### Dependencies
+
+* Added `sf` and `leaflet` to Suggests (lazy-loaded by
+  `farm_balance()` and the Shiny tab only).
+
+## Version 0.10.0 (2026-04-24) - Shiny web interface
+
+### New features
+
+* `run_app()` launches a full-featured Shiny interface that exposes the
+  balance, distribution, precision and spatial modules of NFert through
+  interactive forms and maps. The app ships with six tabs (Welcome, N
+  balance, P & K balance, Distribution plan, Precision N, Spatial
+  balance), live MAS and 170 kg N ha-1 ZVN validation, per-pixel VRT
+  map preview and a one-click Sentinel-2 -> NNI pipeline driven by
+  `compute_NNI_from_S2()`. A dedicated "Research mode" toggle in the
+  navbar exposes coefficient overrides and intermediate balance terms
+  for advanced users.
+
+* Shiny module layout under `inst/shinyapp/`, with one file per module
+  in `modules/` and shared assets in `www/` (custom.css follows the
+  same colour palette as the scientific article).
+
+### Dependencies
+
+* Added `shiny (>= 1.7.0)`, `shinyjs`, `DT` and `ggplot2` to Suggests
+  (lazy-loaded by `run_app()` only).
+
+## Version 0.9.0 (2026-04-24) - Crop-aware S2->NNI pipeline
+
+### New features
+
+* New `compute_NNI_from_S2()` end-to-end pipeline: takes the LAI, Cm and
+  canopy-N rasters returned by `estimate_biophysical()`, looks up the
+  crop-specific parameters with `crop_params_NNI()`, applies the leaf-to-
+  total biomass partitioning, the N:Chl conversion (or the direct
+  protein path), the FVC + SCL masking and the critical-N dilution
+  curve, and returns a list of SpatRasters with W, N_actual, N_crit,
+  NNI and a categorical zone map (1 deficient / 2 optimal / 3
+  excessive). A single call goes from Sentinel-2 traits to an actionable
+  zone map.
+
+* New `crop_params_NNI()` exposes the first-guess defaults for eight
+  crops (wheat, maize, rice, barley, rapeseed, sorghum, sunflower,
+  soybean) with all seven parameters needed by the pipeline: dilution
+  coefficients a/b, biomass lower bound w_min, leaf allocation
+  alpha_leaf, N:Chl ratio k_NChl and FVC cutoff fvc_min. The function
+  accepts Italian aliases ("frumento", "mais", "orzo", ...) and
+  documents the literature sources and the calibration caveats (15-30\%
+  bias if alpha_leaf and k_NChl are not locally calibrated).
+
+### Changes
+
+* `biophysical_to_NNI_inputs()` now accepts `alpha_leaf` and `k_NChl`
+  arguments so the leaf-to-total partitioning and the chlorophyll path
+  are explicit; the previous version conflated leaf and total biomass.
+  Most users should migrate to the higher-level
+  `compute_NNI_from_S2()`.
+
+## Version 0.8.0 (2026-04-24) - GPR biophysical retrieval from Sentinel-2
+
+### New features
+
+* New `estimate_biophysical()` applies pre-trained Gaussian Process
+  Regression (GPR) models to a 10-band Sentinel-2 L2A surface-reflectance
+  raster (B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12) and returns
+  canopy-level biophysical maps: leaf area index `LAI`, leaf dry-matter
+  content `Cm`, canopy water content `Cw`, fractional vegetation cover
+  `FVC`, leaf chlorophyll `Cab`, the classic pyeogpr `laiCab` product
+  and two canopy-N products `CNC_Cab` / `CNC_Cprot`. The implementation
+  is a pure-R port of the `pyeogpr` inference pipeline (Estevez et al.,
+  2022) validated at correlation 1.0 against the reference Python code
+  on a 200-pixel benchmark (relative error < 1.4e-8). Depends only on
+  `terra` and `jsonlite`. Models are loaded from user-supplied JSON
+  files, so the module can be used with any additional PROSAIL-trained
+  GPR variable without touching the source.
+
+* New `biophysical_to_NNI_inputs()` helper converts the GPR outputs
+  (`LAI`, `Cm`, `CNC_Cprot`) into the two layers required by
+  `compute_NNI()` (aboveground dry biomass `W` and plant N concentration
+  `N_actual`), closing the pipeline
+  Sentinel-2 -> canopy traits -> NNI map -> VRT modifier.
+
+### Dependencies
+
+* Added `terra` and `jsonlite` to `Suggests` (loaded on demand by
+  `estimate_biophysical()` via `requireNamespace()`).
+
+## Version 0.7.0 (2026-04-19) - Remote sensing diagnosis
+
+### New features
+
+* New `compute_vi()` multi-index engine: computes NDVI, NDRE, GNDVI,
+  CIred-edge, MCARI and MSAVI2 from a multi-band `RasterStack`
+  (Sentinel-2 L2A or UAV multispectral) with configurable band mapping
+  and optional integer-DN rescaling (`scale_factor`). All existing
+  variable-rate functions (`variable_rate_N()`,
+  `estimate_N_rate_from_calibration_curve()`,
+  `estimate_N_rate_from_holland_schepers()`) now accept any
+  normalised index on a 0-1 scale, so users can switch from NDVI to
+  red-edge indices transparently in mid- to late-vegetative stages
+  where NDVI saturates (Clarke 2001; Li 2014; Cao 2015).
+
+* New `compute_NNI()` implements the Nitrogen Nutrition Index of
+  Lemaire & Gastal (1997): NNI = N_actual / N_c, where
+  N_c = a * W^(-b) is the species-specific critical N dilution curve.
+  Curves bundled for wheat (Justes 1994), maize (Plenet & Lemaire
+  2000), rice (Sheehy 1998), rapeseed (Colnenne 1998), grass (Duru
+  1997), sorghum (van Oosterom 2010) and sunflower (Debaeke 2012).
+  Accepts scalar/vector/`RasterLayer` inputs and returns the matching
+  output type.
+
+* New `diagnose_N_status()` wraps `compute_NNI()` and turns continuous
+  NNI into three interpretable classes (deficient / optimal /
+  excessive) with user-configurable thresholds. Returns per-pixel
+  class raster and aggregated counts for diagnostic maps.
+
+* New `critical_N_curve()` returns the `(a, b, W_min)` coefficients of
+  the critical-N dilution curve for a given crop, supporting both
+  English and Italian synonyms (frumento, mais, colza, riso, sorgo,
+  girasole, prato).
+
+* New vignette `remote-sensing-diagnosis` walking through the full
+  diagnosis-to-prescription loop: multi-band stack -> multi-index
+  comparison -> NNI diagnosis -> variable-rate prescription guided by
+  the NNI classes.
+
+## Version 0.6.0 (2026-04-18) - Spatial nitrogen balance
+
+### New features
+
+* New `spatial_N_balance()` applies `N_balance()` pixel-by-pixel to
+  a `RasterStack` of soil properties (TN, SOM, Clay, Sand, CNratio),
+  returning a `RasterStack` of spatially-resolved balance terms
+  (A, B, C1, C2, D, E, F, Forg, G, N_to_apply).
+* Bundled real soil-property rasters for a 12-ha arable field near
+  Cremona (Northern Italy) in `inst/extdata/`:
+  `Cremonesi_TN.tif`, `Cremonesi_SOM.tif`, `Cremonesi_Clay.tif`,
+  `Cremonesi_Sand.tif`, `Cremonesi_Silt.tif`, `Cremonesi_CNratio.tif`
+  (~3.5 m resolution, EPSG:4326).
+* New vignette `spatial-balance` demonstrating the full workflow:
+  load rasters -> `spatial_N_balance()` -> synthetic NDVI ->
+  `variable_rate_N(method = "holland")` -> VRT prescription.
+
+## Version 0.5.1 (2026-04-16) - Shiny dashboard removed
+
+### Removed
+
+* `run_NFert_app()` and the bundled Shiny dashboard (`inst/shiny/app.R`)
+  have been removed. The package is now a scripting-only R API.
+* `shiny`, `bslib`, `DT`, `plotly` and `leaflet` removed from
+  Suggests. The core NFert API keeps a single hard dependency
+  (`raster`), and Suggests are now limited to `testthat`, `knitr`
+  and `rmarkdown`.
+
+## Version 0.5.0 (2026-04-15) - Precision fertilization wrapper
+
+### New features
+
+* New `variable_rate_N()` wrapper that accepts an NDVI `RasterLayer`
+  plus a whole-field N dose and returns a spatial prescription under
+  a mass-balance constraint (mean rate = `n_dose`, bounded by
+  `minN` / `maxN`). Supported methods: `"calibration"` (two- or
+  three-point linear regression between user-defined N rates and
+  reference NDVI) and `"holland"` (Holland & Schepers
+  sufficiency-index redistribution, default
+  `NDVI_ref = quantile(ndvi, 0.95)`).
+
 ## Version 0.4.0 (2026-04-15) - English-only naming (BREAKING)
 
-### Crop names: bilingual (Italian canonical + English alias)
+* Italian column names and dataset names renamed to English
+  equivalents. Italian originals are preserved in `_it` companion
+  columns where helpful.
+* Crops are now bilingual: new `crop_en` column (54 curated English
+  translations, fallback to Italian for the remaining DPI 2026
+  entries) plus a `resolve_crop()` helper that accepts either form
+  (case-insensitive). `list_crops()` returns the mapping.
+* Italian function names kept as backward-compatible aliases
+  (`scheda_N()` / `scheda_PK()`).
 
-* New `crop_en` column added to `uptake_table`, `mas.table`, `crops.table`
-  and `standard_pk_doses.table`. The Italian DPI label remains the
-  canonical join key in `crop`, while `crop_en` provides an English
-  translation for the most common DPI 2026 crops (54 of 235 crops
-  curated; the rest fall back to the Italian name).
-* New `resolve_crop()` helper accepts either the Italian or the English
-  crop name (case-insensitive) and returns the canonical Italian form.
-* All public functions that look up by crop (`calc_crop_N_demand()`,
-  `calc_crop_P_demand()`, `calc_crop_K_demand()`, `dose_standard_N()`,
-  `dose_standard_PK()`, `get_MAS()`, `check_MAS()`) now route through
-  `resolve_crop()`, so the user can pass English names indifferently.
-* New `list_crops()` helper returns the full Italian/English mapping.
+## Version 0.3.0 (2026-02) - Full P+K + scheda
 
-### BREAKING CHANGES
+* Full P2O5 and K2O balance (`P_balance()`, `K_balance()`).
+* Scheda a dose Standard for N and PK.
+* Fertilization distribution plan (`plan_distribution()`) with organic
+  and mineral fertilisers, DPI 2026 efficiency matrix and ZVN 170
+  kg N/ha check.
+* End-of-cycle soil P and K estimation.
+* Soil chemistry classifiers: pH, carbonate, CEC, Mg/K, K/CEC, SOM,
+  maximum SO input.
+* Alignment with Fert_Office v1.26 (Febbraio 2026).
 
-* All Italian column names replaced with English equivalents. Italian
-  originals are preserved in `_it` companion columns where helpful.
-* All Italian dataset names renamed:
-  - `gruppo.table` -> `crop_groups.table`
-  - `ragg_tes.table` -> `texture_groups.table`
-  - `gri_p.table` -> `p_availability.table` (+ `gri_p_meta` -> `p_availability_meta`)
-  - `gri_k.table` -> `k_availability.table`
-  - `tipo_fert.table` -> `fertilizer_types.table`
-  - `fert_org.table` -> `organic_fertilizers.table`
-  - `efficienza.table` -> `efficiency.table`
-  - `mod_distribuz.table` -> `distribution_modalities.table`
-  - `ciclo_modalita.table` -> `cycle_modality.table`
-  - `cicli.table` -> `cycles.table`
-  - `cicli_fase.table` -> `cycle_phases.table`
-  - `cd.table` -> `c_d.table`
-  - `concimi.table` -> `mineral_fertilizers.table`
-  - `calcare_tot.table` -> `total_carbonate.table`
-  - `calcare_att.table` -> `active_carbonate.table`
-* Italian function names kept as backward-compatible aliases:
-  `scheda_N()` -> `dose_standard_N()`, `scheda_PK()` -> `dose_standard_PK()`.
-* `scheda_PK()` class arguments renamed: `"Normale"` -> `"normal"`,
-  `"Bassa"` -> `"low"`, `"Elevata"` -> `"high"`,
-  `"Molto_Bassa"` -> `"very_low"`.
-* `max_SO_input()` class argument renamed: `"Scarsa"` -> `"Poor"`,
-  `"Normale"` -> `"Normal"`, `"Elevata"` -> `"Rich"`.
-* `normalise_soil_group()$en` is now the canonical form (was Italian plural).
-* Soil group values in `texture_groups.table`, `k_availability.table`,
-  `so.table`, etc. are now English ("Sandy textures", "Loamy textures",
-  "Clay textures").
-* Several column renames inside tables (English-only naming):
-  - `uptake_table`: `bilancio` -> `balance`, `yield_ref` -> `reference_yield`,
-    `fabb_*_std` -> `std_*_demand`, `parte_asportata` -> `harvested_part`.
-  - `mas.table`: `resa_standard` -> `standard_yield`, `N_standard` ->
-    `standard_N`, `incremento_max` -> `max_increment`,
-    `dose_max_N` -> `max_N_dose`, `N_max_teorico` -> `max_theoretical_N`,
-    `ss_pct` -> `dry_matter_pct`, `asciutto_irriguo` -> `dry_or_irrigated`.
-  - `crops.table`: `cic_id` -> `cycle_id`, `detrazione_sodo` ->
-    `no_till_reduction`, `group_prog` -> `group_progressive`.
-  - `texture_groups.table`: `peso_specifico` -> `specific_weight`,
-    `f_imm_P` -> `P_immobilisation_factor`,
-    `peso_*cm` -> `soil_weight_*cm`.
-  - `organic_fertilizers.table`: `tipo` -> `type_id`,
-    `avg_ss/min_ss/max_ss` -> `avg_dm/min_dm/max_dm`,
-    `zootec_100pct` -> `fully_zootec`, `incremento_SO` -> `SO_increment`.
-  - `mineral_fertilizers.table`: `concime` -> `fertilizer`,
-    `ID_Conc_min` -> `ID_min`.
-  - `coef_time`: `precessione_da_conteggiare` -> `precession_to_count`,
-    `anticipazioni` -> `advance_allowed`, `allevamento` -> `husbandry`.
-  - `standard_pk_doses.table`: `Resa_Standard` -> `standard_yield`,
-    `N_Standard` -> `standard_N`, `P2O5_dot_*` -> `P2O5_*` (with English
-    classes), `K2O_dot_*` -> `K2O_*`.
-  - `standard_decrements.table` / `standard_increments.table`: full
-    translation (e.g. `Rid_N_Resa` -> `red_N_yield`,
-    `Inc_N_Surplus_pluvio` -> `inc_N_rain_surplus`, `N_Inc_Max` ->
-    `inc_N_max`, etc.).
-  - `standard_multicycle.table`: `N_I_anno_allev` ->
-    `N_1st_husbandry_year`, `Inc_N_inizio_produz` ->
-    `inc_N_start_production`, `piu_tagli` -> `multi_cuts`,
-    `incremento_per_taglio` -> `increment_per_cut`.
+## Version 0.1.0
 
-### Migration notes
-
-* User code passing Italian soil-group strings still works through
-  `normalise_soil_group()` which accepts all conventions.
-* User code calling `scheda_N()` / `scheda_PK()` continues to work.
-* User code accessing data columns by Italian names must be updated to
-  the English equivalent (full mapping in `data-raw/build-rda.R`).
-
-## Version 0.3.0 (2026-04-15) - Full N + P + K balance and distribution plan
-
-### Major
-
-* **Phosphorus balance**: `P_balance()` implements DPI 2026 P2O5 balance
-  (Fabbisogno A, Arricchimento B1, Anticipazioni A2, Riduzione B2) with
-  Olsen-P class via `classify_P_olsen()` and soil P availability strategy
-  via `soil_P_availability()` (Arricchimento / Mantenimento / Riduzione).
-* **Potassium balance**: `K_balance()` with K2O availability by texture group
-  via `classify_K()` and `soil_K_availability()`, plus `K_leaching_by_clay()`
-  step function for clay-dependent leaching (foglio Gri_K).
-* **Unit crop demand**: `calc_crop_P_demand()` and `calc_crop_K_demand()`
-  parallel to `calc_crop_N_demand()`.
-* **Scheda PK**: `scheda_PK()` returns the DPI 2026 standard-dose P2O5 and
-  K2O values from `standard_pk_doses.table` with user-configurable
-  decrements and increments.
-* **Distribution plan**: `plan_distribution()` builds the full fertilisation
-  plan (foglio Distribuz) combining organic matrices (via `fert_org.table`
-  titres and `efficienza.table` N efficiency by soil x dose x sector) with
-  mineral fertilisers (from `concimi.table`, 146 records), with alerts for
-  Eccesso/Deficit vs the N/P/K balances and optional ZVN 170 kg N/ha check.
-* **End-of-cycle soil dotation**: `estimate_soil_P_end_of_cycle()` and
-  `estimate_soil_K_end_of_cycle()` project soil P2O5 and K2O ppm at the
-  end of the cycle, usable as input for the following year.
-
-### Bug fix — soil group naming uniformization
-
-* The DPI texture grouping was inconsistently encoded across the lookup
-  tables: `ragg_tes.table` used "Sabbioso/Franco/Argilloso" (singular),
-  `gri_k.table`, `so.table` used "Sabbiosi/Medio impasto/Argillosi e limosi"
-  (plural), and the legacy NFert 0.1.0 tables (`soil.table`, `coefN_*`)
-  used English ("Sandy textures", etc.). This caused silent NA joins in
-  `P_balance()` / `K_balance()` / `estimate_soil_*_end_of_cycle()`.
-* Added `normalise_soil_group()` and `resolve_id_rag()` helpers that accept
-  any of the three naming conventions (case-insensitive) and return the
-  canonical Italian plural form plus the universal `ID_Rag` integer key.
-* All PK functions, `plan_distribution()` and `max_SO_input()` now route
-  every soil-group string through `normalise_soil_group()` and join on
-  `ID_Rag`. The user can pass any form indifferently.
-
-### Precision agriculture integration
-
-* New `variable_rate_N()` wrapper that bridges the agronomic balance
-  (`N_balance()` + `calculate_N_fertilization()` or `scheda_N()`) with the
-  NDVI-based variable-rate estimators
-  (`estimate_N_rate_from_calibration_curve()`,
-  `estimate_N_rate_from_holland_schepers()`). Preserves the field-average
-  dose by rescaling and supports an optional MAS per-pixel cap.
-
-### New soil chemistry classifiers
-
-* `classify_pH()`, `classify_carbonate_tot()`, `classify_carbonate_att()`,
-  `classify_CEC()`, `ratio_Mg_K()`, `ratio_K_CEC()`, `classify_SOM()`,
-  `max_SO_input()`.
-
-### New datasets
-
-* `standard_pk_doses.table` (239 rows, 14 cols): base PK doses per crop by
-  soil dotation class (Molto_Bassa / Bassa / Normale / Elevata).
-* `standard_decrements.table` (239 x 21), `standard_increments.table`
-  (239 x 29), `standard_multicycle.table` (239 x 24): DPI 2026 adjustment
-  factors from foglio `Standard` (exploded into three tables for
-  readability).
-* `concimi.table`: 146 mineral / organic-mineral fertilisers with titres
-  (N, P2O5, K2O).
-
-## Version 0.2.0 (2026-04-15) - Sync with Fert_Office v1.26 (DPI 2026, Feb 2026)
-
-### Alignment with DPI Emilia-Romagna 2026
-
-* **Full re-sync of reference data** from `Fert_Office_v1._26.xlsm`
-  (Febbraio 2026, Regione Emilia-Romagna):
-  `uptake_table` (236 crops, with N + P2O5 + K2O coefficients),
-  `mas.table` (239 crops with N_standard, dose_max_N, RR 2/2024 note),
-  `e.table`, `f.table`, `g.table` (English-first with Italian alias),
-  `coef_time` (now including N/P/K allowed percentages, anticipazioni and
-  allevamento flags per phase).
-
-* **New lookup tables**: `crops.table`, `gruppo.table`, `ragg_tes.table`,
-  `so.table`, `so_max_input`, `ph.table`, `calcare_tot.table`,
-  `calcare_att.table`, `gri_p.table`, `gri_p_meta`, `gri_k.table`,
-  `tipo_fert.table`, `fert_org.table`, `efficienza.table` (220 rows),
-  `mod_distribuz.table`, `ciclo_modalita.table`, `cicli.table`,
-  `cicli_fase.table`, `cd.table`.
-
-### New functions
-
-* `scheda_N()`: DPI 2026 simplified "Scheda a dose Standard" method for N,
-  with catalogued decrement and increment factors and MAS cap.
-
-### Fixes to the N balance (DPI 2026 semantics)
-
-* `soil_fertility()` gains `soil_seeding` argument. When `"no-till"` the
-  detrazione of 3 kg/ha (foglio B, Detrazione semina su sodo) is applied to b1.
-* `calc_N_immobilization_loss()` gains `greenhouse` (adds 2 kg/ha,
-  foglio C&D cella D23) and `E_residual` (fold negative E into D as per
-  foglio C&D cella I21).
-* `leaching_loss()` now returns `surplus_pluviometrico` (logical), true when
-  pioggia 1/10 - 28/2 >= 300 mm (foglio C&D righe 34-35).
-* `N_balance()` gains `soil_seeding`, `greenhouse`, `E_to_D` parameters and
-  exposes `surplus_pluviometrico` in the output. When `E_to_D = TRUE` (default),
-  a negative precessione `E` is summed into `D` and `E` in the output is set
-  to 0, matching the exact columnar layout of the Fert_Office `Bilancio` sheet.
-
-### Documentation
-
-* `R/data.R` updated with the full list of new datasets and their role.
-* `docs/UPDATE_PLAN_Fert_Office_v1.26.md` published with detailed gap analysis
-  and roadmap for PK balance and distribution planning (phases D, E, F).
-
-## Version 0.1.0 (2024-XX-XX) - First CRAN release
-
-### Major Features
-* Initial release of NFert package
-* Nitrogen balance aligned with **Disciplinari di Produzione Integrata (DPI) Emilia-Romagna 2025–2026** (Allegato 2) and *Guida alla Fertilizzazione Minerale e Organica* (N, P, K); FertDPI / Fert_Office reference
-* Comprehensive nitrogen balance calculation (crop demand, soil supply, leaching, immobilization, residues, organic, natural)
-* **Maximum allowed doses (MAS)**: `get_MAS()` and `check_MAS()` for DPI 2026 crop ceilings (N and P₂O₅)
-* Soil texture classification (USDA; DPI 3-group: sabbioso / franco / argilloso) via tri2, tri3, calc_soil_group_and_id_rag
-* NDVI-based variable rate estimation (calibration curve and Holland & Schepers)
-* Component functions for all balance terms
-
-### New Functions
-* `N_balance()`: Main function for comprehensive nitrogen balance calculation
-* `calc_crop_N_demand()`: Calculate crop nitrogen requirements
-* `soil_fertility()`: Estimate soil nitrogen availability
-* `leaching_loss()`: Calculate nitrogen leaching losses
-* `calc_N_immobilization_loss()`: Estimate nitrogen immobilization
-* `organic_fertilization()`: Calculate nitrogen from organic fertilizers
-* `natural_contribution()`: Estimate natural nitrogen deposition
-* `nitrogen_from_previous_crop_residues()`: Estimate nitrogen from previous crops
-* `tri2()` and `tri3()`: Soil texture classification
-* `calc_soil_group_and_id_rag()`: Determine soil group and drainage index
-* `estimate_N_rate_from_calibration_curve()`: NDVI-based rate estimation (calibration method)
-* `estimate_N_rate_from_holland_schepers()`: NDVI-based rate estimation (H&S method)
-* `calculate_N_fertilization()`: Calculate final nitrogen fertilization requirement from balance
-* `get_MAS()`: Return maximum allowed N (MAS) for a crop; optional `edition = "2025"` (ZVN table from Guida) or `"2026"` (FertDPI style)
-* `check_MAS()`: Check planned N dose against MAS (supports same `edition`)
-
-### Improvements
-* Comprehensive input validation in `N_balance()` function
-* Optimized code removing duplicate function calls
-* Improved error messages (translated to English)
-* Added namespace prefixes for all external package functions
-* Comprehensive test suite with testthat
-* Improved documentation with data.R for all datasets
-* Added README.md with usage examples
-* Added LICENSE file (MIT)
-* Added CITATION file for package citation
-
-### Bug Fixes
-* Fixed bug in `N_balance()` where `calc_crop_N_demand()` result (list) was incorrectly handled
-* Fixed incorrect data.frame structure in `N_balance()` output
-* Removed unused variables (silt, TRI2, TRI3) from `N_balance()`
-* Fixed missing namespace prefixes in `estimate_N_rate_from_holland_schepers()`
-
-### Data
-* 13 internal datasets for lookup tables and coefficients
-* All datasets documented in R/data.R
-
-### Documentation
-* Comprehensive function documentation with examples
-* Vignette included with detailed usage examples
-* README.md with quick start guide
+* Initial release: N balance following DPI Emilia-Romagna 2018/2020.

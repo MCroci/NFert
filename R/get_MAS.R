@@ -138,6 +138,28 @@ check_MAS <- function(crop, N_planned, mas_table = NULL, edition = c("2026", "20
       "Actinidia",
       "Ciliegio"
     ),
+    # English aliases used by the canonical `crop` column of uptake_table
+    # after the 0.12.0 rebuild. get_MAS() matches against both `crop` and
+    # `crop_en` (case-insensitive) so either language can be supplied.
+    crop_en = c(
+      "Soft wheat (grain)",
+      "Soft wheat FF - strong (grain)",
+      "Soft wheat (whole plant)",
+      "Durum wheat (grain)",
+      "Grain maize 500-700 (grain)",
+      "Silage maize (class 700)",
+      "Silage maize (class 700)",
+      "Barley (grain)",
+      "Sunflower (achenes)",
+      "Soybean (grain)",
+      "Processing tomato (medium yield)",
+      "Apple",
+      "Pear",
+      "Peach and Nectarine",
+      "Vineyard (plain) - grapes, wood and leaves",
+      "Kiwifruit (green flesh) - fruit, wood and leaves",
+      "Cherry"
+    ),
     mas_N = c(200L, 200L, 200L, 200L, 260L, 340L, 340L, 180L, 160L, NA_integer_,
               200L, 340L, 340L, 340L, 120L, 340L, 340L),
     mas_P2O5 = c(100L, 100L, 100L, 100L, 150L, 150L, 150L, 90L, 90L, 100L,

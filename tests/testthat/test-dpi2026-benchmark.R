@@ -4,7 +4,7 @@
 #   Ntot 1.5 g/kg, SO 2%, CN 7.73 (basso)
 #   Calcare tot 15, calcare att 6.8, pH 8.3
 #   Pioggia 1/10-31/1 = 150 mm, febbraio = 0 mm
-#   Precessione: Mais stocchi asportati (E = -10)
+#   Precessione: Maize stalks removed (E = -10)
 #   Grano duro (pianta intera), resa 6 t/ha, fase primaverile-estiva 100-130 gg
 #   Apporti naturali: pianura limitrofa -> G = 20 kg/ha * C_tempo 0.67 * N_pct 0.75 = 10.05
 #

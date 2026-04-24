@@ -1,13 +1,17 @@
 Package: NFert
 Title: N, P and K fertilization following Emilia-Romagna DPI 2026
-Version: 0.4.0
+Version: 0.13.1
 URL: https://github.com/mcroci/NFert
 BugReports: https://github.com/mcroci/NFert/issues
-Authors@R: 
+Authors@R:
     c(
         person("Michele", "Croci", email = "michele.croci@unicatt.it", role = c("aut", "cre")),
-        person("Manuele", "Ragazzi", role = "aut"),
         person("Giorgio", "Impollonia", role = "aut"),
+        person("Andrea", "Ferrarini", role = "aut"),
+        person("Andrea", "Fiorini", role = "aut"),
+        person("Manuele", "Ragazzi", role = "aut"),
+        person("Nicolaj", "Franceschi", role = "aut"),
+        person("Vincenzo", "Tabaglio", role = "aut"),
         person("Stefano", "Amaducci", role = "aut")
     )
 Description: Calculates N, P2O5 and K2O fertilization requirements following
@@ -21,8 +25,15 @@ Description: Calculates N, P2O5 and K2O fertilization requirements following
     groupings), maximum allowed doses (MAS), Olsen P and exchangeable K
     availability classes, soil pH / carbonate / CEC classification,
     fertilization distribution plan with organic and mineral fertilisers,
-    end-of-cycle soil P and K estimation, NDVI-based variable rate estimation
-    (calibration and Holland & Schepers), and tools for integrated and
+    end-of-cycle soil P and K estimation, multi-index vegetation index engine
+    (NDVI, NDRE, GNDVI, CIred-edge, MCARI, MSAVI2) for Sentinel-2 and UAV
+    imagery, Nitrogen Nutrition Index (NNI) computation based on species-
+    specific critical-N dilution curves (Lemaire & Gastal 1997), Gaussian-
+    process retrieval of canopy biophysical variables (LAI, Cw, Cm, Cab,
+    canopy nitrogen content) from Sentinel-2 L2A imagery (pyeogpr GPR
+    models; Estevez et al. 2022) for remote-sensing-driven NNI mapping,
+    and variable-rate N prescription (calibration and Holland & Schepers)
+    with mass-balance constraint. Includes tools for integrated and
     precision nutrient management.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -35,6 +46,16 @@ Imports:
 Suggests:
     testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    terra,
+    jsonlite,
+    shiny (>= 1.7.0),
+    shinyjs,
+    DT,
+    ggplot2,
+    patchwork,
+    sf,
+    leaflet,
+    xml2
 LazyData: true
 VignetteBuilder: knitr

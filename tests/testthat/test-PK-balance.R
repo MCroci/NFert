@@ -15,15 +15,14 @@ context("DPI 2026 P & K balance benchmark")
 
 test_that("resolve_crop accepts Italian or English crop names", {
   skip_if_not_installed("NFert")
-  # Italian (canonical) works
-  expect_equal(resolve_crop("Grano duro (pianta intera)"),
-               "Grano duro (pianta intera)")
-  # English alias resolves to canonical Italian
+  # Since NFert 0.12.0 the reference tables are English-canonical.
+  # `resolve_crop()` returns the English name regardless of input.
   expect_equal(resolve_crop("Durum wheat (whole plant)"),
-               "Grano duro (pianta intera)")
-  # Case-insensitive English
+               "Durum wheat (whole plant)")
+  expect_equal(resolve_crop("Grano duro (pianta intera)"),
+               "Durum wheat (whole plant)")
   expect_equal(resolve_crop("durum wheat (whole plant)"),
-               "Grano duro (pianta intera)")
+               "Durum wheat (whole plant)")
 })
 
 test_that("calc_crop_N_demand and P_balance accept English crop names", {

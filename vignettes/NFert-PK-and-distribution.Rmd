@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{NFert PK and Distribution}
+  %\VignetteIndexEntry{N, P and K fertilization with NFert — DPI Emilia-Romagna 2026}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-This vignette shows how to use **NFert 0.4.0** to compute a full nitrogen,
+This vignette shows how to use **NFert 0.6.0** to compute a full nitrogen,
 phosphorus and potassium fertilisation plan following the
 *Disciplinari di Produzione Integrata* (DPI) Emilia-Romagna 2026. The
 package reproduces the logic of the official regional tool
@@ -251,7 +251,7 @@ imm <- calc_N_immobilization_loss(B = fertility$b1 + fertility$b2,
                                   oxygen_availability = "Normal",
                                   id_rag = soil_props$id_rag,
                                   greenhouse = greenhouse,
-                                  E_residual = -10)   # stocchi asportati
+                                  E_residual = -10)   # maize stalks removed
 imm
 
 natural_contribution(location = location,
@@ -383,7 +383,7 @@ The N standard dose is modified by five decrements and five increments,
 then capped by MAS.
 
 ```{r scheda-n}
-# Grano duro with buried straw + compacted / no-till
+# Durum wheat with buried straw + compacted / no-till
 scheda_N(
   crop = crop,
   increments = c(straw_burial = 30, compacted_no_till = 10)
@@ -538,7 +538,7 @@ A second scenario with different crop, cycle, irrigation and precessione.
 ```{r maize}
 mais_bal <- N_balance(
   expected_yield_tons_ha = 15,
-  crop = "Maize silage (class 700)",
+  crop = "Silage maize (class 700)",
   ccp  = "Spring-summer crop 100-130 days",
   sand = 50, clay = 30,
   Ntot = 1.2, SOM = 1.6, CN = 10,

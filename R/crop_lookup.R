@@ -1,16 +1,21 @@
 #' @noRd
 .crop_alias_to_canonical <- function() {
-  # Common English / legacy names -> canonical Italian `uptake_table$crop`
+  # Only truly non-obvious variants that are neither in the English
+  # canonical `crop` column nor in the Italian translation `crop_it`.
+  # Standard Italian / English crop names are resolved directly against
+  # the table columns by `resolve_crop()`.
   stats::setNames(
     c(
-      "Mais trinciato classe 700",
-      "Mais trinciato classe 700",
-      "Mais trinciato classe 700"
+      "Silage maize (class 700)",
+      "Silage maize (class 700)",
+      "Silage maize (class 700)",
+      "Silage maize (class 500)"
     ),
     c(
       "Mais trinciato (classe 700)",
-      "Maize silage (class 700)",
-      "Shredded corn class 700"
+      "Mais da insilato (classe 700)",
+      "Shredded corn class 700",
+      "Mais da insilato (classe 500)"
     )
   )
 }
@@ -18,21 +23,24 @@
 #' Resolve a crop name (Italian or English) to its canonical entry
 #'
 #' NFert reference tables (`uptake_table`, `mas.table`, `crops.table`,
-#' `standard_pk_doses.table`) carry the official Italian DPI crop names in
-#' the column `crop` and an English translation in `crop_en`. This helper
-#' accepts either form (case-insensitive, exact match) and returns the
-#' canonical Italian name used as join key.
+#' `standard_pk_doses.table`) carry the canonical English crop names in
+#' the column `crop` (since NFert 0.12.0), with the Italian translation
+#' in `crop_it` and a duplicate of the English name in `crop_en` for
+#' backward compatibility. This helper accepts any of the three forms
+#' (case-insensitive, whitespace-normalised, exact match) and returns
+#' the canonical English key used for joins downstream.
 #'
-#' If the input matches no Italian or English crop name, the input is
-#' returned unchanged together with a warning, so the caller can decide how
-#' to handle the mismatch.
+#' If the input matches none of the columns, the input is returned
+#' unchanged together with a warning.
 #'
 #' @param x Character. Crop name in Italian or English.
 #' @param table Lookup table; default `NFert::uptake_table`.
-#' @return Character. The canonical Italian crop name.
+#' @return Character. The canonical crop name (English, as in the
+#'   `crop` column).
 #' @examples
-#' resolve_crop("Durum wheat (whole plant)")
-#' resolve_crop("Grano duro (pianta intera)")
+#' resolve_crop("Durum wheat (grain)")
+#' resolve_crop("Grano duro (granella)")
+#' resolve_crop("Mais trinciato classe 700")
 #' @export
 resolve_crop <- function(x, table = NFert::uptake_table) {
   if (!is.character(x) || length(x) != 1 || is.na(x)) {
@@ -42,18 +50,27 @@ resolve_crop <- function(x, table = NFert::uptake_table) {
   norm <- function(s) gsub("\\s+", " ", trimws(s))
   xn <- norm(x)
 
-  # Apply known aliases (English / alternate spelling) before table lookup
+  # Apply known aliases (rare names / alternate spellings)
   amap <- .crop_alias_to_canonical()
   i_alias <- match(tolower(xn), tolower(names(amap)))
   if (!is.na(i_alias)) xn <- norm(amap[i_alias])
 
-  # Direct match on Italian name (with normalised whitespace)
-  it_norm <- norm(as.character(table$crop))
-  i <- which(it_norm == xn)
+  # 1. Direct match on the primary column (English canonical since 0.12.0)
+  crop_norm <- norm(as.character(table$crop))
+  i <- which(tolower(crop_norm) == tolower(xn))
   if (length(i) > 0) return(as.character(table$crop[i[1]]))
 
-  # Match on English name (case-insensitive, normalised whitespace)
-  if ('crop_en' %in% names(table)) {
+  # 2. Match on the Italian translation column (if present)
+  if ("crop_it" %in% names(table)) {
+    it_norm <- norm(as.character(table$crop_it))
+    i <- which(tolower(it_norm) == tolower(xn))
+    if (length(i) > 0) return(as.character(table$crop[i[1]]))
+  }
+
+  # 3. Match on the crop_en alias column (mirrors crop after 0.12.0;
+  #    useful for legacy tables where crop was Italian and crop_en
+  #    held the English form)
+  if ("crop_en" %in% names(table)) {
     en_norm <- norm(as.character(table$crop_en))
     i <- which(tolower(en_norm) == tolower(xn))
     if (length(i) > 0) return(as.character(table$crop[i[1]]))

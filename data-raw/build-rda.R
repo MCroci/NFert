@@ -1,8 +1,16 @@
 # ----------------------------------------------------------------------------
 # data-raw/build-rda.R
 #
-# Rebuild all NFert datasets from the canonical CSVs in data-raw/csv/ using
-# R's native serialisation (NFert >= 0.4.0, all-English schema).
+# Rebuild all NFert datasets from the canonical CSVs in data-raw/csv/.
+# Since NFert 0.12.0 the rebuilt .rda files expose the English names as
+# the canonical lookup columns (`crop`, `previous_crop`, `fertilizer`,
+# `modality_epoch`, `level`, `cycle`, `type`, `phase_duration`) and the
+# Italian translations as the secondary `*_it` columns.
+#
+# Three CSVs still carry Italian as the primary `crop` column with an
+# `crop_en` alternative: uptake_table, mas.table, crops.table. For them
+# the builder swaps the columns on the fly so the saved .rda is
+# consistent with the rest of the package (English canonical).
 #
 # Usage (one-off, from RStudio with the package as project root):
 #
@@ -30,7 +38,31 @@ read_table_csv <- function(name) {
   df
 }
 
+# Rename / swap columns so that English is always the canonical lookup
+# column. Call for every dataframe before it is saved.
+promote_english_primary <- function(df, name) {
+  # Tables where the Italian column is currently primary and carries
+  # the alternative `crop_en` column - swap them so English becomes
+  # primary ("crop") and Italian becomes secondary ("crop_it").
+  if (name %in% c("uptake_table", "mas.table", "crops.table")) {
+    if (all(c("crop", "crop_en") %in% names(df))) {
+      it <- df$crop
+      en <- df$crop_en
+      # When crop_en is NA or empty fall back to the Italian name so
+      # that no row becomes unreachable.
+      fill <- is.na(en) | !nzchar(en)
+      en[fill] <- it[fill]
+      df$crop    <- en     # primary lookup column (English)
+      df$crop_it <- it     # Italian alias
+      df$crop_en <- en     # kept as an alias for internal functions
+                           # that look up by `crop_en` (get_MAS, ...)
+    }
+  }
+  df
+}
+
 save_as_rda <- function(df, name) {
+  df  <- promote_english_primary(df, name)
   out <- file.path(data_dir, paste0(name, ".rda"))
   assign(name, df, envir = environment())
   save(list = name, file = out, compress = "xz", version = 2)
@@ -78,7 +110,7 @@ datasets <- c(
   "standard_multicycle.table"
 )
 
-message("Rebuilding ", length(datasets), " datasets ...")
+message("Rebuilding ", length(datasets), " datasets (English canonical) ...")
 for (nm in datasets) {
   df <- read_table_csv(nm)
   save_as_rda(df, nm)
