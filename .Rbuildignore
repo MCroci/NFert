@@ -16,3 +16,5 @@
 ^references$
 ^NFert_SoftwareX_article_.*\.docx$
 ^output_.*$
+^_pkgdown\.yml$
+^pkgdown$
