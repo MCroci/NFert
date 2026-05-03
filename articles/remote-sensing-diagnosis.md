@@ -34,6 +34,7 @@ scene or a UAV multispectral flight. Here we synthesise a small stack so
 the vignette is reproducible offline.
 
 ``` r
+
 library(NFert)
 library(raster)
 #> Loading required package: sp
@@ -60,6 +61,7 @@ stack, with configurable band mapping. Default mapping follows
 Sentinel-2 L2A naming.
 
 ``` r
+
 ndvi  <- compute_vi(s2, "NDVI")
 ndre  <- compute_vi(s2, "NDRE")
 gndvi <- compute_vi(s2, "GNDVI")
@@ -74,6 +76,7 @@ summary(getValues(ndre))
 ```
 
 ``` r
+
 par(mfrow = c(2, 2), mar = c(2, 2, 2, 3))
 plot(ndvi,  main = "NDVI",  col = rev(terrain.colors(30)))
 plot(ndre,  main = "NDRE",  col = rev(terrain.colors(30)))
@@ -95,6 +98,7 @@ returns the (a, b, W_min) coefficients of the species-specific critical
 nitrogen dilution curve. Italian synonyms are accepted.
 
 ``` r
+
 critical_N_curve("wheat")
 #> $a
 #> [1] 5.35
@@ -130,6 +134,7 @@ Colnenne 1998 (rapeseed), Duru 1997 (grass), van Oosterom 2010
 ## 4. Scalar NNI diagnosis
 
 ``` r
+
 # Winter wheat at GS30: N% = 3.2, biomass = 2.5 t DM / ha
 compute_NNI(N_content = 3.2, biomass = 2.5,
             crop = "wheat", is_percent = TRUE)
@@ -150,6 +155,7 @@ Here we illustrate with two synthetic layers that emulate the output of
 a biomass retrieval model + a leaf-N retrieval model.
 
 ``` r
+
 # Synthetic biomass and N% layers
 w_map <- setValues(template, runif(ncell(template), 1.5, 6.0))
 n_map <- setValues(template, runif(ncell(template), 2.2, 3.9))
@@ -169,6 +175,7 @@ plot(d$class,
 ![](remote-sensing-diagnosis_files/figure-html/raster-nni-1.png)
 
 ``` r
+
 d$summary
 #> $counts
 #> $counts$deficient
@@ -217,6 +224,7 @@ NNI diagnosis shows excessive N status, so fertiliser is not applied
 where the crop is already over-supplied.
 
 ``` r
+
 N_target <- 160   # e.g. from a preliminary N_balance()
 
 vr <- variable_rate_N(ndre, n_dose = N_target,
@@ -241,6 +249,7 @@ plot(rate_guided,
 ![](remote-sensing-diagnosis_files/figure-html/vrt-guided-1.png)
 
 ``` r
+
 cat("Full prescription  mean :",
     round(cellStats(vr$rate_raster, mean), 1), "kg/ha\n")
 #> Full prescription  mean : 160 kg/ha
@@ -267,6 +276,7 @@ NDRE, satellite NDVI, etc.), the helper
 delivers an NNI map directly through a published linear regression:
 
 ``` r
+
 ndre <- raster::raster("ndre_field.tif")
 out  <- nni_from_vi_empirical(
   ndre,
@@ -291,6 +301,7 @@ An NNI map (from either pipeline) can drive
 machine-width strips directly exportable to any tractor monitor:
 
 ``` r
+
 ex    <- system.file("extdata/example_farm.geojson", package = "NFert")
 field <- sf::st_read(ex, quiet = TRUE)[1, ]
 
@@ -344,8 +355,9 @@ nitrogen uptake and dry matter accumulation in maize crops. Plant Soil
 ## Session info
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -372,9 +384,9 @@ sessionInfo()
 #>  [1] terra_1.9-11      cli_3.6.6         knitr_1.51        rlang_1.2.0      
 #>  [5] xfun_0.57         otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0   
 #>  [9] htmltools_0.5.9   ragg_1.5.2        sass_0.4.10       rmarkdown_2.31   
-#> [13] grid_4.5.3        evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.5.3    codetools_0.2-20 
-#> [21] fs_2.1.0          Rcpp_1.1.1-1      htmlwidgets_1.6.4 systemfonts_1.3.2
+#> [13] grid_4.6.0        evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
+#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    codetools_0.2-20 
+#> [21] fs_2.1.0          Rcpp_1.1.1-1.1    htmlwidgets_1.6.4 systemfonts_1.3.2
 #> [25] lattice_0.22-9    digest_0.6.39     R6_2.6.1          bslib_0.10.0     
-#> [29] tools_4.5.3       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
+#> [29] tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
 ```

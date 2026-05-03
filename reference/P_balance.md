@@ -63,6 +63,7 @@ A data frame with A, B1, A2, B2, `strategy`, `ID_Gri_P`,
 
 Formula:
 
+
       P2O5 da apportare = A (asportazione) + B1 (arricchimento) + A2 (advance_allowed)
                            - B2 (riduzione)
 

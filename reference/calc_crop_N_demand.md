@@ -42,6 +42,7 @@ A list with `N_requirement` (kg/ha), `units` ("kg/ha") and
 
 The calculation is:
 
+
     A_gross = unit crop absorption (kg N / t yield) * yield (t / ha)
     A       = A_gross * (1 - n_fixation_pct / 100)
 

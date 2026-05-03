@@ -85,6 +85,7 @@ end-of-cycle soil P and K estimation and precision agriculture
 ## Installation
 
 ``` r
+
 # Install from GitHub (once available)
 # devtools::install_github("yourusername/NFert")
 ```
@@ -92,6 +93,7 @@ end-of-cycle soil P and K estimation and precision agriculture
 ## Quick Start
 
 ``` r
+
 library(NFert)
 
 # Calculate nitrogen balance for a maize crop
@@ -168,6 +170,7 @@ farm level.
 See the package vignette for detailed examples and usage:
 
 ``` r
+
 vignette("NFert")
 ```
 
@@ -183,6 +186,7 @@ vignette("NFert")
 To cite this package in publications, use:
 
 ``` r
+
 citation("NFert")
 ```
 

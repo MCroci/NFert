@@ -15,7 +15,9 @@ Nitrogen balance is a quantitative method that accounts for all nitrogen
 inputs and outputs in an agricultural system. The general equation used
 in NFert is:
 
-$$\text{Nitrogen Fertilization (N)} = A - B + C1 + C2 + D - E - F_{org} - G$$
+``` math
+\text{Nitrogen Fertilization (N)} = A - B + C1 + C2 + D - E - F_{org} - G
+```
 
 Where:
 
@@ -149,6 +151,7 @@ NFert provides the following categories of functions:
 ## Installation and Setup
 
 ``` r
+
 # If not already installed
 # install.packages("NFert")
 
@@ -165,6 +168,7 @@ Let’s start with a basic example calculating the nitrogen balance for a
 wheat crop:
 
 ``` r
+
 # Calculate nitrogen balance for winter wheat
 wheat_balance <- N_balance(
   expected_yield_tons_ha = 8,
@@ -205,6 +209,7 @@ The crop nitrogen demand is calculated based on expected yield and
 crop-specific nitrogen uptake coefficients:
 
 ``` r
+
 # Calculate crop nitrogen demand
 crop_demand <- calc_crop_N_demand(
   expected_yield_tons_ha = 10,
@@ -286,6 +291,7 @@ Soil fertility accounts for both readily available nitrogen (b1) and
 mineralizable nitrogen from organic matter (b2):
 
 ``` r
+
 # Calculate soil fertility
 soil_N <- soil_fertility(
   Ntot = 1.2,
@@ -313,6 +319,7 @@ cat("Total soil N supply (B):", soil_N$b1 + soil_N$b2, "kg/ha\n")
 First, you need to determine the soil group based on texture:
 
 ``` r
+
 # Classify soil texture using simplified method
 texture_class <- tri3(clay = 20, sand = 35)
 cat("Simplified texture class:", texture_class, "\n")
@@ -336,6 +343,7 @@ print(soil_props)
 Leaching losses depend on rainfall and soil drainage properties:
 
 ``` r
+
 # Calculate leaching losses
 leaching <- leaching_loss(
   winter_rain = 180,
@@ -364,6 +372,7 @@ Immobilization occurs when soil microorganisms use nitrogen for their
 own growth:
 
 ``` r
+
 # Calculate immobilization loss
 immobilization <- calc_N_immobilization_loss(
   B = 50,
@@ -380,6 +389,7 @@ cat("Immobilization loss (D):", immobilization, "kg/ha\n")
 Nitrogen contribution from previous crop residues:
 
 ``` r
+
 # Nitrogen from previous crop
 residue_N <- nitrogen_from_previous_crop_residues(
   previous_crop = "Winter cereals straw removal"
@@ -419,6 +429,7 @@ head(NFert::e.table, 10)
 Contribution from organic fertilizers:
 
 ``` r
+
 # Calculate organic fertilizer contribution
 organic_N <- organic_fertilization(
   source = "Cattle slurry",
@@ -449,6 +460,7 @@ print(organic_comparison)
 Natural nitrogen inputs from atmospheric deposition:
 
 ``` r
+
 # Calculate natural nitrogen contribution
 natural_N <- natural_contribution(
   location = "Plain adjacent to urbanized areas",
@@ -475,6 +487,7 @@ head(NFert::g.table, 10)
 Let’s work through a complete example for maize production:
 
 ``` r
+
 # Step 1: Define field parameters
 maize_params <- list(
   expected_yield_tons_ha = 12,  # tons/ha
@@ -542,6 +555,7 @@ MAS. Use `get_MAS(crop, edition = "2025")` for the ZVN table from the
 to verify a planned N dose.
 
 ``` r
+
 # List MAS for main crops (default: edition 2026)
 get_MAS()
 #>                               crop
@@ -696,6 +710,7 @@ be recorded in field sheets within 7 days (DPI cap. 11).
 Compare different management scenarios for the same field:
 
 ``` r
+
 # Base scenario parameters
 base_params <- list(
   expected_yield_tons_ha = 10,
@@ -771,6 +786,7 @@ layer.
 ### Method 1: Calibration Curve
 
 ``` r
+
 # Create example NDVI raster
 set.seed(42)
 ndvi_raster <- raster(nrows=20, ncols=20, xmn=0, xmx=100, ymn=0, ymx=100)
@@ -817,12 +833,14 @@ raster::plot(n_rate_3pt, main = "N rate — 3-point (kg/ha)", axes = FALSE,
 ![](NFert_files/figure-html/precision-ag-calibration-1.png)
 
 ``` r
+
 par(op)
 ```
 
 ### Method 2: Holland & Schepers Algorithm
 
 ``` r
+
 # Holland & Schepers method
 hs_result <- estimate_N_rate_from_holland_schepers(
   ndvi_raster = ndvi_raster,
@@ -852,6 +870,7 @@ raster::plot(hs_result$sufficiency_index_raster, main = "Sufficiency index", axe
 ![](NFert_files/figure-html/precision-ag-holland-schepers-1.png)
 
 ``` r
+
 par(op2)
 
 # Export maps for farm management systems
@@ -864,6 +883,7 @@ par(op2)
 For agricultural consultants managing multiple fields:
 
 ``` r
+
 # Create field data
 fields_data <- data.frame(
   field_id = c("Field_A", "Field_B", "Field_C"),
@@ -940,6 +960,7 @@ cat("\nTotal nitrogen required for all fields:",
 Understand how different factors affect nitrogen requirements:
 
 ``` r
+
 # Base scenario
 base_scenario <- N_balance(
   expected_yield_tons_ha = 10,
@@ -1061,6 +1082,7 @@ cat("- Rainfall increase from 100mm to 220mm changes N requirement by",
 Make sure to use the exact crop name as it appears in the database:
 
 ``` r
+
 # Check available crops
 available_crops <- NFert::uptake_table$crop
 cat("Available crops (first 10):\n")
@@ -1109,6 +1131,7 @@ function includes input validation, but you should verify:
 ### Issue 1: Crop not found
 
 ``` r
+
 # Error: Crop not found
 # Solution: Check exact spelling and match with database
 tryCatch({
@@ -1124,6 +1147,7 @@ tryCatch({
 ### Issue 2: Invalid soil texture
 
 ``` r
+
 # Error: Invalid clay and sand combination
 # Solution: Ensure clay + sand ≤ 100
 tryCatch({
@@ -1139,6 +1163,7 @@ tryCatch({
 ### Issue 3: NA values in results
 
 ``` r
+
 # If you get NA values, check:
 # 1. Location name matches g.table
 # 2. CCP matches coef_time
@@ -1163,6 +1188,7 @@ result <- N_balance(
 All internal datasets are documented and accessible:
 
 ``` r
+
 # View available datasets
 cat("Available internal datasets:\n")
 #> Available internal datasets:
@@ -1216,7 +1242,7 @@ head(NFert::uptake_table, 5)
 ### Getting Help
 
 - **Package documentation**:
-  [`help(package = "NFert")`](https://rdrr.io/pkg/NFert/man)
+  [`help(package = "NFert")`](https://mcroci.github.io/NFert/reference)
 - **Function help**:
   [`?N_balance`](https://mcroci.github.io/NFert/reference/N_balance.md)
   or

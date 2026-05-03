@@ -65,7 +65,7 @@
                         <h4 data-toc-skip class="author">Michele Croci,
 Manuele Ragazzi, Giorgio Impollonia, Stefano Amaducci</h4>
             
-            <h4 data-toc-skip class="date">April 2026</h4>
+            <h4 data-toc-skip class="date">May 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mcroci/NFert/blob/master/vignettes/NFert-PK-and-distribution.Rmd" class="external-link"><code>vignettes/NFert-PK-and-distribution.Rmd</code></a></small>
       <div class="d-none name"><code>NFert-PK-and-distribution.Rmd</code></div>
@@ -499,7 +499,7 @@ P_2O_5 = A_{asp} + B_{1,arric} + A_2 - B_{2,rid}
 <li>
 <strong>Molto bassa / bassa</strong>: <code>Arricchimento</code> —
 add
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>22.9</mn><mo>−</mo><msub><mi>P</mi><mn>2</mn></msub><msubsup><mi>O</mi><mn>5</mn><mrow><mi>p</mi><mi>p</mi><mi>m</mi></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>×</mo><msub><mi>w</mi><mrow><mn>30</mn><mi>c</mi><mi>m</mi></mrow></msub><mi>/</mi><mn>1000</mn><mo>×</mo><msub><mi>f</mi><mrow><mi>i</mi><mi>m</mi><mi>m</mi></mrow></msub></mrow><annotation encoding="application/x-tex">B_1 = (22.9 -
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>22.9</mn><mo>−</mo><msub><mi>P</mi><mn>2</mn></msub><msubsup><mi>O</mi><mn>5</mn><mrow><mi>p</mi><mi>p</mi><mi>m</mi></mrow></msubsup><mo stretchy="false" form="postfix">)</mo><mo>×</mo><msub><mi>w</mi><mrow><mn>30</mn><mi>c</mi><mi>m</mi></mrow></msub><mi>/</mi><mn>1000</mn><mo>×</mo><msub><mi>f</mi><mrow><mi>i</mi><mi>m</mi><mi>m</mi></mrow></msub></mrow><annotation encoding="application/x-tex">B_1 = (22.9 -
 P_2O_5^{ppm}) \times w_{30cm}/1000 \times f_{imm}</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mrow><mi>i</mi><mi>m</mi><mi>m</mi></mrow></msub><mo>=</mo><mn>1.6</mn></mrow><annotation encoding="application/x-tex">f_{imm}=1.6</annotation></semantics></math>.</li>
@@ -554,7 +554,7 @@ A = asportazione.</li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mn>63.6</mn></mrow><annotation encoding="application/x-tex">A = 63.6</annotation></semantics></math>
 kg P2O5/ha (asportazione)</li>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>22.9</mn><mo>−</mo><mn>15</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>×</mo><mn>3900</mn><mi>/</mi><mn>1000</mn><mo>×</mo><mn>1.6</mn><mo>=</mo><mn>49.3</mn></mrow><annotation encoding="application/x-tex">B_1 = (22.9 - 15) \times 3900/1000 \times 1.6 = 49.3</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>B</mi><mn>1</mn></msub><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>22.9</mn><mo>−</mo><mn>15</mn><mo stretchy="false" form="postfix">)</mo><mo>×</mo><mn>3900</mn><mi>/</mi><mn>1000</mn><mo>×</mo><mn>1.6</mn><mo>=</mo><mn>49.3</mn></mrow><annotation encoding="application/x-tex">B_1 = (22.9 - 15) \times 3900/1000 \times 1.6 = 49.3</annotation></semantics></math>
 kg P2O5/ha</li>
 <li>Total <strong>≈ 112.9 kg P2O5/ha</strong>
 </li>
@@ -1296,7 +1296,7 @@ NDVI:</p>
 <span>  calibration_type <span class="op">=</span> <span class="st">"three-point"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html" class="external-link">cellStats</a></span><span class="op">(</span><span class="va">n_rate_3pt</span>, <span class="va">summary</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's </span></span>
+<span><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs </span></span>
 <span><span class="co">#&gt;   99.54  129.84  141.21  140.95  152.36  179.51    1481</span></span></code></pre></div>
 </div>
 </div>
@@ -1428,7 +1428,7 @@ explicitly when ambiguity matters.</li>
 </h2>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.5.3 (2026-03-11)</span></span>
+<span><span class="co">#&gt; R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -1452,16 +1452,16 @@ explicitly when ambiguity matters.</li>
 <span><span class="co">#&gt; [1] raster_3.6-32 sp_2.2-1      NFert_0.13.1 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] jsonlite_2.0.0     compiler_4.5.3     Rcpp_1.1.1-1       jquerylib_0.1.4   </span></span>
+<span><span class="co">#&gt;  [1] jsonlite_2.0.0     compiler_4.6.0     Rcpp_1.1.1-1.1     jquerylib_0.1.4   </span></span>
 <span><span class="co">#&gt;  [5] systemfonts_1.3.2  textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     </span></span>
 <span><span class="co">#&gt;  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-0          </span></span>
 <span><span class="co">#&gt; [13] knitr_1.51         htmlwidgets_1.6.4  units_1.0-1        desc_1.4.3        </span></span>
 <span><span class="co">#&gt; [17] DBI_1.3.0          bslib_0.10.0       rlang_1.2.0        cachem_1.1.0      </span></span>
 <span><span class="co">#&gt; [21] terra_1.9-11       xfun_0.57          fs_2.1.0           sass_0.4.10       </span></span>
 <span><span class="co">#&gt; [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      magrittr_2.0.5    </span></span>
-<span><span class="co">#&gt; [29] class_7.3-23       digest_0.6.39      grid_4.5.3         lifecycle_1.0.5   </span></span>
+<span><span class="co">#&gt; [29] class_7.3-23       digest_0.6.39      grid_4.6.0         lifecycle_1.0.5   </span></span>
 <span><span class="co">#&gt; [33] KernSmooth_2.23-26 proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20  </span></span>
-<span><span class="co">#&gt; [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.5.3       </span></span>
+<span><span class="co">#&gt; [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.6.0       </span></span>
 <span><span class="co">#&gt; [41] htmltools_0.5.9</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

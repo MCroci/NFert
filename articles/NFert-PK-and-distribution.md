@@ -55,6 +55,7 @@ NFert mixes English and Italian terminology by design:
   helper canonicalises any of them.
 
 ``` r
+
 library(NFert)
 normalise_soil_group("Loamy textures")
 #> $id_rag
@@ -87,6 +88,7 @@ resolve_id_rag(clay = 18.5, sand = 15.5)
 ## Setup
 
 ``` r
+
 # Crop and yield
 crop  <- "Durum wheat (whole plant)"
 yield <- 6   # t/ha
@@ -126,6 +128,7 @@ every subsequent coefficient choice (B, C, D, efficiency, soil weight,
 etc.).
 
 ``` r
+
 # USDA class + DPI 3-group
 soil_props <- calc_soil_group_and_id_rag(clay = clay, sand = sand)
 soil_props
@@ -192,24 +195,27 @@ max_SO_input(som_cls$class)
 
 The DPI 2026 formula is:
 
-$$N_{fert} = A - B + C_{1} + C_{2} + D - E - F - F_{org} - G$$
+``` math
+N_{fert} = A - B + C_1 + C_2 + D - E - F - F_{org} - G
+```
 
 where each term is computed by a dedicated function:
 
-| Term        | Function                                                                                                                     | Meaning                                                 |
-|-------------|------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| A           | [`calc_crop_N_demand()`](https://mcroci.github.io/NFert/reference/calc_crop_N_demand.md)                                     | Crop N demand (kg/ha)                                   |
-| B = b1 + b2 | [`soil_fertility()`](https://mcroci.github.io/NFert/reference/soil_fertility.md)                                             | b1 = N pronto from N total, b2 = N mineralised from SOM |
-| C1, C2      | [`leaching_loss()`](https://mcroci.github.io/NFert/reference/leaching_loss.md)                                               | Autumn-winter and early-spring leaching                 |
-| D           | [`calc_N_immobilization_loss()`](https://mcroci.github.io/NFert/reference/calc_N_immobilization_loss.md)                     | Microbial immobilisation                                |
-| E           | [`nitrogen_from_previous_crop_residues()`](https://mcroci.github.io/NFert/reference/nitrogen_from_previous_crop_residues.md) | Previous-crop residual N                                |
-| F           | [`organic_previous_years_N()`](https://mcroci.github.io/NFert/reference/organic_previous_years_N.md)                         | Residual N from previous years’ organic                 |
-| Forg        | [`organic_fertilization()`](https://mcroci.github.io/NFert/reference/organic_fertilization.md)                               | Current-year organic N, DPI efficiency                  |
-| G           | [`natural_contribution()`](https://mcroci.github.io/NFert/reference/natural_contribution.md)                                 | Atmospheric deposition                                  |
+| Term | Function | Meaning |
+|----|----|----|
+| A | [`calc_crop_N_demand()`](https://mcroci.github.io/NFert/reference/calc_crop_N_demand.md) | Crop N demand (kg/ha) |
+| B = b1 + b2 | [`soil_fertility()`](https://mcroci.github.io/NFert/reference/soil_fertility.md) | b1 = N pronto from N total, b2 = N mineralised from SOM |
+| C1, C2 | [`leaching_loss()`](https://mcroci.github.io/NFert/reference/leaching_loss.md) | Autumn-winter and early-spring leaching |
+| D | [`calc_N_immobilization_loss()`](https://mcroci.github.io/NFert/reference/calc_N_immobilization_loss.md) | Microbial immobilisation |
+| E | [`nitrogen_from_previous_crop_residues()`](https://mcroci.github.io/NFert/reference/nitrogen_from_previous_crop_residues.md) | Previous-crop residual N |
+| F | [`organic_previous_years_N()`](https://mcroci.github.io/NFert/reference/organic_previous_years_N.md) | Residual N from previous years’ organic |
+| Forg | [`organic_fertilization()`](https://mcroci.github.io/NFert/reference/organic_fertilization.md) | Current-year organic N, DPI efficiency |
+| G | [`natural_contribution()`](https://mcroci.github.io/NFert/reference/natural_contribution.md) | Atmospheric deposition |
 
 ### Full computation
 
 ``` r
+
 n_bal <- N_balance(
   expected_yield_tons_ha = yield,
   crop = crop,
@@ -240,6 +246,7 @@ n_dose
 ```
 
 ``` r
+
 # Signed terms in N_fert = A - B + C1 + C2 + D - E - F - Forg - G (kg N/ha)
 signed <- c(
   A = n_bal$A, B = -n_bal$B, C1 = n_bal$C1, C2 = n_bal$C2, D = n_bal$D,
@@ -258,6 +265,7 @@ abline(h = 0, lty = 2, col = "gray40")
 ![](NFert-PK-and-distribution_files/figure-html/fig-n-balance-1.png)
 
 ``` r
+
 par(op)
 ```
 
@@ -268,6 +276,7 @@ The result matches the Fert_Office `Bilancio` sheet: A = 186.6, B =
 ### MAS verification (Massimali Ammessi di Simulazione)
 
 ``` r
+
 get_MAS(crop = crop)
 #> Warning in get_MAS(crop = crop): Crop 'Durum wheat (whole plant)' not found in
 #> MAS table. Return NULL. Use get_MAS() to see available crops.
@@ -289,6 +298,7 @@ check_MAS(crop, n_dose)
 ```
 
 ``` r
+
 mas_row <- get_MAS(crop = crop)
 #> Warning in get_MAS(crop = crop): Crop 'Durum wheat (whole plant)' not found in
 #> MAS table. Return NULL. Use get_MAS() to see available crops.
@@ -309,6 +319,7 @@ Every balance term is also exposed as a standalone function for teaching
 or advanced scenario analysis:
 
 ``` r
+
 demand <- calc_crop_N_demand(expected_yield_tons_ha = yield, crop = crop)
 demand
 #> $N_requirement
@@ -367,19 +378,22 @@ natural_contribution(location = location,
 The phosphorus balance follows the DPI Allegato 2 logic coded in foglio
 `Gri_P`:
 
-$$P_{2}O_{5} = A_{asp} + B_{1,arric} + A_{2} - B_{2,rid}$$
+``` math
+P_2O_5 = A_{asp} + B_{1,arric} + A_2 - B_{2,rid}
+```
 
 with the *strategia* depending on the soil Olsen class:
 
-- **Molto bassa / bassa**: `Arricchimento` — add
-  $B_{1} = \left( 22.9 - P_{2}O_{5}^{ppm} \right) \times w_{30cm}/1000 \times f_{imm}$
-  where $f_{imm} = 1.6$.
+- **Molto bassa / bassa**: `Arricchimento` — add $`B_1 = (22.9 -
+  P_2O_5^{ppm}) \times w_{30cm}/1000 \times f_{imm}`$ where
+  $`f_{imm}=1.6`$.
 - **Media / elevata**: `Mantenimento` — apply A = asportazione.
 - **Molto elevata**: `Riduzione` — A = 0.
 
 ### Olsen classification
 
 ``` r
+
 p_cls <- classify_P_olsen(value = olsen_P, unit = "P2O5")
 p_cls
 #> $value_ppm_P
@@ -404,6 +418,7 @@ p_cls
 ### P balance
 
 ``` r
+
 p_bal <- P_balance(
   expected_yield_tons_ha = yield, crop = crop,
   olsen_value = olsen_P, olsen_unit = "P2O5",
@@ -419,8 +434,8 @@ p_bal
 In the benchmark scenario (Olsen P = 15 ppm P2O5) the class is “bassa” →
 Arricchimento, so:
 
-- $A = 63.6$ kg P2O5/ha (asportazione)
-- $B_{1} = (22.9 - 15) \times 3900/1000 \times 1.6 = 49.3$ kg P2O5/ha
+- $`A = 63.6`$ kg P2O5/ha (asportazione)
+- $`B_1 = (22.9 - 15) \times 3900/1000 \times 1.6 = 49.3`$ kg P2O5/ha
 - Total **≈ 112.9 kg P2O5/ha**
 
 This matches cell `Bilancio!I33` of Fert_Office.
@@ -430,7 +445,9 @@ This matches cell `Bilancio!I33` of Fert_Office.
 The potassium balance extends the formula with a leaching term **H**
 that depends on clay content:
 
-$$K_{2}O = A_{asp} + H + B_{1,arric} + A_{2} - B_{2,rid}$$
+``` math
+K_2O = A_{asp} + H + B_{1,arric} + A_2 - B_{2,rid}
+```
 
 Classes for K are defined per DPI texture group (`Sabbiosi`,
 `Medio impasto`, `Argillosi e limosi`).
@@ -438,6 +455,7 @@ Classes for K are defined per DPI texture group (`Sabbiosi`,
 ### K classification and leaching
 
 ``` r
+
 k_cls <- classify_K(value = K, unit = "K2O", soil_group = "Medio impasto")
 k_cls
 #> $value_ppm_K
@@ -461,6 +479,7 @@ sapply(c(2, 10, 18.5, 30), K_leaching_by_clay)
 ```
 
 ``` r
+
 clay_seq <- seq(0, 45, length.out = 300)
 h_seq <- vapply(clay_seq, K_leaching_by_clay, numeric(1))
 plot(
@@ -482,6 +501,7 @@ points(
 ### K balance
 
 ``` r
+
 k_bal <- K_balance(
   expected_yield_tons_ha = yield, crop = crop,
   k_value = K, k_unit = "K2O",
@@ -493,6 +513,7 @@ k_bal
 ```
 
 ``` r
+
 npk <- c(
   `N (mineral)` = n_dose,
   `P2O5` = p_bal$P2O5_required,
@@ -508,8 +529,8 @@ barplot(
 ![](NFert-PK-and-distribution_files/figure-html/fig-npk-1.png)
 
 Scenario: K = 150 ppm K2O is “media” in Medio impasto → Mantenimento. -
-$A = 119.4$ kg K2O/ha - $H = 20$ (clay 18.5% → step “15.1-25.1 → 20”) -
-Total **= 139.4 kg K2O/ha**
+$`A = 119.4`$ kg K2O/ha - $`H = 20`$ (clay 18.5% → step “15.1-25.1 →
+20”) - Total **= 139.4 kg K2O/ha**
 
 This matches cell `Gri_K!F30` of Fert_Office (A + H).
 
@@ -525,6 +546,7 @@ The N standard dose is modified by five decrements and five increments,
 then capped by MAS.
 
 ``` r
+
 # Durum wheat with buried straw + compacted / no-till
 scheda_N(
   crop = crop,
@@ -609,6 +631,7 @@ When the cumulated dose overshoots `max_N_dose`, the function caps it
 and flags `mas_exceeded = TRUE`:
 
 ``` r
+
 scheda_N(
   crop = crop,
   increments = c(straw_burial = 100, compacted_no_till = 100, low_SOM = 50)
@@ -653,6 +676,7 @@ scheda_N(
 For P and K the base dose depends on the initial soil dotation class:
 
 ``` r
+
 scheda_PK(
   crop = crop,
   soil_P_class = "normal",
@@ -765,6 +789,7 @@ accepts:
 - Optional target doses (for Eccesso/Deficit alerts) and a ZVN flag.
 
 ``` r
+
 plan <- plan_distribution(
   soil_group = "Medio impasto",
   n_balance  = n_dose,
@@ -818,6 +843,7 @@ Modalities are catalogued in `distribution_modalities.table` and their
 compatibility with crop cycles in `cycle_modality.table`:
 
 ``` r
+
 head(NFert::distribution_modalities.table, 12)
 #>    ID_Mo                            modality_epoch
 #> 1      1        Bare soil, sown the following year
@@ -852,6 +878,7 @@ head(NFert::distribution_modalities.table, 12)
 Available organic matrices and mineral products:
 
 ``` r
+
 # Organic: 21 matrices with their N, P, K and dry-matter titres
 head(NFert::organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
                                "avg_P2O5", "avg_K2O", "fully_zootec")], 10)
@@ -901,6 +928,7 @@ sui, dig_tq, dig_sui, dig_avi, dig_chi, fanghi) and the modality level.
 The full matrix has 220 entries:
 
 ``` r
+
 # Medium impasto, dose media (125-249 kg N/ha), bovino:
 NFert::efficiency.table[
   NFert::efficiency.table$ID_Rag == 2 &
@@ -919,6 +947,7 @@ After the plan is executed, NFert estimates the residual soil P and K in
 ppm, usable as input for the following year’s calculation:
 
 ``` r
+
 P_end <- estimate_soil_P_end_of_cycle(
   P2O5_start_ppm = olsen_P,
   P2O5_applied   = plan$totals["P2O5_useful"],
@@ -947,6 +976,7 @@ A second scenario with different crop, cycle, irrigation and
 precessione.
 
 ``` r
+
 mais_bal <- N_balance(
   expected_yield_tons_ha = 15,
   crop = "Silage maize (class 700)",
@@ -972,6 +1002,7 @@ calculate_N_fertilization(mais_bal)
 ## Alternative scenario: apple orchard in piena produzione
 
 ``` r
+
 apple_n <- N_balance(
   expected_yield_tons_ha = 40,
   crop = "Melo frutti, legno e foglie",
@@ -1041,6 +1072,7 @@ rescaling and (optionally) caps each pixel at the MAS limit.
 ### Example: variable-rate N for grano duro
 
 ``` r
+
 library(raster)
 #> Loading required package: sp
 
@@ -1060,6 +1092,7 @@ ndvi
 ```
 
 ``` r
+
 # Field-average N from the balance
 n_dose                 # ~142 kg/ha (computed earlier in this vignette)
 #> [1] 157.82
@@ -1090,6 +1123,7 @@ raster::plot(vr_cal$rate_raster,
 ### Example: Holland & Schepers method
 
 ``` r
+
 vr_hs <- variable_rate_N(
   ndvi_raster = ndvi,
   n_dose      = n_dose,
@@ -1109,6 +1143,7 @@ raster::plot(vr_hs$rate_raster,
 ### Comparison and aggregation
 
 ``` r
+
 # Total N applied to the field (assuming each pixel has the same area)
 mean(getValues(vr_cal$rate_raster), na.rm = TRUE)
 #> [1] 159.1884
@@ -1126,6 +1161,7 @@ hist(getValues(vr_hs$rate_raster),  main = "Holland & Schepers",
 ![](NFert-PK-and-distribution_files/figure-html/prec-ag-compare-1.png)
 
 ``` r
+
 par(oldpar)
 ```
 
@@ -1137,6 +1173,7 @@ application (typically the **copertura**) inside
 read the mean rate from the raster and pass it as the mineral row.
 
 ``` r
+
 mean_rate <- vr_cal$mean_kg_ha
 # Quintals/ha of UREA needed to deliver mean_rate (titre 46% N)
 q_urea_per_ha <- mean_rate / 46
@@ -1167,13 +1204,14 @@ For more refined NDVI-rate relationships you can call the underlying
 estimator directly, providing a `meanN` for the average NDVI:
 
 ``` r
+
 n_rate_3pt <- estimate_N_rate_from_calibration_curve(
   raster = ndvi,
   minN = 100, meanN = 140, maxN = 180,
   calibration_type = "three-point"
 )
 raster::cellStats(n_rate_3pt, summary)
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 #>   99.54  129.84  141.21  140.95  152.36  179.51    1481
 ```
 
@@ -1182,6 +1220,7 @@ raster::cellStats(n_rate_3pt, summary)
 NFert exposes 33 internal tables; the most useful in day-to-day work:
 
 ``` r
+
 # Crop master list
 head(NFert::uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
                               "reference_yield")], 5)
@@ -1302,8 +1341,9 @@ NFert::texture_groups.table
 ## Session info
 
 ``` r
+
 sessionInfo()
-#> R version 4.5.3 (2026-03-11)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -1327,15 +1367,15 @@ sessionInfo()
 #> [1] raster_3.6-32 sp_2.2-1      NFert_0.13.1 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] jsonlite_2.0.0     compiler_4.5.3     Rcpp_1.1.1-1       jquerylib_0.1.4   
+#>  [1] jsonlite_2.0.0     compiler_4.6.0     Rcpp_1.1.1-1.1     jquerylib_0.1.4   
 #>  [5] systemfonts_1.3.2  textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     
 #>  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-0          
 #> [13] knitr_1.51         htmlwidgets_1.6.4  units_1.0-1        desc_1.4.3        
 #> [17] DBI_1.3.0          bslib_0.10.0       rlang_1.2.0        cachem_1.1.0      
 #> [21] terra_1.9-11       xfun_0.57          fs_2.1.0           sass_0.4.10       
 #> [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      magrittr_2.0.5    
-#> [29] class_7.3-23       digest_0.6.39      grid_4.5.3         lifecycle_1.0.5   
+#> [29] class_7.3-23       digest_0.6.39      grid_4.6.0         lifecycle_1.0.5   
 #> [33] KernSmooth_2.23-26 proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20  
-#> [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.5.3       
+#> [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.6.0       
 #> [41] htmltools_0.5.9
 ```

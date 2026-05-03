@@ -20,6 +20,7 @@ All of this runs on the demo data that ships with NFert.
 ## 1. Load a field polygon
 
 ``` r
+
 library(NFert)
 library(sf)
 
@@ -52,6 +53,7 @@ we build a plausible NDVI in one line using the internal demo helper
 (same synthesiser used by the Shiny “Load demo NDVI” button):
 
 ``` r
+
 library(raster)
 
 # Two-patch NDVI with smooth base + noise
@@ -100,6 +102,7 @@ vigour) to `max_dose` (to push canopy development) and a high-vigour
 NDVI to `min_dose` (canopy already lush, less N needed):
 
 ``` r
+
 # Agronomic N target from the field-scale balance (example: 220 kg N/ha
 # for an 11 t/ha grain maize in Pianura Padana)
 N_target <- 220
@@ -145,6 +148,7 @@ calibration), use Option B with
 below, which exposes them as arguments.
 
 ``` r
+
 vr <- variable_rate_N(
   ndvi_raster = r,
   n_dose      = N_target,
@@ -162,6 +166,7 @@ plot(rx_raster,
 ![](prescription-map-example_files/figure-html/vrt-raster-1.png)
 
 ``` r
+
 cat("Mean applied N:  ", round(cellStats(rx_raster, "mean", na.rm = TRUE), 1),
     "kg N/ha\n")
 #> Mean applied N:   220 kg N/ha
@@ -185,6 +190,7 @@ a single dose per cell. NFert’s
 produces exactly that, applying the same calibration internally:
 
 ``` r
+
 rx_grid <- build_strip_prescription(
   field         = field,
   machine_width = 24,     # metres, working width of the spreader
@@ -220,6 +226,7 @@ tramline.
 ### Distribution of doses per grid cell
 
 ``` r
+
 hist(rx_grid$dose, breaks = 20, col = "#D5E4F0",
      main = "Grid cell dose distribution",
      xlab = "dose (kg N/ha)")
@@ -233,6 +240,7 @@ text(N_target, par("usr")[4]*0.9,
 ## 6. Export to tractor-ready formats
 
 ``` r
+
 # A) raster GeoTIFF (farm-management software, continuous)
 raster::writeRaster(rx_raster, "rx_raster.tif", overwrite = TRUE)
 

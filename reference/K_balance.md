@@ -61,6 +61,7 @@ A data frame with A, H, B1, A2, B2, strategy, ID_Gri_K, K2O_required.
 
 Formula:
 
+
       K2O da apportare = A (asportazione) + H (lisciviazione clay-based) + B1 (arricchimento)
                          + A2 (advance_allowed) - B2 (riduzione)
 

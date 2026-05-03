@@ -17,6 +17,7 @@ plots carrying all the columns required by
 [`N_balance()`](https://mcroci.github.io/NFert/reference/N_balance.md):
 
 ``` r
+
 library(NFert)
 library(sf)
 ex   <- system.file("extdata/example_farm.geojson", package = "NFert")
@@ -57,6 +58,7 @@ to every feature and appends `N_target`, `MAS_cap`, `MAS_ok` and
 and translated on the fly.
 
 ``` r
+
 farm_out <- farm_balance(farm)
 farm_out[, c("plot_id", "crop", "N_target", "MAS_cap",
              "MAS_ok", "N_total_kg")]
@@ -94,6 +96,7 @@ direction. Dose variability can be driven by a uniform target, a VI
 calibration curve, NNI zones, or quantile classes.
 
 ``` r
+
 field <- farm[1, ]          # Campo Grande, 5.2 ha silage maize
 
 # Option A: uniform 226 kg N/ha (from the balance), 24 m spreader
@@ -114,6 +117,7 @@ the mean across the field is preserved (mass-balance constraint) by
 default.
 
 ``` r
+
 # Option B: VI calibration (requires an NDVI raster)
 rx_cal <- build_strip_prescription(
   field         = field,
@@ -131,6 +135,7 @@ A 2-D **grid** (variable dose cell-by-cell) is produced by passing
 `ab_line`:
 
 ``` r
+
 # Option C: 24 m working width x 50 m along-strip cells, AB = 30 deg
 rx_grid <- build_strip_prescription(
   field         = field,
@@ -163,6 +168,7 @@ writes a single file;
 bundles several formats in one output folder.
 
 ``` r
+
 export_prescription(rx_uni, "rx.shp",       format = "shp")
 export_prescription(rx_uni, "JD/rx.shp",    format = "johndeere")
 export_prescription(rx_uni, "TASKDATA",     format = "isoxml",

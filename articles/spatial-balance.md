@@ -24,6 +24,7 @@ soil organic matter (SOM, %), clay, sand and silt content (%), and the
 C/N ratio.
 
 ``` r
+
 library(NFert)
 library(raster)
 #> Loading required package: sp
@@ -64,6 +65,7 @@ soil
 ```
 
 ``` r
+
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
 plot(soil[["SOM"]], main = "SOM (%)", col = terrain.colors(30))
 plot(soil[["Clay"]], main = "Clay (%)", col = heat.colors(30))
@@ -81,6 +83,7 @@ over every non-NA pixel in the stack. Agronomic and climatic parameters
 spatial variability is driven by the soil rasters alone.
 
 ``` r
+
 n_map <- spatial_N_balance(
   soil_stack            = soil,
   expected_yield_tons_ha = 60,
@@ -108,6 +111,7 @@ n_map
 ```
 
 ``` r
+
 plot(n_map[["N_to_apply"]],
      main = "Mineral N to apply (kg N/ha)",
      col = rev(terrain.colors(30)))
@@ -118,6 +122,7 @@ plot(n_map[["N_to_apply"]],
 The field-average N to apply is:
 
 ``` r
+
 cellStats(n_map[["N_to_apply"]], stat = "mean")
 #> [1] 227.2872
 ```
@@ -129,6 +134,7 @@ imagery. Here we simulate one correlated with SOM (higher SOM → better
 canopy vigor):
 
 ``` r
+
 set.seed(42)
 som_vals <- values(soil[["SOM"]])
 som_01   <- (som_vals - min(som_vals, na.rm = TRUE)) /
@@ -149,6 +155,7 @@ NDVI-based vigor gradient, under the mass-balance constraint described
 in Section 2.2 of the article:
 
 ``` r
+
 N_target <- cellStats(n_map[["N_to_apply"]], stat = "mean")
 
 vr <- variable_rate_N(
@@ -163,6 +170,7 @@ rx <- vr$rate_raster
 ```
 
 ``` r
+
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
 plot(ndvi, main = "Synthetic NDVI", col = rev(terrain.colors(30)))
 plot(rx,   main = "VRT N prescription (kg N/ha)",
@@ -176,6 +184,7 @@ plot(rx,   main = "VRT N prescription (kg N/ha)",
 The field-mean VRT rate should match the balance-based N target:
 
 ``` r
+
 cat("Balance N target:", round(N_target, 1), "kg N/ha\n")
 #> Balance N target: 227.3 kg N/ha
 cat("VRT field mean:  ", round(vr$mean_kg_ha, 1), "kg N/ha\n")
@@ -192,6 +201,7 @@ The resulting raster can be saved as a GeoTIFF and loaded into any GIS
 or farm-management software:
 
 ``` r
+
 writeRaster(rx, "VRT_prescription_Cremonesi.tif", overwrite = TRUE)
 ```
 
@@ -203,6 +213,7 @@ accepted by modern on-board monitors (Shapefile, GeoJSON, KML,
 GeoPackage, John Deere-ready, Trimble-ready, ISOXML TASKDATA):
 
 ``` r
+
 # Single file with auto-detected format
 export_prescription(rx, "VRT_Cremonesi.shp")
 
@@ -227,6 +238,7 @@ produces parallel polygons of the working width, each with a dose
 derived from the VRT raster (or from NNI / VI directly):
 
 ``` r
+
 # Field polygon from the same farm GeoJSON
 ex    <- system.file("extdata/example_farm.geojson", package = "NFert")
 field <- sf::st_read(ex, quiet = TRUE)[1, ]

@@ -6,6 +6,7 @@ estimated soil P2O5 at the end of the cycle in ppm P2O5 (useful as input
 for the following year's calculation). Formula from Fert_Office v1.26
 foglio `Gri_P!C27`:
 
+
       P2O5_end_ppm = P2O5_start_ppm + (P2O5_applied - P2O5_removed) / (soil_weight_30cm/1000) / P_immobilisation_factor
 
 ## Usage

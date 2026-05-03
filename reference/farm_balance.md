@@ -65,22 +65,22 @@ to disk (existing files are overwritten).
 
 Every feature must carry at least:
 
-|                                    |                                     |                               |
-|------------------------------------|-------------------------------------|-------------------------------|
-| **Column**                         | **Example**                         | **Notes**                     |
-| `crop`                             | "Mais da insilato (classe 700)"     | DPI 2026 name                 |
-| `expected_yield_tons_ha`           | 60                                  | target yield                  |
-| `ccp`                              | "Spring-summer crop 100-130 days"   | climate period                |
-| `sand`, `clay`                     | 50, 35                              | pct of texture                |
-| `Ntot`, `SOM`, `CN`                | 1.2, 1.2, 9.5                       | soil analysis                 |
-| `oxygen_availability`              | "Normal" / "Low" / "High"           |                               |
-| `winter_rain`, `start_spring_rain` | 160, 40                             | mm                            |
-| `prev_crop`                        | "Winter cereals straw removal"      |                               |
-| `source`                           | "Cattle slurry" or "None"/NA        | organic source                |
-| `fertorg_frequency`                | "every year"                        |                               |
-| `location`                         | "Plain adjacent to urbanized areas" |                               |
-| `forg_quantity`                    | 100                                 | kg N ha\\^{-1}\\ from organic |
-| `area_ha`                          | 5.2                                 | used to derive `N_total_kg`   |
+|  |  |  |
+|----|----|----|
+| **Column** | **Example** | **Notes** |
+| `crop` | "Mais da insilato (classe 700)" | DPI 2026 name |
+| `expected_yield_tons_ha` | 60 | target yield |
+| `ccp` | "Spring-summer crop 100-130 days" | climate period |
+| `sand`, `clay` | 50, 35 | pct of texture |
+| `Ntot`, `SOM`, `CN` | 1.2, 1.2, 9.5 | soil analysis |
+| `oxygen_availability` | "Normal" / "Low" / "High" |  |
+| `winter_rain`, `start_spring_rain` | 160, 40 | mm |
+| `prev_crop` | "Winter cereals straw removal" |  |
+| `source` | "Cattle slurry" or "None"/NA | organic source |
+| `fertorg_frequency` | "every year" |  |
+| `location` | "Plain adjacent to urbanized areas" |  |
+| `forg_quantity` | 100 | kg N ha\\^{-1}\\ from organic |
+| `area_ha` | 5.2 | used to derive `N_total_kg` |
 
 Italian aliases (Frumento tenero, Liquame bovino, Cereali vernini -
 paglia asportata, ...) are accepted because the underlying NFert

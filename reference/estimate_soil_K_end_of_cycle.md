@@ -2,6 +2,7 @@
 
 Simplified relationship:
 
+
       K2O_end_ppm = K2O_start_ppm + (K2O_applied - K2O_removed - K2O_leaching) / (soil_weight_30cm/1000)
 
 The lisciviazione (H) is taken from `K_leaching_by_clay(clay_pct)`.
