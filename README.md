@@ -2,8 +2,6 @@
 
 **N, P and K fertilization following Emilia-Romagna DPI 2026**
 
-[![R-CMD-check](https://github.com/mcroci/NFert/workflows/R-CMD-check/badge.svg)](https://github.com/mcroci/NFert/actions)
-
 ## Overview
 
 `NFert` is an R package for calculating nitrogen, phosphorus and potassium
@@ -55,7 +53,7 @@ precision agriculture (NDVI-based variable rate).
 
 ```r
 # Install from GitHub (once available)
-# devtools::install_github("yourusername/NFert")
+# devtools::install_github("MCroci/NFert")
 ```
 
 ## Quick Start
