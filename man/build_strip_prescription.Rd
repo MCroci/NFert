@@ -18,6 +18,7 @@ build_strip_prescription(
   max_dose = 220,
   vi_low = 0.35,
   vi_high = 0.8,
+  calibration_inverse = TRUE,
   thr_lo = 0.9,
   thr_hi = 1.1,
   n_classes = 5,
@@ -60,9 +61,17 @@ with vegetation index (0-1). Required for \code{"calibration"} and
 \item{min_dose, max_dose}{Numeric caps (kg N ha\eqn{^{-1}}).}
 
 \item{vi_low, vi_high}{Two-point calibration anchors
-(\code{variability = "calibration"}). Below \code{vi_low} the dose
-is capped to \code{max_dose}; above \code{vi_high} to
-\code{min_dose}.}
+(\code{variability = "calibration"}). With \code{calibration_inverse = TRUE}
+(default), below \code{vi_low} the dose is capped to \code{max_dose};
+above \code{vi_high} to \code{min_dose}. With \code{FALSE}, below
+\code{vi_low} the dose is capped to \code{min_dose}; above \code{vi_high}
+to \code{max_dose}.}
+
+\item{calibration_inverse}{Logical. If \code{TRUE} (default), NDVI and dose
+are inversely related along the segment (\code{vi_low} \eqn{\rightarrow}
+\code{max_dose}). If \code{FALSE}, NDVI and dose increase together
+(\code{vi_low} \eqn{\rightarrow} \code{min_dose}). Applies to
+\code{"calibration"} and to dose ordering in \code{"classes"}.}
 
 \item{thr_lo, thr_hi}{NNI thresholds (\code{variability = "nni"}).}
 
@@ -103,19 +112,20 @@ input field so that downstream tools see consistent coordinates.
 \item{\code{"uniform"}}{Every strip receives the same \code{n_target}
 dose. Useful as a baseline.}
 \item{\code{"calibration"}}{Samples the mean \code{vi_raster} value
-per strip and maps it to a dose via a two- or three-point
-calibration curve. The dose decreases with vigour (higher VI =
-less N).}
+per strip and maps it to a dose via a two-point linear curve between
+\code{vi_low} and \code{vi_high}. With \code{calibration_inverse = TRUE}
+(default), higher VI implies lower dose (typical side-dress). With
+\code{FALSE}, higher VI implies higher dose.}
 \item{\code{"nni"}}{Samples the mean \code{nni_raster} value per
 strip and translates it into the three agronomic zones of
 Lemaire & Gastal: deficient (NNI < \code{thr_lo}) gets
 \code{max_dose}, optimal (\code{thr_lo} <= NNI <= \code{thr_hi})
 gets \code{n_target}, excessive (NNI > \code{thr_hi}) gets
 \code{min_dose}.}
-\item{\code{"classes"}}{Assigns doses equal to
-\code{seq(min_dose, max_dose, length.out = n_classes)} based on
-the k-quantile class of the mean \code{vi_raster} value per
-strip. Useful when a categorical map is preferred.}
+\item{\code{"classes"}}{Splits strips into \code{n_classes} NDVI quantiles
+and assigns an increasing or decreasing dose ladder consistent with
+\code{calibration_inverse}: when \code{TRUE}, the lowest VI class gets
+\code{max_dose}; when \code{FALSE}, it gets \code{min_dose}.}
 }
 Regardless of the method, the mean dose across the field is rescaled
 to match \code{n_target} (mass-balance constraint) when
@@ -133,8 +143,7 @@ defines the driving direction.
 }
 
 \examples{
-\dontrun{
-# Pick one feature from the demo farm
+\dontshow{if (requireNamespace("sf", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 ex <- system.file("extdata/example_farm.geojson", package = "NFert")
 farm <- sf::st_read(ex, quiet = TRUE)
 field <- farm[1, ]  # 5.2 ha silage-maize plot
@@ -144,7 +153,8 @@ rx <- build_strip_prescription(field, machine_width = 24,
                                 variability = "uniform",
                                 n_target = 180)
 
-# VI-based 40-180 band calibration, 36 m machine
+\dontrun{
+# VI-based 40-180 band calibration, 36 m machine (supply `vi_raster` aligned to field)
 rx2 <- build_strip_prescription(field, machine_width = 36,
                                  variability = "calibration",
                                  vi_raster = my_ndvi,
@@ -153,6 +163,7 @@ rx2 <- build_strip_prescription(field, machine_width = 36,
 
 export_prescription(rx, "strips.shp", format = "shp")
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link{export_prescription}},

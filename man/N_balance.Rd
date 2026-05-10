@@ -68,12 +68,15 @@ Use \code{0} for no organic application: \code{Forg} is set to 0 without calling
 applied in the previous year (same source/frequency). If provided, term F (residual
 N from previous years' organic, DPI section 3.1.6) is included. Default 0.}
 
-\item{soil_group}{Optional. Soil group (e.g. from \code{calc_soil_group_and_id_rag()})
-to use DPI efficiency for current-year organic. If set, \code{distribution_efficiency}
-should also be set.}
+\item{soil_group}{Optional override for DPI organic-N efficiency (texture class).
+When \code{NULL} (default), \code{N_balance()} uses the \code{soil.group}
+computed from \code{sand} and \code{clay} via \code{calc_soil_group_and_id_rag()},
+so current-year organic (\code{Forg}) follows the same texture as \code{B}.}
 
-\item{distribution_efficiency}{Optional. "efficient", "medium", or "low" (DPI distribution).
-Used with \code{soil_group} for DPI organic N efficiency.}
+\item{distribution_efficiency}{Optional. \code{"efficient"}, \code{"medium"}, or
+\code{"low"} (DPI distribution quality). When \code{NULL} (default),
+\code{N_balance()} uses \code{"medium"} for \code{Forg} (typical farm practice
+when not specified). Ignored for \code{Forg} when \code{forg_quantity == 0}.}
 
 \item{soil_seeding}{One of \code{"traditional"} (default) or \code{"no-till"}. If \code{"no-till"},
 DPI 2026 applies a 3 kg/ha reduction to b1 (readily available N).}

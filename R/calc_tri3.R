@@ -5,7 +5,8 @@
 #' @param clay Percentage of clay in the soil (0-100).
 #' @param sand Percentage of sand in the soil (0-100).
 #' @param tri3.table A matrix containing the simplified soil texture classes
-#'   based on clay and sand percentages. The default is `NFert::tri3.table`.
+#'   based on clay and sand percentages. The default is the package dataset
+#'   `tri3.table`.
 #'
 #' @return A character string representing the simplified soil texture class
 #'   (e.g., "Sandy", "Loamy", "Clayey"). If the `clay` and `sand` combination
@@ -25,7 +26,7 @@
 #' tri3(clay = 25, sand = 20)  # "Loamy"
 #' tri3(clay = 55, sand = 15)  # "Clayey"
 
-tri3 <- function(clay = 10, sand = 35, tri3.table = NFert::tri3.table) {
+tri3 <- function(clay = 10, sand = 35, tri3.table = nfert_data_get("tri3.table")) {
 
   # Input Validation
   if (!is.numeric(clay) || clay < 0 || clay > 100) {

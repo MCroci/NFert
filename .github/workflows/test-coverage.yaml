@@ -1,0 +1,34 @@
+# Coverage summary on each PR (no external token required)
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: test-coverage
+
+permissions: read-all
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::covr
+
+      - name: Package coverage
+        run: |
+          cov <- covr::package_coverage(quiet = FALSE)
+          print(summary(cov))
+          pct <- covr::percent_coverage(cov)
+          message("Total line coverage: ", format(round(pct, 2), nsmall = 2), "%")
+        shell: Rscript {0}

@@ -4,7 +4,7 @@
 \alias{classify_pH}
 \title{Classify soil pH}
 \usage{
-classify_pH(pH, ph.table = NFert::ph.table)
+classify_pH(pH, ph.table = nfert_data_get("ph.table"))
 }
 \arguments{
 \item{pH}{Numeric.}

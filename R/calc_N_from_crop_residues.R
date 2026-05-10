@@ -23,7 +23,7 @@
 #' print(E)
 #'
 nitrogen_from_previous_crop_residues <- function(previous_crop = "Winter cereals straw removal",
-                                                 e.table = NFert::e.table){
+                                                 e.table = nfert_data_get("e.table")){
 
 
   # Input Validation

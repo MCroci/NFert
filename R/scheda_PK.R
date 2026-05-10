@@ -31,7 +31,7 @@ dose_standard_PK <- function(crop,
                       soil_K_class = c("normal","low","high","very_low"),
                       P_decrements = numeric(), P_increments = numeric(),
                       K_decrements = numeric(), K_increments = numeric(),
-                      standard_pk_doses.table = NFert::standard_pk_doses.table) {
+                      standard_pk_doses.table = nfert_data_get("standard_pk_doses.table")) {
 
   soil_P_class <- match.arg(soil_P_class)
   soil_K_class <- match.arg(soil_K_class)

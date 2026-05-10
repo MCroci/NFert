@@ -75,3 +75,48 @@ test_that("N_balance calculates all components", {
   expect_true(all(result$A > 0))
   expect_true(all(result$B >= 0))
 })
+
+test_that("N_balance uses DPI organic path by default (Forg scales with dose)", {
+  low <- N_balance(
+    expected_yield_tons_ha = 60,
+    crop = "Silage maize (class 700)",
+    ccp = "Spring-summer crop 100-130 days",
+    sand = 16.8,
+    clay = 37,
+    Ntot = 1.2,
+    SOM = 1.7,
+    CN = 8.84,
+    oxygen_availability = "Normal",
+    winter_rain = 150,
+    start_spring_rain = 0,
+    prev_crop = "Maize stalks buried",
+    source = "Cattle slurry",
+    fertorg_frequency = "every year",
+    location = "Isolated plain",
+    forg_quantity = 1,
+    organic_previous_year_N = 0,
+    E_to_D = TRUE
+  )
+  hi <- N_balance(
+    expected_yield_tons_ha = 60,
+    crop = "Silage maize (class 700)",
+    ccp = "Spring-summer crop 100-130 days",
+    sand = 16.8,
+    clay = 37,
+    Ntot = 1.2,
+    SOM = 1.7,
+    CN = 8.84,
+    oxygen_availability = "Normal",
+    winter_rain = 150,
+    start_spring_rain = 0,
+    prev_crop = "Maize stalks buried",
+    source = "Cattle slurry",
+    fertorg_frequency = "every year",
+    location = "Isolated plain",
+    forg_quantity = 154,
+    organic_previous_year_N = 0,
+    E_to_D = TRUE
+  )
+  expect_true(hi$Forg > 50)
+  expect_true(hi$Forg > low$Forg * 80)
+})

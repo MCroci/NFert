@@ -24,9 +24,9 @@
 soil_fertility <- function(Ntot = 1.2, SOM = 2, soil.group = "Sandy textures",
                                    CN = 8, ccp = "Autumn-winter crop <150 days",
                                    soil_seeding = c("traditional", "no-till"),
-                                   coefN_readily = NFert::coefN_readily,
-                                   coefN_mineralised = NFert::coefN_mineralised,
-                                   coef_time = NFert::coef_time
+                                   coefN_readily = nfert_data_get("coefN_readily"),
+                                   coefN_mineralised = nfert_data_get("coefN_mineralised"),
+                                   coef_time = nfert_data_get("coef_time")
                                    ) {
   soil_seeding <- match.arg(soil_seeding)
   ccp <- resolve_ccp(ccp, table = coef_time)

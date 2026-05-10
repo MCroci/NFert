@@ -2,8 +2,10 @@
 #'
 #' Calculates the amount of nitrogen (N) supplied to the soil through organic
 #' fertilization. Optionally applies **DPI efficiency** by material type, soil
-#' texture and distribution technique (when \code{soil_group} and
-#' \code{distribution_efficiency} are given). In the balance formula the term
+#' \code{distribution_efficiency} are both given). If either is \code{NULL}, falls back to
+#' \code{f.table}: \code{value * quantity / 100}. Function \code{\link{N_balance}()} passes
+#' computed soil texture and defaults distribution to \code{"medium"} so \code{Forg} matches
+#' the DPI path used by Fert_Office (\emph{Apporti al terreno}). In the balance formula the term
 #' to subtract is the **efficient N** (N utile) available to the crop in the
 #' year of application, not total N (DPI Guida / FertDPI).
 #'
@@ -14,8 +16,8 @@
 #' @param soil_group Optional. Soil group from \code{calc_soil_group_and_id_rag()}
 #'   (e.g. "Sandy textures", "Franco") to use DPI efficiency by texture. If \code{NULL},
 #'   efficiency is taken from \code{f.table} (no texture/distribution).
-#' @param distribution_efficiency Optional. "efficient", "medium", or "low" (DPI: Alta/Media/Bassa).
-#'   Required if \code{soil_group} is set. Efficient = injection, fertigation, incorporation within 4 h.
+#' @param distribution_efficiency Optional. \code{"efficient"}, \code{"medium"}, or \code{"low"}
+#'   (DPI: Alta/Media/Bassa). Required together with \code{soil_group} for the DPI efficiency path.
 #' @param f.table A data frame with columns \code{source}, \code{frequency}, \code{value}.
 #'   Used when \code{soil_group} is \code{NULL}. Default is \code{NFert::f.table}.
 #'
@@ -34,7 +36,7 @@
 organic_fertilization <- function(source = "Cattle slurry", frequency = "every year",
                                   quantity = 100, soil_group = NULL,
                                   distribution_efficiency = NULL,
-                                  f.table = NFert::f.table) {
+                                  f.table = nfert_data_get("f.table")) {
 
   if (quantity < 0) {
     stop("Quantity of organic fertilizer cannot be negative.")

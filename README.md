@@ -1,5 +1,12 @@
 # NFert
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/mcroci/NFert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mcroci/NFert/actions/workflows/R-CMD-check.yaml)
+[![pkgdown](https://github.com/mcroci/NFert/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/mcroci/NFert/actions/workflows/pkgdown.yaml)
+[![Coverage](https://github.com/mcroci/NFert/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/mcroci/NFert/actions/workflows/test-coverage.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- badges: end -->
+
 **N, P and K fertilization following Emilia-Romagna DPI 2026**
 
 ## Overview
@@ -52,9 +59,30 @@ precision agriculture (NDVI-based variable rate).
 ## Installation
 
 ```r
-# Install from GitHub (once available)
-# devtools::install_github("MCroci/NFert")
+# install.packages("remotes")
+remotes::install_github("mcroci/NFert")
 ```
+
+See also the [pkgdown site](https://mcroci.github.io/NFert/).
+
+## Course lab workflow (companion teaching repo)
+
+If you use the **lab-agricoltura-di-precisione** exercise scripts together with this package, the mapping is:
+
+| Exercise script | Main NFert entry points |
+|-------------------|-------------------------|
+| `01_bilancio_N.R` | `farm_balance()`, `N_balance()` |
+| `02_suolo_IDW.R` | interpolation outputs feed `spatial_N_balance()` via rasters |
+| `03_bilancio_spaziale.R` | `spatial_N_balance()` |
+| `04_NDVI_calibrazione.R` | `compute_vi()` |
+| `05_NNI_singolo_scena.R` | `estimate_biophysical()`, `compute_NNI_from_S2()` |
+| `06_NNI_serie_temporale.R` | `estimate_biophysical()`, `crop_params_NNI()`, NNI helpers |
+| `07_prescrizione_VRT.R` | `build_strip_prescription()` |
+| `08_export_macchine.R` | `export_prescription_all()` |
+| `09_figure_prescrizioni_metodi.R` | reads grids from step 07 (no new NFert calls) |
+| `10_biophysical_mean_vs_pixel.R` | `estimate_biophysical()` |
+
+Install course dependencies once with `source("esercitazioni/00_install_packages.R")` from the lab repository root.
 
 ## Quick Start
 

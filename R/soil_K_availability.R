@@ -18,7 +18,7 @@
 classify_K <- function(value,
                        unit = c("K", "K2O"),
                        soil_group,
-                       k_availability.table = NFert::k_availability.table) {
+                       k_availability.table = nfert_data_get("k_availability.table")) {
   unit <- match.arg(unit)
   if (!is.numeric(value) || length(value) != 1 || is.na(value) || value < 0) {
     stop("`value` must be a single non-negative numeric.")
@@ -101,7 +101,7 @@ soil_K_availability <- function(k_value, unit = c("K","K2O"),
                                 soil_group, A_demand_K2O,
                                 clay_pct,
                                 include_leaching = TRUE,
-                                k_availability.table = NFert::k_availability.table) {
+                                k_availability.table = nfert_data_get("k_availability.table")) {
   unit <- match.arg(unit)
   cls <- classify_K(k_value, unit = unit, soil_group = soil_group,
                     k_availability.table = k_availability.table)

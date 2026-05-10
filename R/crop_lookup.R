@@ -42,7 +42,7 @@
 #' resolve_crop("Grano duro (granella)")
 #' resolve_crop("Mais trinciato classe 700")
 #' @export
-resolve_crop <- function(x, table = NFert::uptake_table) {
+resolve_crop <- function(x, table = nfert_data_get("uptake_table")) {
   if (!is.character(x) || length(x) != 1 || is.na(x)) {
     stop("`x` must be a single non-NA character.")
   }
@@ -99,7 +99,7 @@ resolve_crop <- function(x, table = NFert::uptake_table) {
 #' resolve_ccp("Spring-summer crop 100\u2013130 days")  # em-dash
 #' resolve_ccp("autumn-winter crop <150 days")         # case
 #' @export
-resolve_ccp <- function(x, table = NFert::coef_time) {
+resolve_ccp <- function(x, table = nfert_data_get("coef_time")) {
   if (!is.character(x) || length(x) != 1 || is.na(x)) {
     stop("`x` must be a single non-NA character.")
   }
@@ -131,7 +131,7 @@ resolve_ccp <- function(x, table = NFert::coef_time) {
 #' head(list_crops())
 #' @export
 list_crops <- function() {
-  ut <- NFert::uptake_table
+  ut <- nfert_data_get("uptake_table")
   if (!('crop_en' %in% names(ut))) {
     return(data.frame(crop = ut$crop, crop_en = ut$crop, stringsAsFactors = FALSE))
   }

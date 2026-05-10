@@ -4,7 +4,7 @@
 \alias{classify_SOM}
 \title{Classify SO (soil organic matter) initial content by texture group}
 \usage{
-classify_SOM(SOM, soil_group, so.table = NFert::so.table)
+classify_SOM(SOM, soil_group, so.table = nfert_data_get("so.table"))
 }
 \arguments{
 \item{SOM}{Soil organic matter (\% mass).}

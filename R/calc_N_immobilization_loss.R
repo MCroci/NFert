@@ -32,11 +32,13 @@ calc_N_immobilization_loss <- function(B = 50, oxygen_availability = "Normal",
                                        id_rag = 1, greenhouse = FALSE,
                                        E_residual = 0) {
 
-  ca.table <- NFert::ca.table
-  cb.table <- NFert::cb.table
+  oxygen_availability <- nfert_normalize_oxygen(oxygen_availability)
+  ca.table <- nfert_data_get("ca.table")
+  cb.table <- nfert_data_get("cb.table")
 
   # Get ID_Dre corresponding to oxygen_availability
-  id_dre <- ca.table$ID_Dre[match(oxygen_availability, ca.table$availability)]
+  avail <- trimws(as.character(ca.table$availability))
+  id_dre <- ca.table$ID_Dre[match(oxygen_availability, avail)]
 
   # Check if id_dre is valid
   if (is.na(id_dre)) {

@@ -23,11 +23,14 @@
 #' @param organic_previous_year_N Optional. Total N (kg/ha) from organic fertilization
 #'   applied in the previous year (same source/frequency). If provided, term F (residual
 #'   N from previous years' organic, DPI section 3.1.6) is included. Default 0.
-#' @param soil_group Optional. Soil group (e.g. from \code{calc_soil_group_and_id_rag()})
-#'   to use DPI efficiency for current-year organic. If set, \code{distribution_efficiency}
-#'   should also be set.
-#' @param distribution_efficiency Optional. "efficient", "medium", or "low" (DPI distribution).
-#'   Used with \code{soil_group} for DPI organic N efficiency.
+#' @param soil_group Optional override for DPI organic-N efficiency (texture class).
+#'   When \code{NULL} (default), \code{N_balance()} uses the \code{soil.group}
+#'   computed from \code{sand} and \code{clay} via \code{calc_soil_group_and_id_rag()},
+#'   so current-year organic (\code{Forg}) follows the same texture as \code{B}.
+#' @param distribution_efficiency Optional. \code{"efficient"}, \code{"medium"}, or
+#'   \code{"low"} (DPI distribution quality). When \code{NULL} (default),
+#'   \code{N_balance()} uses \code{"medium"} for \code{Forg} (typical farm practice
+#'   when not specified). Ignored for \code{Forg} when \code{forg_quantity == 0}.
 #' @param soil_seeding One of `"traditional"` (default) or `"no-till"`. If `"no-till"`,
 #'   DPI 2026 applies a 3 kg/ha reduction to b1 (readily available N).
 #' @param greenhouse Logical. If `TRUE`, 2 kg/ha are added to D (DPI 2026 greenhouse factor).
@@ -149,6 +152,10 @@ N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (gran
     source = source,
     frequency = fertorg_frequency
   )
+  # Current-year organic N (Forg): DPI path N_tot × efficiency when texture + distribution
+  # are known. Defaults match Fert_Office-style behaviour when args omitted.
+  soil_for_org <- if (!is.null(soil_group)) soil_group else soil.group
+  dist_for_org <- if (!is.null(distribution_efficiency)) distribution_efficiency else "medium"
   # Skip organic_fertilization when quantity is 0 (avoids error in older package versions;
   # same result as organic_fertilization(..., quantity = 0) returning 0)
   Forg <- if (isTRUE(forg_quantity == 0)) {
@@ -158,8 +165,8 @@ N_balance <- function(expected_yield_tons_ha = 15, crop = "Grano tenero FF (gran
       source = source,
       frequency = fertorg_frequency,
       quantity = forg_quantity,
-      soil_group = soil_group,
-      distribution_efficiency = distribution_efficiency
+      soil_group = soil_for_org,
+      distribution_efficiency = dist_for_org
     )
   }
   G <- natural_contribution(location = location, ccp = ccp)

@@ -1,5 +1,30 @@
 # NFert News
 
+## Version 0.13.3 (2026-05-09) — Forg aligned with DPI when texture omitted
+
+### Fixes
+
+* `N_balance()` now passes **computed soil texture** (`soil.group` from sand/clay)
+  and defaults **`distribution_efficiency = "medium"`** to `organic_fertilization()`
+  when those arguments are omitted. Current-year organic N (**Forg**) therefore uses
+  the DPI path (N content × efficiency) like Fert_Office **Apporti al terreno**, instead
+  of the legacy `f.table` shortcut `value * quantity / 100` that produced unrealistically
+  small **Forg** (e.g. 154 m³/ha → ~0.46 kg N/ha). Standalone `organic_fertilization()`
+  behaviour is unchanged when `soil_group` is NULL.
+
+## Version 0.13.2 (2026-05-09) - Leaching C1/C2 vs Fert_Office C&D
+
+### Fixes
+
+* `leaching_loss()` now follows DPI 2026 Allegato 2 / Fert_Office v1.26
+  foglio `C&D`: **C1** (`C_a`) is the rainfall-dependent fraction of
+  readily available N (`b_1`), not the constant tabular column
+  `cb.table$C`. **C2** (`C_b`) is only the February contribution on the
+  residual `b_1 - C_1`. Thus `C_1 + C_2 <= b_1` and `N_balance()`
+  matches the spreadsheet for scenarios such as winter rain exactly 150 mm
+  (previously `C1` could wrongly stay at the tabular maximum).
+  New regression tests in `tests/testthat/test-leaching_loss.R`.
+
 ## Version 0.13.1 (2026-04-24) - Strip-prescription builder + demo Shiny
 
 ### New features
