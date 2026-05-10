@@ -19,7 +19,7 @@ dose_standard_PK(
   P_increments = numeric(),
   K_decrements = numeric(),
   K_increments = numeric(),
-  standard_pk_doses.table = NFert::standard_pk_doses.table
+  standard_pk_doses.table = nfert_data_get("standard_pk_doses.table")
 )
 
 scheda_PK(...)

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">NFert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -365,12 +365,12 @@ N_{fert} = A - B + C_1 + C_2 + D - E - F - F_{org} - G
 <span></span>
 <span><span class="va">n_bal</span></span>
 <span><span class="co">#&gt;       A     B b1    b2 C1 C2     D E F Forg    G surplus_pluviometrico</span></span>
-<span><span class="co">#&gt; 1 186.6 73.84 39 34.84 30  0 28.46 0 0    0 13.4                 FALSE</span></span>
+<span><span class="co">#&gt; 1 186.6 73.84 39 34.84  0  0 28.46 0 0    0 13.4                 FALSE</span></span>
 <span></span>
 <span><span class="co"># Final dose</span></span>
 <span><span class="va">n_dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_N_fertilization.html">calculate_N_fertilization</a></span><span class="op">(</span><span class="va">n_bal</span><span class="op">)</span></span>
 <span><span class="va">n_dose</span></span>
-<span><span class="co">#&gt; [1] 157.82</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 127.82</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Signed terms in N_fert = A - B + C1 + C2 + D - E - F - Forg - G (kg N/ha)</span></span>
 <span><span class="va">signed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -410,7 +410,7 @@ N_{fert} = A - B + C_1 + C_2 + D - E - F - F_{org} - G
 <span><span class="co">#&gt; [1] NA</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $N_planned</span></span>
-<span><span class="co">#&gt; [1] 157.82</span></span>
+<span><span class="co">#&gt; [1] 127.82</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $message</span></span>
 <span><span class="co">#&gt; [1] "Crop not found in MAS table; check not performed."</span></span></code></pre></div>
@@ -465,7 +465,7 @@ teaching or advanced scenario analysis:</p>
 <span>                       b1 <span class="op">=</span> <span class="va">fertility</span><span class="op">$</span><span class="va">b1</span><span class="op">)</span></span>
 <span><span class="va">leach</span></span>
 <span><span class="co">#&gt; $C1</span></span>
-<span><span class="co">#&gt; [1] 30</span></span>
+<span><span class="co">#&gt; [1] 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $C2</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
@@ -951,7 +951,7 @@ flag.</li>
 <code>distribution_modalities.table</code> and their compatibility with
 crop cycles in <code>cycle_modality.table</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">distribution_modalities.table</a></span>, <span class="fl">12</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">distribution_modalities.table</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ID_Mo                            modality_epoch</span></span>
 <span><span class="co">#&gt; 1      1        Bare soil, sown the following year</span></span>
 <span><span class="co">#&gt; 2      2   Straw residues, sown the following year</span></span>
@@ -985,7 +985,7 @@ crop cycles in <code>cycle_modality.table</code>:</p>
 <p>Available organic matrices and mineral products:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Organic: 21 matrices with their N, P, K and dry-matter titres</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">organic_fertilizers.table</a></span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fertilizer"</span>, <span class="st">"avg_dm"</span>, <span class="st">"avg_N"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">organic_fertilizers.table</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fertilizer"</span>, <span class="st">"avg_dm"</span>, <span class="st">"avg_N"</span>,</span>
 <span>                               <span class="st">"avg_P2O5"</span>, <span class="st">"avg_K2O"</span>, <span class="st">"fully_zootec"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                         fertilizer avg_dm avg_N avg_P2O5</span></span>
 <span><span class="co">#&gt; 1                                          compost     65    12      9.0</span></span>
@@ -1011,7 +1011,7 @@ crop cycles in <code>cycle_modality.table</code>:</p>
 <span><span class="co">#&gt; 10       7         TRUE</span></span>
 <span></span>
 <span><span class="co"># Mineral: 146 commercial fertilisers</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">mineral_fertilizers.table</a></span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mineral_fertilizers.table</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    ID_min                            fertilizer    N P2O5  K2O</span></span>
 <span><span class="co">#&gt; 1       1                               Nessuno  0.0    0  0.0</span></span>
 <span><span class="co">#&gt; 2       2                   Acido fosforico 85%  0.0   61  0.0</span></span>
@@ -1033,10 +1033,10 @@ sui, dig_tq, dig_sui, dig_avi, dig_chi, fanghi) and the modality level.
 The full matrix has 220 entries:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Medium impasto, dose media (125-249 kg N/ha), bovino:</span></span>
-<span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">efficiency.table</a></span><span class="op">[</span></span>
-<span>  <span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">efficiency.table</a></span><span class="op">$</span><span class="va">ID_Rag</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span></span>
-<span>    <span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">efficiency.table</a></span><span class="op">$</span><span class="va">ID_Liv</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span></span>
-<span>    <span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">efficiency.table</a></span><span class="op">$</span><span class="va">sector_id</span> <span class="op">==</span> <span class="st">"bov"</span>,</span>
+<span><span class="va">efficiency.table</span><span class="op">[</span></span>
+<span>  <span class="va">efficiency.table</span><span class="op">$</span><span class="va">ID_Rag</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span></span>
+<span>    <span class="va">efficiency.table</span><span class="op">$</span><span class="va">ID_Liv</span> <span class="op">==</span> <span class="fl">2</span> <span class="op">&amp;</span></span>
+<span>    <span class="va">efficiency.table</span><span class="op">$</span><span class="va">sector_id</span> <span class="op">==</span> <span class="st">"bov"</span>,</span>
 <span><span class="op">]</span></span>
 <span><span class="co">#&gt;     ID_Rag ID_Liv sector_id ID_N_org efficiency_pct</span></span>
 <span><span class="co">#&gt; 77       2      2       bov        1          44.20</span></span>
@@ -1093,10 +1093,10 @@ precessione.</p>
 <span>  soil_seeding <span class="op">=</span> <span class="st">"traditional"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">mais_bal</span></span>
-<span><span class="co">#&gt;      A      B   b1     b2 C1   C2      D E F Forg     G surplus_pluviometrico</span></span>
-<span><span class="co">#&gt; 1 58.5 56.928 31.2 25.728 30 36.2 24.232 0 0 0.24 10.05                  TRUE</span></span>
+<span><span class="co">#&gt;      A      B   b1     b2   C1 C2      D E F   Forg     G surplus_pluviometrico</span></span>
+<span><span class="co">#&gt; 1 58.5 56.928 31.2 25.728 31.2  0 24.232 0 0 159.12 10.05                  TRUE</span></span>
 <span><span class="fu"><a href="../reference/calculate_N_fertilization.html">calculate_N_fertilization</a></span><span class="op">(</span><span class="va">mais_bal</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 81.714</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="alternative-scenario-apple-orchard-in-piena-produzione">Alternative scenario: apple orchard in piena produzione<a class="anchor" aria-label="anchor" href="#alternative-scenario-apple-orchard-in-piena-produzione"></a>
@@ -1116,10 +1116,10 @@ precessione.</p>
 <span>  forg_quantity <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">apple_n</span></span>
-<span><span class="co">#&gt;     A     B   b1 b2 C1    C2    D E F Forg  G surplus_pluviometrico</span></span>
-<span><span class="co">#&gt; 1 116 106.8 46.8 60 30 32.76 26.7 0 0    0 10                 FALSE</span></span>
+<span><span class="co">#&gt;     A     B   b1 b2    C1 C2    D E F Forg  G surplus_pluviometrico</span></span>
+<span><span class="co">#&gt; 1 116 106.8 46.8 60 32.76  3 26.7 0 0    0 10                 FALSE</span></span>
 <span><span class="fu"><a href="../reference/calculate_N_fertilization.html">calculate_N_fertilization</a></span><span class="op">(</span><span class="va">apple_n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 88.66</span></span>
+<span><span class="co">#&gt; [1] 61.66</span></span>
 <span></span>
 <span><span class="va">apple_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/P_balance.html">P_balance</a></span><span class="op">(</span>expected_yield_tons_ha <span class="op">=</span> <span class="fl">40</span>,</span>
 <span>                     crop <span class="op">=</span> <span class="st">"Melo frutti, legno e foglie"</span>,</span>
@@ -1191,7 +1191,7 @@ caps each pixel at the MAS limit.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Field-average N from the balance</span></span>
 <span><span class="va">n_dose</span>                 <span class="co"># ~142 kg/ha (computed earlier in this vignette)</span></span>
-<span><span class="co">#&gt; [1] 157.82</span></span>
+<span><span class="co">#&gt; [1] 127.82</span></span>
 <span></span>
 <span><span class="co"># Variable-rate via two-point calibration; envelope of +/-25%</span></span>
 <span><span class="va">vr_cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/variable_rate_N.html">variable_rate_N</a></span><span class="op">(</span></span>
@@ -1203,11 +1203,11 @@ caps each pixel at the MAS limit.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vr_cal</span><span class="op">$</span><span class="va">mean_kg_ha</span>       <span class="co"># ~ n_dose</span></span>
-<span><span class="co">#&gt; [1] 159.1884</span></span>
+<span><span class="co">#&gt; [1] 128.9633</span></span>
 <span><span class="va">vr_cal</span><span class="op">$</span><span class="va">min_kg_ha</span></span>
-<span><span class="co">#&gt; [1] 118.365</span></span>
+<span><span class="co">#&gt; [1] 95.865</span></span>
 <span><span class="va">vr_cal</span><span class="op">$</span><span class="va">max_kg_ha</span></span>
-<span><span class="co">#&gt; [1] 190</span></span>
+<span><span class="co">#&gt; [1] 159.775</span></span>
 <span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vr_cal</span><span class="op">$</span><span class="va">rate_raster</span>,</span>
 <span>             main <span class="op">=</span> <span class="st">"Variable rate N (calibration) - kg/ha"</span>,</span>
@@ -1226,7 +1226,7 @@ caps each pixel at the MAS limit.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vr_hs</span><span class="op">$</span><span class="va">mean_kg_ha</span></span>
-<span><span class="co">#&gt; [1] 149.5423</span></span>
+<span><span class="co">#&gt; [1] 127.4532</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vr_hs</span><span class="op">$</span><span class="va">rate_raster</span>,</span>
 <span>             main <span class="op">=</span> <span class="st">"Variable rate N (Holland &amp; Schepers) - kg/ha"</span>,</span>
 <span>             col  <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"YlOrBr"</span>, rev <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -1238,9 +1238,9 @@ caps each pixel at the MAS limit.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Total N applied to the field (assuming each pixel has the same area)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/getValues.html" class="external-link">getValues</a></span><span class="op">(</span><span class="va">vr_cal</span><span class="op">$</span><span class="va">rate_raster</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 159.1884</span></span>
+<span><span class="co">#&gt; [1] 128.9633</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/getValues.html" class="external-link">getValues</a></span><span class="op">(</span><span class="va">vr_hs</span><span class="op">$</span><span class="va">rate_raster</span><span class="op">)</span>,  na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 149.5423</span></span>
+<span><span class="co">#&gt; [1] 127.4532</span></span>
 <span></span>
 <span><span class="co"># Histogram comparison</span></span>
 <span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -1276,12 +1276,12 @@ pass it as the mineral row.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">plan_vr</span><span class="op">$</span><span class="va">rows</span></span>
 <span><span class="co">#&gt;    source             fertilizer year modality_epoch ID_Mo quantity_t_ha</span></span>
-<span><span class="co">#&gt; 1 mineral UREA AGRICOLA PRIL.46%   NA             11    11     0.3460618</span></span>
+<span><span class="co">#&gt; 1 mineral UREA AGRICOLA PRIL.46%   NA             11    11     0.2803549</span></span>
 <span><span class="co">#&gt;       N_kg P2O5_kg K2O_kg efficiency_pct N_useful P2O5_useful K2O_useful zootec</span></span>
-<span><span class="co">#&gt; 1 159.1884       0      0            100 159.1884           0          0  FALSE</span></span>
+<span><span class="co">#&gt; 1 128.9633       0      0            100 128.9633           0          0  FALSE</span></span>
 <span><span class="va">plan_vr</span><span class="op">$</span><span class="va">totals</span></span>
 <span><span class="co">#&gt;    N_useful P2O5_useful  K2O_useful </span></span>
-<span><span class="co">#&gt;    159.1884      0.0000      0.0000</span></span></code></pre></div>
+<span><span class="co">#&gt;    128.9633      0.0000      0.0000</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="three-point-calibration-advanced">Three-point calibration (advanced)<a class="anchor" aria-label="anchor" href="#three-point-calibration-advanced"></a>
@@ -1307,7 +1307,7 @@ NDVI:</p>
 work:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Crop master list</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">uptake_table</a></span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crop_id"</span>, <span class="st">"crop"</span>, <span class="st">"N"</span>, <span class="st">"P2O5"</span>, <span class="st">"K2O"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">uptake_table</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crop_id"</span>, <span class="st">"crop"</span>, <span class="st">"N"</span>, <span class="st">"P2O5"</span>, <span class="st">"K2O"</span>,</span>
 <span>                              <span class="st">"reference_yield"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   crop_id                                              crop    N      P2O5</span></span>
 <span><span class="co">#&gt; 1      A2  Kiwifruit (green flesh) - fruit, wood and leaves 0.59 0.1600000</span></span>
@@ -1323,7 +1323,7 @@ work:</p>
 <span><span class="co">#&gt; 5 0.7411538              NA</span></span>
 <span></span>
 <span><span class="co"># MAS (massimali) 2026</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">mas.table</a></span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crop_id"</span>, <span class="st">"crop"</span>, <span class="st">"MAS_N"</span>, <span class="st">"standard_N"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mas.table</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"crop_id"</span>, <span class="st">"crop"</span>, <span class="st">"MAS_N"</span>, <span class="st">"standard_N"</span>,</span>
 <span>                           <span class="st">"max_N_dose"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   crop_id                                              crop MAS_N standard_N</span></span>
 <span><span class="co">#&gt; 1      A2  Kiwifruit (green flesh) - fruit, wood and leaves   150        120</span></span>
@@ -1339,7 +1339,7 @@ work:</p>
 <span><span class="co">#&gt; 5         NA</span></span>
 <span></span>
 <span><span class="co"># Gri_P and Gri_K classes</span></span>
-<span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">p_availability.table</a></span></span>
+<span><span class="va">p_availability.table</span></span>
 <span><span class="co">#&gt;   ID_Gri_P min_P_ppm max_P_ppm min_P2O5_ppm max_P2O5_ppm    rating</span></span>
 <span><span class="co">#&gt; 1        1         0         5         0.00        11.45  very low</span></span>
 <span><span class="co">#&gt; 2        2         5        10        11.45        22.90       low</span></span>
@@ -1352,7 +1352,7 @@ work:</p>
 <span><span class="co">#&gt; 3          media      normale</span></span>
 <span><span class="co">#&gt; 4        elevata      normale</span></span>
 <span><span class="co">#&gt; 5  molto elevata   molto alto</span></span>
-<span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">k_availability.table</a></span></span>
+<span><span class="va">k_availability.table</span></span>
 <span><span class="co">#&gt;    ID_Gri_K          group           group_it min_K_ppm max_K_ppm min_K2O_ppm</span></span>
 <span><span class="co">#&gt; 1         1 Sandy textures           Sabbiosi         0        40           0</span></span>
 <span><span class="co">#&gt; 2         2 Sandy textures           Sabbiosi        40        80          48</span></span>
@@ -1381,7 +1381,7 @@ work:</p>
 <span><span class="co">#&gt; 12      1198.8     high     elevata        4</span></span>
 <span></span>
 <span><span class="co"># Texture grouping with soil weights</span></span>
-<span><span class="fu">NFert</span><span class="fu">::</span><span class="va"><a href="../reference/NFert-data.html">texture_groups.table</a></span></span>
+<span><span class="va">texture_groups.table</span></span>
 <span><span class="co">#&gt;            group group_canonical_it group_singular_it ID_Rag specific_weight</span></span>
 <span><span class="co">#&gt; 1  Clay textures Argillosi e limosi         Argilloso      3             1.2</span></span>
 <span><span class="co">#&gt; 2 Sandy textures           Sabbiosi          Sabbioso      1             1.4</span></span>
@@ -1449,20 +1449,19 @@ explicitly when ambiguity matters.</li>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] raster_3.6-32 sp_2.2-1      NFert_0.13.1 </span></span>
+<span><span class="co">#&gt; [1] raster_3.6-32 sp_2.2-1      NFert_0.14.0 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] jsonlite_2.0.0     compiler_4.6.0     Rcpp_1.1.1-1.1     jquerylib_0.1.4   </span></span>
 <span><span class="co">#&gt;  [5] systemfonts_1.3.2  textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     </span></span>
-<span><span class="co">#&gt;  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-0          </span></span>
-<span><span class="co">#&gt; [13] knitr_1.51         htmlwidgets_1.6.4  units_1.0-1        desc_1.4.3        </span></span>
+<span><span class="co">#&gt;  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-1          </span></span>
+<span><span class="co">#&gt; [13] knitr_1.51         htmlwidgets_1.6.4  desc_1.4.3         units_1.0-1       </span></span>
 <span><span class="co">#&gt; [17] DBI_1.3.0          bslib_0.10.0       rlang_1.2.0        cachem_1.1.0      </span></span>
-<span><span class="co">#&gt; [21] terra_1.9-11       xfun_0.57          fs_2.1.0           sass_0.4.10       </span></span>
-<span><span class="co">#&gt; [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      magrittr_2.0.5    </span></span>
-<span><span class="co">#&gt; [29] class_7.3-23       digest_0.6.39      grid_4.6.0         lifecycle_1.0.5   </span></span>
-<span><span class="co">#&gt; [33] KernSmooth_2.23-26 proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20  </span></span>
-<span><span class="co">#&gt; [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.6.0       </span></span>
-<span><span class="co">#&gt; [41] htmltools_0.5.9</span></span></code></pre></div>
+<span><span class="co">#&gt; [21] terra_1.9-25       xfun_0.57          fs_2.1.0           sass_0.4.10       </span></span>
+<span><span class="co">#&gt; [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      class_7.3-23      </span></span>
+<span><span class="co">#&gt; [29] digest_0.6.39      grid_4.6.0         lifecycle_1.0.5    KernSmooth_2.23-26</span></span>
+<span><span class="co">#&gt; [33] proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20   ragg_1.5.2        </span></span>
+<span><span class="co">#&gt; [37] e1071_1.7-17       rmarkdown_2.31     tools_4.6.0        htmltools_0.5.9</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

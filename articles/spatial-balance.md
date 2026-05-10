@@ -106,8 +106,8 @@ n_map
 #> extent     : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)
 #> crs        : +proj=longlat +datum=WGS84 +no_defs 
 #> names      :           A,           B,          C1,          C2,           D,           E,           F,        Forg,           G,  N_to_apply 
-#> min values : 234.0000000,  31.9104424,  20.0000000,   0.4793168,  19.5731327,   0.0000000,   0.0000000,   0.3000000,  13.4000000, 225.8138077 
-#> max values : 234.0000000,  35.6650130,  20.0000000,   0.5108526,  20.6995039,   0.0000000,   0.0000000,   0.3000000,  13.4000000, 228.4735429
+#> min values : 234.0000000,  31.9104424,   0.4793168,   4.0000000,  19.5731327,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  29.6638077 
+#> max values : 234.0000000,  35.6650130,   0.5108526,   4.0000000,  20.6995039,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  32.3235429
 ```
 
 ``` r
@@ -124,7 +124,7 @@ The field-average N to apply is:
 ``` r
 
 cellStats(n_map[["N_to_apply"]], stat = "mean")
-#> [1] 227.2872
+#> [1] 31.13723
 ```
 
 ## 3. Generate a synthetic NDVI raster
@@ -186,13 +186,13 @@ The field-mean VRT rate should match the balance-based N target:
 ``` r
 
 cat("Balance N target:", round(N_target, 1), "kg N/ha\n")
-#> Balance N target: 227.3 kg N/ha
+#> Balance N target: 31.1 kg N/ha
 cat("VRT field mean:  ", round(vr$mean_kg_ha, 1), "kg N/ha\n")
-#> VRT field mean:   227.3 kg N/ha
+#> VRT field mean:   31.1 kg N/ha
 cat("VRT range:       ",
     round(vr$min_kg_ha, 1), "–",
     round(vr$max_kg_ha, 1), "kg N/ha\n")
-#> VRT range:        0 – 441.2 kg N/ha
+#> VRT range:        0 – 60.4 kg N/ha
 ```
 
 ## 6. Export the prescription

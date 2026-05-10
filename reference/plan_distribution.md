@@ -14,11 +14,11 @@ plan_distribution(
   organic_rows = list(),
   mineral_rows = list(),
   zvn = FALSE,
-  organic_fertilizers.table = NFert::organic_fertilizers.table,
-  mineral_fertilizers.table = NFert::mineral_fertilizers.table,
-  efficiency.table = NFert::efficiency.table,
-  distribution_modalities.table = NFert::distribution_modalities.table,
-  texture_groups.table = NFert::texture_groups.table
+  organic_fertilizers.table = nfert_data_get("organic_fertilizers.table"),
+  mineral_fertilizers.table = nfert_data_get("mineral_fertilizers.table"),
+  efficiency.table = nfert_data_get("efficiency.table"),
+  distribution_modalities.table = nfert_data_get("distribution_modalities.table"),
+  texture_groups.table = nfert_data_get("texture_groups.table")
 )
 ```
 

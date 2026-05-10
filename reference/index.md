@@ -136,11 +136,23 @@
 - [`natural_contribution()`](https://mcroci.github.io/NFert/reference/natural_contribution.md)
   : Natural Nitrogen Contribution
 
+- [`nfert_crop_pars_quefts()`](https://mcroci.github.io/NFert/reference/nfert_crop_pars_quefts.md)
+  : Map NFert crop label to QUEFTS crop parameters (backward-compatible)
+
 - [`nfert_en2it()`](https://mcroci.github.io/NFert/reference/nfert_en2it.md)
   : Translate an English alias into its canonical Italian NFert key
 
 - [`nfert_it2en()`](https://mcroci.github.io/NFert/reference/nfert_it2en.md)
   : Translate an Italian NFert canonical key into its English alias
+
+- [`nfert_to_quefts_biom()`](https://mcroci.github.io/NFert/reference/nfert_to_quefts_biom.md)
+  : Build QUEFTS biomass list from NFert state and Sentinel-2 NNI
+
+- [`nfert_to_quefts_crop()`](https://mcroci.github.io/NFert/reference/nfert_to_quefts_crop.md)
+  : Translate NFert crop name into QUEFTS crop parameters
+
+- [`nfert_to_quefts_soil()`](https://mcroci.github.io/NFert/reference/nfert_to_quefts_soil.md)
+  : Translate NFert inputs into QUEFTS soil parameters
 
 - [`nitrogen_from_previous_crop_residues()`](https://mcroci.github.io/NFert/reference/nitrogen_from_previous_crop_residues.md)
   : Nitrogen from previous crop residues
@@ -150,6 +162,9 @@
 
 - [`normalise_soil_group()`](https://mcroci.github.io/NFert/reference/normalise_soil_group.md)
   : Normalise a soil-group label across the three NFert conventions
+
+- [`optimize_VR_DPI()`](https://mcroci.github.io/NFert/reference/optimize_VR_DPI.md)
+  : Compliance-aware variable-rate nitrogen prescription
 
 - [`organic_N_efficiency()`](https://mcroci.github.io/NFert/reference/organic_N_efficiency.md)
   : Organic nitrogen efficiency by material, soil texture and

@@ -8,7 +8,7 @@ Crop K2O demand
 calc_crop_K_demand(
   expected_yield_tons_ha,
   crop,
-  uptake_table = NFert::uptake_table
+  uptake_table = nfert_data_get("uptake_table")
 )
 ```
 

@@ -78,5 +78,5 @@ balance <- N_balance(
 # Calculate required nitrogen fertilization
 n_fert <- calculate_N_fertilization(balance)
 print(paste("Required N fertilization:", round(n_fert, 2), "kg/ha"))
-#> [1] "Required N fertilization: 50.55 kg/ha"
+#> [1] "Required N fertilization: 0 kg/ha"
 ```

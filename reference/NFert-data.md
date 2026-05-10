@@ -186,7 +186,8 @@ NFert versions is required.
 ## Examples
 
 ``` r
-head(NFert::uptake_table)
+library(NFert)
+head(uptake_table)
 #>   id crop_id                                              crop    N      P2O5
 #> 1  1      A2  Kiwifruit (green flesh) - fruit, wood and leaves 0.59 0.1600000
 #> 2  2     Ab2 Kiwifruit (yellow flesh) - fruit, wood and leaves 0.59 0.1600000
@@ -215,7 +216,7 @@ head(NFert::uptake_table)
 #> 4 Albicocco  alta produzione frutti, legno e foglie
 #> 5           Altri fruttiferi frutti, legno e foglie
 #> 6                    Arancio frutti, legno e foglie
-head(NFert::mas.table)
+head(mas.table)
 #>   id group_id crop_id phase                                              crop
 #> 1  1        1      A2    nd  Kiwifruit (green flesh) - fruit, wood and leaves
 #> 2  2        2     Ab2    nd Kiwifruit (yellow flesh) - fruit, wood and leaves
@@ -251,7 +252,7 @@ head(NFert::mas.table)
 #> 4 Albicocco  alta produzione frutti, legno e foglie
 #> 5           Altri fruttiferi frutti, legno e foglie
 #> 6                    Arancio frutti, legno e foglie
-head(NFert::p_availability.table)
+head(p_availability.table)
 #>   ID_Gri_P min_P_ppm max_P_ppm min_P2O5_ppm max_P2O5_ppm    rating
 #> 1        1         0         5         0.00        11.45  very low
 #> 2        2         5        10        11.45        22.90       low
@@ -264,7 +265,7 @@ head(NFert::p_availability.table)
 #> 3          media      normale
 #> 4        elevata      normale
 #> 5  molto elevata   molto alto
-head(NFert::k_availability.table)
+head(k_availability.table)
 #>   ID_Gri_K          group      group_it min_K_ppm max_K_ppm min_K2O_ppm
 #> 1        1 Sandy textures      Sabbiosi         0        40           0
 #> 2        2 Sandy textures      Sabbiosi        40        80          48
@@ -279,7 +280,7 @@ head(NFert::k_availability.table)
 #> 4      1198.8     high     elevata        4
 #> 5        72.0 very low molto bassa        1
 #> 6       120.0      low       bassa        2
-head(NFert::organic_fertilizers.table)
+head(organic_fertilizers.table)
 #>   ID_F_org                                  fertilizer
 #> 1        1                                     compost
 #> 2        2 Whole digestate (biomass / cattle effluent)

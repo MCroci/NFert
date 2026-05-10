@@ -11,8 +11,8 @@ the conversion factor is P2O5 = P / 0.436681.
 classify_P_olsen(
   value,
   unit = c("P", "P2O5"),
-  p_availability.table = NFert::p_availability.table,
-  p_availability_meta = NFert::p_availability_meta
+  p_availability.table = nfert_data_get("p_availability.table"),
+  p_availability_meta = nfert_data_get("p_availability_meta")
 )
 ```
 

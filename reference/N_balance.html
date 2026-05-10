@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">NFert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,14 +151,17 @@ N from previous years' organic, DPI section 3.1.6) is included. Default 0.</p></
 
 
 <dt id="arg-soil-group">soil_group<a class="anchor" aria-label="anchor" href="#arg-soil-group"></a></dt>
-<dd><p>Optional. Soil group (e.g. from <code><a href="calc_soil_group_and_id_rag.html">calc_soil_group_and_id_rag()</a></code>)
-to use DPI efficiency for current-year organic. If set, <code>distribution_efficiency</code>
-should also be set.</p></dd>
+<dd><p>Optional override for DPI organic-N efficiency (texture class).
+When <code>NULL</code> (default), <code>N_balance()</code> uses the <code>soil.group</code>
+computed from <code>sand</code> and <code>clay</code> via <code><a href="calc_soil_group_and_id_rag.html">calc_soil_group_and_id_rag()</a></code>,
+so current-year organic (<code>Forg</code>) follows the same texture as <code>B</code>.</p></dd>
 
 
 <dt id="arg-distribution-efficiency">distribution_efficiency<a class="anchor" aria-label="anchor" href="#arg-distribution-efficiency"></a></dt>
-<dd><p>Optional. "efficient", "medium", or "low" (DPI distribution).
-Used with <code>soil_group</code> for DPI organic N efficiency.</p></dd>
+<dd><p>Optional. <code>"efficient"</code>, <code>"medium"</code>, or
+<code>"low"</code> (DPI distribution quality). When <code>NULL</code> (default),
+<code>N_balance()</code> uses <code>"medium"</code> for <code>Forg</code> (typical farm practice
+when not specified). Ignored for <code>Forg</code> when <code>forg_quantity == 0</code>.</p></dd>
 
 
 <dt id="arg-soil-seeding">soil_seeding<a class="anchor" aria-label="anchor" href="#arg-soil-seeding"></a></dt>
@@ -209,8 +212,10 @@ N_fert = A - B + C1 + C2 + D - E - F - Forg - G</p>
 <span class="r-in"><span>          prev_crop <span class="op">=</span> <span class="st">"Winter cereals straw removal"</span>, source <span class="op">=</span> <span class="st">"Cattle slurry"</span>,</span></span>
 <span class="r-in"><span>          fertorg_frequency <span class="op">=</span> <span class="st">"every year"</span>, location <span class="op">=</span> <span class="st">"Plain adjacent to urbanized areas"</span>,</span></span>
 <span class="r-in"><span>          forg_quantity <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      A      B    b1    b2 C1    C2       D E F Forg    G surplus_pluviometrico</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.5 38.808 29.16 9.648 20 2.916 21.6424 0 0  0.3 13.4                 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      A      B    b1    b2    C1 C2       D E F   Forg    G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 58.5 38.808 29.16 9.648 2.916  4 21.6424 0 0 180.45 13.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   surplus_pluviometrico</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 FALSE</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

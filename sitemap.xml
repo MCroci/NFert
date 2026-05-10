@@ -55,11 +55,17 @@
 <url><loc>https://mcroci.github.io/NFert/reference/list_crops.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/max_SO_input.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/natural_contribution.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/nfert_crop_pars_quefts.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/nfert_data_get.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/nfert_en2it.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/nfert_it2en.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/nfert_to_quefts_biom.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/nfert_to_quefts_crop.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/nfert_to_quefts_soil.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/nitrogen_from_previous_crop_residues.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/nni_from_vi_empirical.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/normalise_soil_group.html</loc></url>
+<url><loc>https://mcroci.github.io/NFert/reference/optimize_VR_DPI.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/organic_N_efficiency.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/organic_fertilization.html</loc></url>
 <url><loc>https://mcroci.github.io/NFert/reference/organic_previous_years_N.html</loc></url>

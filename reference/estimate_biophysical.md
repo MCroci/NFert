@@ -122,12 +122,11 @@ data. *Remote Sensing of Environment*, 273, 112958.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-maps <- estimate_biophysical(
-  raster_path  = "scene_10bands.tif",
-  output_dir   = "output_maps",
-  variables    = c("LAI", "Cm", "CNC_Cprot"),
-  model_dir    = system.file("extdata/gpr_models", package = "NFert")
-)
-} # }
+scene <- system.file("extdata/sentinel-2/S2_field001_20240711.tif", package = "NFert")
+if (nzchar(scene)) {
+  od <- tempfile()
+  dir.create(od)
+  maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
+  stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
+}
 ```

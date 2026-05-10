@@ -19,7 +19,7 @@ DPI 2026 7-class scheme from Fert_Office v1.26 foglio `pH`:
 ## Usage
 
 ``` r
-classify_pH(pH, ph.table = NFert::ph.table)
+classify_pH(pH, ph.table = nfert_data_get("ph.table"))
 ```
 
 ## Arguments

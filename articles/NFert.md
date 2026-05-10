@@ -191,14 +191,14 @@ wheat_balance <- N_balance(
 
 # Display results
 print(wheat_balance)
-#>       A    B   b1 b2 C1   C2    D E F Forg  G surplus_pluviometrico
-#> 1 248.8 55.2 31.2 24 30 3.12 23.8 0 0  0.3 10                 FALSE
+#>       A    B   b1 b2   C1 C2    D E F  Forg  G surplus_pluviometrico
+#> 1 248.8 55.2 31.2 24 3.12  4 23.8 0 0 198.9 10                 FALSE
 
 # Calculate final nitrogen requirement
 required_N <- calculate_N_fertilization(wheat_balance)
 cat("\nRequired nitrogen fertilization:", round(required_N, 2), "kg/ha\n")
 #> 
-#> Required nitrogen fertilization: 240.22 kg/ha
+#> Required nitrogen fertilization: 15.62 kg/ha
 ```
 
 ## Understanding the Nitrogen Balance Components
@@ -227,7 +227,7 @@ print(crop_demand)
 #> [1] 0
 
 # Available crops in the database
-head(NFert::uptake_table, 10)
+head(uptake_table, 10)
 #>    id crop_id                                              crop    N      P2O5
 #> 1   1      A2  Kiwifruit (green flesh) - fruit, wood and leaves 0.59 0.1600000
 #> 2   2     Ab2 Kiwifruit (yellow flesh) - fruit, wood and leaves 0.59 0.1600000
@@ -355,15 +355,15 @@ leaching <- leaching_loss(
 
 print(leaching)
 #> $C1
-#> [1] 20
+#> [1] 7.5
 #> 
 #> $C2
-#> [1] 7.5
+#> [1] 4.5
 #> 
 #> $surplus_pluviometrico
 #> [1] FALSE
 cat("Total leaching loss:", leaching$C1 + leaching$C2, "kg/ha\n")
-#> Total leaching loss: 27.5 kg/ha
+#> Total leaching loss: 12 kg/ha
 ```
 
 ### Component 4: Immobilization Loss (D)
@@ -399,7 +399,7 @@ cat("Nitrogen from residues (E):", residue_N, "kg/ha\n")
 #> Nitrogen from residues (E): -10 kg/ha
 
 # Available previous crops
-head(NFert::e.table, 10)
+head(e.table, 10)
 #>    ID_Pre                previous_crop   N legume
 #> 1       1                   Sugar beet  30  FALSE
 #> 2       2 Winter cereals straw removal -10  FALSE
@@ -471,7 +471,7 @@ cat("Natural contribution (G):", natural_N, "kg/ha\n")
 #> Natural contribution (G): 10 kg/ha
 
 # Available locations
-head(NFert::g.table, 10)
+head(g.table, 10)
 #>   ID_UBI                          location annual_deposition
 #> 1      1 Plain adjacent to urbanized areas                20
 #> 2      2                    Isolated plain                15
@@ -515,14 +515,14 @@ maize_balance <- do.call(N_balance, maize_params)
 cat("=== MAIZE NITROGEN BALANCE ===\n")
 #> === MAIZE NITROGEN BALANCE ===
 print(maize_balance)
-#>      A      B b1     b2 C1   C2      D E F Forg    G surplus_pluviometrico
-#> 1 46.8 84.024 39 45.024 30 5.85 31.006 0 0 0.27 13.4                 FALSE
+#>      A      B b1     b2   C1  C2      D E F   Forg    G surplus_pluviometrico
+#> 1 46.8 84.024 39 45.024 5.85 3.5 31.006 0 0 179.01 13.4                 FALSE
 
 # Step 4: Calculate final requirement
 maize_N_requirement <- calculate_N_fertilization(maize_balance)
 cat("\nFinal N requirement:", round(maize_N_requirement, 2), "kg/ha\n")
 #> 
-#> Final N requirement: 15.96 kg/ha
+#> Final N requirement: 0 kg/ha
 
 # Step 5: Interpretation
 cat("\n=== INTERPRETATION ===\n")
@@ -533,13 +533,13 @@ cat("Crop demand (A):", round(maize_balance$A, 1), "kg/ha\n")
 cat("Soil supply (B):", round(maize_balance$B, 1), "kg/ha\n")
 #> Soil supply (B): 84 kg/ha
 cat("Leaching losses (C1+C2):", round(maize_balance$C1 + maize_balance$C2, 1), "kg/ha\n")
-#> Leaching losses (C1+C2): 35.9 kg/ha
+#> Leaching losses (C1+C2): 9.3 kg/ha
 cat("Immobilization (D):", round(maize_balance$D, 1), "kg/ha\n")
 #> Immobilization (D): 31 kg/ha
 cat("Residue contribution (E):", round(maize_balance$E, 1), "kg/ha\n")
 #> Residue contribution (E): 0 kg/ha
 cat("Organic fertilizer (Forg):", round(maize_balance$Forg, 1), "kg/ha\n")
-#> Organic fertilizer (Forg): 0.3 kg/ha
+#> Organic fertilizer (Forg): 179 kg/ha
 cat("Natural contribution (G):", round(maize_balance$G, 1), "kg/ha\n")
 #> Natural contribution (G): 13.4 kg/ha
 ```
@@ -687,16 +687,16 @@ check_MAS("Grain maize 500-700 (grain)", 250)             # OK (MAS 260 or 280 d
 required_N <- calculate_N_fertilization(wheat_balance)
 check_MAS("Soft wheat FF - strong (grain)", round(required_N, 0))
 #> $ok
-#> [1] FALSE
+#> [1] TRUE
 #> 
 #> $mas_N
 #> [1] 200
 #> 
 #> $N_planned
-#> [1] 240
+#> [1] 16
 #> 
 #> $message
-#> [1] "Planned N (240 kg/ha) exceeds MAS (200 kg/ha)."
+#> [1] "Planned N is within MAS."
 ```
 
 Soia: MAS N = 30 kg/ha (ZVN 2025); in case of failed rhizobium, up to
@@ -764,16 +764,16 @@ comparison <- data.frame(
 
 print(comparison)
 #>            Scenario Organic_N N_requirement N_saved
-#> 1        No organic      0.00        302.72    0.00
-#> 2  80 m³/ha organic      0.24        302.48    0.24
-#> 3 150 m³/ha organic      0.45        302.27    0.45
+#> 1        No organic      0.00        276.72    0.00
+#> 2  80 m³/ha organic    159.12        117.60  159.12
+#> 3 150 m³/ha organic    298.35          0.00  276.72
 cat("\nNitrogen saved with organic fertilization:\n")
 #> 
 #> Nitrogen saved with organic fertilization:
 cat("Scenario 2:", round(N1 - N2, 2), "kg/ha (", round((N1-N2)/N1*100, 1), "%)\n")
-#> Scenario 2: 0.24 kg/ha ( 0.1 %)
+#> Scenario 2: 159.12 kg/ha ( 57.5 %)
 cat("Scenario 3:", round(N1 - N3, 2), "kg/ha (", round((N1-N3)/N1*100, 1), "%)\n")
-#> Scenario 3: 0.45 kg/ha ( 0.1 %)
+#> Scenario 3: 276.72 kg/ha ( 100 %)
 ```
 
 ## Precision Agriculture: NDVI-Based Variable Rate Application
@@ -945,14 +945,14 @@ summary_table <- fields_data[, c("field_id", "crop", "area_ha",
 names(summary_table)[4] <- "N_rate_kg_ha"
 print(summary_table)
 #>   field_id                           crop area_ha N_rate_kg_ha total_N_kg
-#> 1  Field_A Soft wheat FF - strong (grain)      15      269.925   4048.875
-#> 2  Field_B       Silage maize (class 700)      20       14.300    286.000
-#> 3  Field_C Soft wheat FF - strong (grain)      12      233.760   2805.120
+#> 1  Field_A Soft wheat FF - strong (grain)      15      239.925   3598.875
+#> 2  Field_B       Silage maize (class 700)      20        0.000      0.000
+#> 3  Field_C Soft wheat FF - strong (grain)      12       44.880    538.560
 
 cat("\nTotal nitrogen required for all fields:", 
     sum(summary_table$total_N_kg), "kg\n")
 #> 
-#> Total nitrogen required for all fields: 7139.995 kg
+#> Total nitrogen required for all fields: 4137.435 kg
 ```
 
 ## Advanced: Sensitivity Analysis
@@ -1030,16 +1030,16 @@ sensitivity_results <- data.frame(
 
 print(sensitivity_results)
 #>               Parameter Value N_requirement Change_from_base
-#> 1               SOM (%)   1.5        306.92             4.50
-#> 2               SOM (%)   2.0        302.42             0.00
-#> 3               SOM (%)   2.5        297.92            -4.50
-#> 4               SOM (%)   3.0        293.42            -9.00
-#> 5               SOM (%)   3.5        288.92           -13.50
-#> 6  Winter rainfall (mm) 100.0        299.30            -3.12
-#> 7  Winter rainfall (mm) 130.0        299.30            -3.12
-#> 8  Winter rainfall (mm) 160.0        302.42             0.00
-#> 9  Winter rainfall (mm) 190.0        311.78             9.36
-#> 10 Winter rainfall (mm) 220.0        322.14            19.72
+#> 1               SOM (%)   1.5         82.32             4.50
+#> 2               SOM (%)   2.0         77.82             0.00
+#> 3               SOM (%)   2.5         73.32            -4.50
+#> 4               SOM (%)   3.0         68.82            -9.00
+#> 5               SOM (%)   3.5         64.32           -13.50
+#> 6  Winter rainfall (mm) 100.0         70.70            -7.12
+#> 7  Winter rainfall (mm) 130.0         70.70            -7.12
+#> 8  Winter rainfall (mm) 160.0         77.82             0.00
+#> 9  Winter rainfall (mm) 190.0         87.18             9.36
+#> 10 Winter rainfall (mm) 220.0         96.54            18.72
 
 cat("\nKey insights:\n")
 #> 
@@ -1049,7 +1049,7 @@ cat("- SOM increase from 1.5% to 3.5% changes N requirement by",
 #> - SOM increase from 1.5% to 3.5% changes N requirement by 18 kg/ha
 cat("- Rainfall increase from 100mm to 220mm changes N requirement by",
     round(max(rainfall_impact) - min(rainfall_impact), 1), "kg/ha\n")
-#> - Rainfall increase from 100mm to 220mm changes N requirement by 22.8 kg/ha
+#> - Rainfall increase from 100mm to 220mm changes N requirement by 25.8 kg/ha
 ```
 
 ## Best Practices and Tips
@@ -1084,7 +1084,7 @@ Make sure to use the exact crop name as it appears in the database:
 ``` r
 
 # Check available crops
-available_crops <- NFert::uptake_table$crop
+available_crops <- uptake_table$crop
 cat("Available crops (first 10):\n")
 #> Available crops (first 10):
 print(head(available_crops, 10))
@@ -1212,7 +1212,7 @@ cat("- coef_time: Time adjustment factors\n")
 #> - coef_time: Time adjustment factors
 
 # Access any dataset
-head(NFert::uptake_table, 5)
+head(uptake_table, 5)
 #>   id crop_id                                              crop    N      P2O5
 #> 1  1      A2  Kiwifruit (green flesh) - fruit, wood and leaves 0.59 0.1600000
 #> 2  2     Ab2 Kiwifruit (yellow flesh) - fruit, wood and leaves 0.59 0.1600000

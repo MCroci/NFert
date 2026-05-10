@@ -12,7 +12,7 @@ value stored in `coef_time$ccp`:
 ## Usage
 
 ``` r
-resolve_ccp(x, table = NFert::coef_time)
+resolve_ccp(x, table = nfert_data_get("coef_time"))
 ```
 
 ## Arguments

@@ -12,7 +12,7 @@ classify_K(
   value,
   unit = c("K", "K2O"),
   soil_group,
-  k_availability.table = NFert::k_availability.table
+  k_availability.table = nfert_data_get("k_availability.table")
 )
 ```
 

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">NFert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,8 +172,8 @@ spatial variability is driven by the soil rasters alone.</p>
 <span><span class="co">#&gt; extent     : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 +no_defs </span></span>
 <span><span class="co">#&gt; names      :           A,           B,          C1,          C2,           D,           E,           F,        Forg,           G,  N_to_apply </span></span>
-<span><span class="co">#&gt; min values : 234.0000000,  31.9104424,  20.0000000,   0.4793168,  19.5731327,   0.0000000,   0.0000000,   0.3000000,  13.4000000, 225.8138077 </span></span>
-<span><span class="co">#&gt; max values : 234.0000000,  35.6650130,  20.0000000,   0.5108526,  20.6995039,   0.0000000,   0.0000000,   0.3000000,  13.4000000, 228.4735429</span></span></code></pre></div>
+<span><span class="co">#&gt; min values : 234.0000000,  31.9104424,   0.4793168,   4.0000000,  19.5731327,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  29.6638077 </span></span>
+<span><span class="co">#&gt; max values : 234.0000000,  35.6650130,   0.5108526,   4.0000000,  20.6995039,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  32.3235429</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n_map</span><span class="op">[[</span><span class="st">"N_to_apply"</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>     main <span class="op">=</span> <span class="st">"Mineral N to apply (kg N/ha)"</span>,</span>
@@ -182,7 +182,7 @@ spatial variability is driven by the soil rasters alone.</p>
 <p>The field-average N to apply is:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/cellStats.html" class="external-link">cellStats</a></span><span class="op">(</span><span class="va">n_map</span><span class="op">[[</span><span class="st">"N_to_apply"</span><span class="op">]</span><span class="op">]</span>, stat <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 227.2872</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 31.13723</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="generate-a-synthetic-ndvi-raster">3. Generate a synthetic NDVI raster<a class="anchor" aria-label="anchor" href="#generate-a-synthetic-ndvi-raster"></a>
@@ -234,13 +234,13 @@ in Section 2.2 of the article:</p>
 <p>The field-mean VRT rate should match the balance-based N target:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Balance N target:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">N_target</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"kg N/ha\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Balance N target: 227.3 kg N/ha</span></span>
+<span><span class="co">#&gt; Balance N target: 31.1 kg N/ha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"VRT field mean:  "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">vr</span><span class="op">$</span><span class="va">mean_kg_ha</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"kg N/ha\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; VRT field mean:   227.3 kg N/ha</span></span>
+<span><span class="co">#&gt; VRT field mean:   31.1 kg N/ha</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"VRT range:       "</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">vr</span><span class="op">$</span><span class="va">min_kg_ha</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"–"</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">vr</span><span class="op">$</span><span class="va">max_kg_ha</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"kg N/ha\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; VRT range:        0 – 441.2 kg N/ha</span></span></code></pre></div>
+<span><span class="co">#&gt; VRT range:        0 – 60.4 kg N/ha</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="export-the-prescription">6. Export the prescription<a class="anchor" aria-label="anchor" href="#export-the-prescription"></a>

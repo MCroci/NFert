@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="N, P and K fertilization following Emilia-Romagna DPI 2026">
-<meta name="description" content='Calculates N, P2O5 and K2O fertilization requirements following the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna – method of the balance (Allegato 2) and the "Scheda a dose Standard" simplified method. It implements the nutrient balance model used by FertDPI / Fert_Office (v1.26, Febbraio 2026) and accounts for crop demand (A), soil supply (B1/B2/A-Mantenimento), leaching (C1, C2, H), immobilization (D), previous crop residues (E), organic fertilization (F, F_org), and natural deposition (G). Includes soil texture classification (USDA and DPI groupings), maximum allowed doses (MAS), Olsen P and exchangeable K availability classes, soil pH / carbonate / CEC classification, fertilization distribution plan with organic and mineral fertilisers, end-of-cycle soil P and K estimation, multi-index vegetation index engine (NDVI, NDRE, GNDVI, CIred-edge, MCARI, MSAVI2) for Sentinel-2 and UAV imagery, Nitrogen Nutrition Index (NNI) computation based on species- specific critical-N dilution curves (Lemaire &amp; Gastal 1997), Gaussian- process retrieval of canopy biophysical variables (LAI, Cw, Cm, Cab, canopy nitrogen content) from Sentinel-2 L2A imagery (pyeogpr GPR models; Estevez et al. 2022) for remote-sensing-driven NNI mapping, and variable-rate N prescription (calibration and Holland &amp; Schepers) with mass-balance constraint. Includes tools for integrated and precision nutrient management.'>
-<meta property="og:description" content='Calculates N, P2O5 and K2O fertilization requirements following the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna – method of the balance (Allegato 2) and the "Scheda a dose Standard" simplified method. It implements the nutrient balance model used by FertDPI / Fert_Office (v1.26, Febbraio 2026) and accounts for crop demand (A), soil supply (B1/B2/A-Mantenimento), leaching (C1, C2, H), immobilization (D), previous crop residues (E), organic fertilization (F, F_org), and natural deposition (G). Includes soil texture classification (USDA and DPI groupings), maximum allowed doses (MAS), Olsen P and exchangeable K availability classes, soil pH / carbonate / CEC classification, fertilization distribution plan with organic and mineral fertilisers, end-of-cycle soil P and K estimation, multi-index vegetation index engine (NDVI, NDRE, GNDVI, CIred-edge, MCARI, MSAVI2) for Sentinel-2 and UAV imagery, Nitrogen Nutrition Index (NNI) computation based on species- specific critical-N dilution curves (Lemaire &amp; Gastal 1997), Gaussian- process retrieval of canopy biophysical variables (LAI, Cw, Cm, Cab, canopy nitrogen content) from Sentinel-2 L2A imagery (pyeogpr GPR models; Estevez et al. 2022) for remote-sensing-driven NNI mapping, and variable-rate N prescription (calibration and Holland &amp; Schepers) with mass-balance constraint. Includes tools for integrated and precision nutrient management.'>
+<meta name="description" content='Calculates N, P2O5 and K2O fertilization requirements following the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna – method of the balance (Allegato 2) and the "Scheda a dose Standard" simplified method. It implements the nutrient balance model used by FertDPI / Fert_Office (v1.26, Febbraio 2026) and accounts for crop demand (A), soil supply (B1/B2/A-Mantenimento), leaching (C1, C2, H), immobilization (D), previous crop residues (E), organic fertilization (F, F_org), and natural deposition (G). Includes soil texture classification (USDA and DPI groupings), maximum allowed doses (MAS), Olsen P and exchangeable K availability classes, soil pH / carbonate / CEC classification, fertilization distribution plan with organic and mineral fertilisers, end-of-cycle soil P and K estimation, multi-index vegetation index engine (NDVI, NDRE, GNDVI, CIred-edge, MCARI, MSAVI2) for Sentinel-2 and UAV imagery, Nitrogen Nutrition Index (NNI) computation based on species- specific critical-N dilution curves (Lemaire &amp; Gastal 1997), Gaussian- process retrieval of canopy biophysical variables (LAI, Cw, Cm, Cab, canopy nitrogen content) from Sentinel-2 L2A imagery (pyeogpr GPR models; Estevez et al. 2022) for remote-sensing-driven NNI mapping, and variable-rate N prescription (calibration and Holland &amp; Schepers) with mass-balance constraint, and optional DPI + QUEFTS coupling (\code{optimize_VR_DPI}) with Rquefts. Includes tools for integrated and precision nutrient management.'>
+<meta property="og:description" content='Calculates N, P2O5 and K2O fertilization requirements following the Disciplinari di Produzione Integrata (DPI) Emilia-Romagna – method of the balance (Allegato 2) and the "Scheda a dose Standard" simplified method. It implements the nutrient balance model used by FertDPI / Fert_Office (v1.26, Febbraio 2026) and accounts for crop demand (A), soil supply (B1/B2/A-Mantenimento), leaching (C1, C2, H), immobilization (D), previous crop residues (E), organic fertilization (F, F_org), and natural deposition (G). Includes soil texture classification (USDA and DPI groupings), maximum allowed doses (MAS), Olsen P and exchangeable K availability classes, soil pH / carbonate / CEC classification, fertilization distribution plan with organic and mineral fertilisers, end-of-cycle soil P and K estimation, multi-index vegetation index engine (NDVI, NDRE, GNDVI, CIred-edge, MCARI, MSAVI2) for Sentinel-2 and UAV imagery, Nitrogen Nutrition Index (NNI) computation based on species- specific critical-N dilution curves (Lemaire &amp; Gastal 1997), Gaussian- process retrieval of canopy biophysical variables (LAI, Cw, Cm, Cab, canopy nitrogen content) from Sentinel-2 L2A imagery (pyeogpr GPR models; Estevez et al. 2022) for remote-sensing-driven NNI mapping, and variable-rate N prescription (calibration and Holland &amp; Schepers) with mass-balance constraint, and optional DPI + QUEFTS coupling (\code{optimize_VR_DPI}) with Rquefts. Includes tools for integrated and precision nutrient management.'>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">NFert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,8 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="nfert">NFert<a class="anchor" aria-label="anchor" href="#nfert"></a>
 </h1></div>
+<!-- badges: start -->
+
 <p><strong>N, P and K fertilization following Emilia-Romagna DPI 2026</strong></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
@@ -108,8 +110,72 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install from GitHub (once available)</span></span>
-<span><span class="co"># devtools::install_github("MCroci/NFert")</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mcroci/NFert"</span><span class="op">)</span></span></code></pre></div>
+<p>See also the <a href="https://mcroci.github.io/NFert/">pkgdown site</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="course-lab-workflow-companion-teaching-repo">Course lab workflow (companion teaching repo)<a class="anchor" aria-label="anchor" href="#course-lab-workflow-companion-teaching-repo"></a>
+</h2>
+<p>If you use the <strong>lab-agricoltura-di-precisione</strong> exercise scripts together with this package, the mapping is:</p>
+<table class="table">
+<colgroup>
+<col width="43%">
+<col width="56%">
+</colgroup>
+<thead><tr>
+<th>Exercise script</th>
+<th>Main NFert entry points</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>01_bilancio_N.R</code></td>
+<td>
+<code><a href="reference/farm_balance.html">farm_balance()</a></code>, <code><a href="reference/N_balance.html">N_balance()</a></code>
+</td>
+</tr>
+<tr>
+<td><code>02_suolo_IDW.R</code></td>
+<td>interpolation outputs feed <code><a href="reference/spatial_N_balance.html">spatial_N_balance()</a></code> via rasters</td>
+</tr>
+<tr>
+<td><code>03_bilancio_spaziale.R</code></td>
+<td><code><a href="reference/spatial_N_balance.html">spatial_N_balance()</a></code></td>
+</tr>
+<tr>
+<td><code>04_NDVI_calibrazione.R</code></td>
+<td><code><a href="reference/compute_vi.html">compute_vi()</a></code></td>
+</tr>
+<tr>
+<td><code>05_NNI_singolo_scena.R</code></td>
+<td>
+<code><a href="reference/estimate_biophysical.html">estimate_biophysical()</a></code>, <code><a href="reference/compute_NNI_from_S2.html">compute_NNI_from_S2()</a></code>
+</td>
+</tr>
+<tr>
+<td><code>06_NNI_serie_temporale.R</code></td>
+<td>
+<code><a href="reference/estimate_biophysical.html">estimate_biophysical()</a></code>, <code><a href="reference/crop_params_NNI.html">crop_params_NNI()</a></code>, NNI helpers</td>
+</tr>
+<tr>
+<td><code>07_prescrizione_VRT.R</code></td>
+<td><code><a href="reference/build_strip_prescription.html">build_strip_prescription()</a></code></td>
+</tr>
+<tr>
+<td><code>08_export_macchine.R</code></td>
+<td><code><a href="reference/export_prescription_all.html">export_prescription_all()</a></code></td>
+</tr>
+<tr>
+<td><code>09_figure_prescrizioni_metodi.R</code></td>
+<td>reads grids from step 07 (no new NFert calls)</td>
+</tr>
+<tr>
+<td><code>10_biophysical_mean_vs_pixel.R</code></td>
+<td><code><a href="reference/estimate_biophysical.html">estimate_biophysical()</a></code></td>
+</tr>
+</tbody>
+</table>
+<p>Install course dependencies once with <code>source("esercitazioni/00_install_packages.R")</code> from the lab repository root.</p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
@@ -265,7 +331,15 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mcroci/NFert/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/mcroci/NFert/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/mcroci/NFert/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/mcroci/NFert/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://github.com/mcroci/NFert/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/mcroci/NFert/actions/workflows/test-coverage.yaml/badge.svg" alt="Coverage"></a></li>
+<li><a href="https://opensource.org/licenses/MIT" class="external-link"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>

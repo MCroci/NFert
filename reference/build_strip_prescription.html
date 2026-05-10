@@ -17,7 +17,7 @@ GeoJSON / ISOXML / John Deere / Trimble export."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">NFert</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,7 @@ GeoJSON / ISOXML / John Deere / Trimble export.</p>
 <span>  max_dose <span class="op">=</span> <span class="fl">220</span>,</span>
 <span>  vi_low <span class="op">=</span> <span class="fl">0.35</span>,</span>
 <span>  vi_high <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  calibration_inverse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  thr_lo <span class="op">=</span> <span class="fl">0.9</span>,</span>
 <span>  thr_hi <span class="op">=</span> <span class="fl">1.1</span>,</span>
 <span>  n_classes <span class="op">=</span> <span class="fl">5</span>,</span>
@@ -144,9 +145,19 @@ with vegetation index (0-1). Required for <code>"calibration"</code> and
 
 <dt id="arg-vi-low-vi-high">vi_low, vi_high<a class="anchor" aria-label="anchor" href="#arg-vi-low-vi-high"></a></dt>
 <dd><p>Two-point calibration anchors
-(<code>variability = "calibration"</code>). Below <code>vi_low</code> the dose
-is capped to <code>max_dose</code>; above <code>vi_high</code> to
-<code>min_dose</code>.</p></dd>
+(<code>variability = "calibration"</code>). With <code>calibration_inverse = TRUE</code>
+(default), below <code>vi_low</code> the dose is capped to <code>max_dose</code>;
+above <code>vi_high</code> to <code>min_dose</code>. With <code>FALSE</code>, below
+<code>vi_low</code> the dose is capped to <code>min_dose</code>; above <code>vi_high</code>
+to <code>max_dose</code>.</p></dd>
+
+
+<dt id="arg-calibration-inverse">calibration_inverse<a class="anchor" aria-label="anchor" href="#arg-calibration-inverse"></a></dt>
+<dd><p>Logical. If <code>TRUE</code> (default), NDVI and dose
+are inversely related along the segment (<code>vi_low</code> \(\rightarrow\)
+<code>max_dose</code>). If <code>FALSE</code>, NDVI and dose increase together
+(<code>vi_low</code> \(\rightarrow\) <code>min_dose</code>). Applies to
+<code>"calibration"</code> and to dose ordering in <code>"classes"</code>.</p></dd>
 
 
 <dt id="arg-thr-lo-thr-hi">thr_lo, thr_hi<a class="anchor" aria-label="anchor" href="#arg-thr-lo-thr-hi"></a></dt>
@@ -194,9 +205,10 @@ dose. Useful as a baseline.</p></dd>
 
 <dt><code>"calibration"</code></dt>
 <dd><p>Samples the mean <code>vi_raster</code> value
-per strip and maps it to a dose via a two- or three-point
-calibration curve. The dose decreases with vigour (higher VI =
-less N).</p></dd>
+per strip and maps it to a dose via a two-point linear curve between
+<code>vi_low</code> and <code>vi_high</code>. With <code>calibration_inverse = TRUE</code>
+(default), higher VI implies lower dose (typical side-dress). With
+<code>FALSE</code>, higher VI implies higher dose.</p></dd>
 
 <dt><code>"nni"</code></dt>
 <dd><p>Samples the mean <code>nni_raster</code> value per
@@ -207,10 +219,10 @@ gets <code>n_target</code>, excessive (NNI &gt; <code>thr_hi</code>) gets
 <code>min_dose</code>.</p></dd>
 
 <dt><code>"classes"</code></dt>
-<dd><p>Assigns doses equal to
-<code>seq(min_dose, max_dose, length.out = n_classes)</code> based on
-the k-quantile class of the mean <code>vi_raster</code> value per
-strip. Useful when a categorical map is preferred.</p></dd>
+<dd><p>Splits strips into <code>n_classes</code> NDVI quantiles
+and assigns an increasing or decreasing dose ladder consistent with
+<code>calibration_inverse</code>: when <code>TRUE</code>, the lowest VI class gets
+<code>max_dose</code>; when <code>FALSE</code>, it gets <code>min_dose</code>.</p></dd>
 
 
 </dl><p>Regardless of the method, the mean dose across the field is rescaled
@@ -237,9 +249,7 @@ defines the driving direction.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Pick one feature from the demo farm</span></span></span>
-<span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example_farm.geojson"</span>, package <span class="op">=</span> <span class="st">"NFert"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/example_farm.geojson"</span>, package <span class="op">=</span> <span class="st">"NFert"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">farm</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="va">ex</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">field</span> <span class="op">&lt;-</span> <span class="va">farm</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>  <span class="co"># 5.2 ha silage-maize plot</span></span></span>
 <span class="r-in"><span></span></span>
@@ -247,8 +257,10 @@ defines the driving direction.</p>
 <span class="r-in"><span><span class="va">rx</span> <span class="op">&lt;-</span> <span class="fu">build_strip_prescription</span><span class="op">(</span><span class="va">field</span>, machine_width <span class="op">=</span> <span class="fl">24</span>,</span></span>
 <span class="r-in"><span>                                variability <span class="op">=</span> <span class="st">"uniform"</span>,</span></span>
 <span class="r-in"><span>                                n_target <span class="op">=</span> <span class="fl">180</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>st_centroid assumes attributes are constant over geometries</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># VI-based 40-180 band calibration, 36 m machine</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># VI-based 40-180 band calibration, 36 m machine (supply `vi_raster` aligned to field)</span></span></span>
 <span class="r-in"><span><span class="va">rx2</span> <span class="op">&lt;-</span> <span class="fu">build_strip_prescription</span><span class="op">(</span><span class="va">field</span>, machine_width <span class="op">=</span> <span class="fl">36</span>,</span></span>
 <span class="r-in"><span>                                 variability <span class="op">=</span> <span class="st">"calibration"</span>,</span></span>
 <span class="r-in"><span>                                 vi_raster <span class="op">=</span> <span class="va">my_ndvi</span>,</span></span>

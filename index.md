@@ -84,9 +84,33 @@ end-of-cycle soil P and K estimation and precision agriculture
 
 ``` r
 
-# Install from GitHub (once available)
-# devtools::install_github("MCroci/NFert")
+# install.packages("remotes")
+remotes::install_github("mcroci/NFert")
 ```
+
+See also the [pkgdown site](https://mcroci.github.io/NFert/).
+
+## Course lab workflow (companion teaching repo)
+
+If you use the **lab-agricoltura-di-precisione** exercise scripts
+together with this package, the mapping is:
+
+| Exercise script | Main NFert entry points |
+|----|----|
+| `01_bilancio_N.R` | [`farm_balance()`](https://mcroci.github.io/NFert/reference/farm_balance.md), [`N_balance()`](https://mcroci.github.io/NFert/reference/N_balance.md) |
+| `02_suolo_IDW.R` | interpolation outputs feed [`spatial_N_balance()`](https://mcroci.github.io/NFert/reference/spatial_N_balance.md) via rasters |
+| `03_bilancio_spaziale.R` | [`spatial_N_balance()`](https://mcroci.github.io/NFert/reference/spatial_N_balance.md) |
+| `04_NDVI_calibrazione.R` | [`compute_vi()`](https://mcroci.github.io/NFert/reference/compute_vi.md) |
+| `05_NNI_singolo_scena.R` | [`estimate_biophysical()`](https://mcroci.github.io/NFert/reference/estimate_biophysical.md), [`compute_NNI_from_S2()`](https://mcroci.github.io/NFert/reference/compute_NNI_from_S2.md) |
+| `06_NNI_serie_temporale.R` | [`estimate_biophysical()`](https://mcroci.github.io/NFert/reference/estimate_biophysical.md), [`crop_params_NNI()`](https://mcroci.github.io/NFert/reference/crop_params_NNI.md), NNI helpers |
+| `07_prescrizione_VRT.R` | [`build_strip_prescription()`](https://mcroci.github.io/NFert/reference/build_strip_prescription.md) |
+| `08_export_macchine.R` | [`export_prescription_all()`](https://mcroci.github.io/NFert/reference/export_prescription_all.md) |
+| `09_figure_prescrizioni_metodi.R` | reads grids from step 07 (no new NFert calls) |
+| `10_biophysical_mean_vs_pixel.R` | [`estimate_biophysical()`](https://mcroci.github.io/NFert/reference/estimate_biophysical.md) |
+
+Install course dependencies once with
+`source("esercitazioni/00_install_packages.R")` from the lab repository
+root.
 
 ## Quick Start
 

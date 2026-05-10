@@ -110,15 +110,18 @@ N_balance(
 
 - soil_group:
 
-  Optional. Soil group (e.g. from
-  [`calc_soil_group_and_id_rag()`](https://mcroci.github.io/NFert/reference/calc_soil_group_and_id_rag.md))
-  to use DPI efficiency for current-year organic. If set,
-  `distribution_efficiency` should also be set.
+  Optional override for DPI organic-N efficiency (texture class). When
+  `NULL` (default), `N_balance()` uses the `soil.group` computed from
+  `sand` and `clay` via
+  [`calc_soil_group_and_id_rag()`](https://mcroci.github.io/NFert/reference/calc_soil_group_and_id_rag.md),
+  so current-year organic (`Forg`) follows the same texture as `B`.
 
 - distribution_efficiency:
 
-  Optional. "efficient", "medium", or "low" (DPI distribution). Used
-  with `soil_group` for DPI organic N efficiency.
+  Optional. `"efficient"`, `"medium"`, or `"low"` (DPI distribution
+  quality). When `NULL` (default), `N_balance()` uses `"medium"` for
+  `Forg` (typical farm practice when not specified). Ignored for `Forg`
+  when `forg_quantity == 0`.
 
 - soil_seeding:
 
@@ -187,6 +190,8 @@ N_balance(expected_yield_tons_ha = 15, crop = "Mais trinciato (classe 700)",
           prev_crop = "Winter cereals straw removal", source = "Cattle slurry",
           fertorg_frequency = "every year", location = "Plain adjacent to urbanized areas",
           forg_quantity = 100)
-#>      A      B    b1    b2 C1    C2       D E F Forg    G surplus_pluviometrico
-#> 1 58.5 38.808 29.16 9.648 20 2.916 21.6424 0 0  0.3 13.4                 FALSE
+#>      A      B    b1    b2    C1 C2       D E F   Forg    G
+#> 1 58.5 38.808 29.16 9.648 2.916  4 21.6424 0 0 180.45 13.4
+#>   surplus_pluviometrico
+#> 1                 FALSE
 ```

@@ -9,8 +9,8 @@ using the USDA soil texture triangle.
 calc_soil_group_and_id_rag(
   clay = 10,
   sand = 35,
-  tri3.table = NFert::tri3.table,
-  soil.table = NFert::soil.table
+  tri3.table = nfert_data_get("tri3.table"),
+  soil.table = nfert_data_get("soil.table")
 )
 ```
 
@@ -27,14 +27,13 @@ calc_soil_group_and_id_rag(
 - tri3.table:
 
   A matrix containing the simplified soil texture classes based on clay
-  and sand percentages. The default is
-  [`NFert::tri3.table`](https://mcroci.github.io/NFert/reference/NFert-data.md).
+  and sand percentages. The default is the package dataset `tri3.table`.
 
 - soil.table:
 
   A data frame mapping soil texture classes (ID_Suo) to soil groups and
   ID_Rag. It should have at least three columns: `ID_Suo`, `Group`, and
-  `ID_Rag`. The default is obtained from the NFert package.
+  `ID_Rag`. The default is the package dataset `soil.table`.
 
 ## Value
 

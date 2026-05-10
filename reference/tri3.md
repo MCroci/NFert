@@ -6,7 +6,7 @@ percentages.
 ## Usage
 
 ``` r
-tri3(clay = 10, sand = 35, tri3.table = NFert::tri3.table)
+tri3(clay = 10, sand = 35, tri3.table = nfert_data_get("tri3.table"))
 ```
 
 ## Arguments
@@ -22,8 +22,7 @@ tri3(clay = 10, sand = 35, tri3.table = NFert::tri3.table)
 - tri3.table:
 
   A matrix containing the simplified soil texture classes based on clay
-  and sand percentages. The default is
-  [`NFert::tri3.table`](https://mcroci.github.io/NFert/reference/NFert-data.md).
+  and sand percentages. The default is the package dataset `tri3.table`.
 
 ## Value
 

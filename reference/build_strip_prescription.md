@@ -25,6 +25,7 @@ build_strip_prescription(
   max_dose = 220,
   vi_low = 0.35,
   vi_high = 0.8,
+  calibration_inverse = TRUE,
   thr_lo = 0.9,
   thr_hi = 1.1,
   n_classes = 5,
@@ -86,9 +87,18 @@ build_strip_prescription(
 
 - vi_low, vi_high:
 
-  Two-point calibration anchors (`variability = "calibration"`). Below
-  `vi_low` the dose is capped to `max_dose`; above `vi_high` to
-  `min_dose`.
+  Two-point calibration anchors (`variability = "calibration"`). With
+  `calibration_inverse = TRUE` (default), below `vi_low` the dose is
+  capped to `max_dose`; above `vi_high` to `min_dose`. With `FALSE`,
+  below `vi_low` the dose is capped to `min_dose`; above `vi_high` to
+  `max_dose`.
+
+- calibration_inverse:
+
+  Logical. If `TRUE` (default), NDVI and dose are inversely related
+  along the segment (`vi_low` \\\rightarrow\\ `max_dose`). If `FALSE`,
+  NDVI and dose increase together (`vi_low` \\\rightarrow\\ `min_dose`).
+  Applies to `"calibration"` and to dose ordering in `"classes"`.
 
 - thr_lo, thr_hi:
 
@@ -131,8 +141,9 @@ so that downstream tools see consistent coordinates.
 - `"calibration"`:
 
   Samples the mean `vi_raster` value per strip and maps it to a dose via
-  a two- or three-point calibration curve. The dose decreases with
-  vigour (higher VI = less N).
+  a two-point linear curve between `vi_low` and `vi_high`. With
+  `calibration_inverse = TRUE` (default), higher VI implies lower dose
+  (typical side-dress). With `FALSE`, higher VI implies higher dose.
 
 - `"nni"`:
 
@@ -143,10 +154,10 @@ so that downstream tools see consistent coordinates.
 
 - `"classes"`:
 
-  Assigns doses equal to
-  `seq(min_dose, max_dose, length.out = n_classes)` based on the
-  k-quantile class of the mean `vi_raster` value per strip. Useful when
-  a categorical map is preferred.
+  Splits strips into `n_classes` NDVI quantiles and assigns an
+  increasing or decreasing dose ladder consistent with
+  `calibration_inverse`: when `TRUE`, the lowest VI class gets
+  `max_dose`; when `FALSE`, it gets `min_dose`.
 
 Regardless of the method, the mean dose across the field is rescaled to
 match `n_target` (mass-balance constraint) when `preserve_mean = TRUE`
@@ -170,8 +181,6 @@ the driving direction.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Pick one feature from the demo farm
 ex <- system.file("extdata/example_farm.geojson", package = "NFert")
 farm <- sf::st_read(ex, quiet = TRUE)
 field <- farm[1, ]  # 5.2 ha silage-maize plot
@@ -180,8 +189,10 @@ field <- farm[1, ]  # 5.2 ha silage-maize plot
 rx <- build_strip_prescription(field, machine_width = 24,
                                 variability = "uniform",
                                 n_target = 180)
+#> Warning: st_centroid assumes attributes are constant over geometries
 
-# VI-based 40-180 band calibration, 36 m machine
+if (FALSE) { # \dontrun{
+# VI-based 40-180 band calibration, 36 m machine (supply `vi_raster` aligned to field)
 rx2 <- build_strip_prescription(field, machine_width = 36,
                                  variability = "calibration",
                                  vi_raster = my_ndvi,

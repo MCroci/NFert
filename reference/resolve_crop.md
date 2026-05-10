@@ -11,7 +11,7 @@ canonical English key used for joins downstream.
 ## Usage
 
 ``` r
-resolve_crop(x, table = NFert::uptake_table)
+resolve_crop(x, table = nfert_data_get("uptake_table"))
 ```
 
 ## Arguments

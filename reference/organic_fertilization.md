@@ -2,10 +2,14 @@
 
 Calculates the amount of nitrogen (N) supplied to the soil through
 organic fertilization. Optionally applies **DPI efficiency** by material
-type, soil texture and distribution technique (when `soil_group` and
-`distribution_efficiency` are given). In the balance formula the term to
-subtract is the **efficient N** (N utile) available to the crop in the
-year of application, not total N (DPI Guida / FertDPI).
+type, soil `distribution_efficiency` are both given). If either is
+`NULL`, falls back to `f.table`: `value * quantity / 100`. Function
+[`N_balance()`](https://mcroci.github.io/NFert/reference/N_balance.md)
+passes computed soil texture and defaults distribution to `"medium"` so
+`Forg` matches the DPI path used by Fert_Office (*Apporti al terreno*).
+In the balance formula the term to subtract is the **efficient N** (N
+utile) available to the crop in the year of application, not total N
+(DPI Guida / FertDPI).
 
 ## Usage
 
@@ -16,7 +20,7 @@ organic_fertilization(
   quantity = 100,
   soil_group = NULL,
   distribution_efficiency = NULL,
-  f.table = NFert::f.table
+  f.table = nfert_data_get("f.table")
 )
 ```
 
@@ -46,9 +50,9 @@ organic_fertilization(
 
 - distribution_efficiency:
 
-  Optional. "efficient", "medium", or "low" (DPI: Alta/Media/Bassa).
-  Required if `soil_group` is set. Efficient = injection, fertigation,
-  incorporation within 4 h.
+  Optional. `"efficient"`, `"medium"`, or `"low"` (DPI:
+  Alta/Media/Bassa). Required together with `soil_group` for the DPI
+  efficiency path.
 
 - f.table:
 

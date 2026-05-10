@@ -1,6 +1,7 @@
 # Leaching Loss of Nitrogen
 
-Calculates the nitrogen leaching loss from soil based on two methods:
+DPI 2026 (Allegato 2; foglio `C&D` di Fert_Office v1.26): loss of
+readily available mineral nitrogen (\\b_1\\) from leaching.
 
 ## Usage
 
@@ -26,44 +27,65 @@ leaching_loss(
 
 - oxygen_availability:
 
-  Oxygen availability level in the soil (e.g., "Normal").
+  Oxygen availability level in the soil: one of `ca.table$availability`
+  (e.g. `"Normal"`, `"Slow"`, `"Fast"`).
 
 - id_rag:
 
-  Soil drainage index (ID_Rag).
+  Soil drainage index (`ID_Rag`); retained for backward compatibility
+  with earlier NFert signatures (not used in the \\C_a\\/\\C_b\\
+  formulas above).
 
 - b1:
 
-  Readily available nitrogen in the soil (kg/ha).
+  Readily available nitrogen in the soil (kg N/ha).
 
 ## Value
 
-A list containing: - C1: Nitrogen leaching loss in the autumn-winter
-season (kg/ha). - C2: Nitrogen leaching loss after leaving winter
-(kg/ha). - surplus_pluviometrico: Logical. TRUE when winter_rain +
-start_spring_rain \>= 300 mm (DPI 2026 scheda a dose standard: attiva
-l'incremento "Lisciviazione x surplus pluviometrico").
+A list containing:
+
+- C1:
+
+  Autumn–winter leaching loss (kg N/ha).
+
+- C2:
+
+  February leaching loss (kg N/ha).
+
+- surplus_pluviometrico:
+
+  Logical. `TRUE` when `winter_rain + start_spring_rain >= 300` mm (DPI
+  2026 scheda a dose standard: surplus-pluviometric flag).
 
 ## Details
 
-1.  Precipitation-Based Method (C1):
+- **C1** (\\C_a\\, autumn–winter):
 
-    - Considers winter rainfall (October 1 to January 31).
+  Depends on winter rainfall (1 October – 31 January), `winter_rain`
+  (mm):
 
-    - No loss if rainfall \< 150 mm.
+  - \\\leq 150\\ mm \\\rightarrow\\ no loss (0);
 
-    - Progressive loss of readily available nitrogen (b1) if rainfall is
-      150-250 mm.
+  - \\(150,\\250\]\\ mm \\\rightarrow\\ linear fraction of \\b_1\\:
+    \\b_1 \times (R\_{\mathrm{win}} - 150) / 100\\;
 
-    - Complete loss of readily available nitrogen if rainfall \> 250 mm.
+  - \\\> 250\\ mm \\\rightarrow\\ loss of the entire \\b_1\\ pool
+    (cannot exceed \\b_1\\).
 
-2.  Ease of Drainage Method (C2):
+- **C2** (\\C_b\\, February):
 
-    - Estimates leaching based on soil drainage capacity (ID_Rag) and
-      oxygen availability.
+  Additional loss from February rainfall (`start_spring_rain`, mm)
+  applied only to the *residual* readily available N after \\C_1\\, and
+  only if `winter_rain > 150`. Formula:
+  \\\min(\code{start_spring_rain}/10,\\ b_1 - C_1)\\.
 
-    - Uses lookup tables (`ca.table` and `cb.table`) for specific
-      values.
+Invariant: \\C_1 + C_2 \leq b_1\\.
+
+`oxygen_availability` is validated against
+[`ca.table`](https://mcroci.github.io/NFert/reference/NFert-data.md) for
+consistency with other balance terms; the rainfall formulas above do not
+use the legacy tabular column `cb.table$C` (that column referred to the
+old, incorrect assignment of a fixed loss independent of rainfall).
 
 ## Examples
 
@@ -71,10 +93,10 @@ l'incremento "Lisciviazione x surplus pluviometrico").
 leaching_loss(winter_rain = 160, start_spring_rain = 40,
               oxygen_availability = "Normal", id_rag = 3, b1 = 29.16)
 #> $C1
-#> [1] 20
+#> [1] 2.916
 #> 
 #> $C2
-#> [1] 2.916
+#> [1] 4
 #> 
 #> $surplus_pluviometrico
 #> [1] FALSE

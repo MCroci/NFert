@@ -68,14 +68,14 @@ farm_out[, c("plot_id", "crop", "N_target", "MAS_cap",
 #> Bounding box:  xmin: 9.7122 ymin: 45.048 xmax: 9.7257 ymax: 45.05645
 #> Geodetic CRS:  WGS 84
 #>   plot_id                           crop N_target MAS_cap MAS_ok N_total_kg
-#> 1     P01       Silage maize (class 700)    226.1     340   TRUE     1175.7
-#> 2     P02 Soft wheat FF - strong (grain)    209.9     200  FALSE      713.7
-#> 3     P03    Grain maize 500-700 (grain)    222.9     260   TRUE     1738.6
-#> 4     P04                Soybean (grain)     55.5      NA  FALSE      116.6
+#> 1     P01       Silage maize (class 700)     29.9     340   TRUE      155.5
+#> 2     P02 Soft wheat FF - strong (grain)    194.9     200   TRUE      662.7
+#> 3     P03    Grain maize 500-700 (grain)     77.5     260   TRUE      604.5
+#> 4     P04                Soybean (grain)     29.7      NA  FALSE       62.4
 #> 5     P05                        Alfalfa      0.0      NA  FALSE        0.0
-#> 6     P06       Silage maize (class 500)    234.2      NA  FALSE     1405.2
-#> 7     P07            Durum wheat (grain)    167.6     200   TRUE      620.1
-#> 8     P08                 Barley (grain)    147.0     180   TRUE      411.6
+#> 6     P06       Silage maize (class 500)     40.0      NA  FALSE      240.0
+#> 7     P07            Durum wheat (grain)    141.4     200   TRUE      523.2
+#> 8     P08                 Barley (grain)     32.2     180   TRUE       90.2
 #>                         geometry
 #> 1 POLYGON ((9.715 45.048, 9.7...
 #> 2 POLYGON ((9.7187 45.048, 9....

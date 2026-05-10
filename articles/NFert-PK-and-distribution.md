@@ -237,12 +237,12 @@ n_bal <- N_balance(
 
 n_bal
 #>       A     B b1    b2 C1 C2     D E F Forg    G surplus_pluviometrico
-#> 1 186.6 73.84 39 34.84 30  0 28.46 0 0    0 13.4                 FALSE
+#> 1 186.6 73.84 39 34.84  0  0 28.46 0 0    0 13.4                 FALSE
 
 # Final dose
 n_dose <- calculate_N_fertilization(n_bal)
 n_dose
-#> [1] 157.82
+#> [1] 127.82
 ```
 
 ``` r
@@ -291,7 +291,7 @@ check_MAS(crop, n_dose)
 #> [1] NA
 #> 
 #> $N_planned
-#> [1] 157.82
+#> [1] 127.82
 #> 
 #> $message
 #> [1] "Crop not found in MAS table; check not performed."
@@ -352,7 +352,7 @@ leach <- leaching_loss(winter_rain = winter_rain,
                        b1 = fertility$b1)
 leach
 #> $C1
-#> [1] 30
+#> [1] 0
 #> 
 #> $C2
 #> [1] 0
@@ -844,7 +844,7 @@ compatibility with crop cycles in `cycle_modality.table`:
 
 ``` r
 
-head(NFert::distribution_modalities.table, 12)
+head(distribution_modalities.table, 12)
 #>    ID_Mo                            modality_epoch
 #> 1      1        Bare soil, sown the following year
 #> 2      2   Straw residues, sown the following year
@@ -880,7 +880,7 @@ Available organic matrices and mineral products:
 ``` r
 
 # Organic: 21 matrices with their N, P, K and dry-matter titres
-head(NFert::organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
+head(organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
                                "avg_P2O5", "avg_K2O", "fully_zootec")], 10)
 #>                                         fertilizer avg_dm avg_N avg_P2O5
 #> 1                                          compost     65    12      9.0
@@ -906,7 +906,7 @@ head(NFert::organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
 #> 10       7         TRUE
 
 # Mineral: 146 commercial fertilisers
-head(NFert::mineral_fertilizers.table, 10)
+head(mineral_fertilizers.table, 10)
 #>    ID_min                            fertilizer    N P2O5  K2O
 #> 1       1                               Nessuno  0.0    0  0.0
 #> 2       2                   Acido fosforico 85%  0.0   61  0.0
@@ -930,10 +930,10 @@ The full matrix has 220 entries:
 ``` r
 
 # Medium impasto, dose media (125-249 kg N/ha), bovino:
-NFert::efficiency.table[
-  NFert::efficiency.table$ID_Rag == 2 &
-    NFert::efficiency.table$ID_Liv == 2 &
-    NFert::efficiency.table$sector_id == "bov",
+efficiency.table[
+  efficiency.table$ID_Rag == 2 &
+    efficiency.table$ID_Liv == 2 &
+    efficiency.table$sector_id == "bov",
 ]
 #>     ID_Rag ID_Liv sector_id ID_N_org efficiency_pct
 #> 77       2      2       bov        1          44.20
@@ -993,10 +993,10 @@ mais_bal <- N_balance(
   soil_seeding = "traditional"
 )
 mais_bal
-#>      A      B   b1     b2 C1   C2      D E F Forg     G surplus_pluviometrico
-#> 1 58.5 56.928 31.2 25.728 30 36.2 24.232 0 0 0.24 10.05                  TRUE
+#>      A      B   b1     b2   C1 C2      D E F   Forg     G surplus_pluviometrico
+#> 1 58.5 56.928 31.2 25.728 31.2  0 24.232 0 0 159.12 10.05                  TRUE
 calculate_N_fertilization(mais_bal)
-#> [1] 81.714
+#> [1] 0
 ```
 
 ## Alternative scenario: apple orchard in piena produzione
@@ -1017,10 +1017,10 @@ apple_n <- N_balance(
   forg_quantity = 0
 )
 apple_n
-#>     A     B   b1 b2 C1    C2    D E F Forg  G surplus_pluviometrico
-#> 1 116 106.8 46.8 60 30 32.76 26.7 0 0    0 10                 FALSE
+#>     A     B   b1 b2    C1 C2    D E F Forg  G surplus_pluviometrico
+#> 1 116 106.8 46.8 60 32.76  3 26.7 0 0    0 10                 FALSE
 calculate_N_fertilization(apple_n)
-#> [1] 88.66
+#> [1] 61.66
 
 apple_p <- P_balance(expected_yield_tons_ha = 40,
                      crop = "Melo frutti, legno e foglie",
@@ -1095,7 +1095,7 @@ ndvi
 
 # Field-average N from the balance
 n_dose                 # ~142 kg/ha (computed earlier in this vignette)
-#> [1] 157.82
+#> [1] 127.82
 
 # Variable-rate via two-point calibration; envelope of +/-25%
 vr_cal <- variable_rate_N(
@@ -1107,11 +1107,11 @@ vr_cal <- variable_rate_N(
 )
 
 vr_cal$mean_kg_ha       # ~ n_dose
-#> [1] 159.1884
+#> [1] 128.9633
 vr_cal$min_kg_ha
-#> [1] 118.365
+#> [1] 95.865
 vr_cal$max_kg_ha
-#> [1] 190
+#> [1] 159.775
 
 raster::plot(vr_cal$rate_raster,
              main = "Variable rate N (calibration) - kg/ha",
@@ -1132,7 +1132,7 @@ vr_hs <- variable_rate_N(
 )
 
 vr_hs$mean_kg_ha
-#> [1] 149.5423
+#> [1] 127.4532
 raster::plot(vr_hs$rate_raster,
              main = "Variable rate N (Holland & Schepers) - kg/ha",
              col  = grDevices::hcl.colors(50, "YlOrBr", rev = TRUE))
@@ -1146,9 +1146,9 @@ raster::plot(vr_hs$rate_raster,
 
 # Total N applied to the field (assuming each pixel has the same area)
 mean(getValues(vr_cal$rate_raster), na.rm = TRUE)
-#> [1] 159.1884
+#> [1] 128.9633
 mean(getValues(vr_hs$rate_raster),  na.rm = TRUE)
-#> [1] 149.5423
+#> [1] 127.4532
 
 # Histogram comparison
 oldpar <- par(mfrow = c(1, 2))
@@ -1190,12 +1190,12 @@ plan_vr <- plan_distribution(
 )
 plan_vr$rows
 #>    source             fertilizer year modality_epoch ID_Mo quantity_t_ha
-#> 1 mineral UREA AGRICOLA PRIL.46%   NA             11    11     0.3460618
+#> 1 mineral UREA AGRICOLA PRIL.46%   NA             11    11     0.2803549
 #>       N_kg P2O5_kg K2O_kg efficiency_pct N_useful P2O5_useful K2O_useful zootec
-#> 1 159.1884       0      0            100 159.1884           0          0  FALSE
+#> 1 128.9633       0      0            100 128.9633           0          0  FALSE
 plan_vr$totals
 #>    N_useful P2O5_useful  K2O_useful 
-#>    159.1884      0.0000      0.0000
+#>    128.9633      0.0000      0.0000
 ```
 
 ### Three-point calibration (advanced)
@@ -1222,7 +1222,7 @@ NFert exposes 33 internal tables; the most useful in day-to-day work:
 ``` r
 
 # Crop master list
-head(NFert::uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
+head(uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
                               "reference_yield")], 5)
 #>   crop_id                                              crop    N      P2O5
 #> 1      A2  Kiwifruit (green flesh) - fruit, wood and leaves 0.59 0.1600000
@@ -1238,7 +1238,7 @@ head(NFert::uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
 #> 5 0.7411538              NA
 
 # MAS (massimali) 2026
-head(NFert::mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
+head(mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
                            "max_N_dose")], 5)
 #>   crop_id                                              crop MAS_N standard_N
 #> 1      A2  Kiwifruit (green flesh) - fruit, wood and leaves   150        120
@@ -1254,7 +1254,7 @@ head(NFert::mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
 #> 5         NA
 
 # Gri_P and Gri_K classes
-NFert::p_availability.table
+p_availability.table
 #>   ID_Gri_P min_P_ppm max_P_ppm min_P2O5_ppm max_P2O5_ppm    rating
 #> 1        1         0         5         0.00        11.45  very low
 #> 2        2         5        10        11.45        22.90       low
@@ -1267,7 +1267,7 @@ NFert::p_availability.table
 #> 3          media      normale
 #> 4        elevata      normale
 #> 5  molto elevata   molto alto
-NFert::k_availability.table
+k_availability.table
 #>    ID_Gri_K          group           group_it min_K_ppm max_K_ppm min_K2O_ppm
 #> 1         1 Sandy textures           Sabbiosi         0        40           0
 #> 2         2 Sandy textures           Sabbiosi        40        80          48
@@ -1296,7 +1296,7 @@ NFert::k_availability.table
 #> 12      1198.8     high     elevata        4
 
 # Texture grouping with soil weights
-NFert::texture_groups.table
+texture_groups.table
 #>            group group_canonical_it group_singular_it ID_Rag specific_weight
 #> 1  Clay textures Argillosi e limosi         Argilloso      3             1.2
 #> 2 Sandy textures           Sabbiosi          Sabbioso      1             1.4
@@ -1364,18 +1364,17 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] raster_3.6-32 sp_2.2-1      NFert_0.13.1 
+#> [1] raster_3.6-32 sp_2.2-1      NFert_0.14.0 
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] jsonlite_2.0.0     compiler_4.6.0     Rcpp_1.1.1-1.1     jquerylib_0.1.4   
 #>  [5] systemfonts_1.3.2  textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     
-#>  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-0          
-#> [13] knitr_1.51         htmlwidgets_1.6.4  units_1.0-1        desc_1.4.3        
+#>  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-1          
+#> [13] knitr_1.51         htmlwidgets_1.6.4  desc_1.4.3         units_1.0-1       
 #> [17] DBI_1.3.0          bslib_0.10.0       rlang_1.2.0        cachem_1.1.0      
-#> [21] terra_1.9-11       xfun_0.57          fs_2.1.0           sass_0.4.10       
-#> [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      magrittr_2.0.5    
-#> [29] class_7.3-23       digest_0.6.39      grid_4.6.0         lifecycle_1.0.5   
-#> [33] KernSmooth_2.23-26 proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20  
-#> [37] ragg_1.5.2         e1071_1.7-17       rmarkdown_2.31     tools_4.6.0       
-#> [41] htmltools_0.5.9
+#> [21] terra_1.9-25       xfun_0.57          fs_2.1.0           sass_0.4.10       
+#> [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      class_7.3-23      
+#> [29] digest_0.6.39      grid_4.6.0         lifecycle_1.0.5    KernSmooth_2.23-26
+#> [33] proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20   ragg_1.5.2        
+#> [37] e1071_1.7-17       rmarkdown_2.31     tools_4.6.0        htmltools_0.5.9
 ```
