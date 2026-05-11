@@ -79,7 +79,8 @@ Every feature must carry at least:
 | `source` | "Cattle slurry" or "None"/NA | organic source |
 | `fertorg_frequency` | "every year" |  |
 | `location` | "Plain adjacent to urbanized areas" |  |
-| `forg_quantity` | 100 | kg N ha\\^{-1}\\ from organic |
+| `forg_quantity` | 100 | organic dose this year (m\\^3\\/ha or t/ha, see [`N_balance`](https://mcroci.github.io/NFert/reference/N_balance.md)) |
+| `organic_previous_year_N` | 50 | optional; kg N ha\\^{-1}\\ from organic applied last year (term `F`) |
 | `area_ha` | 5.2 | used to derive `N_total_kg` |
 
 Italian aliases (Frumento tenero, Liquame bovino, Cereali vernini -

@@ -1372,7 +1372,7 @@ sessionInfo()
 #>  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-1          
 #> [13] knitr_1.51         htmlwidgets_1.6.4  desc_1.4.3         units_1.0-1       
 #> [17] DBI_1.3.0          bslib_0.10.0       rlang_1.2.0        cachem_1.1.0      
-#> [21] terra_1.9-25       xfun_0.57          fs_2.1.0           sass_0.4.10       
+#> [21] terra_1.9-27       xfun_0.57          fs_2.1.0           sass_0.4.10       
 #> [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      class_7.3-23      
 #> [29] digest_0.6.39      grid_4.6.0         lifecycle_1.0.5    KernSmooth_2.23-26
 #> [33] proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20   ragg_1.5.2        

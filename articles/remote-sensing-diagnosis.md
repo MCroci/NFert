@@ -381,7 +381,7 @@ sessionInfo()
 #> [1] raster_3.6-32 sp_2.2-1      NFert_0.14.0 
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] terra_1.9-25      cli_3.6.6         knitr_1.51        rlang_1.2.0      
+#>  [1] terra_1.9-27      cli_3.6.6         knitr_1.51        rlang_1.2.0      
 #>  [5] xfun_0.57         otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0   
 #>  [9] htmltools_0.5.9   ragg_1.5.2        sass_0.4.10       rmarkdown_2.31   
 #> [13] grid_4.6.0        evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
