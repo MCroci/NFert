@@ -46,8 +46,8 @@ crop_en2it <- c(
   "Grain maize 300-400 (whole)"    = "Mais da granella 300-400 (pianta intera)",
   "Sweet maize"                    = "Mais dolce  (spighe)",
   "Sweet maize (whole)"            = "Mais dolce (pianta intera)",
-  "Soft wheat FF"                  = "Grano tenero FF (granella)",
-  "Soft wheat FF (whole)"          = "Grano tenero FF (pianta intera)",
+  "Soft wheat FF - strong (grain)"    = "Grano tenero FF (granella)",
+  "Soft wheat FF - strong (whole plant)" = "Grano tenero FF (pianta intera)",
   "Soft wheat FP/FPS"              = "Grano tenero FP/FPS (granella)",
   "Soft wheat FP/FPS (whole)"      = "Grano tenero FP/FPS (pianta intera)",
   "Biscuit wheat"                  = "Grano tenero biscottiero  (granella)",
@@ -182,6 +182,20 @@ level_en2it <- c(
 
 # ---- Translator functions ------------------------------------------
 
+#' @noRd
+.canonicalize_legacy_crop_en <- function(x) {
+  short <- c(
+    "soft wheat ff" = "Soft wheat FF - strong (grain)",
+    "soft wheat ff (whole)" = "Soft wheat FF - strong (whole plant)"
+  )
+  for (i in seq_along(x)) {
+    if (is.na(x[i]) || !nzchar(x[i])) next
+    k <- tolower(trimws(as.character(x[i])))
+    if (k %in% names(short)) x[i] <- unname(short[k])
+  }
+  x
+}
+
 #' Translate an English alias into its canonical Italian NFert key
 #'
 #' Case-insensitive lookup in one of the NFert translation dictionaries
@@ -213,6 +227,7 @@ nfert_en2it <- function(x, kind = c("crop", "prev_crop", "source",
     modality_epoch = modality_epoch_en2it,
     level          = level_en2it)
   if (is.null(x)) return(x)
+  if (identical(kind, "crop")) x <- .canonicalize_legacy_crop_en(x)
   out <- character(length(x))
   lookup_names <- tolower(names(dict))
   for (i in seq_along(x)) {

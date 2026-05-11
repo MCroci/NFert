@@ -9,13 +9,17 @@
       "Silage maize (class 700)",
       "Silage maize (class 700)",
       "Silage maize (class 700)",
-      "Silage maize (class 500)"
+      "Silage maize (class 500)",
+      "Soft wheat FF - strong (grain)",
+      "Soft wheat FF - strong (whole plant)"
     ),
     c(
       "Mais trinciato (classe 700)",
       "Mais da insilato (classe 700)",
       "Shredded corn class 700",
-      "Mais da insilato (classe 500)"
+      "Mais da insilato (classe 500)",
+      "Soft wheat FF",
+      "Soft wheat FF (whole)"
     )
   )
 }

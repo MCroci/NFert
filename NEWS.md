@@ -12,6 +12,10 @@
   small **Forg** (e.g. 154 m³/ha → ~0.46 kg N/ha). Standalone `organic_fertilization()`
   behaviour is unchanged when `soil_group` is NULL.
 
+### farm_balance
+
+* Reads optional column **`organic_previous_year_N`** (kg N ha⁻¹, DPI term **F**) and passes it to `N_balance()`. **`farm_balance()` documentation** for **`forg_quantity`** now matches **`N_balance()`** (current-year organic material dose, m³/ha or t/ha — not kg N/ha).
+
 ## Version 0.13.2 (2026-05-09) - Leaching C1/C2 vs Fert_Office C&D
 
 ### Fixes
