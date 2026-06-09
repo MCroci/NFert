@@ -382,11 +382,11 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] terra_1.9-27      cli_3.6.6         knitr_1.51        rlang_1.2.0      
-#>  [5] xfun_0.57         otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0   
+#>  [5] xfun_0.58         otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0   
 #>  [9] htmltools_0.5.9   ragg_1.5.2        sass_0.4.10       rmarkdown_2.31   
 #> [13] grid_4.6.0        evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
 #> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    codetools_0.2-20 
 #> [21] fs_2.1.0          Rcpp_1.1.1-1.1    htmlwidgets_1.6.4 systemfonts_1.3.2
-#> [25] lattice_0.22-9    digest_0.6.39     R6_2.6.1          bslib_0.10.0     
+#> [25] lattice_0.22-9    digest_0.6.39     R6_2.6.1          bslib_0.11.0     
 #> [29] tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
 ```
