@@ -10,7 +10,7 @@
 #' @examples max_SO_input("Normal")
 #' @export
 max_SO_input <- function(so_class = c("Poor", "Normal", "Rich"),
-                         so_max_input = NFert::so_max_input) {
+                         so_max_input = nfert_data_get("so_max_input")) {
   choices <- c("Poor", "Normal", "Rich")
   if (length(so_class) == 1L && !is.na(so_class) && !so_class %in% choices) {
     i <- match(tolower(so_class), tolower(choices))
@@ -34,7 +34,7 @@ max_SO_input <- function(so_class = c("Poor", "Normal", "Rich"),
 #' @return List with `rating` (4 classes) and `class` (3-class for SO input).
 #' @examples classify_SOM(SOM = 2, soil_group = "Medio impasto")
 #' @export
-classify_SOM <- function(SOM, soil_group, so.table = NFert::so.table) {
+classify_SOM <- function(SOM, soil_group, so.table = nfert_data_get("so.table")) {
   if (!is.numeric(SOM) || length(SOM) != 1 || is.na(SOM) || SOM < 0) {
     stop("`SOM` must be a non-negative numeric.")
   }

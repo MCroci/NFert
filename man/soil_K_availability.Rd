@@ -11,7 +11,7 @@ soil_K_availability(
   A_demand_K2O,
   clay_pct,
   include_leaching = TRUE,
-  k_availability.table = NFert::k_availability.table
+  k_availability.table = nfert_data_get("k_availability.table")
 )
 }
 \arguments{

@@ -6,7 +6,7 @@
 \usage{
 max_SO_input(
   so_class = c("Poor", "Normal", "Rich"),
-  so_max_input = NFert::so_max_input
+  so_max_input = nfert_data_get("so_max_input")
 )
 }
 \arguments{

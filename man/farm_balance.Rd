@@ -61,7 +61,8 @@ Every feature must carry at least:
 \code{source} \tab "Cattle slurry" or "None"/NA \tab organic source \cr
 \code{fertorg_frequency} \tab "every year" \tab \cr
 \code{location} \tab "Plain adjacent to urbanized areas" \tab \cr
-\code{forg_quantity} \tab 100 \tab kg N ha\eqn{^{-1}} from organic \cr
+\code{forg_quantity} \tab 100 \tab organic dose this year (m\eqn{^3}/ha or t/ha, see \code{\link{N_balance}}) \cr
+\code{organic_previous_year_N} \tab 50 \tab optional; kg N ha\eqn{^{-1}} from organic applied last year (term \code{F}) \cr
 \code{area_ha} \tab 5.2 \tab used to derive \code{N_total_kg}
 }
 Italian aliases (Frumento tenero, Liquame bovino, Cereali vernini -

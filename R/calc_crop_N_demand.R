@@ -36,7 +36,7 @@ calc_crop_N_demand <- function(expected_yield_tons_ha = 10,
                               crop = "Shredded corn class 700",
                               apply_n_fixation = TRUE) {
 
-  uptake_table <- NFert::uptake_table
+  uptake_table <- nfert_data_get("uptake_table")
 
   # Accept either Italian (canonical) or English crop name
   crop <- resolve_crop(crop, table = uptake_table)
@@ -59,7 +59,7 @@ calc_crop_N_demand <- function(expected_yield_tons_ha = 10,
   # both language variants of the crops.table schema.
   fix_pct <- 0
   if (isTRUE(apply_n_fixation)) {
-    ct <- tryCatch(NFert::crops.table, error = function(e) NULL)
+    ct <- tryCatch(nfert_data_get("crops.table"), error = function(e) NULL)
     if (!is.null(ct) && "n_fixation_pct" %in% names(ct)) {
       m <- match(crop, ct$crop)
       if (is.na(m) && "crop_it" %in% names(ct))

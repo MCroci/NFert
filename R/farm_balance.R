@@ -24,7 +24,8 @@
 #' \code{source} \tab "Cattle slurry" or "None"/NA \tab organic source \cr
 #' \code{fertorg_frequency} \tab "every year" \tab \cr
 #' \code{location} \tab "Plain adjacent to urbanized areas" \tab \cr
-#' \code{forg_quantity} \tab 100 \tab kg N ha\eqn{^{-1}} from organic \cr
+#' \code{forg_quantity} \tab 100 \tab organic dose this year (m\eqn{^3}/ha or t/ha, see \code{\link{N_balance}}) \cr
+#' \code{organic_previous_year_N} \tab 50 \tab optional; kg N ha\eqn{^{-1}} from organic applied last year (term \code{F}) \cr
 #' \code{area_ha} \tab 5.2 \tab used to derive \code{N_total_kg}
 #' }
 #' Italian aliases (Frumento tenero, Liquame bovino, Cereali vernini -
@@ -142,17 +143,9 @@ farm_balance <- function(x,
       Ntot                   = as.numeric(row$Ntot),
       SOM                    = as.numeric(row$SOM),
       CN                     = as.numeric(row$CN),
-      oxygen_availability    = {
-        o <- as.character(row$oxygen_availability %||% "Normal")
-        # Legacy aliases - ca.table$availability only has Slow/Normal/Fast
-        switch(o,
-               "Low"       = "Slow",
-               "High"      = "Fast",
-               "Reduced"   = "Slow",
-               "Poor"      = "Slow",
-               "Good"      = "Fast",
-               o)
-      },
+      oxygen_availability    = nfert_normalize_oxygen(
+        as.character(row$oxygen_availability %||% "Normal")
+      ),
       winter_rain            = as.numeric(row$winter_rain),
       start_spring_rain      = as.numeric(row$start_spring_rain),
       prev_crop              = coerce_en(row$prev_crop, "prev_crop"),
@@ -164,7 +157,8 @@ farm_balance <- function(x,
             identical(tolower(s), "nessuno")) NA
         else coerce_en(s, "source")
       },
-      forg_quantity = as.numeric(row$forg_quantity %||% 0)
+      forg_quantity = as.numeric(row$forg_quantity %||% 0),
+      organic_previous_year_N = as.numeric(row$organic_previous_year_N %||% 0)
     )
     res <- tryCatch({
       bal <- do.call(N_balance, args_N)

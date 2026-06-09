@@ -89,14 +89,15 @@ The helper \code{\link{biophysical_to_NNI_inputs}} wraps this conversion.
 }
 
 \examples{
-\dontrun{
-maps <- estimate_biophysical(
-  raster_path  = "scene_10bands.tif",
-  output_dir   = "output_maps",
-  variables    = c("LAI", "Cm", "CNC_Cprot"),
-  model_dir    = system.file("extdata/gpr_models", package = "NFert")
-)
+\dontshow{if (requireNamespace("terra", quietly = TRUE) && requireNamespace("jsonlite", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+scene <- system.file("extdata/sentinel-2/S2_field001_20240711.tif", package = "NFert")
+if (nzchar(scene)) {
+  od <- tempfile()
+  dir.create(od)
+  maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
+  stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 Estevez, J., Salinero-Delgado, M., Berger, K., Pipia, L., Rivera-Caicedo,

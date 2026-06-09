@@ -7,8 +7,8 @@
 calc_soil_group_and_id_rag(
   clay = 10,
   sand = 35,
-  tri3.table = NFert::tri3.table,
-  soil.table = NFert::soil.table
+  tri3.table = nfert_data_get("tri3.table"),
+  soil.table = nfert_data_get("soil.table")
 )
 }
 \arguments{
@@ -17,10 +17,10 @@ calc_soil_group_and_id_rag(
 \item{sand}{Percentage of sand in the soil (0-100).}
 
 \item{tri3.table}{A matrix containing the simplified soil texture classes based on
-clay and sand percentages. The default is \code{NFert::tri3.table}.}
+clay and sand percentages. The default is the package dataset \code{tri3.table}.}
 
 \item{soil.table}{A data frame mapping soil texture classes (ID_Suo) to soil groups and ID_Rag.
-It should have at least three columns: \code{ID_Suo}, \code{Group}, and \code{ID_Rag}. The default is obtained from the NFert package.}
+It should have at least three columns: \code{ID_Suo}, \code{Group}, and \code{ID_Rag}. The default is the package dataset \code{soil.table}.}
 }
 \value{
 A named list containing:

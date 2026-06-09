@@ -13,7 +13,7 @@
 #'                    crop = "Grano duro (pianta intera)")
 calc_crop_P_demand <- function(expected_yield_tons_ha,
                                crop,
-                               uptake_table = NFert::uptake_table) {
+                               uptake_table = nfert_data_get("uptake_table")) {
   if (!is.numeric(expected_yield_tons_ha) || expected_yield_tons_ha < 0) {
     stop("`expected_yield_tons_ha` must be non-negative numeric.")
   }
@@ -42,7 +42,7 @@ calc_crop_P_demand <- function(expected_yield_tons_ha,
 #'                    crop = "Grano duro (pianta intera)")
 calc_crop_K_demand <- function(expected_yield_tons_ha,
                                crop,
-                               uptake_table = NFert::uptake_table) {
+                               uptake_table = nfert_data_get("uptake_table")) {
   if (!is.numeric(expected_yield_tons_ha) || expected_yield_tons_ha < 0) {
     stop("`expected_yield_tons_ha` must be non-negative numeric.")
   }

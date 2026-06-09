@@ -4,7 +4,7 @@
 \alias{resolve_crop}
 \title{Resolve a crop name (Italian or English) to its canonical entry}
 \usage{
-resolve_crop(x, table = NFert::uptake_table)
+resolve_crop(x, table = nfert_data_get("uptake_table"))
 }
 \arguments{
 \item{x}{Character. Crop name in Italian or English.}

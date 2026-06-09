@@ -138,11 +138,12 @@ Fert_Office v1.26 foglio Concimi with N, P2O5, K2O titres (kg/q).}
 }
 
 \examples{
-head(NFert::uptake_table)
-head(NFert::mas.table)
-head(NFert::p_availability.table)
-head(NFert::k_availability.table)
-head(NFert::organic_fertilizers.table)
+library(NFert)
+head(uptake_table)
+head(mas.table)
+head(p_availability.table)
+head(k_availability.table)
+head(organic_fertilizers.table)
 
 }
 \keyword{datasets}

@@ -16,19 +16,20 @@
 #'   \item{\code{"uniform"}}{Every strip receives the same \code{n_target}
 #'     dose. Useful as a baseline.}
 #'   \item{\code{"calibration"}}{Samples the mean \code{vi_raster} value
-#'     per strip and maps it to a dose via a two- or three-point
-#'     calibration curve. The dose decreases with vigour (higher VI =
-#'     less N).}
+#'     per strip and maps it to a dose via a two-point linear curve between
+#'     \code{vi_low} and \code{vi_high}. With \code{calibration_inverse = TRUE}
+#'     (default), higher VI implies lower dose (typical side-dress). With
+#'     \code{FALSE}, higher VI implies higher dose.}
 #'   \item{\code{"nni"}}{Samples the mean \code{nni_raster} value per
 #'     strip and translates it into the three agronomic zones of
 #'     Lemaire & Gastal: deficient (NNI < \code{thr_lo}) gets
 #'     \code{max_dose}, optimal (\code{thr_lo} <= NNI <= \code{thr_hi})
 #'     gets \code{n_target}, excessive (NNI > \code{thr_hi}) gets
 #'     \code{min_dose}.}
-#'   \item{\code{"classes"}}{Assigns doses equal to
-#'     \code{seq(min_dose, max_dose, length.out = n_classes)} based on
-#'     the k-quantile class of the mean \code{vi_raster} value per
-#'     strip. Useful when a categorical map is preferred.}
+#'   \item{\code{"classes"}}{Splits strips into \code{n_classes} NDVI quantiles
+#'     and assigns an increasing or decreasing dose ladder consistent with
+#'     \code{calibration_inverse}: when \code{TRUE}, the lowest VI class gets
+#'     \code{max_dose}; when \code{FALSE}, it gets \code{min_dose}.}
 #' }
 #' Regardless of the method, the mean dose across the field is rescaled
 #' to match \code{n_target} (mass-balance constraint) when
@@ -66,9 +67,16 @@
 #' @param n_target Target field-level mean dose (kg N ha\eqn{^{-1}}).
 #' @param min_dose,max_dose Numeric caps (kg N ha\eqn{^{-1}}).
 #' @param vi_low,vi_high Two-point calibration anchors
-#'   (\code{variability = "calibration"}). Below \code{vi_low} the dose
-#'   is capped to \code{max_dose}; above \code{vi_high} to
-#'   \code{min_dose}.
+#'   (\code{variability = "calibration"}). With \code{calibration_inverse = TRUE}
+#'   (default), below \code{vi_low} the dose is capped to \code{max_dose};
+#'   above \code{vi_high} to \code{min_dose}. With \code{FALSE}, below
+#'   \code{vi_low} the dose is capped to \code{min_dose}; above \code{vi_high}
+#'   to \code{max_dose}.
+#' @param calibration_inverse Logical. If \code{TRUE} (default), NDVI and dose
+#'   are inversely related along the segment (\code{vi_low} \eqn{\rightarrow}
+#'   \code{max_dose}). If \code{FALSE}, NDVI and dose increase together
+#'   (\code{vi_low} \eqn{\rightarrow} \code{min_dose}). Applies to
+#'   \code{"calibration"} and to dose ordering in \code{"classes"}.
 #' @param thr_lo,thr_hi NNI thresholds (\code{variability = "nni"}).
 #' @param n_classes Integer number of equal-spaced dose classes for
 #'   \code{variability = "classes"} (default 5).
@@ -89,9 +97,7 @@
 #'   \code{\link{variable_rate_N}},
 #'   \code{\link{compute_NNI_from_S2}}
 #'
-#' @examples
-#' \dontrun{
-#' # Pick one feature from the demo farm
+#' @examplesIf requireNamespace("sf", quietly = TRUE)
 #' ex <- system.file("extdata/example_farm.geojson", package = "NFert")
 #' farm <- sf::st_read(ex, quiet = TRUE)
 #' field <- farm[1, ]  # 5.2 ha silage-maize plot
@@ -101,7 +107,8 @@
 #'                                 variability = "uniform",
 #'                                 n_target = 180)
 #'
-#' # VI-based 40-180 band calibration, 36 m machine
+#' \dontrun{
+#' # VI-based 40-180 band calibration, 36 m machine (supply `vi_raster` aligned to field)
 #' rx2 <- build_strip_prescription(field, machine_width = 36,
 #'                                  variability = "calibration",
 #'                                  vi_raster = my_ndvi,
@@ -125,6 +132,7 @@ build_strip_prescription <- function(
   max_dose      = 220,
   vi_low        = 0.35,
   vi_high       = 0.80,
+  calibration_inverse = TRUE,
   thr_lo        = 0.90,
   thr_hi        = 1.10,
   n_classes     = 5,
@@ -137,6 +145,9 @@ build_strip_prescription <- function(
   variability <- match.arg(variability)
   stopifnot(machine_width > 0, n_target >= 0,
              min_dose <= max_dose)
+  if (variability %in% c("calibration", "classes")) {
+    stopifnot(vi_low < vi_high)
+  }
 
   # --- Normalise field to one polygon -------------------------------
   if (inherits(field, "sf")) {
@@ -236,11 +247,11 @@ build_strip_prescription <- function(
   strips$dose <- switch(variability,
     uniform     = rep(n_target, nrow(strips)),
     calibration = .dose_from_calibration(mean_vi, min_dose, max_dose,
-                                          vi_low, vi_high),
+                                          vi_low, vi_high, calibration_inverse),
     nni         = .dose_from_nni(mean_nni, n_target,
                                   min_dose, max_dose, thr_lo, thr_hi),
     classes     = .dose_from_classes(mean_vi, min_dose, max_dose,
-                                      n_classes)
+                                      n_classes, calibration_inverse)
   )
   strips$dose[!is.finite(strips$dose)] <- n_target
   strips$dose <- pmin(pmax(strips$dose, min_dose), max_dose)
@@ -309,11 +320,17 @@ build_strip_prescription <- function(
 }
 
 .dose_from_calibration <- function(vi, min_dose, max_dose,
-                                   vi_low, vi_high) {
+                                   vi_low, vi_high, inverse = TRUE) {
   if (all(is.na(vi))) return(rep(NA_real_, length(vi)))
-  # Linear, decreasing: vi_low -> max_dose, vi_high -> min_dose
-  slope <- (min_dose - max_dose) / (vi_high - vi_low)
-  intercept <- max_dose - slope * vi_low
+  if (isTRUE(inverse)) {
+    # vi_low -> max_dose, vi_high -> min_dose (dose falls as VI rises)
+    slope <- (min_dose - max_dose) / (vi_high - vi_low)
+    intercept <- max_dose - slope * vi_low
+  } else {
+    # vi_low -> min_dose, vi_high -> max_dose (dose rises with VI)
+    slope <- (max_dose - min_dose) / (vi_high - vi_low)
+    intercept <- min_dose - slope * vi_low
+  }
   d <- slope * vi + intercept
   pmin(pmax(d, min_dose), max_dose)
 }
@@ -326,12 +343,17 @@ build_strip_prescription <- function(
   d
 }
 
-.dose_from_classes <- function(vi, min_dose, max_dose, n_classes) {
+.dose_from_classes <- function(vi, min_dose, max_dose, n_classes,
+                               inverse = TRUE) {
   if (all(is.na(vi))) return(rep(NA_real_, length(vi)))
   breaks <- stats::quantile(vi, probs = seq(0, 1, length.out = n_classes + 1),
                              na.rm = TRUE, names = FALSE)
   breaks[1] <- breaks[1] - 1e-9
   bin <- cut(vi, breaks = breaks, include.lowest = TRUE, labels = FALSE)
-  doses <- seq(max_dose, min_dose, length.out = n_classes)
+  doses <- if (isTRUE(inverse)) {
+    seq(max_dose, min_dose, length.out = n_classes)
+  } else {
+    seq(min_dose, max_dose, length.out = n_classes)
+  }
   doses[bin]
 }

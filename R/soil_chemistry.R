@@ -15,7 +15,7 @@
 #' @return List with `ID_pH` and `class`.
 #' @examples classify_pH(8.3)
 #' @export
-classify_pH <- function(pH, ph.table = NFert::ph.table) {
+classify_pH <- function(pH, ph.table = nfert_data_get("ph.table")) {
   if (!is.numeric(pH) || length(pH) != 1 || is.na(pH)) {
     stop("`pH` must be a single numeric.")
   }
@@ -34,7 +34,7 @@ classify_pH <- function(pH, ph.table = NFert::ph.table) {
 #' @return List with `ID` and `class`.
 #' @examples classify_carbonate_tot(15)
 #' @export
-classify_carbonate_tot <- function(caco3_tot, total_carbonate.table = NFert::total_carbonate.table) {
+classify_carbonate_tot <- function(caco3_tot, total_carbonate.table = nfert_data_get("total_carbonate.table")) {
   if (!is.numeric(caco3_tot) || length(caco3_tot) != 1 || is.na(caco3_tot)) {
     stop("`caco3_tot` must be a single numeric.")
   }
@@ -55,7 +55,7 @@ classify_carbonate_tot <- function(caco3_tot, total_carbonate.table = NFert::tot
 #' @return List with `ID` and `class`.
 #' @examples classify_carbonate_att(6.8)
 #' @export
-classify_carbonate_att <- function(caco3_att, active_carbonate.table = NFert::active_carbonate.table) {
+classify_carbonate_att <- function(caco3_att, active_carbonate.table = nfert_data_get("active_carbonate.table")) {
   if (!is.numeric(caco3_att) || length(caco3_att) != 1 || is.na(caco3_att)) {
     stop("`caco3_att` must be a single numeric.")
   }

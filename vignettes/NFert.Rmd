@@ -159,7 +159,7 @@ crop_demand <- calc_crop_N_demand(
 print(crop_demand)
 
 # Available crops in the database
-head(NFert::uptake_table, 10)
+head(uptake_table, 10)
 ```
 
 ## Component 2: Soil Fertility (B = b1 + b2)
@@ -240,7 +240,7 @@ residue_N <- nitrogen_from_previous_crop_residues(
 cat("Nitrogen from residues (E):", residue_N, "kg/ha\n")
 
 # Available previous crops
-head(NFert::e.table, 10)
+head(e.table, 10)
 ```
 
 ## Component 6: Organic Fertilizer (Forg)
@@ -282,7 +282,7 @@ natural_N <- natural_contribution(
 cat("Natural contribution (G):", natural_N, "kg/ha\n")
 
 # Available locations
-head(NFert::g.table, 10)
+head(g.table, 10)
 ```
 
 # Complete Workflow: Maize Production Example
@@ -675,7 +675,7 @@ Make sure to use the exact crop name as it appears in the database:
 
 ```{r crop-selection}
 # Check available crops
-available_crops <- NFert::uptake_table$crop
+available_crops <- uptake_table$crop
 cat("Available crops (first 10):\n")
 print(head(available_crops, 10))
 ```
@@ -769,7 +769,7 @@ cat("- coefN_readily, coefN_mineralised: Soil fertility coefficients\n")
 cat("- coef_time: Time adjustment factors\n")
 
 # Access any dataset
-head(NFert::uptake_table, 5)
+head(uptake_table, 5)
 ```
 
 ## Getting Help

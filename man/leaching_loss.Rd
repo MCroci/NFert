@@ -17,37 +17,52 @@ leaching_loss(
 
 \item{start_spring_rain}{Rainfall in February in mm.}
 
-\item{oxygen_availability}{Oxygen availability level in the soil (e.g., "Normal").}
+\item{oxygen_availability}{Oxygen availability level in the soil: one of
+\code{ca.table$availability} (e.g. \code{"Normal"}, \code{"Slow"}, \code{"Fast"}).}
 
-\item{id_rag}{Soil drainage index (ID_Rag).}
+\item{id_rag}{Soil drainage index (\code{ID_Rag}); retained for backward
+compatibility with earlier NFert signatures (not used in the \eqn{C_a}/\eqn{C_b}
+formulas above).}
 
-\item{b1}{Readily available nitrogen in the soil (kg/ha).}
+\item{b1}{Readily available nitrogen in the soil (kg N/ha).}
 }
 \value{
 A list containing:
-- C1: Nitrogen leaching loss in the autumn-winter season (kg/ha).
-- C2: Nitrogen leaching loss after leaving winter (kg/ha).
-- surplus_pluviometrico: Logical. TRUE when winter_rain + start_spring_rain >= 300 mm
-(DPI 2026 scheda a dose standard: attiva l'incremento "Lisciviazione x surplus pluviometrico").
+\item{C1}{Autumn--winter leaching loss (kg N/ha).}
+\item{C2}{February leaching loss (kg N/ha).}
+\item{surplus_pluviometrico}{Logical. \code{TRUE} when
+\code{winter_rain + start_spring_rain >= 300} mm (DPI 2026 scheda a
+dose standard: surplus-pluviometric flag).}
 }
 \description{
-Calculates the nitrogen leaching loss from soil based on two methods:
+DPI 2026 (Allegato 2; foglio \verb{C&D} di Fert_Office v1.26): loss of readily
+available mineral nitrogen (\eqn{b_1}) from leaching.
 }
 \details{
-\enumerate{
-\item Precipitation-Based Method (C1):
+\describe{
+\item{\strong{C1} (\eqn{C_a}, autumn--winter)}{
+Depends on winter rainfall (1 October -- 31 January), \code{winter_rain} (mm):
 \itemize{
-\item Considers winter rainfall (October 1 to January 31).
-\item No loss if rainfall < 150 mm.
-\item Progressive loss of readily available nitrogen (b1) if rainfall is 150-250 mm.
-\item Complete loss of readily available nitrogen if rainfall > 250 mm.
-}
-\item Ease of Drainage Method (C2):
-\itemize{
-\item Estimates leaching based on soil drainage capacity (ID_Rag) and oxygen availability.
-\item Uses lookup tables (\code{ca.table} and \code{cb.table}) for specific values.
+\item \eqn{\leq 150} mm \eqn{\rightarrow} no loss (0);
+\item \eqn{(150,\,250]} mm \eqn{\rightarrow} linear fraction of \eqn{b_1}:
+\eqn{b_1 \times (R_{\mathrm{win}} - 150) / 100};
+\item \eqn{> 250} mm \eqn{\rightarrow} loss of the entire \eqn{b_1} pool
+(cannot exceed \eqn{b_1}).
 }
 }
+\item{\strong{C2} (\eqn{C_b}, February)}{
+Additional loss from February rainfall (\code{start_spring_rain}, mm) applied
+only to the \emph{residual} readily available N after \eqn{C_1}, and only if
+\code{winter_rain > 150}. Formula: \eqn{\min(\code{start_spring_rain}/10,\, b_1 - C_1)}.
+}
+}
+
+Invariant: \eqn{C_1 + C_2 \leq b_1}.
+
+\code{oxygen_availability} is validated against \code{\link{ca.table}} for
+consistency with other balance terms; the rainfall formulas above do not use
+the legacy tabular column \code{cb.table$C} (that column referred to the old,
+incorrect assignment of a fixed loss independent of rainfall).
 }
 \examples{
 leaching_loss(winter_rain = 160, start_spring_rain = 40,

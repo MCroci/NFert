@@ -1,73 +1,92 @@
 #' Leaching Loss of Nitrogen
 #'
-#' Calculates the nitrogen leaching loss from soil based on two methods:
+#' DPI 2026 (Allegato 2; foglio \verb{C&D} di Fert_Office v1.26): loss of readily
+#' available mineral nitrogen (\eqn{b_1}) from leaching.
 #'
-#' 1. Precipitation-Based Method (C1):
-#'    - Considers winter rainfall (October 1 to January 31).
-#'    - No loss if rainfall < 150 mm.
-#'    - Progressive loss of readily available nitrogen (b1) if rainfall is 150-250 mm.
-#'    - Complete loss of readily available nitrogen if rainfall > 250 mm.
+#' \describe{
+#'   \item{\strong{C1} (\eqn{C_a}, autumn--winter)}{
+#'     Depends on winter rainfall (1 October -- 31 January), \code{winter_rain} (mm):
+#'     \itemize{
+#'       \item \eqn{\leq 150} mm \eqn{\rightarrow} no loss (0);
+#'       \item \eqn{(150,\,250]} mm \eqn{\rightarrow} linear fraction of \eqn{b_1}:
+#'             \eqn{b_1 \times (R_{\mathrm{win}} - 150) / 100};
+#'       \item \eqn{> 250} mm \eqn{\rightarrow} loss of the entire \eqn{b_1} pool
+#'             (cannot exceed \eqn{b_1}).
+#'     }
+#'   }
+#'   \item{\strong{C2} (\eqn{C_b}, February)}{
+#'     Additional loss from February rainfall (\code{start_spring_rain}, mm) applied
+#'     only to the \emph{residual} readily available N after \eqn{C_1}, and only if
+#'     \code{winter_rain > 150}. Formula: \eqn{\min(\code{start_spring_rain}/10,\, b_1 - C_1)}.
+#'   }
+#' }
 #'
-#' 2. Ease of Drainage Method (C2):
-#'    - Estimates leaching based on soil drainage capacity (ID_Rag) and oxygen availability.
-#'    - Uses lookup tables (`ca.table` and `cb.table`) for specific values.
+#' Invariant: \eqn{C_1 + C_2 \leq b_1}.
+#'
+#' \code{oxygen_availability} is validated against \code{\link{ca.table}} for
+#' consistency with other balance terms; the rainfall formulas above do not use
+#' the legacy tabular column \code{cb.table$C} (that column referred to the old,
+#' incorrect assignment of a fixed loss independent of rainfall).
 #'
 #' @param winter_rain Winter rainfall (October 1 to January 31) in mm.
 #' @param start_spring_rain Rainfall in February in mm.
-#' @param oxygen_availability Oxygen availability level in the soil (e.g., "Normal").
-#' @param id_rag Soil drainage index (ID_Rag).
-#' @param b1 Readily available nitrogen in the soil (kg/ha).
+#' @param oxygen_availability Oxygen availability level in the soil: one of
+#'   \code{ca.table$availability} (e.g. \code{"Normal"}, \code{"Slow"}, \code{"Fast"}).
+#' @param id_rag Soil drainage index (\code{ID_Rag}); retained for backward
+#'   compatibility with earlier NFert signatures (not used in the \eqn{C_a}/\eqn{C_b}
+#'   formulas above).
+#' @param b1 Readily available nitrogen in the soil (kg N/ha).
 #'
 #' @return A list containing:
-#'         - C1: Nitrogen leaching loss in the autumn-winter season (kg/ha).
-#'         - C2: Nitrogen leaching loss after leaving winter (kg/ha).
-#'         - surplus_pluviometrico: Logical. TRUE when winter_rain + start_spring_rain >= 300 mm
-#'           (DPI 2026 scheda a dose standard: attiva l'incremento "Lisciviazione x surplus pluviometrico").
+#'         \item{C1}{Autumn--winter leaching loss (kg N/ha).}
+#'         \item{C2}{February leaching loss (kg N/ha).}
+#'         \item{surplus_pluviometrico}{Logical. \code{TRUE} when
+#'           \code{winter_rain + start_spring_rain >= 300} mm (DPI 2026 scheda a
+#'           dose standard: surplus-pluviometric flag).}
+#'
 #' @export
 #'
 #' @examples
 #' leaching_loss(winter_rain = 160, start_spring_rain = 40,
 #'               oxygen_availability = "Normal", id_rag = 3, b1 = 29.16)
 
-leaching_loss <- function(winter_rain = 160, start_spring_rain=40, oxygen_availability = "Normal", id_rag = 3, b1 = 29.16) {
+leaching_loss <- function(winter_rain = 160, start_spring_rain = 40,
+                          oxygen_availability = "Normal", id_rag = 3, b1 = 29.16) {
 
-  ca.table = NFert::ca.table
-  cb.table = NFert::cb.table
+  if (!is.numeric(id_rag) || length(id_rag) != 1L || !is.finite(id_rag)) {
+    stop("`id_rag` must be a single finite numeric value.", call. = FALSE)
+  }
+  if (!is.numeric(b1) || length(b1) != 1L || !is.finite(b1) || b1 < 0) {
+    stop("`b1` must be a non-negative finite numeric value.", call. = FALSE)
+  }
 
-  # C (kg/ha): Leaching loss
-  # Ca: Nitrogen losses in the autumn winter season
-  #- based on easiness of drainage:
-  id_dre <- as.numeric( ca.table[ca.table[,"availability"] == oxygen_availability, "ID_Dre"] ) # extraction of id_dre based on description
-  C1 <-as.numeric( cb.table[cb.table[,"ID_Rag"] == id_rag & cb.table[,"ID_Dre"] == id_dre , "C"] ) #
+  oxygen_availability <- nfert_normalize_oxygen(oxygen_availability)
+  ca.table <- nfert_data_get("ca.table")
+  avail <- unique(trimws(as.character(ca.table[["availability"]])))
 
-  #- based on rainfall:
-  # Missing rain for complete loss
-  missing_rain_for_complete_loss <- 250-winter_rain
-  # b1: Available N potentially leachable (kg ha-1)
-  percentage_loss <- ifelse((-150 + winter_rain)<0, 0, ifelse((-150 + winter_rain) > 100, 100, -150 + winter_rain))
-  nitrogen_loss_with_winter_rain <-b1*(percentage_loss/100)
+  if (!oxygen_availability %in% avail) {
+    stop(
+      "Invalid value for oxygen_availability. Use one of: ",
+      paste(sort(avail), collapse = ", "),
+      call. = FALSE
+    )
+  }
 
-  # Nitrogen loss from late rain (kg ha-1)
-  # remaining rain for febraury loss
-  remaining_rain_for_febraury_loss <- start_spring_rain-missing_rain_for_complete_loss
-  nitrogen_loss_with_late_rain <- ifelse(remaining_rain_for_febraury_loss>0, b1 - nitrogen_loss_with_winter_rain, 0)
+  # Ca: autumn–winter — fraction of b1 for rainfall in (150, 250] mm; full b1 above 250 mm
+  percentage_loss <- pmin(pmax(winter_rain - 150, 0), 100)
+  C1 <- pmin(b1 * (percentage_loss / 100), b1)
 
-  # total nitrogen (Azoto pronto) loss
-  total_nitrogen_loss <- (nitrogen_loss_with_winter_rain+nitrogen_loss_with_late_rain)
+  # Cb: February — only on residual b1, only after winter rain exceeds 150 mm
+  b1_residual <- max(b1 - C1, 0)
+  february_loss <- if (isTRUE(winter_rain > 150) && isTRUE(start_spring_rain > 0)) {
+    pmin(start_spring_rain / 10, b1_residual)
+  } else {
+    0
+  }
+  C2 <- february_loss
 
-  # Cb: Nitrogen losses after leaving winter
-  # start_spring_rain
-  # quantità di N lisciviabile (kg/ha)
-  nitrogen_leachable_amount <- remaining_rain_for_febraury_loss/10
-  febraury_loss <- ifelse(winter_rain>150 & nitrogen_leachable_amount>0, nitrogen_leachable_amount, 0)
-
-  C2 <- nitrogen_loss_with_winter_rain+ febraury_loss
-
-  # DPI 2026 scheda standard: condizione surplus pluviometrico
-  # (pioggia 1/10 - 28/2 >= 300 mm) → attiva incremento "Lisciviazione x surplus pluviometrico".
-  # Foglio C&D, righe 34-35.
+  # DPI 2026 scheda standard: surplus pluviometrico (foglio C&D)
   surplus_pluviometrico <- isTRUE((winter_rain + start_spring_rain) >= 300)
 
-  res <- list(C1 = C1, C2 = C2, surplus_pluviometrico = surplus_pluviometrico)
-  return(res)
+  list(C1 = C1, C2 = C2, surplus_pluviometrico = surplus_pluviometrico)
 }

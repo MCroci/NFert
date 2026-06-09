@@ -54,7 +54,7 @@ dose_standard_N <- function(crop,
                      phase = NULL,
                      decrements = numeric(),
                      increments = numeric(),
-                     mas.table = NFert::mas.table,
+                     mas.table = nfert_data_get("mas.table"),
                      apply_mas_cap = TRUE) {
 
   if (missing(crop) || !is.character(crop) || length(crop) != 1) {

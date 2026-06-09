@@ -10,9 +10,9 @@ soil_P_availability(
   soil_group,
   A_demand_P2O5,
   depth_cm = 30,
-  p_availability.table = NFert::p_availability.table,
-  p_availability_meta = NFert::p_availability_meta,
-  texture_groups.table = NFert::texture_groups.table
+  p_availability.table = nfert_data_get("p_availability.table"),
+  p_availability_meta = nfert_data_get("p_availability_meta"),
+  texture_groups.table = nfert_data_get("texture_groups.table")
 )
 }
 \arguments{

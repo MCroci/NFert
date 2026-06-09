@@ -35,8 +35,8 @@
 
 natural_contribution <- function(location = "Plain adjacent to urbanized areas",
                                  ccp = "Autumn-winter crop <150 days",
-                                 g.table = NFert::g.table,
-                                 coef_time = NFert::coef_time) {
+                                 g.table = nfert_data_get("g.table"),
+                                 coef_time = nfert_data_get("coef_time")) {
 
   # Input Validation
   if (!location %in% g.table$location) {

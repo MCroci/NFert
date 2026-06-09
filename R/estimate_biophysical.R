@@ -68,14 +68,13 @@
 #' Google Earth Engine based on Sentinel-2 top-of-atmosphere data.
 #' \emph{Remote Sensing of Environment}, 273, 112958.
 #'
-#' @examples
-#' \dontrun{
-#' maps <- estimate_biophysical(
-#'   raster_path  = "scene_10bands.tif",
-#'   output_dir   = "output_maps",
-#'   variables    = c("LAI", "Cm", "CNC_Cprot"),
-#'   model_dir    = system.file("extdata/gpr_models", package = "NFert")
-#' )
+#' @examplesIf requireNamespace("terra", quietly = TRUE) && requireNamespace("jsonlite", quietly = TRUE)
+#' scene <- system.file("extdata/sentinel-2/S2_field001_20240711.tif", package = "NFert")
+#' if (nzchar(scene)) {
+#'   od <- tempfile()
+#'   dir.create(od)
+#'   maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
+#'   stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
 #' }
 #' @export
 estimate_biophysical <- function(

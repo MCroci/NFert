@@ -475,7 +475,7 @@ Modalities are catalogued in `distribution_modalities.table` and their compatibi
 with crop cycles in `cycle_modality.table`:
 
 ```{r mod}
-head(NFert::distribution_modalities.table, 12)
+head(distribution_modalities.table, 12)
 ```
 
 ## Fertiliser sources
@@ -484,11 +484,11 @@ Available organic matrices and mineral products:
 
 ```{r fert-sources}
 # Organic: 21 matrices with their N, P, K and dry-matter titres
-head(NFert::organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
+head(organic_fertilizers.table[, c("fertilizer", "avg_dm", "avg_N",
                                "avg_P2O5", "avg_K2O", "fully_zootec")], 10)
 
 # Mineral: 146 commercial fertilisers
-head(NFert::mineral_fertilizers.table, 10)
+head(mineral_fertilizers.table, 10)
 ```
 
 ## DPI 2026 organic N efficiency
@@ -500,10 +500,10 @@ matrix has 220 entries:
 
 ```{r eff}
 # Medium impasto, dose media (125-249 kg N/ha), bovino:
-NFert::efficiency.table[
-  NFert::efficiency.table$ID_Rag == 2 &
-    NFert::efficiency.table$ID_Liv == 2 &
-    NFert::efficiency.table$sector_id == "bov",
+efficiency.table[
+  efficiency.table$ID_Rag == 2 &
+    efficiency.table$ID_Liv == 2 &
+    efficiency.table$sector_id == "bov",
 ]
 ```
 
@@ -719,19 +719,19 @@ NFert exposes 33 internal tables; the most useful in day-to-day work:
 
 ```{r tables}
 # Crop master list
-head(NFert::uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
+head(uptake_table[, c("crop_id", "crop", "N", "P2O5", "K2O",
                               "reference_yield")], 5)
 
 # MAS (massimali) 2026
-head(NFert::mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
+head(mas.table[, c("crop_id", "crop", "MAS_N", "standard_N",
                            "max_N_dose")], 5)
 
 # Gri_P and Gri_K classes
-NFert::p_availability.table
-NFert::k_availability.table
+p_availability.table
+k_availability.table
 
 # Texture grouping with soil weights
-NFert::texture_groups.table
+texture_groups.table
 ```
 
 # Notes and limitations

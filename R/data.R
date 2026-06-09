@@ -102,11 +102,12 @@
 #' }
 #'
 #' @examples
-#' head(NFert::uptake_table)
-#' head(NFert::mas.table)
-#' head(NFert::p_availability.table)
-#' head(NFert::k_availability.table)
-#' head(NFert::organic_fertilizers.table)
+#' library(NFert)
+#' head(uptake_table)
+#' head(mas.table)
+#' head(p_availability.table)
+#' head(k_availability.table)
+#' head(organic_fertilizers.table)
 #'
 #' @keywords datasets internal
 NULL
