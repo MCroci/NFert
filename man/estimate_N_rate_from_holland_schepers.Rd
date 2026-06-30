@@ -11,8 +11,9 @@ estimate_N_rate_from_holland_schepers(
 )
 }
 \arguments{
-\item{ndvi_raster}{A \code{raster::RasterLayer} with NDVI (0--1), or a \code{RasterBrick} /
-\code{RasterStack} (layer named \code{NDVI} if present, else first layer).}
+\item{ndvi_raster}{A \code{terra::SpatRaster} with NDVI (0--1); the layer named
+\code{NDVI} is used if present, else the first layer. Legacy \code{raster} objects
+are accepted and converted with \code{terra::rast()}.}
 
 \item{base_N_rate}{The base N rate (kg/ha) to be adjusted (default = 50).}
 
@@ -21,8 +22,8 @@ estimate_N_rate_from_holland_schepers(
 \value{
 A list containing:
 \itemize{
-\item dose_raster: RasterLayer with estimated N rates (kg/ha)
-\item sufficiency_index_raster: RasterLayer with calculated sufficiency indices
+\item dose_raster: \code{terra::SpatRaster} with estimated N rates (kg/ha)
+\item sufficiency_index_raster: \code{terra::SpatRaster} with calculated sufficiency indices
 }
 }
 \description{
@@ -31,15 +32,15 @@ It calculates a sufficiency index (SI) for each pixel in the NDVI raster, then a
 }
 \examples{
 \dontrun{
-library(raster)
+library(terra)
 # Load NDVI raster (replace with your data)
-ndvi_raster <- raster(system.file("extdata/sample_ndvi.tif", package = "yourpackage"))
+ndvi_raster <- terra::rast(system.file("extdata/sample_ndvi.tif", package = "yourpackage"))
 
 # Calculate N rates with plotting
 result <- estimate_N_rate_from_holland_schepers(ndvi_raster, base_N_rate = 60)
 
 # Visualize results
-plot(result$dose_raster, main = "Recommended N Rates")
-plot(result$sufficiency_index_raster, main = "Sufficiency Index")
+terra::plot(result$dose_raster, main = "Recommended N Rates")
+terra::plot(result$sufficiency_index_raster, main = "Sufficiency Index")
 }
 }

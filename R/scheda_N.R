@@ -70,7 +70,8 @@ dose_standard_N <- function(crop,
     stop(sprintf("Crop '%s' not found in mas.table.", crop))
   }
   if (!is.null(phase)) {
-    idx_p <- which(mas.table$crop == crop & mas.table$phase == phase)
+    idx_p <- which(.nfert_ascii_fold(mas.table$crop) == .nfert_ascii_fold(crop) &
+                     .nfert_ascii_fold(mas.table$phase) == .nfert_ascii_fold(phase))
     if (length(idx_p) == 0) {
       warning(sprintf("Phase '%s' not found for crop '%s'. Using first available row.", phase, crop))
     } else {

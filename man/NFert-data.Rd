@@ -79,7 +79,9 @@ ID_Rag x ID_Dre.}
 \item{coef_time}{\code{C_tempo} time adjustment factors by phase x cycle; in
 v0.2.0 also carries DPI 2026 percentages for N, P2O5 and K2O allowed
 per phase, plus \code{advance_allowed} and \code{husbandry} flags.}
-\item{s2.rast}{Example Sentinel-2 NDVI raster for vignettes.}
+\item{s2.rast}{Example Sentinel-2 raster (5 bands) for vignettes, stored as
+a \code{terra} \code{PackedSpatRaster}. Unwrap with
+\code{terra::rast(s2.rast)} before use.}
 }
 }
 

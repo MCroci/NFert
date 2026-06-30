@@ -59,8 +59,9 @@
 #'   \code{NULL}, the long side of the field is used.
 #' @param variability One of \code{"uniform"}, \code{"calibration"},
 #'   \code{"nni"}, \code{"classes"}.
-#' @param vi_raster \code{terra::SpatRaster} or \code{raster::RasterLayer}
-#'   with vegetation index (0-1). Required for \code{"calibration"} and
+#' @param vi_raster \code{terra::SpatRaster} with vegetation index (0-1); a
+#'   legacy \code{raster} object is accepted and converted with
+#'   \code{terra::rast()}. Required for \code{"calibration"} and
 #'   \code{"classes"}.
 #' @param nni_raster Same, with NNI values. Required for
 #'   \code{"nni"}.
@@ -302,6 +303,12 @@ build_strip_prescription <- function(
 }
 
 .strip_zonal_mean <- function(strips, rast) {
+  # Accept legacy raster objects by coercing to terra SpatRaster.
+  if (inherits(rast, c("RasterLayer", "RasterStack", "RasterBrick"))) {
+    if (!requireNamespace("terra", quietly = TRUE))
+      stop("Package 'terra' is required for zonal stats.")
+    rast <- terra::rast(rast)
+  }
   if (inherits(rast, "SpatRaster")) {
     if (!requireNamespace("terra", quietly = TRUE))
       stop("Package 'terra' is required for SpatRaster zonal stats.")
@@ -309,11 +316,6 @@ build_strip_prescription <- function(
                         fun = mean, na.rm = TRUE)
     # terra::extract returns a data.frame with ID + one column per band
     as.numeric(v[, 2])
-  } else if (inherits(rast, c("RasterLayer", "RasterStack", "RasterBrick"))) {
-    if (!requireNamespace("raster", quietly = TRUE))
-      stop("Package 'raster' is required for RasterLayer zonal stats.")
-    as.numeric(raster::extract(rast, sf::as_Spatial(strips),
-                                fun = mean, na.rm = TRUE))
   } else {
     rep(NA_real_, nrow(strips))
   }

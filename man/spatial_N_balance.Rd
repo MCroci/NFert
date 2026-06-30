@@ -22,8 +22,9 @@ spatial_N_balance(
 )
 }
 \arguments{
-\item{soil_stack}{A \code{RasterStack} (or \code{RasterBrick}) whose layers
-encode the soil properties that vary in space.
+\item{soil_stack}{A \code{terra::SpatRaster} whose layers encode the soil
+properties that vary in space (a legacy \code{raster} object is accepted
+and converted with \code{terra::rast()}).
 Required layers (matched by name, case-insensitive):
 \describe{
 \item{TN}{Total soil nitrogen, pct}
@@ -52,15 +53,15 @@ Required layers (matched by name, case-insensitive):
 parameters (see \code{\link{N_balance}()}).}
 
 \item{terms}{Character vector of balance terms to return as layers in the
-output \code{RasterStack}. Default
+output \code{terra::SpatRaster}. Default
 \code{c("A", "B", "C1", "C2", "D", "E", "F", "Forg", "G", "N_to_apply")}.
 Use \code{"all"} to return every column of the \code{N_balance()} output.}
 
 \item{...}{Additional arguments passed to \code{N_balance()}.}
 }
 \value{
-A \code{RasterStack} with one layer per requested balance term, at
-the same resolution, extent and CRS as \code{soil_stack}.
+A \code{terra::SpatRaster} with one layer per requested balance term,
+at the same resolution, extent and CRS as \code{soil_stack}.
 }
 \description{
 Applies \code{\link{N_balance}()} pixel-by-pixel to a set of soil-property
@@ -79,15 +80,15 @@ takes approximately one second on a modern laptop.
 }
 \examples{
 \dontrun{
-library(raster)
+library(terra)
 ext <- system.file("extdata", package = "NFert")
-soil <- raster::stack(
+soil <- terra::rast(c(
   file.path(ext, "Cremonesi_TN.tif"),
   file.path(ext, "Cremonesi_SOM.tif"),
   file.path(ext, "Cremonesi_Clay.tif"),
   file.path(ext, "Cremonesi_Sand.tif"),
   file.path(ext, "Cremonesi_CNratio.tif")
-)
+))
 names(soil) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
 
 n_map <- spatial_N_balance(
@@ -102,7 +103,7 @@ n_map <- spatial_N_balance(
   location = "Plain adjacent to urbanized areas",
   forg_quantity = 100
 )
-raster::plot(n_map[["N_to_apply"]])
+terra::plot(n_map[["N_to_apply"]])
 }
 }
 \seealso{

@@ -100,10 +100,10 @@ optimize_VR_DPI <- function(field_inputs,
   bal <- do.call(N_balance, fi)
   bal <- bal[1L, , drop = FALSE]
 
-  N_tot_DPI <- with(
-    bal,
-    A - B + C1 + C2 + D - E - F - Forg - G
-  )
+  # Explicit column references (not with(bal, ...)) so codetools does not flag
+  # the balance terms as undefined globals (R CMD check "no visible binding").
+  N_tot_DPI <- bal$A - bal$B + bal$C1 + bal$C2 + bal$D -
+    bal$E - bal$F - bal$Forg - bal$G
 
   mas_row <- get_MAS(field_inputs$crop)
   if (is.null(mas_row) || nrow(mas_row) == 0L || is.na(mas_row$mas_N[1])) {

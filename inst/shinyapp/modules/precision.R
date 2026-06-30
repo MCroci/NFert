@@ -327,8 +327,8 @@ precisionServer <- function(id, research_mode, app_state) {
     # ---- VRT --------------------------------------------------------
     vi_rast_val <- reactiveVal(NULL)
     observeEvent(input$vi_file, {
-      if (!requireNamespace("raster", quietly = TRUE)) return()
-      vi_rast_val(raster::raster(input$vi_file$datapath))
+      if (!requireNamespace("terra", quietly = TRUE)) return()
+      vi_rast_val(terra::rast(input$vi_file$datapath))
     })
     observeEvent(input$vi_demo, {
       if (!requireNamespace("sf", quietly = TRUE)) return()
@@ -375,13 +375,13 @@ precisionServer <- function(id, research_mode, app_state) {
 
     output$vi_plot <- renderPlot({
       r <- vi_rast(); req(r)
-      raster::plot(r, main = "Input VI", col = hcl.colors(100, "YlGn"))
+      terra::plot(r, main = "Input VI", col = hcl.colors(100, "YlGn"))
     })
 
     output$vrt_plot <- renderPlot({
       o <- vrt_out(); req(o)
       r <- o$rate_raster %||% o
-      raster::plot(r,
+      terra::plot(r,
         main = "VRT prescription (kg N/ha)",
         col = hcl.colors(100, "RdYlGn", rev = TRUE))
     })
@@ -400,9 +400,9 @@ precisionServer <- function(id, research_mode, app_state) {
     output$vrt_summary <- renderUI({
       o <- vrt_out(); req(o)
       r  <- o$rate_raster %||% o
-      mn <- raster::cellStats(r, "mean", na.rm = TRUE)
-      mi <- raster::cellStats(r, "min",  na.rm = TRUE)
-      ma <- raster::cellStats(r, "max",  na.rm = TRUE)
+      mn <- terra::global(r, "mean", na.rm = TRUE)[1,1]
+      mi <- terra::global(r, "min",  na.rm = TRUE)[1,1]
+      ma <- terra::global(r, "max",  na.rm = TRUE)[1,1]
       div(class = "nfert-kpi-row",
           div(class = "nfert-kpi",
               span(class = "nfert-kpi-value", .nfert_fmt(mn, 0)),
@@ -420,15 +420,15 @@ precisionServer <- function(id, research_mode, app_state) {
         sprintf("VRT_%s.tif", format(Sys.time(), "%Y%m%d_%H%M")),
       content  = function(file) {
         o <- vrt_out(); req(o)
-        raster::writeRaster(o$rate_raster %||% o, file,
-                            overwrite = TRUE)
+        terra::writeRaster(o$rate_raster %||% o, file,
+                           overwrite = TRUE)
       })
 
     # ---- NNI (empirical VI-based) ----------------------------------
     emp_vi_val <- reactiveVal(NULL)
     observeEvent(input$emp_vi_file, {
-      if (!requireNamespace("raster", quietly = TRUE)) return()
-      emp_vi_val(raster::raster(input$emp_vi_file$datapath))
+      if (!requireNamespace("terra", quietly = TRUE)) return()
+      emp_vi_val(terra::rast(input$emp_vi_file$datapath))
     })
     observeEvent(input$emp_vi_demo, {
       if (!requireNamespace("sf", quietly = TRUE)) return()
@@ -436,9 +436,9 @@ precisionServer <- function(id, research_mode, app_state) {
       fd <- sf::st_read(ex, quiet = TRUE)[1, ]
       # Re-range NDVI 0.3-0.9 -> NDRE 0.15-0.55
       r  <- .nfert_demo_ndvi(fd)
-      v  <- raster::values(r)
+      v  <- terra::values(r, mat = FALSE)
       v  <- 0.15 + (v - 0.30) / (0.90 - 0.30) * (0.55 - 0.15)
-      raster::values(r) <- v
+      terra::values(r) <- v
       emp_vi_val(r)
       showNotification("Demo NDRE raster loaded.",
                        type = "message", duration = 3)
@@ -462,19 +462,19 @@ precisionServer <- function(id, research_mode, app_state) {
 
     output$emp_nni_plot <- renderPlot({
       o <- emp_nni_out(); req(o)
-      raster::plot(o$NNI, main = sprintf("NNI (%s -> %s regression)",
-                                          o$index, o$crop),
-                   col = hcl.colors(100, "RdYlGn"))
+      terra::plot(o$NNI, main = sprintf("NNI (%s -> %s regression)",
+                                         o$index, o$crop),
+                  col = hcl.colors(100, "RdYlGn"))
     })
     output$emp_zones_plot <- renderPlot({
       o <- emp_nni_out(); req(o)
-      raster::plot(o$zones,
-                   main = "Zones (1 deficient / 2 optimal / 3 excessive)",
-                   col = c("#C0392B", "#2F7A44", "#1F4E79"))
+      terra::plot(o$zones,
+                  main = "Zones (1 deficient / 2 optimal / 3 excessive)",
+                  col = c("#C0392B", "#2F7A44", "#1F4E79"))
     })
     output$emp_summary <- renderUI({
       o <- emp_nni_out(); req(o)
-      mn <- raster::cellStats(o$NNI, "mean", na.rm = TRUE)
+      mn <- terra::global(o$NNI, "mean", na.rm = TRUE)[1,1]
       div(class = "nfert-kpi-row",
           div(class = "nfert-kpi",
               span(class = "nfert-kpi-value", .nfert_fmt(mn, 2)),

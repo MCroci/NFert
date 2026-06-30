@@ -49,8 +49,9 @@ direction. If both \code{ab_line} and \code{angle_deg} are
 \item{variability}{One of \code{"uniform"}, \code{"calibration"},
 \code{"nni"}, \code{"classes"}.}
 
-\item{vi_raster}{\code{terra::SpatRaster} or \code{raster::RasterLayer}
-with vegetation index (0-1). Required for \code{"calibration"} and
+\item{vi_raster}{\code{terra::SpatRaster} with vegetation index (0-1); a
+legacy \code{raster} object is accepted and converted with
+\code{terra::rast()}. Required for \code{"calibration"} and
 \code{"classes"}.}
 
 \item{nni_raster}{Same, with NNI values. Required for

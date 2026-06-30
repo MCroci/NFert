@@ -1,2 +1,21 @@
+# RStudio / R session
 .Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Office lock / temp files
+~$*
+
+# Generated pkgdown site (built by CI to the gh-pages branch)
 docs
+
+# R CMD build / check artefacts
+*.tar.gz
+*.Rcheck/
+..Rcheck/
+
+# Scratch / intermediate outputs (not part of the package)
+tmp/
+out/
+output/

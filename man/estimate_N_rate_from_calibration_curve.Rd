@@ -14,8 +14,9 @@ estimate_N_rate_from_calibration_curve(
 )
 }
 \arguments{
-\item{raster}{A \code{raster::RasterLayer} with NDVI values, or a \code{RasterBrick} /
-\code{RasterStack} (the layer named \code{NDVI} is used if present, otherwise the first layer).}
+\item{raster}{A \code{terra::SpatRaster} with NDVI values (the layer named \code{NDVI}
+is used if present, otherwise the first layer). Legacy \code{raster} objects are
+accepted and converted with \code{terra::rast()}.}
 
 \item{minN}{The minimum N rate (kg/ha) corresponding to the minimum NDVI.}
 
@@ -28,7 +29,8 @@ estimate_N_rate_from_calibration_curve(
 \item{plot}{A logical value indicating whether to create plots (default is FALSE).}
 }
 \value{
-A RasterLayer object with the estimated N rates based on the chosen calibration method.
+A single-layer \code{terra::SpatRaster} with the estimated N rates based on
+the chosen calibration method.
 }
 \description{
 This function estimates nitrogen (N) application rates based on NDVI values using either
@@ -36,7 +38,7 @@ a two-point or three-point calibration method.
 }
 \examples{
 # Load example NDVI raster (replace with your own)
-# ndvi_raster <- raster::raster(system.file("extdata/s2.tif", package = "NFert"))
+# ndvi_raster <- terra::rast(system.file("extdata/s2.tif", package = "NFert"))
 
 # Two-point calibration
 # n_rate_raster_2pt <- estimate_N_rate_from_calibration_curve(ndvi_raster, minN = 40, maxN = 60)

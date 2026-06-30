@@ -6,18 +6,18 @@
 # ---------------------------------------------------------------------
 
 # Generate a plausible NDVI raster over a given sf polygon. Returns a
-# RasterLayer so both 'raster' and 'terra' paths consume it.
+# SpatRaster consumed by the terra-based pipeline.
 .nfert_demo_ndvi <- function(field, res_m = 5, seed = 42) {
-  if (!requireNamespace("raster", quietly = TRUE) ||
+  if (!requireNamespace("terra", quietly = TRUE) ||
       !requireNamespace("sf", quietly = TRUE)) return(NULL)
   set.seed(seed)
   fp <- sf::st_transform(field, 3857)
   bb <- sf::st_bbox(fp)
   nx <- max(20, as.integer((bb$xmax - bb$xmin) / res_m))
   ny <- max(20, as.integer((bb$ymax - bb$ymin) / res_m))
-  r  <- raster::raster(xmn = bb$xmin, xmx = bb$xmax,
-                       ymn = bb$ymin, ymx = bb$ymax,
-                       ncols = nx, nrows = ny, crs = 3857)
+  r  <- terra::rast(xmin = bb$xmin, xmax = bb$xmax,
+                    ymin = bb$ymin, ymax = bb$ymax,
+                    ncols = nx, nrows = ny, crs = "EPSG:3857")
   # Smooth gradient + two low-vigour patches + noise
   x <- seq(0, 1, length.out = nx)
   y <- seq(0, 1, length.out = ny)
@@ -28,8 +28,8 @@
   patch2 <- 0.24 * exp(-(((gx - 0.70)^2 + (gy - 0.55)^2) / 0.006))
   z <- base - patch1 - patch2 + 0.03 * matrix(rnorm(nx * ny), ny, nx)
   z <- pmin(pmax(z, 0.30), 0.92)
-  raster::values(r) <- as.vector(z)
-  r <- raster::mask(r, sf::as_Spatial(fp))
+  terra::values(r) <- as.vector(z)
+  r <- terra::mask(r, terra::vect(fp))
   r
 }
 
@@ -38,9 +38,9 @@
   r <- .nfert_demo_ndvi(field, res_m, seed)
   if (is.null(r)) return(NULL)
   # remap NDVI 0.3-0.9 -> NNI 0.7-1.25
-  v <- raster::values(r)
+  v <- terra::values(r, mat = FALSE)
   v <- 0.70 + (v - 0.30) / (0.90 - 0.30) * (1.25 - 0.70)
-  raster::values(r) <- v
+  terra::values(r) <- v
   r
 }
 
@@ -255,7 +255,7 @@
   vals <- tryCatch({
     v <- if (inherits(r, "SpatRaster"))
            terra::values(r, na.rm = TRUE)
-         else raster::getValues(r)
+         else terra::values(terra::rast(r), na.rm = TRUE)
     v[!is.na(v) & is.finite(v)]
   }, error = function(e) NULL)
   if (is.null(vals) || length(vals) == 0)
@@ -290,10 +290,11 @@
       pixel_area_m2 <- prod(res)
     }
   } else {
-    v <- raster::getValues(zones_rast)
+    zr <- terra::rast(zones_rast)
+    v <- terra::values(zr, mat = FALSE)
     v <- v[!is.na(v)]
     if (is.null(pixel_area_m2)) {
-      res <- raster::res(zones_rast)
+      res <- terra::res(zr)
       pixel_area_m2 <- prod(res)
     }
   }

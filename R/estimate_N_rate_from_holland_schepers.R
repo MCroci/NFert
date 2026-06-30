@@ -3,34 +3,37 @@
 #' This function estimates nitrogen (N) application rates based on NDVI values using the Holland & Schepers (H&S) algorithm.
 #' It calculates a sufficiency index (SI) for each pixel in the NDVI raster, then adjusts a base N rate to determine the recommended N dose.
 #'
-#' @param ndvi_raster A `raster::RasterLayer` with NDVI (0--1), or a `RasterBrick` /
-#'   `RasterStack` (layer named `NDVI` if present, else first layer).
+#' @param ndvi_raster A `terra::SpatRaster` with NDVI (0--1); the layer named
+#'   `NDVI` is used if present, else the first layer. Legacy `raster` objects
+#'   are accepted and converted with `terra::rast()`.
 #' @param base_N_rate The base N rate (kg/ha) to be adjusted (default = 50).
 #' @param plot Logical indicating whether to create diagnostic plots (default = TRUE).
 #'
 #' @return A list containing:
-#' - dose_raster: RasterLayer with estimated N rates (kg/ha)
-#' - sufficiency_index_raster: RasterLayer with calculated sufficiency indices
+#' - dose_raster: `terra::SpatRaster` with estimated N rates (kg/ha)
+#' - sufficiency_index_raster: `terra::SpatRaster` with calculated sufficiency indices
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
+#' library(terra)
 #' # Load NDVI raster (replace with your data)
-#' ndvi_raster <- raster(system.file("extdata/sample_ndvi.tif", package = "yourpackage"))
+#' ndvi_raster <- terra::rast(system.file("extdata/sample_ndvi.tif", package = "yourpackage"))
 #'
 #' # Calculate N rates with plotting
 #' result <- estimate_N_rate_from_holland_schepers(ndvi_raster, base_N_rate = 60)
 #'
 #' # Visualize results
-#' plot(result$dose_raster, main = "Recommended N Rates")
-#' plot(result$sufficiency_index_raster, main = "Sufficiency Index")
+#' terra::plot(result$dose_raster, main = "Recommended N Rates")
+#' terra::plot(result$sufficiency_index_raster, main = "Sufficiency Index")
 #' }
 
 estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50, plot = TRUE) {
-  ndvi_raster <- .as_raster_layer_ndvi(ndvi_raster)
+  ndvi_raster <- .as_spatraster_ndvi(ndvi_raster)
   # Validate inputs
-  if (!raster::isLonLat(ndvi_raster) && is.na(raster::projection(ndvi_raster))) {
+  crs_txt <- terra::crs(ndvi_raster)
+  if (!isTRUE(terra::is.lonlat(ndvi_raster)) &&
+      (is.na(crs_txt) || !nzchar(crs_txt))) {
     warning("Raster projection information missing. Ensure NDVI values are in 0-1 range.")
   }
   if (base_N_rate <= 0 || base_N_rate > 300) {
@@ -38,8 +41,9 @@ estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50,
   }
 
   # Calculate reference percentiles
-  q95 <- raster::quantile(ndvi_raster, probs = 0.95, na.rm = TRUE)
-  q05 <- raster::quantile(ndvi_raster, probs = 0.05, na.rm = TRUE)
+  ndvi_vals <- terra::values(ndvi_raster, mat = FALSE)
+  q95 <- as.numeric(stats::quantile(ndvi_vals, probs = 0.95, na.rm = TRUE))
+  q05 <- as.numeric(stats::quantile(ndvi_vals, probs = 0.05, na.rm = TRUE))
 
   # Handle low variability case
   delta_SI <- 1 - (q05 / q95)
@@ -65,23 +69,24 @@ estimate_N_rate_from_holland_schepers <- function(ndvi_raster, base_N_rate = 50,
     graphics::par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
 
     # NDVI distribution
-    raster::hist(ndvi_raster, main = "NDVI Distribution",
-                 xlab = "NDVI", col = "darkgreen")
+    terra::hist(ndvi_raster, main = "NDVI Distribution",
+                xlab = "NDVI", col = "darkgreen")
 
     # SI vs NDVI relationship
-    plotSample <- raster::sampleRegular(ndvi_raster, size = 5000)
-    plot(plotSample, raster::values(sufficiency_index)[!is.na(plotSample)],
+    plotSample <- terra::spatSample(ndvi_raster, size = 5000, method = "regular",
+                                    values = TRUE, na.rm = FALSE)[[1]]
+    plot(plotSample, terra::values(sufficiency_index, mat = FALSE)[!is.na(plotSample)],
          pch = ".", col = "blue",
          xlab = "NDVI", ylab = "Sufficiency Index",
          main = "SI-NDVI Relationship")
 
     # Dose distribution
-    raster::hist(dose_raster, main = "N Rate Distribution",
-                 xlab = "N Rate (kg/ha)", col = "darkred")
+    terra::hist(dose_raster, main = "N Rate Distribution",
+                xlab = "N Rate (kg/ha)", col = "darkred")
 
     # Spatial distribution
-    raster::plot(dose_raster, main = "Spatial N Rate Distribution",
-                 col = grDevices::hcl.colors(100, "YlOrBr", rev = TRUE))
+    terra::plot(dose_raster, main = "Spatial N Rate Distribution",
+                col = grDevices::hcl.colors(100, "YlOrBr", rev = TRUE))
   }
 
   return(list(

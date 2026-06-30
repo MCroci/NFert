@@ -1,4 +1,4 @@
-# Tests for strip prescription builder (sf + raster/terra zonal means)
+# Tests for strip prescription builder (sf + terra zonal means)
 
 test_that("build_strip_prescription uniform returns sf with target dose", {
   skip_if_not_installed("sf")
@@ -22,21 +22,21 @@ test_that("build_strip_prescription uniform returns sf with target dose", {
 
 test_that("build_strip_prescription calibration inverse vs not changes dose order", {
   skip_if_not_installed("sf")
-  skip_if_not_installed("raster")
+  skip_if_not_installed("terra")
   ex <- system.file("extdata/example_farm.geojson", package = "NFert")
   skip_if(!nzchar(ex), "no bundled example_farm.geojson")
   farm <- sf::st_read(ex, quiet = TRUE)
   field <- farm[1, , drop = FALSE]
   f3857 <- sf::st_transform(field, 3857)
   bb <- sf::st_bbox(f3857)
-  r <- raster::raster(
-    xmn = bb[["xmin"]], xmx = bb[["xmax"]],
-    ymn = bb[["ymin"]], ymx = bb[["ymax"]],
+  r <- terra::rast(
+    xmin = bb[["xmin"]], xmax = bb[["xmax"]],
+    ymin = bb[["ymin"]], ymax = bb[["ymax"]],
     nrows = 40, ncols = 40,
     crs = sf::st_crs(3857)$wkt
   )
   set.seed(1L)
-  raster::values(r) <- stats::runif(raster::ncell(r), 0.35, 0.75)
+  terra::values(r) <- stats::runif(terra::ncell(r), 0.35, 0.75)
 
   rx_inv <- build_strip_prescription(
     field,

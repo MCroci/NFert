@@ -48,7 +48,9 @@
 #'   \item{coef_time}{`C_tempo` time adjustment factors by phase x cycle; in
 #'         v0.2.0 also carries DPI 2026 percentages for N, P2O5 and K2O allowed
 #'         per phase, plus `advance_allowed` and `husbandry` flags.}
-#'   \item{s2.rast}{Example Sentinel-2 NDVI raster for vignettes.}
+#'   \item{s2.rast}{Example Sentinel-2 raster (5 bands) for vignettes, stored as
+#'         a \code{terra} \code{PackedSpatRaster}. Unwrap with
+#'         \code{terra::rast(s2.rast)} before use.}
 #' }
 #'
 #' @section DPI 2026 additional lookup tables (v0.2.0):

@@ -23,7 +23,7 @@ calibration.}
 (fraction). Auto-detected and warned if values > 1.}
 }
 \value{
-A numeric scalar / vector or a \code{RasterLayer} of NNI values.
+A numeric scalar / vector or a \code{terra::SpatRaster} of NNI values.
 }
 \description{
 Computes the Nitrogen Nutrition Index, the standard scalar indicator of
@@ -43,9 +43,10 @@ consumption / N-excess
 }
 
 All three arguments can be scalar, numeric vectors of the same length
-(pixel-wise / plot-wise), or \code{raster::RasterLayer}s aligned to the
-same grid. If any of them is a \code{RasterLayer}, the output is a
-\code{RasterLayer}; otherwise a numeric vector is returned.
+(pixel-wise / plot-wise), or \code{terra::SpatRaster}s aligned to the
+same grid. If any of them is a \code{SpatRaster}, the output is a
+\code{SpatRaster}; otherwise a numeric vector is returned. Legacy \code{raster}
+objects are accepted and converted with \code{terra::rast()}.
 }
 \examples{
 \dontrun{
@@ -58,7 +59,7 @@ compute_NNI(N_content = 3.2, biomass = 2.5, crop = "wheat",
 compute_NNI(2.8, 4, crop = "maize", is_percent = TRUE)
 # ~ 1.52 -> luxury consumption
 
-# Raster (pixel-wise): N_content and biomass as RasterLayers
+# Raster (pixel-wise): N_content and biomass as SpatRasters
 nni_map <- compute_NNI(N_content = n_map, biomass = w_map,
                        crop = "wheat", is_percent = TRUE)
 }

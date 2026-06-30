@@ -1,5 +1,5 @@
 Package: NFert
-Title: N, P and K fertilization following Emilia-Romagna DPI 2026
+Title: N, P and K Fertilization Following Emilia-Romagna DPI 2026
 Version: 0.14.0
 URL: https://github.com/mcroci/NFert, https://mcroci.github.io/NFert/
 BugReports: https://github.com/mcroci/NFert/issues
@@ -44,12 +44,11 @@ RoxygenNote: 7.3.3
 Depends: 
     R (>= 4.0.0)
 Imports:
-    raster
+    terra
 Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    terra,
     jsonlite,
     shiny (>= 1.7.0),
     shinyjs,

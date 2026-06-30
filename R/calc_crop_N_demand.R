@@ -63,7 +63,7 @@ calc_crop_N_demand <- function(expected_yield_tons_ha = 10,
     if (!is.null(ct) && "n_fixation_pct" %in% names(ct)) {
       m <- match(crop, ct$crop)
       if (is.na(m) && "crop_it" %in% names(ct))
-        m <- match(crop, ct$crop_it)
+        m <- match(.nfert_ascii_fold(crop), .nfert_ascii_fold(ct$crop_it))
       if (is.na(m) && "crop_en" %in% names(ct))
         m <- match(crop, ct$crop_en)
       if (!is.na(m)) {

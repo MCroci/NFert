@@ -20,8 +20,9 @@
 #' arguments) whenever a ground-truth dataset is available. NNI is
 #' clipped to a user-configurable range (default 0.5-1.5).
 #'
-#' @param vi_raster A \code{RasterLayer} / \code{SpatRaster} with a
-#'   normalised vegetation index (dimensionless, typically 0-1).
+#' @param vi_raster A \code{terra::SpatRaster} with a normalised vegetation
+#'   index (dimensionless, typically 0-1). Legacy \code{raster} objects are
+#'   accepted and converted with \code{terra::rast()}.
 #' @param index Character. The vegetation index used. One of
 #'   \code{"NDRE"}, \code{"NDVI"}, \code{"CIred_edge"}.
 #' @param crop Character. One of \code{"wheat"}, \code{"maize"},
@@ -36,7 +37,7 @@
 #'   upper NNI thresholds for zone classification
 #'   (default \code{c(0.90, 1.10)}).
 #'
-#' @return A named list with two SpatRaster / RasterLayer objects:
+#' @return A named list with two \code{terra::SpatRaster} objects:
 #'   \code{NNI} (continuous) and \code{zones} (integer 1 / 2 / 3 for
 #'   deficient / optimal / excessive).
 #'
@@ -57,10 +58,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
-#' ndre <- raster("ndre.tif")
+#' library(terra)
+#' ndre <- rast("ndre.tif")
 #' out  <- nni_from_vi_empirical(ndre, index = "NDRE", crop = "wheat")
-#' plot(out$NNI)
+#' terra::plot(out$NNI)
 #' }
 #' @export
 nni_from_vi_empirical <- function(vi_raster,
@@ -72,6 +73,9 @@ nni_from_vi_empirical <- function(vi_raster,
                                    nni_thresholds = c(0.90, 1.10)) {
   index <- match.arg(index)
   crop  <- .norm_crop_key(crop)
+
+  if (!requireNamespace("terra", quietly = TRUE))
+    stop("Package 'terra' is required for nni_from_vi_empirical().")
 
   # Default linear coefficients (slope, intercept) per (index, crop).
   # Sources: Cao 2013, Fitzgerald 2010, Li 2014, Magney 2017,
@@ -107,26 +111,19 @@ nni_from_vi_empirical <- function(vi_raster,
     intercept <- pair[["intercept"]]
   }
 
-  if (inherits(vi_raster, "SpatRaster")) {
-    NNI <- slope * vi_raster + intercept
-    NNI <- terra::clamp(NNI, nni_range[1], nni_range[2], values = TRUE)
-    rcl <- matrix(c(-Inf, nni_thresholds[1], 1,
-                    nni_thresholds[1], nni_thresholds[2], 2,
-                    nni_thresholds[2], Inf, 3),
-                  ncol = 3, byrow = TRUE)
-    zones <- terra::classify(NNI, rcl, include.lowest = TRUE, right = FALSE)
-  } else if (inherits(vi_raster, c("RasterLayer", "RasterStack", "RasterBrick"))) {
-    NNI <- slope * vi_raster + intercept
-    NNI <- raster::clamp(NNI, nni_range[1], nni_range[2])
-    rcl <- matrix(c(-Inf, nni_thresholds[1], 1,
-                    nni_thresholds[1], nni_thresholds[2], 2,
-                    nni_thresholds[2], Inf, 3),
-                  ncol = 3, byrow = TRUE)
-    zones <- raster::reclassify(NNI, rcl, include.lowest = TRUE,
-                                 right = FALSE)
-  } else {
-    stop("`vi_raster` must be a RasterLayer or SpatRaster.")
-  }
+  # Accept legacy raster objects by coercing to terra SpatRaster.
+  if (inherits(vi_raster, c("RasterLayer", "RasterStack", "RasterBrick")))
+    vi_raster <- terra::rast(vi_raster)
+  if (!inherits(vi_raster, "SpatRaster"))
+    stop("`vi_raster` must be a SpatRaster (terra) or a raster object.")
+
+  NNI <- slope * vi_raster + intercept
+  NNI <- terra::clamp(NNI, nni_range[1], nni_range[2], values = TRUE)
+  rcl <- matrix(c(-Inf, nni_thresholds[1], 1,
+                  nni_thresholds[1], nni_thresholds[2], 2,
+                  nni_thresholds[2], Inf, 3),
+                ncol = 3, byrow = TRUE)
+  zones <- terra::classify(NNI, rcl, include.lowest = TRUE, right = FALSE)
 
   list(NNI   = NNI, zones = zones,
        slope = slope, intercept = intercept,

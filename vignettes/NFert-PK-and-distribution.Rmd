@@ -611,16 +611,16 @@ pixel at the MAS limit.
 
 ## Example: variable-rate N for grano duro
 
-```{r prec-ag-setup, eval = requireNamespace("raster", quietly = TRUE)}
-library(raster)
+```{r prec-ag-setup, eval = requireNamespace("terra", quietly = TRUE)}
+library(terra)
 
-# NDVI raster: example from NFert (RasterLayer or multi-band stack; functions use the NDVI layer if named)
+# NDVI raster: example from NFert (SpatRaster or multi-band stack; functions use the NDVI layer if named)
 data(s2.rast)
-ndvi <- s2.rast
+ndvi <- terra::rast(s2.rast)
 ndvi
 ```
 
-```{r prec-ag-calibration, eval = requireNamespace("raster", quietly = TRUE), fig.width = 6, fig.height = 5}
+```{r prec-ag-calibration, eval = requireNamespace("terra", quietly = TRUE), fig.width = 6, fig.height = 5}
 # Field-average N from the balance
 n_dose                 # ~142 kg/ha (computed earlier in this vignette)
 
@@ -637,14 +637,14 @@ vr_cal$mean_kg_ha       # ~ n_dose
 vr_cal$min_kg_ha
 vr_cal$max_kg_ha
 
-raster::plot(vr_cal$rate_raster,
+terra::plot(vr_cal$rate_raster,
              main = "Variable rate N (calibration) - kg/ha",
              col  = grDevices::hcl.colors(50, "YlOrBr", rev = TRUE))
 ```
 
 ## Example: Holland & Schepers method
 
-```{r prec-ag-holland, eval = requireNamespace("raster", quietly = TRUE), fig.width = 6, fig.height = 5}
+```{r prec-ag-holland, eval = requireNamespace("terra", quietly = TRUE), fig.width = 6, fig.height = 5}
 vr_hs <- variable_rate_N(
   ndvi_raster = ndvi,
   n_dose      = n_dose,
@@ -653,23 +653,23 @@ vr_hs <- variable_rate_N(
 )
 
 vr_hs$mean_kg_ha
-raster::plot(vr_hs$rate_raster,
+terra::plot(vr_hs$rate_raster,
              main = "Variable rate N (Holland & Schepers) - kg/ha",
              col  = grDevices::hcl.colors(50, "YlOrBr", rev = TRUE))
 ```
 
 ## Comparison and aggregation
 
-```{r prec-ag-compare, eval = requireNamespace("raster", quietly = TRUE)}
+```{r prec-ag-compare, eval = requireNamespace("terra", quietly = TRUE)}
 # Total N applied to the field (assuming each pixel has the same area)
-mean(getValues(vr_cal$rate_raster), na.rm = TRUE)
-mean(getValues(vr_hs$rate_raster),  na.rm = TRUE)
+mean(terra::values(vr_cal$rate_raster, mat = FALSE), na.rm = TRUE)
+mean(terra::values(vr_hs$rate_raster,  mat = FALSE), na.rm = TRUE)
 
 # Histogram comparison
 oldpar <- par(mfrow = c(1, 2))
-hist(getValues(vr_cal$rate_raster), main = "Calibration",
+hist(terra::values(vr_cal$rate_raster, mat = FALSE), main = "Calibration",
      xlab = "N rate (kg/ha)", col = "steelblue", border = "white")
-hist(getValues(vr_hs$rate_raster),  main = "Holland & Schepers",
+hist(terra::values(vr_hs$rate_raster,  mat = FALSE),  main = "Holland & Schepers",
      xlab = "N rate (kg/ha)", col = "tomato",   border = "white")
 par(oldpar)
 ```
@@ -680,7 +680,7 @@ The variable-rate raster can be coupled to a single fertiliser application
 (typically the **copertura**) inside `plan_distribution()`: read the mean
 rate from the raster and pass it as the mineral row.
 
-```{r prec-ag-plan, eval = requireNamespace("raster", quietly = TRUE)}
+```{r prec-ag-plan, eval = requireNamespace("terra", quietly = TRUE)}
 mean_rate <- vr_cal$mean_kg_ha
 # Quintals/ha of UREA needed to deliver mean_rate (titre 46% N)
 q_urea_per_ha <- mean_rate / 46
@@ -704,13 +704,13 @@ plan_vr$totals
 For more refined NDVI-rate relationships you can call the underlying
 estimator directly, providing a `meanN` for the average NDVI:
 
-```{r prec-ag-3pt, eval = requireNamespace("raster", quietly = TRUE)}
+```{r prec-ag-3pt, eval = requireNamespace("terra", quietly = TRUE)}
 n_rate_3pt <- estimate_N_rate_from_calibration_curve(
   raster = ndvi,
   minN = 100, meanN = 140, maxN = 180,
   calibration_type = "three-point"
 )
-raster::cellStats(n_rate_3pt, summary)
+summary(terra::values(n_rate_3pt, mat = FALSE))
 ```
 
 # Reference tables

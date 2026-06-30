@@ -1,49 +1,42 @@
 # ---------------------------------------------------------------------------
 # data-raw/rebuild-s2-raster.R
 #
-# Rebuild s2.rast for compatibility with the current `raster` package (>=3.5
-# introduced the "srs" slot in RasterBrick that older serialisations lack).
-# Run once if devtools::document() warns about an invalid validObject() with
-# message "no slot of name 'srs'".
+# Rebuild data/s2.rast.rda as a terra PackedSpatRaster.
 #
-# Usage (from RStudio with the package as project root):
+# SpatRaster objects hold an external C++ pointer and cannot be serialised to
+# an .rda directly (they become a "NULL pointer" on load). We therefore store
+# the example raster wrapped with terra::wrap() (a PackedSpatRaster, which IS
+# serialisable) and unwrap it on use with terra::rast(s2.rast).
+#
+# This removes the dependency on the {raster} package: s2.rast now loads with
+# {terra} only. Run once after changing the source raster:
 #   source("data-raw/rebuild-s2-raster.R")
 # ---------------------------------------------------------------------------
 
 stopifnot(file.exists("DESCRIPTION"))
-if (!requireNamespace("raster", quietly = TRUE)) {
-  stop("Package 'raster' is required.")
+if (!requireNamespace("terra", quietly = TRUE)) {
+  stop("Package 'terra' is required.")
 }
 
-# Load the existing raster (suppress the validObject warning during load)
-suppressWarnings(load("data/s2.rast.rda"))
+# Source of truth: the previous serialisation. Historically this was a
+# {raster} RasterBrick; convert it to a SpatRaster (terra::rast() accepts a
+# Raster* object). If the stored object is already packed, just unwrap it.
+e <- new.env()
+suppressWarnings(load("data/s2.rast.rda", envir = e))
+obj <- e$s2.rast
 
-# Force a clean rebuild by extracting values + extent + crs and constructing
-# a fresh RasterBrick / RasterLayer with the current class definition.
-if (inherits(s2.rast, "RasterBrick")) {
-  vals <- raster::getValues(s2.rast)
-  ext  <- raster::extent(s2.rast)
-  crs  <- raster::crs(s2.rast)
-  nr   <- nrow(s2.rast); nc <- ncol(s2.rast); nl <- raster::nlayers(s2.rast)
-  fresh <- raster::brick(nrows = nr, ncols = nc, nl = nl,
-                         xmn = ext@xmin, xmx = ext@xmax,
-                         ymn = ext@ymin, ymx = ext@ymax,
-                         crs = crs)
-  raster::values(fresh) <- vals
-  names(fresh) <- names(s2.rast)
-  s2.rast <- fresh
-} else if (inherits(s2.rast, "RasterLayer")) {
-  vals <- raster::getValues(s2.rast)
-  ext  <- raster::extent(s2.rast)
-  crs  <- raster::crs(s2.rast)
-  fresh <- raster::raster(nrows = nrow(s2.rast), ncols = ncol(s2.rast),
-                          xmn = ext@xmin, xmx = ext@xmax,
-                          ymn = ext@ymin, ymx = ext@ymax,
-                          crs = crs)
-  raster::values(fresh) <- vals
-  names(fresh) <- names(s2.rast)
-  s2.rast <- fresh
+sr <- if (inherits(obj, "PackedSpatRaster")) {
+  terra::rast(obj)
+} else if (inherits(obj, "SpatRaster")) {
+  obj
+} else {
+  # legacy raster::RasterBrick / RasterLayer
+  terra::rast(obj)
 }
 
+# Pack for serialisation.
+s2.rast <- terra::wrap(sr)
 save(s2.rast, file = "data/s2.rast.rda", compress = "xz", version = 2)
-message("Rebuilt data/s2.rast.rda with current raster class definition.")
+message(sprintf(
+  "Rebuilt data/s2.rast.rda as PackedSpatRaster (%d layer(s): %s).",
+  terra::nlyr(sr), paste(names(sr), collapse = ", ")))

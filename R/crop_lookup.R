@@ -1,3 +1,21 @@
+#' Fold the few non-ASCII characters of the Italian reference labels
+#' (degree sign, en/em dash, accented vowels) to ASCII. Used both when
+#' building the bundled data and when matching user input, so lookups stay
+#' accent-insensitive while the data remains ASCII (CRAN requirement).
+#' @noRd
+.nfert_ascii_fold <- function(s) {
+  s <- as.character(s)
+  # Build the non-ASCII characters from code points so this source file
+  # stays pure ASCII. en/em dash -> hyphen; degree sign -> "o"; accented
+  # vowels -> base letter via a 1:1 chartr() map.
+  s <- gsub(paste0("[", intToUtf8(c(0x2013L, 0x2014L)), "]"), "-", s)
+  s <- gsub(intToUtf8(0xB0L), "o", s, fixed = TRUE)
+  from <- intToUtf8(c(0xE0L, 0xE8L, 0xE9L, 0xECL, 0xEDL, 0xF2L, 0xF3L,
+                      0xF9L, 0xFAL, 0xC0L, 0xC8L, 0xC9L, 0xCCL, 0xD2L, 0xD9L))
+  to   <- "aeeiioouuAEEIOU"
+  chartr(from, to, s)
+}
+
 #' @noRd
 .crop_alias_to_canonical <- function() {
   # Only truly non-obvious variants that are neither in the English
@@ -50,8 +68,9 @@ resolve_crop <- function(x, table = nfert_data_get("uptake_table")) {
   if (!is.character(x) || length(x) != 1 || is.na(x)) {
     stop("`x` must be a single non-NA character.")
   }
-  # Normalise: trim outer spaces and collapse internal multiple spaces
-  norm <- function(s) gsub("\\s+", " ", trimws(s))
+  # Normalise: fold accents to ASCII, trim and collapse internal spaces, so
+  # matching is accent-insensitive and works against the ASCII-folded data.
+  norm <- function(s) .nfert_ascii_fold(gsub("\\s+", " ", trimws(s)))
   xn <- norm(x)
 
   # Apply known aliases (rare names / alternate spellings)
@@ -108,7 +127,7 @@ resolve_ccp <- function(x, table = nfert_data_get("coef_time")) {
     stop("`x` must be a single non-NA character.")
   }
   norm <- function(s) {
-    s <- gsub("[\u2013\u2014]", "-", s)   # en/em dash -> hyphen
+    s <- .nfert_ascii_fold(s)             # degree / dash / accents -> ASCII
     s <- gsub("\\bcrop\\b", "", s, ignore.case = TRUE)  # optional "crop" word
     s <- gsub("\\s+", " ", trimws(s))
     tolower(s)

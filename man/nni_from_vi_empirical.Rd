@@ -15,8 +15,9 @@ nni_from_vi_empirical(
 )
 }
 \arguments{
-\item{vi_raster}{A \code{RasterLayer} / \code{SpatRaster} with a
-normalised vegetation index (dimensionless, typically 0-1).}
+\item{vi_raster}{A \code{terra::SpatRaster} with a normalised vegetation
+index (dimensionless, typically 0-1). Legacy \code{raster} objects are
+accepted and converted with \code{terra::rast()}.}
 
 \item{index}{Character. The vegetation index used. One of
 \code{"NDRE"}, \code{"NDVI"}, \code{"CIred_edge"}.}
@@ -37,7 +38,7 @@ upper NNI thresholds for zone classification
 (default \code{c(0.90, 1.10)}).}
 }
 \value{
-A named list with two SpatRaster / RasterLayer objects:
+A named list with two \code{terra::SpatRaster} objects:
 \code{NNI} (continuous) and \code{zones} (integer 1 / 2 / 3 for
 deficient / optimal / excessive).
 }
@@ -65,10 +66,10 @@ clipped to a user-configurable range (default 0.5-1.5).
 }
 \examples{
 \dontrun{
-library(raster)
-ndre <- raster("ndre.tif")
+library(terra)
+ndre <- rast("ndre.tif")
 out  <- nni_from_vi_empirical(ndre, index = "NDRE", crop = "wheat")
-plot(out$NNI)
+terra::plot(out$NNI)
 }
 }
 \references{

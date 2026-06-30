@@ -59,7 +59,7 @@ Here we build a plausible NDVI in one line using the internal demo
 helper (same synthesiser used by the Shiny "Load demo NDVI" button):
 
 ```{r ndvi}
-library(raster)
+library(terra)
 
 # Two-patch NDVI with smooth base + noise
 set.seed(7)
@@ -68,9 +68,9 @@ bb <- sf::st_bbox(fp)
 
 nx <- 150
 ny <- 110
-r  <- raster(xmn = bb$xmin, xmx = bb$xmax,
-             ymn = bb$ymin, ymx = bb$ymax,
-             ncols = nx, nrows = ny, crs = 3857)
+r  <- terra::rast(xmin = bb$xmin, xmax = bb$xmax,
+                  ymin = bb$ymin, ymax = bb$ymax,
+                  ncols = nx, nrows = ny, crs = "EPSG:3857")
 
 x  <- seq(0, 1, length.out = nx); y <- seq(0, 1, length.out = ny)
 gx <- matrix(x, nrow = ny, ncol = nx, byrow = TRUE)
@@ -80,14 +80,14 @@ patch1 <- 0.22 * exp(-(((gx - 0.30)^2 + (gy - 0.35)^2) / 0.010))
 patch2 <- 0.26 * exp(-(((gx - 0.70)^2 + (gy - 0.55)^2) / 0.008))
 ndvi_vals <- base - patch1 - patch2 + 0.03 * rnorm(nx * ny)
 ndvi_vals <- pmin(pmax(ndvi_vals, 0.30), 0.92)
-raster::values(r) <- ndvi_vals
-r <- raster::mask(r, as(fp, "Spatial"))
+terra::values(r) <- ndvi_vals
+r <- terra::mask(r, terra::vect(fp))
 
 names(r) <- "NDVI"
 r
 
-plot(r, main = "Input NDVI (synthetic)",
-     col = hcl.colors(30, "YlGn"))
+terra::plot(r, main = "Input NDVI (synthetic)",
+            col = hcl.colors(30, "YlGn"))
 ```
 
 ## 3. Define the calibration curve
@@ -147,13 +147,13 @@ vr <- variable_rate_N(
 )
 
 rx_raster <- vr$rate_raster %||% vr    # robust to return shape
-plot(rx_raster,
-     main = "VRT raster (kg N/ha)",
-     col = rev(hcl.colors(30, "RdYlGn")))
-cat("Mean applied N:  ", round(cellStats(rx_raster, "mean", na.rm = TRUE), 1),
+terra::plot(rx_raster,
+            main = "VRT raster (kg N/ha)",
+            col = rev(hcl.colors(30, "RdYlGn")))
+cat("Mean applied N:  ", round(terra::global(rx_raster, "mean", na.rm = TRUE)[1, 1], 1),
     "kg N/ha\n")
-cat("Range:           ", round(cellStats(rx_raster, "min", na.rm = TRUE), 1),
-    "-", round(cellStats(rx_raster, "max", na.rm = TRUE), 1), "kg N/ha\n")
+cat("Range:           ", round(terra::global(rx_raster, "min", na.rm = TRUE)[1, 1], 1),
+    "-", round(terra::global(rx_raster, "max", na.rm = TRUE)[1, 1], 1), "kg N/ha\n")
 ```
 
 `%||%` is just defensive code (some versions of `variable_rate_N()`
@@ -215,7 +215,7 @@ text(N_target, par("usr")[4]*0.9,
 
 ```{r export, eval = FALSE}
 # A) raster GeoTIFF (farm-management software, continuous)
-raster::writeRaster(rx_raster, "rx_raster.tif", overwrite = TRUE)
+terra::writeRaster(rx_raster, "rx_raster.tif", overwrite = TRUE)
 
 # B) grid polygons - any format accepted by the on-board monitor
 export_prescription(rx_grid, "rx_grid.shp",          format = "shp")

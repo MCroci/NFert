@@ -13,9 +13,9 @@ compute_vi(
 )
 }
 \arguments{
-\item{stack}{A \code{raster::RasterStack} or \code{RasterBrick} with the required
-spectral bands. Band names (or layer indices) are mapped through
-\code{bands}.}
+\item{stack}{A \code{terra::SpatRaster} with the required spectral bands (a
+legacy \code{raster} object is accepted and converted with \code{terra::rast()}).
+Band names (or layer indices) are mapped through \code{bands}.}
 
 \item{index}{One of \code{"NDVI"}, \code{"NDRE"}, \code{"GNDVI"},
 \code{"CIred"}, \code{"MCARI"}, \code{"MSAVI2"} (case-insensitive).}
@@ -36,12 +36,12 @@ NDRE, GNDVI, MSAVI2), clamp output to the range -1 to 1. Ignored
 for CIred and MCARI (unbounded).}
 }
 \value{
-A \code{raster::RasterLayer} with the computed index. Layer name
-is set to the index name.
+A single-layer \code{terra::SpatRaster} with the computed index.
+Layer name is set to the index name.
 }
 \description{
 Generic engine that computes the main vegetation indices used in nitrogen
-diagnosis from a multi-band \code{raster::RasterStack} or \code{RasterBrick}.
+diagnosis from a multi-band \code{terra::SpatRaster}.
 NFert supports six indices with configurable band mapping, so the function
 works with Sentinel-2 L2A, UAV multispectral sensors (MicaSense, Parrot
 Sequoia, Pix4D) or any other multispectral product.
@@ -74,11 +74,11 @@ transparently.
 }
 \examples{
 \dontrun{
-library(raster)
+library(terra)
 library(NFert)
 
 # Sentinel-2 L2A stack (integer DN, 0-10000)
-s2 <- raster::stack("S2_Cremonesi_20260415.tif")
+s2 <- terra::rast("S2_Cremonesi_20260415.tif")
 names(s2) <- c("B03", "B04", "B05", "B08")
 
 ndvi  <- compute_vi(s2, "NDVI",  scale_factor = 10000)

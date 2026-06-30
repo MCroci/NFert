@@ -45,12 +45,14 @@ dose_standard_PK <- function(crop,
 
   # Locate crop row
   t <- standard_pk_doses.table
-  idx <- which(t$crop == crop)
+  cf <- .nfert_ascii_fold(crop)
+  idx <- which(.nfert_ascii_fold(t$crop) == cf)
   if (length(idx) == 0) {
     stop(sprintf("Crop '%s' not found in standard_pk_doses.table.", crop))
   }
   if (!is.null(phase)) {
-    idx_p <- which(t$crop == crop & t$phase == phase)
+    idx_p <- which(.nfert_ascii_fold(t$crop) == cf &
+                     .nfert_ascii_fold(t$phase) == .nfert_ascii_fold(phase))
     if (length(idx_p) > 0) idx <- idx_p
   }
   if (length(idx) > 1) idx <- idx[1]

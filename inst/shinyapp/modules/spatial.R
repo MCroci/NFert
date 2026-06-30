@@ -69,7 +69,7 @@ spatialServer <- function(id, research_mode, app_state) {
   moduleServer(id, function(input, output, session) {
 
     soil_stack <- reactive({
-      if (!requireNamespace("raster", quietly = TRUE)) return(NULL)
+      if (!requireNamespace("terra", quietly = TRUE)) return(NULL)
       if (identical(input$source_sel, "cremonesi")) {
         dir <- system.file("extdata", package = "NFert")
         paths <- file.path(dir, c("Cremonesi_TN.tif",
@@ -78,17 +78,17 @@ spatialServer <- function(id, research_mode, app_state) {
                                   "Cremonesi_Sand.tif",
                                   "Cremonesi_CNratio.tif"))
         if (!all(file.exists(paths))) return(NULL)
-        s <- raster::stack(paths)
+        s <- terra::rast(paths)
         names(s) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
         s
       } else {
         req(input$tn_tif, input$som_tif, input$clay_tif,
             input$sand_tif, input$cn_tif)
-        s <- raster::stack(c(input$tn_tif$datapath,
-                             input$som_tif$datapath,
-                             input$clay_tif$datapath,
-                             input$sand_tif$datapath,
-                             input$cn_tif$datapath))
+        s <- terra::rast(c(input$tn_tif$datapath,
+                           input$som_tif$datapath,
+                           input$clay_tif$datapath,
+                           input$sand_tif$datapath,
+                           input$cn_tif$datapath))
         names(s) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
         s
       }
@@ -122,14 +122,14 @@ spatialServer <- function(id, research_mode, app_state) {
     output$nmap_plot <- renderPlot({
       r <- result(); req(r)
       lyr <- tryCatch(r[["N_to_apply"]], error = function(e) r)
-      raster::plot(lyr,
+      terra::plot(lyr,
         main = "Mineral N to apply (kg N/ha)",
         col = hcl.colors(100, "RdYlGn"))
     })
     output$nmap_hist <- renderPlot({
       r <- result(); req(r)
       lyr <- tryCatch(r[["N_to_apply"]], error = function(e) r)
-      mean_val <- tryCatch(raster::cellStats(lyr, "mean", na.rm = TRUE),
+      mean_val <- tryCatch(terra::global(lyr, "mean", na.rm = TRUE)[1,1],
                             error = function(e) NA)
       .nfert_raster_hist(lyr, breaks = mean_val,
                           xlab = "N rate (kg N/ha)")
@@ -137,9 +137,9 @@ spatialServer <- function(id, research_mode, app_state) {
     output$spat_summary <- renderUI({
       r <- result(); req(r)
       lyr <- tryCatch(r[["N_to_apply"]], error = function(e) r)
-      mn <- raster::cellStats(lyr, "mean", na.rm = TRUE)
-      mi <- raster::cellStats(lyr, "min",  na.rm = TRUE)
-      ma <- raster::cellStats(lyr, "max",  na.rm = TRUE)
+      mn <- terra::global(lyr, "mean", na.rm = TRUE)[1,1]
+      mi <- terra::global(lyr, "min",  na.rm = TRUE)[1,1]
+      ma <- terra::global(lyr, "max",  na.rm = TRUE)[1,1]
       div(class = "nfert-kpi-row",
           div(class = "nfert-kpi",
               span(class = "nfert-kpi-value", .nfert_fmt(mn, 1)),
@@ -158,7 +158,7 @@ spatialServer <- function(id, research_mode, app_state) {
       content  = function(file) {
         r <- result(); req(r)
         lyr <- tryCatch(r[["N_to_apply"]], error = function(e) r)
-        raster::writeRaster(lyr, file, overwrite = TRUE)
+        terra::writeRaster(lyr, file, overwrite = TRUE)
       })
   })
 }

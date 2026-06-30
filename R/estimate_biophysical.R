@@ -55,7 +55,13 @@
 #' @param block_rows Integer. Number of rows processed per chunk; tune to
 #'   available RAM (512 is safe on 8 GB machines).
 #'
-#' @return Named list of file paths for every output GeoTIFF written.
+#' @return Named list of \code{terra::SpatRaster} objects, one per output
+#'   GeoTIFF written: the mean map for each requested variable plus a
+#'   \code{<var>_unc} layer for every variable whose model exposes prediction
+#'   uncertainty. The corresponding on-disk file paths are attached as the
+#'   \code{"paths"} attribute (a named list aligned with the result), so
+#'   \code{attr(result, "paths")[[v]]} is the GeoTIFF backing variable
+#'   \code{v}.
 #'
 #' @seealso \code{\link{compute_NNI}}, \code{\link{diagnose_N_status}},
 #'   \code{\link{biophysical_to_NNI_inputs}},
@@ -74,7 +80,8 @@
 #'   od <- tempfile()
 #'   dir.create(od)
 #'   maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
-#'   stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
+#'   stopifnot(inherits(maps$LAI, "SpatRaster"),
+#'             file.exists(attr(maps, "paths")$LAI))
 #' }
 #' @export
 estimate_biophysical <- function(
@@ -184,7 +191,18 @@ estimate_biophysical <- function(
       }
     }
   }
-  out_paths
+
+  # Finalise every GeoTIFF so it can be re-opened, then clear `writers` to
+  # disarm the on.exit() safety net (a harmless no-op now that the files are
+  # flushed and closed).
+  for (w_ in writers) terra::writeStop(w_)
+  writers <- list()
+
+  # Return loaded SpatRasters keyed exactly like `out_paths`, keeping the
+  # on-disk file paths on the `paths` attribute.
+  maps <- lapply(out_paths, function(p) terra::rast(p))
+  attr(maps, "paths") <- out_paths
+  maps
 }
 
 #' Convert GPR biophysical outputs into NNI inputs (low-level helper)
@@ -238,9 +256,9 @@ biophysical_to_NNI_inputs <- function(
 ) {
   if (!requireNamespace("terra", quietly = TRUE))
     stop("Package 'terra' is required for biophysical_to_NNI_inputs().")
-  lai <- terra::rast(lai_rast)
-  cm  <- terra::rast(cm_rast)
-  cnc <- terra::rast(cnc_rast)
+  lai <- .as_spatraster(lai_rast)
+  cm  <- .as_spatraster(cm_rast)
+  cnc <- .as_spatraster(cnc_rast)
 
   W_leaf_g_m2  <- lai * cm * 1e4                     # g m^-2 ground
   W_total_g_m2 <- W_leaf_g_m2 / alpha_leaf
@@ -257,6 +275,14 @@ biophysical_to_NNI_inputs <- function(
 # -----------------------------------------------------------------------------
 # Internal helpers (not exported)
 # -----------------------------------------------------------------------------
+
+# Coerce an input to a terra SpatRaster. A SpatRaster is returned untouched:
+# re-wrapping a live SpatRaster with terra::rast() copies only its geometry and
+# drops the cell values, which then breaks downstream arithmetic
+# ("raster has no values"). Paths and legacy raster objects are opened normally.
+.as_spatraster <- function(x) {
+  if (inherits(x, "SpatRaster")) x else terra::rast(x)
+}
 
 .S2_BANDS <- c("B02","B03","B04","B05","B06","B07","B08","B8A","B11","B12")
 

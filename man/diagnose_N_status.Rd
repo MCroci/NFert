@@ -39,8 +39,8 @@ Default 1.10.}
 \value{
 A list with:
 \describe{
-\item{\code{NNI}}{Continuous NNI (numeric or RasterLayer).}
-\item{\code{class}}{Integer class (1/2/3) or RasterLayer of classes.}
+\item{\code{NNI}}{Continuous NNI (numeric or SpatRaster).}
+\item{\code{class}}{Integer class (1/2/3) or SpatRaster of classes.}
 \item{\code{labels}}{Character labels matching \code{class}.}
 \item{\code{summary}}{Counts / fractions per class (rasters only).}
 \item{\code{thresholds}}{The thresholds used.}
@@ -74,7 +74,7 @@ diagnose_N_status(N_content = 2.8, biomass = 4,
 # Pixel-wise diagnosis
 d <- diagnose_N_status(N_content = n_raster, biomass = w_raster,
                        crop = "wheat", is_percent = TRUE)
-raster::plot(d$class)
+terra::plot(d$class)
 d$summary
 }
 }

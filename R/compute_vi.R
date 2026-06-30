@@ -1,7 +1,7 @@
 #' Compute a vegetation index from a multi-band raster
 #'
 #' Generic engine that computes the main vegetation indices used in nitrogen
-#' diagnosis from a multi-band `raster::RasterStack` or `RasterBrick`.
+#' diagnosis from a multi-band `terra::SpatRaster`.
 #' NFert supports six indices with configurable band mapping, so the function
 #' works with Sentinel-2 L2A, UAV multispectral sensors (MicaSense, Parrot
 #' Sequoia, Pix4D) or any other multispectral product.
@@ -31,9 +31,9 @@
 #' a 0--1 scale, so the user can substitute NDVI with NDRE or GNDVI
 #' transparently.
 #'
-#' @param stack A `raster::RasterStack` or `RasterBrick` with the required
-#'   spectral bands. Band names (or layer indices) are mapped through
-#'   \code{bands}.
+#' @param stack A `terra::SpatRaster` with the required spectral bands (a
+#'   legacy `raster` object is accepted and converted with `terra::rast()`).
+#'   Band names (or layer indices) are mapped through \code{bands}.
 #' @param index One of \code{"NDVI"}, \code{"NDRE"}, \code{"GNDVI"},
 #'   \code{"CIred"}, \code{"MCARI"}, \code{"MSAVI2"} (case-insensitive).
 #' @param bands Named list or character vector mapping the index inputs
@@ -49,8 +49,8 @@
 #'   NDRE, GNDVI, MSAVI2), clamp output to the range -1 to 1. Ignored
 #'   for CIred and MCARI (unbounded).
 #'
-#' @return A \code{raster::RasterLayer} with the computed index. Layer name
-#'   is set to the index name.
+#' @return A single-layer \code{terra::SpatRaster} with the computed index.
+#'   Layer name is set to the index name.
 #'
 #' @references
 #' Rouse, J.W. et al. (1974). Monitoring vegetation systems in the Great
@@ -82,11 +82,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
+#' library(terra)
 #' library(NFert)
 #'
 #' # Sentinel-2 L2A stack (integer DN, 0-10000)
-#' s2 <- raster::stack("S2_Cremonesi_20260415.tif")
+#' s2 <- terra::rast("S2_Cremonesi_20260415.tif")
 #' names(s2) <- c("B03", "B04", "B05", "B08")
 #'
 #' ndvi  <- compute_vi(s2, "NDVI",  scale_factor = 10000)
@@ -106,13 +106,16 @@ compute_vi <- function(stack,
                                     green    = "B03"),
                        scale_factor = 1,
                        clamp = TRUE) {
-  if (!requireNamespace("raster", quietly = TRUE)) {
-    stop("Package 'raster' is required.")
+  if (!requireNamespace("terra", quietly = TRUE)) {
+    stop("Package 'terra' is required.")
   }
   if (missing(stack))
-    stop("`stack` (RasterStack/Brick) is required.")
-  if (!inherits(stack, c("RasterStack", "RasterBrick", "RasterLayer")))
-    stop("`stack` must be a RasterStack, RasterBrick or RasterLayer.")
+    stop("`stack` (SpatRaster) is required.")
+  # Accept legacy raster objects by coercing to terra SpatRaster.
+  if (inherits(stack, c("RasterStack", "RasterBrick", "RasterLayer")))
+    stack <- terra::rast(stack)
+  if (!inherits(stack, "SpatRaster"))
+    stop("`stack` must be a terra SpatRaster (or a raster object).")
   if (missing(index) || length(index) != 1)
     stop("`index` is required (single character).")
 
@@ -141,10 +144,10 @@ compute_vi <- function(stack,
   get_band <- function(key) {
     ref <- bands[[key]]
     if (is.numeric(ref)) {
-      if (ref < 1 || ref > raster::nlayers(stack))
+      if (ref < 1 || ref > terra::nlyr(stack))
         stop("Band index '", ref, "' for '", key,
              "' is out of range (stack has ",
-             raster::nlayers(stack), " layers).")
+             terra::nlyr(stack), " layers).")
       return(stack[[ref]])
     }
     if (!ref %in% names(stack))
@@ -191,7 +194,7 @@ compute_vi <- function(stack,
   )
 
   if (isTRUE(clamp) && idx %in% c("NDVI", "NDRE", "GNDVI", "MSAVI2"))
-    out <- raster::clamp(out, lower = -1, upper = 1)
+    out <- terra::clamp(out, lower = -1, upper = 1, values = TRUE)
 
   names(out) <- switch(idx,
                        NDVI = "NDVI", NDRE = "NDRE", GNDVI = "GNDVI",

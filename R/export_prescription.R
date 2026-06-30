@@ -208,19 +208,17 @@ export_prescription_all <- function(x,
   if (inherits(x, "sf")) return(x)
   if (is.character(x) && length(x) == 1 && file.exists(x))
     return(sf::st_read(x, quiet = TRUE))
-  # SpatRaster or RasterLayer -> polygons
+  # SpatRaster (or a legacy raster object, coerced) -> polygons
+  if (inherits(x, c("RasterLayer", "RasterStack", "RasterBrick"))) {
+    if (!requireNamespace("terra", quietly = TRUE))
+      stop("Package 'terra' is required to polygonise a raster.")
+    x <- terra::rast(x)
+  }
   if (inherits(x, "SpatRaster")) {
     if (!requireNamespace("terra", quietly = TRUE))
       stop("Package 'terra' is required to polygonise a SpatRaster.")
     poly <- terra::as.polygons(x, dissolve = FALSE, na.rm = TRUE,
                                 values = TRUE)
-    return(sf::st_as_sf(poly))
-  }
-  if (inherits(x, c("RasterLayer", "RasterStack", "RasterBrick"))) {
-    if (!requireNamespace("raster", quietly = TRUE))
-      stop("Package 'raster' is required to polygonise a RasterLayer.")
-    poly <- raster::rasterToPolygons(x, dissolve = FALSE,
-                                      na.rm = TRUE)
     return(sf::st_as_sf(poly))
   }
   stop("`x` must be an sf object, a file path, or a raster.")

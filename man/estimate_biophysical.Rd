@@ -40,7 +40,13 @@ Defaults match ESA S2 L2A processor baseline 04.00 onwards.}
 available RAM (512 is safe on 8 GB machines).}
 }
 \value{
-Named list of file paths for every output GeoTIFF written.
+Named list of \code{terra::SpatRaster} objects, one per output
+GeoTIFF written: the mean map for each requested variable plus a
+\code{<var>_unc} layer for every variable whose model exposes prediction
+uncertainty. The corresponding on-disk file paths are attached as the
+\code{"paths"} attribute (a named list aligned with the result), so
+\code{attr(result, "paths")[[v]]} is the GeoTIFF backing variable
+\code{v}.
 }
 \description{
 Applies pre-trained Gaussian Process Regression (GPR) models to a
@@ -95,7 +101,8 @@ if (nzchar(scene)) {
   od <- tempfile()
   dir.create(od)
   maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
-  stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
+  stopifnot(inherits(maps$LAI, "SpatRaster"),
+            file.exists(attr(maps, "paths")$LAI))
 }
 \dontshow{\}) # examplesIf}
 }

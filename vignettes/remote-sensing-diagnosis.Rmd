@@ -45,19 +45,19 @@ so the vignette is reproducible offline.
 
 ```{r synthetic-stack}
 library(NFert)
-library(raster)
+library(terra)
 
 set.seed(1)
-template <- raster(nrows = 40, ncols = 40,
-                   xmn = 0, xmx = 100, ymn = 0, ymx = 100)
+template <- terra::rast(nrows = 40, ncols = 40,
+                        xmin = 0, xmax = 100, ymin = 0, ymax = 100)
 
 # Plausible canopy reflectances (fraction 0-1)
-B03 <- setValues(template, runif(ncell(template), 0.05, 0.12))  # green
-B04 <- setValues(template, runif(ncell(template), 0.04, 0.08))  # red
-B05 <- setValues(template, runif(ncell(template), 0.10, 0.25))  # red-edge
-B08 <- setValues(template, runif(ncell(template), 0.35, 0.55))  # NIR
+B03 <- terra::setValues(template, runif(terra::ncell(template), 0.05, 0.12))  # green
+B04 <- terra::setValues(template, runif(terra::ncell(template), 0.04, 0.08))  # red
+B05 <- terra::setValues(template, runif(terra::ncell(template), 0.10, 0.25))  # red-edge
+B08 <- terra::setValues(template, runif(terra::ncell(template), 0.35, 0.55))  # NIR
 
-s2 <- stack(B03, B04, B05, B08)
+s2 <- terra::rast(list(B03, B04, B05, B08))
 names(s2) <- c("B03", "B04", "B05", "B08")
 ```
 
@@ -73,16 +73,16 @@ ndre  <- compute_vi(s2, "NDRE")
 gndvi <- compute_vi(s2, "GNDVI")
 cire  <- compute_vi(s2, "CIred")
 
-summary(getValues(ndvi))
-summary(getValues(ndre))
+summary(terra::values(ndvi, mat = FALSE))
+summary(terra::values(ndre, mat = FALSE))
 ```
 
 ```{r plot-vis, fig.width=7, fig.height=4}
 par(mfrow = c(2, 2), mar = c(2, 2, 2, 3))
-plot(ndvi,  main = "NDVI",  col = rev(terrain.colors(30)))
-plot(ndre,  main = "NDRE",  col = rev(terrain.colors(30)))
-plot(gndvi, main = "GNDVI", col = rev(terrain.colors(30)))
-plot(cire,  main = "CIred", col = rev(terrain.colors(30)))
+terra::plot(ndvi,  main = "NDVI",  col = rev(terrain.colors(30)))
+terra::plot(ndre,  main = "NDRE",  col = rev(terrain.colors(30)))
+terra::plot(gndvi, main = "GNDVI", col = rev(terrain.colors(30)))
+terra::plot(cire,  main = "CIred", col = rev(terrain.colors(30)))
 ```
 
 NDVI and GNDVI typically cluster in a narrow range for closed canopies
@@ -129,17 +129,17 @@ of a biomass retrieval model + a leaf-N retrieval model.
 
 ```{r raster-nni, fig.width=7, fig.height=3}
 # Synthetic biomass and N% layers
-w_map <- setValues(template, runif(ncell(template), 1.5, 6.0))
-n_map <- setValues(template, runif(ncell(template), 2.2, 3.9))
+w_map <- terra::setValues(template, runif(terra::ncell(template), 1.5, 6.0))
+n_map <- terra::setValues(template, runif(terra::ncell(template), 2.2, 3.9))
 
 d <- diagnose_N_status(N_content = n_map, biomass = w_map,
                        crop = "wheat", is_percent = TRUE)
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(d$NNI,
+terra::plot(d$NNI,
      main = "NNI (continuous)",
      col  = hcl.colors(30, "RdYlGn"))
-plot(d$class,
+terra::plot(d$class,
      main = "NNI class (1=deficient, 2=optimal, 3=excessive)",
      col  = c("#d73027", "#fee08b", "#1a9850"))
 ```
@@ -170,24 +170,24 @@ rate_guided <- vr$rate_raster
 rate_guided[d$class == 3] <- 0
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(vr$rate_raster,
+terra::plot(vr$rate_raster,
      main = "VRT (NDRE + Holland)",
      col  = rev(heat.colors(30)))
-plot(rate_guided,
+terra::plot(rate_guided,
      main = "VRT masked by NNI (class 3 -> 0)",
      col  = rev(heat.colors(30)))
 ```
 
 ```{r verify-guided}
 cat("Full prescription  mean :",
-    round(cellStats(vr$rate_raster, mean), 1), "kg/ha\n")
+    round(terra::global(vr$rate_raster, "mean", na.rm = TRUE)[1, 1], 1), "kg/ha\n")
 cat("NNI-guided        mean  :",
-    round(cellStats(rate_guided, mean), 1), "kg/ha\n")
+    round(terra::global(rate_guided, "mean", na.rm = TRUE)[1, 1], 1), "kg/ha\n")
 cat("N saved by NNI mask     :",
-    round(cellStats(vr$rate_raster - rate_guided, mean), 1),
+    round(terra::global(vr$rate_raster - rate_guided, "mean", na.rm = TRUE)[1, 1], 1),
     "kg/ha avg, or",
-    round(cellStats((vr$rate_raster - rate_guided), sum) *
-          prod(res(rate_guided)) / 10000, 1),
+    round(terra::global(vr$rate_raster - rate_guided, "sum", na.rm = TRUE)[1, 1] *
+          prod(terra::res(rate_guided)) / 10000, 1),
     "kg total over the field\n")
 ```
 
@@ -200,7 +200,7 @@ helper `nni_from_vi_empirical()` delivers an NNI map directly through
 a published linear regression:
 
 ```{r empirical-nni, eval = FALSE}
-ndre <- raster::raster("ndre_field.tif")
+ndre <- terra::rast("ndre_field.tif")
 out  <- nni_from_vi_empirical(
   ndre,
   index = "NDRE",       # or "NDVI", "CIred_edge"
@@ -208,8 +208,8 @@ out  <- nni_from_vi_empirical(
   # slope = 3.5, intercept = 0.30,  # override with local calibration
   nni_thresholds = c(0.90, 1.10))
 
-raster::plot(out$NNI,   main = "NNI (empirical)")
-raster::plot(out$zones, main = "Zones (1 deficient / 2 optimal / 3 excessive)")
+terra::plot(out$NNI,   main = "NNI (empirical)")
+terra::plot(out$zones, main = "Zones (1 deficient / 2 optimal / 3 excessive)")
 ```
 
 Default slope and intercept are first-guess values from Cao 2013

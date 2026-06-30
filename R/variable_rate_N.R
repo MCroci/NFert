@@ -18,8 +18,9 @@
 #' raster of variable rates integrates (mean) to approximately the input
 #' `n_dose`, ensuring the agronomic constraint (MAS, ZVN) is respected.
 #'
-#' @param ndvi_raster A `raster::RasterLayer` with NDVI (0--1), or a `RasterBrick` /
-#'   `RasterStack` (layer \code{NDVI} if present, otherwise the first layer).
+#' @param ndvi_raster A `terra::SpatRaster` with NDVI (0--1); layer \code{NDVI}
+#'   if present, otherwise the first layer. Legacy `raster` objects are accepted
+#'   and converted with `terra::rast()`.
 #' @param n_dose Numeric. Field-average N dose (kg/ha) from `N_balance()` +
 #'   `calculate_N_fertilization()`, `scheda_N()$dose_final`, or any custom
 #'   target.
@@ -35,7 +36,7 @@
 #'
 #' @return A list with:
 #' \describe{
-#'   \item{rate_raster}{`RasterLayer` of N rate per pixel (kg/ha).}
+#'   \item{rate_raster}{`terra::SpatRaster` of N rate per pixel (kg/ha).}
 #'   \item{mean_kg_ha}{Mean rate over non-NA pixels (kg/ha).}
 #'   \item{min_kg_ha, max_kg_ha}{Min and max rate over non-NA pixels.}
 #'   \item{n_dose_input}{The input field-average N dose.}
@@ -44,11 +45,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
+#' library(terra)
 #' library(NFert)
 #' # NDVI raster
 #' data(s2.rast)
-#' ndvi <- s2.rast
+#' ndvi <- terra::rast(s2.rast)   # s2.rast is a PackedSpatRaster; unwrap it
 #'
 #' # 1) Compute agronomic dose with the balance
 #' bal <- N_balance(expected_yield_tons_ha = 6,
@@ -67,7 +68,7 @@
 #' # 2) Spatialise via NDVI calibration
 #' vr <- variable_rate_N(ndvi, n_dose = n_dose, method = "calibration",
 #'                       mas_cap = get_MAS("Grano duro (pianta intera)")$N_max)
-#' raster::plot(vr$rate_raster)
+#' terra::plot(vr$rate_raster)
 #' vr$mean_kg_ha
 #' }
 #' @export
@@ -79,8 +80,8 @@ variable_rate_N <- function(ndvi_raster,
                             mas_cap = NULL,
                             plot    = FALSE) {
   method <- match.arg(method)
-  if (!requireNamespace("raster", quietly = TRUE)) {
-    stop("Package 'raster' is required.")
+  if (!requireNamespace("terra", quietly = TRUE)) {
+    stop("Package 'terra' is required.")
   }
   if (!is.numeric(n_dose) || length(n_dose) != 1 || n_dose <= 0) {
     stop("`n_dose` must be a single positive numeric (kg/ha).")
@@ -103,7 +104,7 @@ variable_rate_N <- function(ndvi_raster,
   }
 
   # Preserve agronomic mean: rescale so mean(rate) == n_dose (only if numeric mean differs)
-  vals <- raster::getValues(rate)
+  vals <- terra::values(rate, mat = FALSE)
   m <- mean(vals, na.rm = TRUE)
   if (is.finite(m) && m > 0 && abs(m - n_dose) > 0.01 * n_dose) {
     rate <- rate * (n_dose / m)
@@ -111,12 +112,12 @@ variable_rate_N <- function(ndvi_raster,
 
   # Optional MAS cap
   if (!is.null(mas_cap) && is.numeric(mas_cap) && mas_cap > 0) {
-    vals <- raster::getValues(rate)
+    vals <- terra::values(rate, mat = FALSE)
     vals[!is.na(vals) & vals > mas_cap] <- mas_cap
-    rate <- raster::setValues(rate, vals)
+    rate <- terra::setValues(rate, vals)
   }
 
-  vals_final <- raster::getValues(rate)
+  vals_final <- terra::values(rate, mat = FALSE)
   list(
     rate_raster  = rate,
     mean_kg_ha   = mean(vals_final, na.rm = TRUE),

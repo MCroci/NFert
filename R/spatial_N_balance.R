@@ -4,8 +4,9 @@
 #' rasters, returning one or more raster layers with the spatially-resolved
 #' balance terms.
 #'
-#' @param soil_stack A \code{RasterStack} (or \code{RasterBrick}) whose layers
-#'   encode the soil properties that vary in space.
+#' @param soil_stack A \code{terra::SpatRaster} whose layers encode the soil
+#'   properties that vary in space (a legacy \code{raster} object is accepted
+#'   and converted with \code{terra::rast()}).
 #'   Required layers (matched by name, case-insensitive):
 #'   \describe{
 #'     \item{TN}{Total soil nitrogen, pct}
@@ -26,13 +27,13 @@
 #' @param source,fertorg_frequency,location,forg_quantity Organic-fertilization
 #'   parameters (see \code{\link{N_balance}()}).
 #' @param terms Character vector of balance terms to return as layers in the
-#'   output \code{RasterStack}. Default
+#'   output \code{terra::SpatRaster}. Default
 #'   \code{c("A", "B", "C1", "C2", "D", "E", "F", "Forg", "G", "N_to_apply")}.
 #'   Use \code{"all"} to return every column of the \code{N_balance()} output.
 #' @param ... Additional arguments passed to \code{N_balance()}.
 #'
-#' @return A \code{RasterStack} with one layer per requested balance term, at
-#'   the same resolution, extent and CRS as \code{soil_stack}.
+#' @return A \code{terra::SpatRaster} with one layer per requested balance term,
+#'   at the same resolution, extent and CRS as \code{soil_stack}.
 #'
 #' @details
 #' Agronomic and climatic parameters that do not depend on location within the
@@ -49,15 +50,15 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(raster)
+#' library(terra)
 #' ext <- system.file("extdata", package = "NFert")
-#' soil <- raster::stack(
+#' soil <- terra::rast(c(
 #'   file.path(ext, "Cremonesi_TN.tif"),
 #'   file.path(ext, "Cremonesi_SOM.tif"),
 #'   file.path(ext, "Cremonesi_Clay.tif"),
 #'   file.path(ext, "Cremonesi_Sand.tif"),
 #'   file.path(ext, "Cremonesi_CNratio.tif")
-#' )
+#' ))
 #' names(soil) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
 #'
 #' n_map <- spatial_N_balance(
@@ -72,7 +73,7 @@
 #'   location = "Plain adjacent to urbanized areas",
 #'   forg_quantity = 100
 #' )
-#' raster::plot(n_map[["N_to_apply"]])
+#' terra::plot(n_map[["N_to_apply"]])
 #' }
 spatial_N_balance <- function(
     soil_stack,
@@ -90,8 +91,12 @@ spatial_N_balance <- function(
     terms         = c("A", "B", "C1", "C2", "D", "E", "F", "Forg", "G", "N_to_apply"),
     ...) {
 
-  if (!requireNamespace("raster", quietly = TRUE))
-    stop("Package 'raster' is required for spatial_N_balance().")
+  if (!requireNamespace("terra", quietly = TRUE))
+    stop("Package 'terra' is required for spatial_N_balance().")
+
+  # Accept legacy raster objects by coercing to terra SpatRaster.
+  if (inherits(soil_stack, c("RasterStack", "RasterBrick", "RasterLayer")))
+    soil_stack <- terra::rast(soil_stack)
 
   # --- Match layer names (case-insensitive) --------------------------------
   lnames  <- tolower(names(soil_stack))
@@ -103,7 +108,7 @@ spatial_N_balance <- function(
                             collapse = ", "))
 
   # --- Extract values matrix  (rows = pixels, cols = layers) ---------------
-  vals <- raster::values(soil_stack)
+  vals <- terra::values(soil_stack)
   n_px <- nrow(vals)
 
   # Identify valid (all-non-NA) pixels
@@ -169,12 +174,12 @@ spatial_N_balance <- function(
     stop("Unknown term(s): ", paste(bad, collapse = ", "),
          ". Available: ", paste(colnames(out_mat), collapse = ", "))
 
-  template <- raster::raster(soil_stack, layer = 1)
+  template <- terra::rast(soil_stack[[1]])
   layers <- lapply(terms, function(t) {
-    r <- template
-    raster::values(r) <- out_mat[, t]
+    r <- terra::rast(template)          # fresh SpatRaster (own pointer), same geom
+    terra::values(r) <- out_mat[, t]
     names(r) <- t
     r
   })
-  raster::stack(layers)
+  terra::rast(layers)
 }

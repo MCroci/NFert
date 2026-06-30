@@ -146,9 +146,9 @@ compute_NNI_from_S2 <- function(
     if (!(nm %in% names(params)))
       params[[nm]] <- crop_params_NNI(crop)[[nm]]
 
-  lai <- terra::rast(lai_rast)
-  cm  <- terra::rast(cm_rast)
-  cnc <- terra::rast(cnc_rast)
+  lai <- .as_spatraster(lai_rast)
+  cm  <- .as_spatraster(cm_rast)
+  cnc <- .as_spatraster(cnc_rast)
 
   # -- Biomass: leaf, then total
   # LAI [m2/m2] * Cm [g/cm2 leaf] * 1e4 = g m^-2 ground leaf dry-mass
@@ -175,11 +175,11 @@ compute_NNI_from_S2 <- function(
   # -- Mask
   keep <- !is.na(W) & W >= params$w_min
   if (!is.null(fvc)) {
-    fvc_r <- terra::rast(fvc)
+    fvc_r <- .as_spatraster(fvc)
     keep  <- keep & !is.na(fvc_r) & (fvc_r >= params$fvc_min)
   }
   if (!is.null(scl)) {
-    scl_r <- terra::rast(scl)
+    scl_r <- .as_spatraster(scl)
     keep  <- keep & (scl_r %in% scl_keep)
   }
 

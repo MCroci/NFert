@@ -16,8 +16,9 @@ variable_rate_N(
 )
 }
 \arguments{
-\item{ndvi_raster}{A \code{raster::RasterLayer} with NDVI (0--1), or a \code{RasterBrick} /
-\code{RasterStack} (layer \code{NDVI} if present, otherwise the first layer).}
+\item{ndvi_raster}{A \code{terra::SpatRaster} with NDVI (0--1); layer \code{NDVI}
+if present, otherwise the first layer. Legacy \code{raster} objects are accepted
+and converted with \code{terra::rast()}.}
 
 \item{n_dose}{Numeric. Field-average N dose (kg/ha) from \code{N_balance()} +
 \code{calculate_N_fertilization()}, \code{scheda_N()$dose_final}, or any custom
@@ -40,7 +41,7 @@ never exceeds the MAS limit (e.g. from \code{get_MAS()}).}
 \value{
 A list with:
 \describe{
-\item{rate_raster}{\code{RasterLayer} of N rate per pixel (kg/ha).}
+\item{rate_raster}{\code{terra::SpatRaster} of N rate per pixel (kg/ha).}
 \item{mean_kg_ha}{Mean rate over non-NA pixels (kg/ha).}
 \item{min_kg_ha, max_kg_ha}{Min and max rate over non-NA pixels.}
 \item{n_dose_input}{The input field-average N dose.}
@@ -70,11 +71,11 @@ raster of variable rates integrates (mean) to approximately the input
 }
 \examples{
 \dontrun{
-library(raster)
+library(terra)
 library(NFert)
 # NDVI raster
 data(s2.rast)
-ndvi <- s2.rast
+ndvi <- terra::rast(s2.rast)   # s2.rast is a PackedSpatRaster; unwrap it
 
 # 1) Compute agronomic dose with the balance
 bal <- N_balance(expected_yield_tons_ha = 6,
@@ -93,7 +94,7 @@ n_dose <- calculate_N_fertilization(bal)   # ~142 kg/ha
 # 2) Spatialise via NDVI calibration
 vr <- variable_rate_N(ndvi, n_dose = n_dose, method = "calibration",
                       mas_cap = get_MAS("Grano duro (pianta intera)")$N_max)
-raster::plot(vr$rate_raster)
+terra::plot(vr$rate_raster)
 vr$mean_kg_ha
 }
 }

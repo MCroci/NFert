@@ -109,9 +109,10 @@ critical_N_curve <- function(crop) {
 #' }
 #'
 #' All three arguments can be scalar, numeric vectors of the same length
-#' (pixel-wise / plot-wise), or \code{raster::RasterLayer}s aligned to the
-#' same grid. If any of them is a `RasterLayer`, the output is a
-#' `RasterLayer`; otherwise a numeric vector is returned.
+#' (pixel-wise / plot-wise), or \code{terra::SpatRaster}s aligned to the
+#' same grid. If any of them is a `SpatRaster`, the output is a
+#' `SpatRaster`; otherwise a numeric vector is returned. Legacy `raster`
+#' objects are accepted and converted with `terra::rast()`.
 #'
 #' @param N_content Aboveground N concentration as a fraction of DM (e.g.
 #'   0.025 = 2.5pct) \strong{or} percentage DM (pass \code{is_percent = TRUE}).
@@ -124,7 +125,7 @@ critical_N_curve <- function(crop) {
 #'   (e.g. 2.5 for 2.5pct) rather than a fraction? Default \code{FALSE}
 #'   (fraction). Auto-detected and warned if values > 1.
 #'
-#' @return A numeric scalar / vector or a `RasterLayer` of NNI values.
+#' @return A numeric scalar / vector or a `terra::SpatRaster` of NNI values.
 #'
 #' @references
 #' Lemaire, G. & Gastal, F. (1997). N uptake and distribution in plant
@@ -146,7 +147,7 @@ critical_N_curve <- function(crop) {
 #' compute_NNI(2.8, 4, crop = "maize", is_percent = TRUE)
 #' # ~ 1.52 -> luxury consumption
 #'
-#' # Raster (pixel-wise): N_content and biomass as RasterLayers
+#' # Raster (pixel-wise): N_content and biomass as SpatRasters
 #' nni_map <- compute_NNI(N_content = n_map, biomass = w_map,
 #'                        crop = "wheat", is_percent = TRUE)
 #' }
@@ -159,16 +160,27 @@ compute_NNI <- function(N_content, biomass, crop,
     stop("`curve` must contain `a` and `b`.")
   if (is.null(curve$W_min)) curve$W_min <- 1.00
 
-  is_raster <- function(x) inherits(x, "RasterLayer")
+  # Accept legacy raster objects by coercing to terra SpatRaster.
+  if (inherits(N_content, c("RasterLayer", "RasterStack", "RasterBrick")) ||
+      inherits(biomass,   c("RasterLayer", "RasterStack", "RasterBrick"))) {
+    if (!requireNamespace("terra", quietly = TRUE))
+      stop("Package 'terra' is required for raster inputs.")
+    if (inherits(N_content, c("RasterLayer", "RasterStack", "RasterBrick")))
+      N_content <- terra::rast(N_content)
+    if (inherits(biomass, c("RasterLayer", "RasterStack", "RasterBrick")))
+      biomass <- terra::rast(biomass)
+  }
+
+  is_raster <- function(x) inherits(x, "SpatRaster")
   any_raster <- is_raster(N_content) || is_raster(biomass)
 
-  if (any_raster && !requireNamespace("raster", quietly = TRUE))
-    stop("Package 'raster' is required for raster inputs.")
+  if (any_raster && !requireNamespace("terra", quietly = TRUE))
+    stop("Package 'terra' is required for raster inputs.")
 
   # normalise N_content to percent (DM)
   normalise_N <- function(x) {
     if (is_raster(x)) {
-      vals <- raster::getValues(x)
+      vals <- terra::values(x, mat = FALSE)
       if (!isTRUE(is_percent) && any(vals > 1, na.rm = TRUE)) {
         warning("`N_content` raster has values > 1 but `is_percent = FALSE`",
                 ". Treating values as percent.")
@@ -189,9 +201,9 @@ compute_NNI <- function(N_content, biomass, crop,
   # clamp biomass at W_min (curve invalid for open canopy)
   clamp_W <- function(x) {
     if (is_raster(x)) {
-      v <- raster::getValues(x)
+      v <- terra::values(x, mat = FALSE)
       v[!is.na(v) & v < curve$W_min] <- curve$W_min
-      return(raster::setValues(x, v))
+      return(terra::setValues(x, v))
     }
     ifelse(!is.na(x) & x < curve$W_min, curve$W_min, x)
   }
@@ -233,8 +245,8 @@ compute_NNI <- function(N_content, biomass, crop,
 #'
 #' @return A list with:
 #' \describe{
-#'   \item{\code{NNI}}{Continuous NNI (numeric or RasterLayer).}
-#'   \item{\code{class}}{Integer class (1/2/3) or RasterLayer of classes.}
+#'   \item{\code{NNI}}{Continuous NNI (numeric or SpatRaster).}
+#'   \item{\code{class}}{Integer class (1/2/3) or SpatRaster of classes.}
 #'   \item{\code{labels}}{Character labels matching \code{class}.}
 #'   \item{\code{summary}}{Counts / fractions per class (rasters only).}
 #'   \item{\code{thresholds}}{The thresholds used.}
@@ -250,7 +262,7 @@ compute_NNI <- function(N_content, biomass, crop,
 #' # Pixel-wise diagnosis
 #' d <- diagnose_N_status(N_content = n_raster, biomass = w_raster,
 #'                        crop = "wheat", is_percent = TRUE)
-#' raster::plot(d$class)
+#' terra::plot(d$class)
 #' d$summary
 #' }
 #' @export
@@ -264,7 +276,7 @@ diagnose_N_status <- function(N_content, biomass, crop,
   nni <- compute_NNI(N_content, biomass, crop = crop,
                      curve = curve, is_percent = is_percent)
 
-  is_raster <- inherits(nni, "RasterLayer")
+  is_raster <- inherits(nni, "SpatRaster")
   labels <- c("deficient", "optimal", "excessive")
 
   classify <- function(v) {
@@ -278,11 +290,11 @@ diagnose_N_status <- function(N_content, biomass, crop,
   }
 
   if (is_raster) {
-    if (!requireNamespace("raster", quietly = TRUE))
-      stop("Package 'raster' is required for raster inputs.")
-    vals <- raster::getValues(nni)
+    if (!requireNamespace("terra", quietly = TRUE))
+      stop("Package 'terra' is required for raster inputs.")
+    vals <- terra::values(nni, mat = FALSE)
     cls_vals <- classify(vals)
-    cls <- raster::setValues(nni, cls_vals)
+    cls <- terra::setValues(nni, cls_vals)
     names(cls) <- "NNI_class"
     tab <- table(factor(cls_vals, levels = 1:3, labels = labels),
                  useNA = "no")

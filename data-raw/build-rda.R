@@ -61,8 +61,25 @@ promote_english_primary <- function(df, name) {
   df
 }
 
+# Fold the few non-ASCII characters of the Italian reference labels
+# (degree sign, en/em dash, accented vowels) to ASCII, so the bundled data
+# passes R CMD check. Matching in the package is accent-insensitive
+# (.nfert_ascii_fold in R/crop_lookup.R), so this does not change lookups.
+fold_nonascii <- function(df) {
+  fold1 <- function(s) {
+    s <- gsub(paste0("[", intToUtf8(c(0x2013L, 0x2014L)), "]"), "-", s)
+    s <- gsub(intToUtf8(0xB0L), "o", s, fixed = TRUE)
+    chartr(intToUtf8(c(0xE0L, 0xE8L, 0xE9L, 0xECL, 0xEDL, 0xF2L, 0xF3L,
+                       0xF9L, 0xFAL, 0xC0L, 0xC8L, 0xC9L, 0xCCL, 0xD2L, 0xD9L)),
+           "aeeiioouuAEEIOU", s)
+  }
+  for (j in seq_along(df)) if (is.character(df[[j]])) df[[j]] <- fold1(df[[j]])
+  df
+}
+
 save_as_rda <- function(df, name) {
   df  <- promote_english_primary(df, name)
+  df  <- fold_nonascii(df)
   out <- file.path(data_dir, paste0(name, ".rda"))
   assign(name, df, envir = environment())
   save(list = name, file = out, compress = "xz", version = 2)
