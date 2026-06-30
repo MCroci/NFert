@@ -20,9 +20,12 @@ estimate_N_rate_from_calibration_curve(
 
 - raster:
 
-  A `raster::RasterLayer` with NDVI values, or a `RasterBrick` /
-  `RasterStack` (the layer named `NDVI` is used if present, otherwise
-  the first layer).
+  A
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  with NDVI values (the layer named `NDVI` is used if present, otherwise
+  the first layer). Legacy `raster` objects are accepted and converted
+  with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html).
 
 - minN:
 
@@ -48,14 +51,15 @@ estimate_N_rate_from_calibration_curve(
 
 ## Value
 
-A RasterLayer object with the estimated N rates based on the chosen
-calibration method.
+A single-layer
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+with the estimated N rates based on the chosen calibration method.
 
 ## Examples
 
 ``` r
 # Load example NDVI raster (replace with your own)
-# ndvi_raster <- raster::raster(system.file("extdata/s2.tif", package = "NFert"))
+# ndvi_raster <- terra::rast(system.file("extdata/s2.tif", package = "NFert"))
 
 # Two-point calibration
 # n_rate_raster_2pt <- estimate_N_rate_from_calibration_curve(ndvi_raster, minN = 40, maxN = 60)

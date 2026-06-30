@@ -38,6 +38,9 @@
 - [`calculate_N_fertilization()`](https://mcroci.github.io/NFert/reference/calculate_N_fertilization.md)
   : Calculate Nitrogen Fertilization Requirement
 
+- [`cerzoo`](https://mcroci.github.io/NFert/reference/cerzoo.md) :
+  CERZOO example datasets (real field, ready to test the functions)
+
 - [`check_MAS()`](https://mcroci.github.io/NFert/reference/check_MAS.md)
   : Check planned N against MAS
 

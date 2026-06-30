@@ -30,9 +30,12 @@ spatial_N_balance(
 
 - soil_stack:
 
-  A `RasterStack` (or `RasterBrick`) whose layers encode the soil
-  properties that vary in space. Required layers (matched by name,
-  case-insensitive):
+  A
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  whose layers encode the soil properties that vary in space (a legacy
+  `raster` object is accepted and converted with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html)).
+  Required layers (matched by name, case-insensitive):
 
   TN
 
@@ -87,7 +90,8 @@ spatial_N_balance(
 - terms:
 
   Character vector of balance terms to return as layers in the output
-  `RasterStack`. Default
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html).
+  Default
   `c("A", "B", "C1", "C2", "D", "E", "F", "Forg", "G", "N_to_apply")`.
   Use `"all"` to return every column of the
   [`N_balance()`](https://mcroci.github.io/NFert/reference/N_balance.md)
@@ -100,8 +104,10 @@ spatial_N_balance(
 
 ## Value
 
-A `RasterStack` with one layer per requested balance term, at the same
-resolution, extent and CRS as `soil_stack`.
+A
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+with one layer per requested balance term, at the same resolution,
+extent and CRS as `soil_stack`.
 
 ## Details
 
@@ -123,15 +129,15 @@ on a modern laptop.
 
 ``` r
 if (FALSE) { # \dontrun{
-library(raster)
+library(terra)
 ext <- system.file("extdata", package = "NFert")
-soil <- raster::stack(
+soil <- terra::rast(c(
   file.path(ext, "Cremonesi_TN.tif"),
   file.path(ext, "Cremonesi_SOM.tif"),
   file.path(ext, "Cremonesi_Clay.tif"),
   file.path(ext, "Cremonesi_Sand.tif"),
   file.path(ext, "Cremonesi_CNratio.tif")
-)
+))
 names(soil) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
 
 n_map <- spatial_N_balance(
@@ -146,6 +152,6 @@ n_map <- spatial_N_balance(
   location = "Plain adjacent to urbanized areas",
   forg_quantity = 100
 )
-raster::plot(n_map[["N_to_apply"]])
+terra::plot(n_map[["N_to_apply"]])
 } # }
 ```

@@ -77,8 +77,9 @@ balance terms.</p>
 
 
 <dl><dt id="arg-soil-stack">soil_stack<a class="anchor" aria-label="anchor" href="#arg-soil-stack"></a></dt>
-<dd><p>A <code>RasterStack</code> (or <code>RasterBrick</code>) whose layers
-encode the soil properties that vary in space.
+<dd><p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> whose layers encode the soil
+properties that vary in space (a legacy <code>raster</code> object is accepted
+and converted with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>).
 Required layers (matched by name, case-insensitive):</p><dl><dt>TN</dt>
 <dd><p>Total soil nitrogen, pct</p></dd>
 
@@ -132,7 +133,7 @@ parameters (see <code><a href="N_balance.html">N_balance()</a></code>).</p></dd>
 
 <dt id="arg-terms">terms<a class="anchor" aria-label="anchor" href="#arg-terms"></a></dt>
 <dd><p>Character vector of balance terms to return as layers in the
-output <code>RasterStack</code>. Default
+output <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code>. Default
 <code>c("A", "B", "C1", "C2", "D", "E", "F", "Forg", "G", "N_to_apply")</code>.
 Use <code>"all"</code> to return every column of the <code><a href="N_balance.html">N_balance()</a></code> output.</p></dd>
 
@@ -143,8 +144,8 @@ Use <code>"all"</code> to return every column of the <code><a href="N_balance.ht
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>RasterStack</code> with one layer per requested balance term, at
-the same resolution, extent and CRS as <code>soil_stack</code>.</p>
+    <p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with one layer per requested balance term,
+at the same resolution, extent and CRS as <code>soil_stack</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -164,16 +165,16 @@ takes approximately one second on a modern laptop.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster" class="external-link">raster</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"NFert"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">soil</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/stack.html" class="external-link">stack</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="va">soil</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">ext</span>, <span class="st">"Cremonesi_TN.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">ext</span>, <span class="st">"Cremonesi_SOM.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">ext</span>, <span class="st">"Cremonesi_Clay.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">ext</span>, <span class="st">"Cremonesi_Sand.tif"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">ext</span>, <span class="st">"Cremonesi_CNratio.tif"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">soil</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TN"</span>, <span class="st">"SOM"</span>, <span class="st">"Clay"</span>, <span class="st">"Sand"</span>, <span class="st">"CNratio"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">soil</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TN"</span>, <span class="st">"SOM"</span>, <span class="st">"Clay"</span>, <span class="st">"Sand"</span>, <span class="st">"CNratio"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">n_map</span> <span class="op">&lt;-</span> <span class="fu">spatial_N_balance</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  soil_stack <span class="op">=</span> <span class="va">soil</span>,</span></span>
@@ -187,7 +188,7 @@ takes approximately one second on a modern laptop.</p>
 <span class="r-in"><span>  location <span class="op">=</span> <span class="st">"Plain adjacent to urbanized areas"</span>,</span></span>
 <span class="r-in"><span>  forg_quantity <span class="op">=</span> <span class="fl">100</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n_map</span><span class="op">[[</span><span class="st">"N_to_apply"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n_map</span><span class="op">[[</span><span class="st">"N_to_apply"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

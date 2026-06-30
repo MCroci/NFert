@@ -61,11 +61,11 @@ A list with:
 
 - `NNI`:
 
-  Continuous NNI (numeric or RasterLayer).
+  Continuous NNI (numeric or SpatRaster).
 
 - `class`:
 
-  Integer class (1/2/3) or RasterLayer of classes.
+  Integer class (1/2/3) or SpatRaster of classes.
 
 - `labels`:
 
@@ -109,7 +109,7 @@ diagnose_N_status(N_content = 2.8, biomass = 4,
 # Pixel-wise diagnosis
 d <- diagnose_N_status(N_content = n_raster, biomass = w_raster,
                        crop = "wheat", is_percent = TRUE)
-raster::plot(d$class)
+terra::plot(d$class)
 d$summary
 } # }
 ```

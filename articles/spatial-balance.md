@@ -26,49 +26,58 @@ C/N ratio.
 ``` r
 
 library(NFert)
-library(raster)
-#> Loading required package: sp
+library(terra)
+#> terra 1.9.34
 
 ext <- system.file("extdata", package = "NFert")
 
 # Read individually: the bundled GeoTIFFs may have sub-pixel extent
 # mismatches from separate acquisitions, so we resample to a common
 # grid (the TN raster) before stacking.
-r_tn   <- raster::raster(file.path(ext, "Cremonesi_TN.tif"))
-r_som  <- raster::raster(file.path(ext, "Cremonesi_SOM.tif"))
-r_clay <- raster::raster(file.path(ext, "Cremonesi_Clay.tif"))
-r_sand <- raster::raster(file.path(ext, "Cremonesi_Sand.tif"))
-r_cn   <- raster::raster(file.path(ext, "Cremonesi_CNratio.tif"))
+r_tn   <- terra::rast(file.path(ext, "Cremonesi_TN.tif"))
+r_som  <- terra::rast(file.path(ext, "Cremonesi_SOM.tif"))
+r_clay <- terra::rast(file.path(ext, "Cremonesi_Clay.tif"))
+r_sand <- terra::rast(file.path(ext, "Cremonesi_Sand.tif"))
+r_cn   <- terra::rast(file.path(ext, "Cremonesi_CNratio.tif"))
 
 align <- function(r, ref) {
-  if (!raster::compareRaster(r, ref, stopiffalse = FALSE)) {
-    r <- raster::resample(r, ref, method = "bilinear")
+  if (!terra::compareGeom(r, ref, stopOnError = FALSE)) {
+    r <- terra::resample(r, ref, method = "bilinear")
   }
   r
 }
-soil <- raster::stack(r_tn,
-                      align(r_som,  r_tn),
-                      align(r_clay, r_tn),
-                      align(r_sand, r_tn),
-                      align(r_cn,   r_tn))
+soil <- terra::rast(list(r_tn,
+                         align(r_som,  r_tn),
+                         align(r_clay, r_tn),
+                         align(r_sand, r_tn),
+                         align(r_cn,   r_tn)))
 names(soil) <- c("TN", "SOM", "Clay", "Sand", "CNratio")
 
 soil
-#> class      : RasterStack 
-#> dimensions : 96, 101, 9696, 5  (nrow, ncol, ncell, nlayers)
-#> resolution : 3.486166e-05, 3.499425e-05  (x, y)
-#> extent     : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=longlat +datum=WGS84 +no_defs 
-#> names      :      TN,     SOM,    Clay,     Sand, CNratio 
-#> min values :       ?,       ?,       ?, 7.151633,       ? 
-#> max values :       ?,       ?,       ?, 24.84696,       ?
+#> class       : SpatRaster
+#> size        : 96, 101, 5  (nrow, ncol, nlyr)
+#> resolution  : 3.486166e-05, 3.499425e-05  (x, y)
+#> extent      : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
+#> sources     : Cremonesi_TN.tif
+#>               Cremonesi_SOM.tif
+#>               Cremonesi_Clay.tif
+#>               ... and 2 more sources
+#> varnames    : Cremonesi_TN
+#>               Cremonesi_SOM
+#>               Cremonesi_Clay
+#>               Cremonesi_TN
+#>               Cremonesi_CNratio
+#> names       :  TN, SOM, Clay,      Sand, CNratio
+#> min values  :  ? ,  ? ,   ? ,  7.503736,      ? 
+#> max values  :  ? ,  ? ,   ? , 24.709644,      ?
 ```
 
 ``` r
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(soil[["SOM"]], main = "SOM (%)", col = terrain.colors(30))
-plot(soil[["Clay"]], main = "Clay (%)", col = heat.colors(30))
+terra::plot(soil[["SOM"]], main = "SOM (%)", col = terrain.colors(30))
+terra::plot(soil[["Clay"]], main = "Clay (%)", col = heat.colors(30))
 ```
 
 ![](spatial-balance_files/figure-html/plot-inputs-1.png)
@@ -100,19 +109,26 @@ n_map <- spatial_N_balance(
 )
 
 n_map
-#> class      : RasterStack 
-#> dimensions : 96, 101, 9696, 10  (nrow, ncol, ncell, nlayers)
-#> resolution : 3.486166e-05, 3.499425e-05  (x, y)
-#> extent     : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=longlat +datum=WGS84 +no_defs 
-#> names      :           A,           B,          C1,          C2,           D,           E,           F,        Forg,           G,  N_to_apply 
-#> min values : 234.0000000,  31.9104424,   0.4793168,   4.0000000,  19.5731327,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  29.6638077 
-#> max values : 234.0000000,  35.6650130,   0.5108526,   4.0000000,  20.6995039,   0.0000000,   0.0000000, 180.4500000,  13.4000000,  32.3235429
+#> class       : SpatRaster
+#> size        : 96, 101, 10  (nrow, ncol, nlyr)
+#> resolution  : 3.486166e-05, 3.499425e-05  (x, y)
+#> extent      : 9.995467, 9.998988, 45.04422, 45.04758  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326)
+#> source(s)   : memory
+#> varnames    : Cremonesi_TN
+#>               Cremonesi_TN
+#>               Cremonesi_TN
+#>               Cremonesi_TN
+#>               Cremonesi_TN
+#>               ...
+#> names       :   A,         B,       C1, C2,         D, E, ...
+#> min values  : 234, 31.910442, 0.479317,  4, 19.573133, 0, ...
+#> max values  : 234, 35.665013, 0.510853,  4, 20.699504, 0, ...
 ```
 
 ``` r
 
-plot(n_map[["N_to_apply"]],
+terra::plot(n_map[["N_to_apply"]],
      main = "Mineral N to apply (kg N/ha)",
      col = rev(terrain.colors(30)))
 ```
@@ -123,8 +139,8 @@ The field-average N to apply is:
 
 ``` r
 
-cellStats(n_map[["N_to_apply"]], stat = "mean")
-#> [1] 31.13723
+terra::global(n_map[["N_to_apply"]], "mean", na.rm = TRUE)[1, 1]
+#> [1] 31.13807
 ```
 
 ## 3. Generate a synthetic NDVI raster
@@ -136,15 +152,15 @@ canopy vigor):
 ``` r
 
 set.seed(42)
-som_vals <- values(soil[["SOM"]])
+som_vals <- terra::values(soil[["SOM"]], mat = FALSE)
 som_01   <- (som_vals - min(som_vals, na.rm = TRUE)) /
             diff(range(som_vals, na.rm = TRUE))
 ndvi_vals <- 0.52 + 0.25 * som_01 + rnorm(length(som_01), 0, 0.025)
 ndvi_vals <- pmin(pmax(ndvi_vals, 0.35), 0.85)
 ndvi_vals[is.na(som_vals)] <- NA
 
-ndvi <- raster(soil[["SOM"]])
-values(ndvi) <- ndvi_vals
+ndvi <- terra::rast(soil[["SOM"]])
+terra::values(ndvi) <- ndvi_vals
 names(ndvi) <- "NDVI"
 ```
 
@@ -156,7 +172,7 @@ in Section 2.2 of the article:
 
 ``` r
 
-N_target <- cellStats(n_map[["N_to_apply"]], stat = "mean")
+N_target <- terra::global(n_map[["N_to_apply"]], "mean", na.rm = TRUE)[1, 1]
 
 vr <- variable_rate_N(
   ndvi_raster = ndvi,
@@ -172,8 +188,8 @@ rx <- vr$rate_raster
 ``` r
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(ndvi, main = "Synthetic NDVI", col = rev(terrain.colors(30)))
-plot(rx,   main = "VRT N prescription (kg N/ha)",
+terra::plot(ndvi, main = "Synthetic NDVI", col = rev(terrain.colors(30)))
+terra::plot(rx,   main = "VRT N prescription (kg N/ha)",
      col = rev(heat.colors(30)))
 ```
 
@@ -202,7 +218,7 @@ or farm-management software:
 
 ``` r
 
-writeRaster(rx, "VRT_prescription_Cremonesi.tif", overwrite = TRUE)
+terra::writeRaster(rx, "VRT_prescription_Cremonesi.tif", overwrite = TRUE)
 ```
 
 ## 7. Tractor-ready formats

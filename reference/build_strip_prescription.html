@@ -125,8 +125,9 @@ direction. If both <code>ab_line</code> and <code>angle_deg</code> are
 
 
 <dt id="arg-vi-raster">vi_raster<a class="anchor" aria-label="anchor" href="#arg-vi-raster"></a></dt>
-<dd><p><code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> or <code>raster::RasterLayer</code>
-with vegetation index (0-1). Required for <code>"calibration"</code> and
+<dd><p><code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with vegetation index (0-1); a
+legacy <code>raster</code> object is accepted and converted with
+<code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>. Required for <code>"calibration"</code> and
 <code>"classes"</code>.</p></dd>
 
 

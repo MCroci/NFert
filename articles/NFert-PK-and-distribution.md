@@ -1073,22 +1073,22 @@ rescaling and (optionally) caps each pixel at the MAS limit.
 
 ``` r
 
-library(raster)
-#> Loading required package: sp
+library(terra)
+#> terra 1.9.34
 
-# NDVI raster: example from NFert (RasterLayer or multi-band stack; functions use the NDVI layer if named)
+# NDVI raster: example from NFert (SpatRaster or multi-band stack; functions use the NDVI layer if named)
 data(s2.rast)
-ndvi <- s2.rast
+ndvi <- terra::rast(s2.rast)
 ndvi
-#> class      : RasterBrick 
-#> dimensions : 35, 70, 2450, 5  (nrow, ncol, ncell, nlayers)
-#> resolution : 10, 10  (x, y)
-#> extent     : 481492.3, 482192.3, 4993333, 4993683  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=utm +zone=32 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-#> source     : memory
-#> names      :    B02,    B03,    B04,    B05,    B08 
-#> min values : 0.0548, 0.0874, 0.0529, 0.1214, 0.2989 
-#> max values : 0.0928, 0.1356, 0.1138, 0.1793, 0.4632
+#> class       : SpatRaster
+#> size        : 35, 70, 5  (nrow, ncol, nlyr)
+#> resolution  : 10, 10  (x, y)
+#> extent      : 481492.3, 482192.3, 4993333, 4993683  (xmin, xmax, ymin, ymax)
+#> coord. ref. : +proj=utm +zone=32 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+#> source(s)   : memory
+#> names       :    B02,    B03,    B04,    B05,    B08
+#> min values  : 0.0548, 0.0874, 0.0529, 0.1214, 0.2989
+#> max values  : 0.0928, 0.1356, 0.1138, 0.1793, 0.4632
 ```
 
 ``` r
@@ -1113,7 +1113,7 @@ vr_cal$min_kg_ha
 vr_cal$max_kg_ha
 #> [1] 159.775
 
-raster::plot(vr_cal$rate_raster,
+terra::plot(vr_cal$rate_raster,
              main = "Variable rate N (calibration) - kg/ha",
              col  = grDevices::hcl.colors(50, "YlOrBr", rev = TRUE))
 ```
@@ -1133,7 +1133,7 @@ vr_hs <- variable_rate_N(
 
 vr_hs$mean_kg_ha
 #> [1] 127.4532
-raster::plot(vr_hs$rate_raster,
+terra::plot(vr_hs$rate_raster,
              main = "Variable rate N (Holland & Schepers) - kg/ha",
              col  = grDevices::hcl.colors(50, "YlOrBr", rev = TRUE))
 ```
@@ -1145,16 +1145,16 @@ raster::plot(vr_hs$rate_raster,
 ``` r
 
 # Total N applied to the field (assuming each pixel has the same area)
-mean(getValues(vr_cal$rate_raster), na.rm = TRUE)
+mean(terra::values(vr_cal$rate_raster, mat = FALSE), na.rm = TRUE)
 #> [1] 128.9633
-mean(getValues(vr_hs$rate_raster),  na.rm = TRUE)
+mean(terra::values(vr_hs$rate_raster,  mat = FALSE), na.rm = TRUE)
 #> [1] 127.4532
 
 # Histogram comparison
 oldpar <- par(mfrow = c(1, 2))
-hist(getValues(vr_cal$rate_raster), main = "Calibration",
+hist(terra::values(vr_cal$rate_raster, mat = FALSE), main = "Calibration",
      xlab = "N rate (kg/ha)", col = "steelblue", border = "white")
-hist(getValues(vr_hs$rate_raster),  main = "Holland & Schepers",
+hist(terra::values(vr_hs$rate_raster,  mat = FALSE),  main = "Holland & Schepers",
      xlab = "N rate (kg/ha)", col = "tomato",   border = "white")
 ```
 
@@ -1210,7 +1210,7 @@ n_rate_3pt <- estimate_N_rate_from_calibration_curve(
   minN = 100, meanN = 140, maxN = 180,
   calibration_type = "three-point"
 )
-raster::cellStats(n_rate_3pt, summary)
+summary(terra::values(n_rate_3pt, mat = FALSE))
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 #>   99.54  129.84  141.21  140.95  152.36  179.51    1481
 ```
@@ -1343,7 +1343,7 @@ texture_groups.table
 ``` r
 
 sessionInfo()
-#> R version 4.6.0 (2026-04-24)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -1364,17 +1364,15 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] raster_3.6-32 sp_2.2-1      NFert_0.14.0 
+#> [1] terra_1.9-34 NFert_0.14.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] jsonlite_2.0.0     compiler_4.6.0     Rcpp_1.1.1-1.1     jquerylib_0.1.4   
-#>  [5] systemfonts_1.3.2  textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     
-#>  [9] lattice_0.22-9     R6_2.6.1           classInt_0.4-11    sf_1.1-1          
-#> [13] knitr_1.51         htmlwidgets_1.6.4  desc_1.4.3         units_1.0-1       
-#> [17] DBI_1.3.0          bslib_0.11.0       rlang_1.2.0        cachem_1.1.0      
-#> [21] terra_1.9-27       xfun_0.58          fs_2.1.0           sass_0.4.10       
-#> [25] otel_0.2.0         cli_3.6.6          pkgdown_2.2.0      class_7.3-23      
-#> [29] digest_0.6.39      grid_4.6.0         lifecycle_1.0.5    KernSmooth_2.23-26
-#> [33] proxy_0.4-29       evaluate_1.0.5     codetools_0.2-20   ragg_1.5.2        
-#> [37] e1071_1.7-17       rmarkdown_2.31     tools_4.6.0        htmltools_0.5.9
+#>  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.59        
+#>  [5] otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0    htmltools_0.5.9  
+#>  [9] ragg_1.5.2        sass_0.4.10       rmarkdown_2.31    evaluate_1.0.5   
+#> [13] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
+#> [17] compiler_4.6.1    codetools_0.2-20  fs_2.1.0          htmlwidgets_1.6.4
+#> [21] Rcpp_1.1.1-1.1    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         
+#> [25] bslib_0.11.0      tools_4.6.1       pkgdown_2.2.0     cachem_1.1.0     
+#> [29] desc_1.4.3
 ```

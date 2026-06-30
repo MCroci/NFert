@@ -74,8 +74,9 @@ or <code><a href="dose_standard_N.html">scheda_N()</a></code> with the spatial N
 
 
 <dl><dt id="arg-ndvi-raster">ndvi_raster<a class="anchor" aria-label="anchor" href="#arg-ndvi-raster"></a></dt>
-<dd><p>A <code>raster::RasterLayer</code> with NDVI (0–1), or a <code>RasterBrick</code> /
-<code>RasterStack</code> (layer <code>NDVI</code> if present, otherwise the first layer).</p></dd>
+<dd><p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with NDVI (0–1); layer <code>NDVI</code>
+if present, otherwise the first layer. Legacy <code>raster</code> objects are accepted
+and converted with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>.</p></dd>
 
 
 <dt id="arg-n-dose">n_dose<a class="anchor" aria-label="anchor" href="#arg-n-dose"></a></dt>
@@ -111,7 +112,7 @@ never exceeds the MAS limit (e.g. from <code><a href="get_MAS.html">get_MAS()</a
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with:</p><dl><dt>rate_raster</dt>
-<dd><p><code>RasterLayer</code> of N rate per pixel (kg/ha).</p></dd>
+<dd><p><code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> of N rate per pixel (kg/ha).</p></dd>
 
 <dt>mean_kg_ha</dt>
 <dd><p>Mean rate over non-NA pixels (kg/ha).</p></dd>
@@ -143,11 +144,11 @@ raster of variable rates integrates (mean) to approximately the input
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster" class="external-link">raster</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mcroci/NFert" class="external-link">NFert</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># NDVI raster</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">s2.rast</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ndvi</span> <span class="op">&lt;-</span> <span class="va">s2.rast</span></span></span>
+<span class="r-in"><span><span class="va">ndvi</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">s2.rast</span><span class="op">)</span>   <span class="co"># s2.rast is a PackedSpatRaster; unwrap it</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 1) Compute agronomic dose with the balance</span></span></span>
 <span class="r-in"><span><span class="va">bal</span> <span class="op">&lt;-</span> <span class="fu"><a href="N_balance.html">N_balance</a></span><span class="op">(</span>expected_yield_tons_ha <span class="op">=</span> <span class="fl">6</span>,</span></span>
@@ -166,7 +167,7 @@ raster of variable rates integrates (mean) to approximately the input
 <span class="r-in"><span><span class="co"># 2) Spatialise via NDVI calibration</span></span></span>
 <span class="r-in"><span><span class="va">vr</span> <span class="op">&lt;-</span> <span class="fu">variable_rate_N</span><span class="op">(</span><span class="va">ndvi</span>, n_dose <span class="op">=</span> <span class="va">n_dose</span>, method <span class="op">=</span> <span class="st">"calibration"</span>,</span></span>
 <span class="r-in"><span>                      mas_cap <span class="op">=</span> <span class="fu"><a href="get_MAS.html">get_MAS</a></span><span class="op">(</span><span class="st">"Grano duro (pianta intera)"</span><span class="op">)</span><span class="op">$</span><span class="va">N_max</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vr</span><span class="op">$</span><span class="va">rate_raster</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vr</span><span class="op">$</span><span class="va">rate_raster</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">vr</span><span class="op">$</span><span class="va">mean_kg_ha</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>

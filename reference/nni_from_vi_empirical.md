@@ -27,8 +27,11 @@ nni_from_vi_empirical(
 
 - vi_raster:
 
-  A `RasterLayer` / `SpatRaster` with a normalised vegetation index
-  (dimensionless, typically 0-1).
+  A
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  with a normalised vegetation index (dimensionless, typically 0-1).
+  Legacy `raster` objects are accepted and converted with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html).
 
 - index:
 
@@ -58,9 +61,10 @@ nni_from_vi_empirical(
 
 ## Value
 
-A named list with two SpatRaster / RasterLayer objects: `NNI`
-(continuous) and `zones` (integer 1 / 2 / 3 for deficient / optimal /
-excessive).
+A named list with two
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+objects: `NNI` (continuous) and `zones` (integer 1 / 2 / 3 for deficient
+/ optimal / excessive).
 
 ## Details
 
@@ -96,9 +100,9 @@ for index computation from raw bands.
 
 ``` r
 if (FALSE) { # \dontrun{
-library(raster)
-ndre <- raster("ndre.tif")
+library(terra)
+ndre <- rast("ndre.tif")
 out  <- nni_from_vi_empirical(ndre, index = "NDRE", crop = "wheat")
-plot(out$NNI)
+terra::plot(out$NNI)
 } # }
 ```

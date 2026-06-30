@@ -29,8 +29,11 @@ variable_rate_N(
 
 - ndvi_raster:
 
-  A `raster::RasterLayer` with NDVI (0–1), or a `RasterBrick` /
-  `RasterStack` (layer `NDVI` if present, otherwise the first layer).
+  A
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  with NDVI (0–1); layer `NDVI` if present, otherwise the first layer.
+  Legacy `raster` objects are accepted and converted with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html).
 
 - n_dose:
 
@@ -70,7 +73,8 @@ A list with:
 
 - rate_raster:
 
-  `RasterLayer` of N rate per pixel (kg/ha).
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  of N rate per pixel (kg/ha).
 
 - mean_kg_ha:
 
@@ -110,11 +114,11 @@ raster of variable rates integrates (mean) to approximately the input
 
 ``` r
 if (FALSE) { # \dontrun{
-library(raster)
+library(terra)
 library(NFert)
 # NDVI raster
 data(s2.rast)
-ndvi <- s2.rast
+ndvi <- terra::rast(s2.rast)   # s2.rast is a PackedSpatRaster; unwrap it
 
 # 1) Compute agronomic dose with the balance
 bal <- N_balance(expected_yield_tons_ha = 6,
@@ -133,7 +137,7 @@ n_dose <- calculate_N_fertilization(bal)   # ~142 kg/ha
 # 2) Spatialise via NDVI calibration
 vr <- variable_rate_N(ndvi, n_dose = n_dose, method = "calibration",
                       mas_cap = get_MAS("Grano duro (pianta intera)")$N_max)
-raster::plot(vr$rate_raster)
+terra::plot(vr$rate_raster)
 vr$mean_kg_ha
 } # }
 ```

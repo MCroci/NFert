@@ -70,8 +70,10 @@ build_strip_prescription(
 - vi_raster:
 
   [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
-  or `raster::RasterLayer` with vegetation index (0-1). Required for
-  `"calibration"` and `"classes"`.
+  with vegetation index (0-1); a legacy `raster` object is accepted and
+  converted with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html).
+  Required for `"calibration"` and `"classes"`.
 
 - nni_raster:
 

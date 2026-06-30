@@ -82,8 +82,9 @@ files and runs on a single band ratio.</p>
 
 
 <dl><dt id="arg-vi-raster">vi_raster<a class="anchor" aria-label="anchor" href="#arg-vi-raster"></a></dt>
-<dd><p>A <code>RasterLayer</code> / <code>SpatRaster</code> with a
-normalised vegetation index (dimensionless, typically 0-1).</p></dd>
+<dd><p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with a normalised vegetation
+index (dimensionless, typically 0-1). Legacy <code>raster</code> objects are
+accepted and converted with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>.</p></dd>
 
 
 <dt id="arg-index">index<a class="anchor" aria-label="anchor" href="#arg-index"></a></dt>
@@ -116,7 +117,7 @@ upper NNI thresholds for zone classification
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A named list with two SpatRaster / RasterLayer objects:
+    <p>A named list with two <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> objects:
 <code>NNI</code> (continuous) and <code>zones</code> (integer 1 / 2 / 3 for
 deficient / optimal / excessive).</p>
     </div>
@@ -155,10 +156,10 @@ computation from raw bands.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster" class="external-link">raster</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ndre</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/raster.html" class="external-link">raster</a></span><span class="op">(</span><span class="st">"ndre.tif"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ndre</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="st">"ndre.tif"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span>  <span class="op">&lt;-</span> <span class="fu">nni_from_vi_empirical</span><span class="op">(</span><span class="va">ndre</span>, index <span class="op">=</span> <span class="st">"NDRE"</span>, crop <span class="op">=</span> <span class="st">"wheat"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">NNI</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">NNI</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

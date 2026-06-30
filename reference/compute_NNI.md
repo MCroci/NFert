@@ -41,7 +41,9 @@ compute_NNI(N_content, biomass, crop, curve = NULL, is_percent = FALSE)
 
 ## Value
 
-A numeric scalar / vector or a `RasterLayer` of NNI values.
+A numeric scalar / vector or a
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+of NNI values.
 
 ## Details
 
@@ -56,9 +58,12 @@ Interpretation:
   N-excess
 
 All three arguments can be scalar, numeric vectors of the same length
-(pixel-wise / plot-wise), or `raster::RasterLayer`s aligned to the same
-grid. If any of them is a `RasterLayer`, the output is a `RasterLayer`;
-otherwise a numeric vector is returned.
+(pixel-wise / plot-wise), or
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)s
+aligned to the same grid. If any of them is a `SpatRaster`, the output
+is a `SpatRaster`; otherwise a numeric vector is returned. Legacy
+`raster` objects are accepted and converted with
+[`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html).
 
 ## References
 
@@ -83,7 +88,7 @@ compute_NNI(N_content = 3.2, biomass = 2.5, crop = "wheat",
 compute_NNI(2.8, 4, crop = "maize", is_percent = TRUE)
 # ~ 1.52 -> luxury consumption
 
-# Raster (pixel-wise): N_content and biomass as RasterLayers
+# Raster (pixel-wise): N_content and biomass as SpatRasters
 nni_map <- compute_NNI(N_content = n_map, biomass = w_map,
                        crop = "wheat", is_percent = TRUE)
 } # }

@@ -66,8 +66,9 @@ a two-point or three-point calibration method.</p>
 
 
 <dl><dt id="arg-raster">raster<a class="anchor" aria-label="anchor" href="#arg-raster"></a></dt>
-<dd><p>A <code>raster::RasterLayer</code> with NDVI values, or a <code>RasterBrick</code> /
-<code>RasterStack</code> (the layer named <code>NDVI</code> is used if present, otherwise the first layer).</p></dd>
+<dd><p>A <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with NDVI values (the layer named <code>NDVI</code>
+is used if present, otherwise the first layer). Legacy <code>raster</code> objects are
+accepted and converted with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>.</p></dd>
 
 
 <dt id="arg-minn">minN<a class="anchor" aria-label="anchor" href="#arg-minn"></a></dt>
@@ -92,13 +93,14 @@ a two-point or three-point calibration method.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A RasterLayer object with the estimated N rates based on the chosen calibration method.</p>
+    <p>A single-layer <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> with the estimated N rates based on
+the chosen calibration method.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load example NDVI raster (replace with your own)</span></span></span>
-<span class="r-in"><span><span class="co"># ndvi_raster &lt;- raster::raster(system.file("extdata/s2.tif", package = "NFert"))</span></span></span>
+<span class="r-in"><span><span class="co"># ndvi_raster &lt;- terra::rast(system.file("extdata/s2.tif", package = "NFert"))</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Two-point calibration</span></span></span>
 <span class="r-in"><span><span class="co"># n_rate_raster_2pt &lt;- estimate_N_rate_from_calibration_curve(ndvi_raster, minN = 40, maxN = 60)</span></span></span>

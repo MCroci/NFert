@@ -54,7 +54,7 @@ we build a plausible NDVI in one line using the internal demo helper
 
 ``` r
 
-library(raster)
+library(terra)
 
 # Two-patch NDVI with smooth base + noise
 set.seed(7)
@@ -63,9 +63,9 @@ bb <- sf::st_bbox(fp)
 
 nx <- 150
 ny <- 110
-r  <- raster(xmn = bb$xmin, xmx = bb$xmax,
-             ymn = bb$ymin, ymx = bb$ymax,
-             ncols = nx, nrows = ny, crs = 3857)
+r  <- terra::rast(xmin = bb$xmin, xmax = bb$xmax,
+                  ymin = bb$ymin, ymax = bb$ymax,
+                  ncols = nx, nrows = ny, crs = "EPSG:3857")
 
 x  <- seq(0, 1, length.out = nx); y <- seq(0, 1, length.out = ny)
 gx <- matrix(x, nrow = ny, ncol = nx, byrow = TRUE)
@@ -75,22 +75,23 @@ patch1 <- 0.22 * exp(-(((gx - 0.30)^2 + (gy - 0.35)^2) / 0.010))
 patch2 <- 0.26 * exp(-(((gx - 0.70)^2 + (gy - 0.55)^2) / 0.008))
 ndvi_vals <- base - patch1 - patch2 + 0.03 * rnorm(nx * ny)
 ndvi_vals <- pmin(pmax(ndvi_vals, 0.30), 0.92)
-raster::values(r) <- ndvi_vals
-r <- raster::mask(r, as(fp, "Spatial"))
+terra::values(r) <- ndvi_vals
+r <- terra::mask(r, terra::vect(fp))
 
 names(r) <- "NDVI"
 r
-#> class      : RasterLayer 
-#> dimensions : 110, 150, 16500  (nrow, ncol, ncell)
-#> resolution : 3.116946, 4.010757  (x, y)
-#> extent     : 1082192, 1082660, 5629081, 5629522  (xmin, xmax, ymin, ymax)
-#> crs        : +proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs 
-#> source     : memory
-#> names      : NDVI 
-#> values     : 0.3834043, 0.901509  (min, max)
+#> class       : SpatRaster
+#> size        : 110, 150, 1  (nrow, ncol, nlyr)
+#> resolution  : 3.116946, 4.010757  (x, y)
+#> extent      : 1082192, 1082660, 5629081, 5629522  (xmin, xmax, ymin, ymax)
+#> coord. ref. : WGS 84 / Pseudo-Mercator (EPSG:3857)
+#> source(s)   : memory
+#> name        :     NDVI
+#> min value   : 0.383404
+#> max value   : 0.901509
 
-plot(r, main = "Input NDVI (synthetic)",
-     col = hcl.colors(30, "YlGn"))
+terra::plot(r, main = "Input NDVI (synthetic)",
+            col = hcl.colors(30, "YlGn"))
 ```
 
 ![](prescription-map-example_files/figure-html/ndvi-1.png)
@@ -158,20 +159,20 @@ vr <- variable_rate_N(
 )
 
 rx_raster <- vr$rate_raster %||% vr    # robust to return shape
-plot(rx_raster,
-     main = "VRT raster (kg N/ha)",
-     col = rev(hcl.colors(30, "RdYlGn")))
+terra::plot(rx_raster,
+            main = "VRT raster (kg N/ha)",
+            col = rev(hcl.colors(30, "RdYlGn")))
 ```
 
 ![](prescription-map-example_files/figure-html/vrt-raster-1.png)
 
 ``` r
 
-cat("Mean applied N:  ", round(cellStats(rx_raster, "mean", na.rm = TRUE), 1),
+cat("Mean applied N:  ", round(terra::global(rx_raster, "mean", na.rm = TRUE)[1, 1], 1),
     "kg N/ha\n")
 #> Mean applied N:   220 kg N/ha
-cat("Range:           ", round(cellStats(rx_raster, "min", na.rm = TRUE), 1),
-    "-", round(cellStats(rx_raster, "max", na.rm = TRUE), 1), "kg N/ha\n")
+cat("Range:           ", round(terra::global(rx_raster, "min", na.rm = TRUE)[1, 1], 1),
+    "-", round(terra::global(rx_raster, "max", na.rm = TRUE)[1, 1], 1), "kg N/ha\n")
 #> Range:            101.5 - 439.8 kg N/ha
 ```
 
@@ -242,7 +243,7 @@ text(N_target, par("usr")[4]*0.9,
 ``` r
 
 # A) raster GeoTIFF (farm-management software, continuous)
-raster::writeRaster(rx_raster, "rx_raster.tif", overwrite = TRUE)
+terra::writeRaster(rx_raster, "rx_raster.tif", overwrite = TRUE)
 
 # B) grid polygons - any format accepted by the on-board monitor
 export_prescription(rx_grid, "rx_grid.shp",          format = "shp")

@@ -158,8 +158,8 @@ NFert provides the following categories of functions:
 # Load the package
 library(NFert)
 
-# For precision agriculture functions, also load raster
-library(raster)
+# For precision agriculture functions, also load terra
+library(terra)
 ```
 
 ## Getting Started: A Simple Example
@@ -240,16 +240,16 @@ head(uptake_table, 10)
 #> 9   9     A14               Clementine - fruit, wood and leaves 0.28 0.1300000
 #> 10 10     A15                   Quince (fruit, wood and leaves) 0.33 0.0800000
 #>          K2O balance reference_yield std_N_demand std_P2O5_demand
-#> 1  0.5900000      sì              25        147.5            40.0
-#> 2  0.5900000      sì              30        177.0            48.0
-#> 3  0.5300000      sì              13         71.5            16.9
-#> 4  0.5000000      sì              18         99.0            23.4
-#> 5  0.7411538      sì              NA           NA              NA
-#> 6  0.3900000      sì              30         84.0            39.0
-#> 7  0.8600000      sì              NA           NA              NA
-#> 8  0.5900000      sì               9         60.3            19.8
-#> 9  0.4300000      sì              25         70.0            32.5
-#> 10 0.3300000      sì              60        198.0            48.0
+#> 1  0.5900000      si              25        147.5            40.0
+#> 2  0.5900000      si              30        177.0            48.0
+#> 3  0.5300000      si              13         71.5            16.9
+#> 4  0.5000000      si              18         99.0            23.4
+#> 5  0.7411538      si              NA           NA              NA
+#> 6  0.3900000      si              30         84.0            39.0
+#> 7  0.8600000      si              NA           NA              NA
+#> 8  0.5900000      si               9         60.3            19.8
+#> 9  0.4300000      si              25         70.0            32.5
+#> 10 0.3300000      si              60        198.0            48.0
 #>    std_K2O_demand harvested_part
 #> 1           147.5         frutti
 #> 2           177.0         frutti
@@ -789,8 +789,8 @@ layer.
 
 # Create example NDVI raster
 set.seed(42)
-ndvi_raster <- raster(nrows=20, ncols=20, xmn=0, xmx=100, ymn=0, ymx=100)
-values(ndvi_raster) <- runif(ncell(ndvi_raster), 0.35, 0.85)
+ndvi_raster <- terra::rast(nrows=20, ncols=20, xmin=0, xmax=100, ymin=0, ymax=100)
+terra::values(ndvi_raster) <- runif(terra::ncell(ndvi_raster), 0.35, 0.85)
 
 # Two-point calibration
 n_rate_2pt <- estimate_N_rate_from_calibration_curve(
@@ -812,21 +812,21 @@ n_rate_3pt <- estimate_N_rate_from_calibration_curve(
 )
 
 # Compare results
-cat("Two-point calibration - Mean N rate:", 
-    round(cellStats(n_rate_2pt, mean), 2), "kg/ha\n")
+cat("Two-point calibration - Mean N rate:",
+    round(terra::global(n_rate_2pt, "mean", na.rm=TRUE)[1,1], 2), "kg/ha\n")
 #> Two-point calibration - Mean N rate: 60.05 kg/ha
-cat("Three-point calibration - Mean N rate:", 
-    round(cellStats(n_rate_3pt, mean), 2), "kg/ha\n")
+cat("Three-point calibration - Mean N rate:",
+    round(terra::global(n_rate_3pt, "mean", na.rm=TRUE)[1,1], 2), "kg/ha\n")
 #> Three-point calibration - Mean N rate: 60.03 kg/ha
 
 # Spatial maps: NDVI and recommended N rate (variable-rate prescription)
 op <- par(no.readonly = TRUE)
 par(mfrow = c(1, 3), mar = c(2, 2, 2.5, 1))
-raster::plot(ndvi_raster, main = "NDVI (example)", axes = FALSE,
+terra::plot(ndvi_raster, main = "NDVI (example)", axes = FALSE,
              col = grDevices::hcl.colors(100, "Greens", rev = TRUE))
-raster::plot(n_rate_2pt, main = "N rate — 2-point (kg/ha)", axes = FALSE,
+terra::plot(n_rate_2pt, main = "N rate — 2-point (kg/ha)", axes = FALSE,
              col = grDevices::hcl.colors(100, "YlOrRd", rev = TRUE))
-raster::plot(n_rate_3pt, main = "N rate — 3-point (kg/ha)", axes = FALSE,
+terra::plot(n_rate_3pt, main = "N rate — 3-point (kg/ha)", axes = FALSE,
              col = grDevices::hcl.colors(100, "YlOrRd", rev = TRUE))
 ```
 
@@ -848,22 +848,22 @@ hs_result <- estimate_N_rate_from_holland_schepers(
   plot = FALSE
 )
 
-cat("Holland & Schepers - Mean N rate:", 
-    round(cellStats(hs_result$dose_raster, mean), 2), "kg/ha\n")
+cat("Holland & Schepers - Mean N rate:",
+    round(terra::global(hs_result$dose_raster, "mean", na.rm=TRUE)[1,1], 2), "kg/ha\n")
 #> Holland & Schepers - Mean N rate: 38.87 kg/ha
-cat("Sufficiency Index range:", 
-    round(cellStats(hs_result$sufficiency_index_raster, min), 2), "to",
-    round(cellStats(hs_result$sufficiency_index_raster, max), 2), "\n")
+cat("Sufficiency Index range:",
+    round(terra::global(hs_result$sufficiency_index_raster, "min", na.rm=TRUE)[1,1], 2), "to",
+    round(terra::global(hs_result$sufficiency_index_raster, "max", na.rm=TRUE)[1,1], 2), "\n")
 #> Sufficiency Index range: 0 to 1.03
 
 # Maps: NDVI, recommended N dose, sufficiency index (SI)
 op2 <- par(no.readonly = TRUE)
 par(mfrow = c(1, 3), mar = c(2, 2, 2.5, 1))
-raster::plot(ndvi_raster, main = "NDVI", axes = FALSE,
+terra::plot(ndvi_raster, main = "NDVI", axes = FALSE,
              col = grDevices::hcl.colors(100, "Greens", rev = TRUE))
-raster::plot(hs_result$dose_raster, main = "H&S N dose (kg/ha)", axes = FALSE,
+terra::plot(hs_result$dose_raster, main = "H&S N dose (kg/ha)", axes = FALSE,
              col = grDevices::hcl.colors(100, "YlOrBr", rev = TRUE))
-raster::plot(hs_result$sufficiency_index_raster, main = "Sufficiency index", axes = FALSE,
+terra::plot(hs_result$sufficiency_index_raster, main = "Sufficiency index", axes = FALSE,
              col = grDevices::hcl.colors(100, "Blues", rev = TRUE))
 ```
 
@@ -874,8 +874,8 @@ raster::plot(hs_result$sufficiency_index_raster, main = "Sufficiency index", axe
 par(op2)
 
 # Export maps for farm management systems
-# writeRaster(hs_result$dose_raster, "N_application_map.tif", 
-#             format="GTiff", overwrite=TRUE)
+# terra::writeRaster(hs_result$dose_raster, "N_application_map.tif",
+#                    overwrite=TRUE)
 ```
 
 ## Batch Processing Multiple Fields
@@ -1220,11 +1220,11 @@ head(uptake_table, 5)
 #> 4  4      A5     Apricot (high yield) - fruit, wood and leaves 0.55 0.1300000
 #> 5  5      A6        Other fruit trees - fruit, wood and leaves 0.33 0.2838462
 #>         K2O balance reference_yield std_N_demand std_P2O5_demand std_K2O_demand
-#> 1 0.5900000      sì              25        147.5            40.0          147.5
-#> 2 0.5900000      sì              30        177.0            48.0          177.0
-#> 3 0.5300000      sì              13         71.5            16.9           68.9
-#> 4 0.5000000      sì              18         99.0            23.4           90.0
-#> 5 0.7411538      sì              NA           NA              NA             NA
+#> 1 0.5900000      si              25        147.5            40.0          147.5
+#> 2 0.5900000      si              30        177.0            48.0          177.0
+#> 3 0.5300000      si              13         71.5            16.9           68.9
+#> 4 0.5000000      si              18         99.0            23.4           90.0
+#> 5 0.7411538      si              NA           NA              NA             NA
 #>   harvested_part                                           crop_en
 #> 1         frutti  Kiwifruit (green flesh) - fruit, wood and leaves
 #> 2         frutti Kiwifruit (yellow flesh) - fruit, wood and leaves

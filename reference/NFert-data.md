@@ -75,7 +75,8 @@ NFert versions is required.
 
 - s2.rast:
 
-  Example Sentinel-2 NDVI raster for vignettes.
+  Example Sentinel-2 raster (5 bands) for vignettes, stored as a `terra`
+  `PackedSpatRaster`. Unwrap with `terra::rast(s2.rast)` before use.
 
 ## DPI 2026 additional lookup tables (v0.2.0)
 
@@ -196,12 +197,12 @@ head(uptake_table)
 #> 5  5      A6        Other fruit trees - fruit, wood and leaves 0.33 0.2838462
 #> 6  6      A8                   Orange - fruit, wood and leaves 0.28 0.1300000
 #>         K2O balance reference_yield std_N_demand std_P2O5_demand std_K2O_demand
-#> 1 0.5900000      sì              25        147.5            40.0          147.5
-#> 2 0.5900000      sì              30        177.0            48.0          177.0
-#> 3 0.5300000      sì              13         71.5            16.9           68.9
-#> 4 0.5000000      sì              18         99.0            23.4           90.0
-#> 5 0.7411538      sì              NA           NA              NA             NA
-#> 6 0.3900000      sì              30         84.0            39.0          117.0
+#> 1 0.5900000      si              25        147.5            40.0          147.5
+#> 2 0.5900000      si              30        177.0            48.0          177.0
+#> 3 0.5300000      si              13         71.5            16.9           68.9
+#> 4 0.5000000      si              18         99.0            23.4           90.0
+#> 5 0.7411538      si              NA           NA              NA             NA
+#> 6 0.3900000      si              30         84.0            39.0          117.0
 #>   harvested_part                                           crop_en
 #> 1         frutti  Kiwifruit (green flesh) - fruit, wood and leaves
 #> 2         frutti Kiwifruit (yellow flesh) - fruit, wood and leaves

@@ -36,20 +36,20 @@ the vignette is reproducible offline.
 ``` r
 
 library(NFert)
-library(raster)
-#> Loading required package: sp
+library(terra)
+#> terra 1.9.34
 
 set.seed(1)
-template <- raster(nrows = 40, ncols = 40,
-                   xmn = 0, xmx = 100, ymn = 0, ymx = 100)
+template <- terra::rast(nrows = 40, ncols = 40,
+                        xmin = 0, xmax = 100, ymin = 0, ymax = 100)
 
 # Plausible canopy reflectances (fraction 0-1)
-B03 <- setValues(template, runif(ncell(template), 0.05, 0.12))  # green
-B04 <- setValues(template, runif(ncell(template), 0.04, 0.08))  # red
-B05 <- setValues(template, runif(ncell(template), 0.10, 0.25))  # red-edge
-B08 <- setValues(template, runif(ncell(template), 0.35, 0.55))  # NIR
+B03 <- terra::setValues(template, runif(terra::ncell(template), 0.05, 0.12))  # green
+B04 <- terra::setValues(template, runif(terra::ncell(template), 0.04, 0.08))  # red
+B05 <- terra::setValues(template, runif(terra::ncell(template), 0.10, 0.25))  # red-edge
+B08 <- terra::setValues(template, runif(terra::ncell(template), 0.35, 0.55))  # NIR
 
-s2 <- stack(B03, B04, B05, B08)
+s2 <- terra::rast(list(B03, B04, B05, B08))
 names(s2) <- c("B03", "B04", "B05", "B08")
 ```
 
@@ -67,10 +67,10 @@ ndre  <- compute_vi(s2, "NDRE")
 gndvi <- compute_vi(s2, "GNDVI")
 cire  <- compute_vi(s2, "CIred")
 
-summary(getValues(ndvi))
+summary(terra::values(ndvi, mat = FALSE))
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #>  0.6329  0.7314  0.7662  0.7655  0.8055  0.8615
-summary(getValues(ndre))
+summary(terra::values(ndre, mat = FALSE))
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #>  0.1751  0.3596  0.4406  0.4456  0.5384  0.6886
 ```
@@ -78,10 +78,10 @@ summary(getValues(ndre))
 ``` r
 
 par(mfrow = c(2, 2), mar = c(2, 2, 2, 3))
-plot(ndvi,  main = "NDVI",  col = rev(terrain.colors(30)))
-plot(ndre,  main = "NDRE",  col = rev(terrain.colors(30)))
-plot(gndvi, main = "GNDVI", col = rev(terrain.colors(30)))
-plot(cire,  main = "CIred", col = rev(terrain.colors(30)))
+terra::plot(ndvi,  main = "NDVI",  col = rev(terrain.colors(30)))
+terra::plot(ndre,  main = "NDRE",  col = rev(terrain.colors(30)))
+terra::plot(gndvi, main = "GNDVI", col = rev(terrain.colors(30)))
+terra::plot(cire,  main = "CIred", col = rev(terrain.colors(30)))
 ```
 
 ![](remote-sensing-diagnosis_files/figure-html/plot-vis-1.png)
@@ -157,17 +157,17 @@ a biomass retrieval model + a leaf-N retrieval model.
 ``` r
 
 # Synthetic biomass and N% layers
-w_map <- setValues(template, runif(ncell(template), 1.5, 6.0))
-n_map <- setValues(template, runif(ncell(template), 2.2, 3.9))
+w_map <- terra::setValues(template, runif(terra::ncell(template), 1.5, 6.0))
+n_map <- terra::setValues(template, runif(terra::ncell(template), 2.2, 3.9))
 
 d <- diagnose_N_status(N_content = n_map, biomass = w_map,
                        crop = "wheat", is_percent = TRUE)
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(d$NNI,
+terra::plot(d$NNI,
      main = "NNI (continuous)",
      col  = hcl.colors(30, "RdYlGn"))
-plot(d$class,
+terra::plot(d$class,
      main = "NNI class (1=deficient, 2=optimal, 3=excessive)",
      col  = c("#d73027", "#fee08b", "#1a9850"))
 ```
@@ -230,6 +230,7 @@ N_target <- 160   # e.g. from a preliminary N_balance()
 vr <- variable_rate_N(ndre, n_dose = N_target,
                       method = "holland",
                       minN = 60, maxN = 200)
+#> Warning: [is.lonlat] unknown crs
 #> Warning in estimate_N_rate_from_holland_schepers(ndvi_raster = ndvi_raster, :
 #> Raster projection information missing. Ensure NDVI values are in 0-1 range.
 
@@ -238,10 +239,10 @@ rate_guided <- vr$rate_raster
 rate_guided[d$class == 3] <- 0
 
 par(mfrow = c(1, 2), mar = c(3, 3, 2, 4))
-plot(vr$rate_raster,
+terra::plot(vr$rate_raster,
      main = "VRT (NDRE + Holland)",
      col  = rev(heat.colors(30)))
-plot(rate_guided,
+terra::plot(rate_guided,
      main = "VRT masked by NNI (class 3 -> 0)",
      col  = rev(heat.colors(30)))
 ```
@@ -251,16 +252,16 @@ plot(rate_guided,
 ``` r
 
 cat("Full prescription  mean :",
-    round(cellStats(vr$rate_raster, mean), 1), "kg/ha\n")
+    round(terra::global(vr$rate_raster, "mean", na.rm = TRUE)[1, 1], 1), "kg/ha\n")
 #> Full prescription  mean : 160 kg/ha
 cat("NNI-guided        mean  :",
-    round(cellStats(rate_guided, mean), 1), "kg/ha\n")
+    round(terra::global(rate_guided, "mean", na.rm = TRUE)[1, 1], 1), "kg/ha\n")
 #> NNI-guided        mean  : 103.9 kg/ha
 cat("N saved by NNI mask     :",
-    round(cellStats(vr$rate_raster - rate_guided, mean), 1),
+    round(terra::global(vr$rate_raster - rate_guided, "mean", na.rm = TRUE)[1, 1], 1),
     "kg/ha avg, or",
-    round(cellStats((vr$rate_raster - rate_guided), sum) *
-          prod(res(rate_guided)) / 10000, 1),
+    round(terra::global(vr$rate_raster - rate_guided, "sum", na.rm = TRUE)[1, 1] *
+          prod(terra::res(rate_guided)) / 10000, 1),
     "kg total over the field\n")
 #> N saved by NNI mask     : 56.1 kg/ha avg, or 56.1 kg total over the field
 ```
@@ -277,7 +278,7 @@ delivers an NNI map directly through a published linear regression:
 
 ``` r
 
-ndre <- raster::raster("ndre_field.tif")
+ndre <- terra::rast("ndre_field.tif")
 out  <- nni_from_vi_empirical(
   ndre,
   index = "NDRE",       # or "NDVI", "CIred_edge"
@@ -285,8 +286,8 @@ out  <- nni_from_vi_empirical(
   # slope = 3.5, intercept = 0.30,  # override with local calibration
   nni_thresholds = c(0.90, 1.10))
 
-raster::plot(out$NNI,   main = "NNI (empirical)")
-raster::plot(out$zones, main = "Zones (1 deficient / 2 optimal / 3 excessive)")
+terra::plot(out$NNI,   main = "NNI (empirical)")
+terra::plot(out$zones, main = "Zones (1 deficient / 2 optimal / 3 excessive)")
 ```
 
 Default slope and intercept are first-guess values from Cao 2013 (rice),
@@ -357,7 +358,7 @@ nitrogen uptake and dry matter accumulation in maize crops. Plant Soil
 ``` r
 
 sessionInfo()
-#> R version 4.6.0 (2026-04-24)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.4 LTS
 #> 
@@ -378,15 +379,15 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] raster_3.6-32 sp_2.2-1      NFert_0.14.0 
+#> [1] terra_1.9-34 NFert_0.14.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] terra_1.9-27      cli_3.6.6         knitr_1.51        rlang_1.2.0      
-#>  [5] xfun_0.58         otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0   
-#>  [9] htmltools_0.5.9   ragg_1.5.2        sass_0.4.10       rmarkdown_2.31   
-#> [13] grid_4.6.0        evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    codetools_0.2-20 
-#> [21] fs_2.1.0          Rcpp_1.1.1-1.1    htmlwidgets_1.6.4 systemfonts_1.3.2
-#> [25] lattice_0.22-9    digest_0.6.39     R6_2.6.1          bslib_0.11.0     
-#> [29] tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
+#>  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.59        
+#>  [5] otel_0.2.0        textshaping_1.0.5 jsonlite_2.0.0    htmltools_0.5.9  
+#>  [9] ragg_1.5.2        sass_0.4.10       rmarkdown_2.31    evaluate_1.0.5   
+#> [13] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
+#> [17] compiler_4.6.1    codetools_0.2-20  fs_2.1.0          htmlwidgets_1.6.4
+#> [21] Rcpp_1.1.1-1.1    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         
+#> [25] bslib_0.11.0      tools_4.6.1       pkgdown_2.2.0     cachem_1.1.0     
+#> [29] desc_1.4.3
 ```

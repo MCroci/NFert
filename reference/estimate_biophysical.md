@@ -63,7 +63,14 @@ estimate_biophysical(
 
 ## Value
 
-Named list of file paths for every output GeoTIFF written.
+Named list of
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+objects, one per output GeoTIFF written: the mean map for each requested
+variable plus a `<var>_unc` layer for every variable whose model exposes
+prediction uncertainty. The corresponding on-disk file paths are
+attached as the `"paths"` attribute (a named list aligned with the
+result), so `attr(result, "paths")[[v]]` is the GeoTIFF backing variable
+`v`.
 
 ## Details
 
@@ -127,6 +134,7 @@ if (nzchar(scene)) {
   od <- tempfile()
   dir.create(od)
   maps <- estimate_biophysical(scene, od, variables = "LAI", block_rows = 32)
-  stopifnot(is.character(maps$LAI), file.exists(maps$LAI))
+  stopifnot(inherits(maps$LAI, "SpatRaster"),
+            file.exists(attr(maps, "paths")$LAI))
 }
 ```

@@ -1,11 +1,11 @@
 # Compute a vegetation index from a multi-band raster
 
 Generic engine that computes the main vegetation indices used in
-nitrogen diagnosis from a multi-band `raster::RasterStack` or
-`RasterBrick`. NFert supports six indices with configurable band
-mapping, so the function works with Sentinel-2 L2A, UAV multispectral
-sensors (MicaSense, Parrot Sequoia, Pix4D) or any other multispectral
-product.
+nitrogen diagnosis from a multi-band
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html).
+NFert supports six indices with configurable band mapping, so the
+function works with Sentinel-2 L2A, UAV multispectral sensors
+(MicaSense, Parrot Sequoia, Pix4D) or any other multispectral product.
 
 ## Usage
 
@@ -23,8 +23,12 @@ compute_vi(
 
 - stack:
 
-  A `raster::RasterStack` or `RasterBrick` with the required spectral
-  bands. Band names (or layer indices) are mapped through `bands`.
+  A
+  [`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+  with the required spectral bands (a legacy `raster` object is accepted
+  and converted with
+  [`terra::rast()`](https://rspatial.github.io/terra/reference/rast.html)).
+  Band names (or layer indices) are mapped through `bands`.
 
 - index:
 
@@ -53,8 +57,9 @@ compute_vi(
 
 ## Value
 
-A `raster::RasterLayer` with the computed index. Layer name is set to
-the index name.
+A single-layer
+[`terra::SpatRaster`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
+with the computed index. Layer name is set to the index name.
 
 ## Details
 
@@ -134,11 +139,11 @@ status: An evaluation of two sensor systems. Comput. Electron. Agric.
 
 ``` r
 if (FALSE) { # \dontrun{
-library(raster)
+library(terra)
 library(NFert)
 
 # Sentinel-2 L2A stack (integer DN, 0-10000)
-s2 <- raster::stack("S2_Cremonesi_20260415.tif")
+s2 <- terra::rast("S2_Cremonesi_20260415.tif")
 names(s2) <- c("B03", "B04", "B05", "B08")
 
 ndvi  <- compute_vi(s2, "NDVI",  scale_factor = 10000)

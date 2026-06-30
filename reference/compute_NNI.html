@@ -94,7 +94,7 @@ calibration.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric scalar / vector or a <code>RasterLayer</code> of NNI values.</p>
+    <p>A numeric scalar / vector or a <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code> of NNI values.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -104,9 +104,10 @@ calibration.</p></dd>
 <li><p>NNI &gt; <code>excessive_threshold</code> (default 1.10): luxury
 consumption / N-excess</p></li>
 </ul><p>All three arguments can be scalar, numeric vectors of the same length
-(pixel-wise / plot-wise), or <code>raster::RasterLayer</code>s aligned to the
-same grid. If any of them is a <code>RasterLayer</code>, the output is a
-<code>RasterLayer</code>; otherwise a numeric vector is returned.</p>
+(pixel-wise / plot-wise), or <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.html" class="external-link">terra::SpatRaster</a></code>s aligned to the
+same grid. If any of them is a <code>SpatRaster</code>, the output is a
+<code>SpatRaster</code>; otherwise a numeric vector is returned. Legacy <code>raster</code>
+objects are accepted and converted with <code><a href="https://rspatial.github.io/terra/reference/rast.html" class="external-link">terra::rast()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -130,7 +131,7 @@ management. Eur. J. Agron. 28, 614-624.</p>
 <span class="r-in"><span><span class="fu">compute_NNI</span><span class="op">(</span><span class="fl">2.8</span>, <span class="fl">4</span>, crop <span class="op">=</span> <span class="st">"maize"</span>, is_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># ~ 1.52 -&gt; luxury consumption</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Raster (pixel-wise): N_content and biomass as RasterLayers</span></span></span>
+<span class="r-in"><span><span class="co"># Raster (pixel-wise): N_content and biomass as SpatRasters</span></span></span>
 <span class="r-in"><span><span class="va">nni_map</span> <span class="op">&lt;-</span> <span class="fu">compute_NNI</span><span class="op">(</span>N_content <span class="op">=</span> <span class="va">n_map</span>, biomass <span class="op">=</span> <span class="va">w_map</span>,</span></span>
 <span class="r-in"><span>                       crop <span class="op">=</span> <span class="st">"wheat"</span>, is_percent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
